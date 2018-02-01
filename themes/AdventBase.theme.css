@@ -17,12 +17,6 @@
     --guild-add-size-v: calc(var(--guild-add-size-v-pre2) + var(--guild-add-size-v-pre3));
 }
 
-/* Tweaks */
-.message-group div[style*=/* Change to your UID */"185784320898629632"/* Change to your UID */] + .comment .username-wrapper strong,
-.channel-members-wrap .member div[class*="avatar"][style*=/* Change to your UID */"185784320898629632"/* Change to your UID */] + .member-inner .member-username .member-username-inner {
-	color: var(--user-color) !important;
-}
-
 /* Head */
 head {
     background: transparent !important;

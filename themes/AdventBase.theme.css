@@ -396,6 +396,9 @@ pre {
     visibility: hidden !important;
     opacity: 0 !important;
 }
+.attachmentInner-3e5fpm {
+	overflow: visible !important;
+}
 
 /* Dead Embeds */
 .embedImage-1JnXMa div div div {

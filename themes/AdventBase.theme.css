@@ -15,6 +15,10 @@
     --guild-add-size-v-pre2: calc(var(--guild-add-size-v-pre1) / 100);
     --guild-add-size-v-pre3: calc(var(--guild-size) / 150);
     --guild-add-size-v: calc(var(--guild-add-size-v-pre2) + var(--guild-add-size-v-pre3));
+    --users-lazy-load: calc(100% + 190px);
+    --chat-width: calc(100% - 240px);
+    --form-width: calc(100% - 260px);
+    --bar-size: calc(260px - 48px);
 }
 
 /* Head */
@@ -769,6 +773,53 @@ span[class^="searchAnswer"] {
     background: transparent !important;
 }
 
+/* New users panel layout */
+svg[name="QuestionMark"] {
+    margin: 0px !important;
+    margin-right: var(--bar-size) !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    z-index: -1 !important;
+}
+svg[name="QuestionMark"] g path,
+svg[name="QuestionMark"] g {
+    display: none !important;
+}
+.channel-members-wrap {
+    display: flex !important;
+    position: absolute !important;
+    top: 0px !important;
+    right: 0px !important;
+    margin-top: 18px !important;
+    z-index: 999999999 !important;
+    height: var(--users-lazy-load) !important;
+}
+.content .flex-spacer.flex-vertical[style="position: relative;"] .messages-wrapper {
+    display: flex !important;
+    width: var(--chat-width) !important;
+}
+.content .flex-spacer.flex-vertical[style="position: relative;"] form {
+    display: flex !important;
+    width: var(--form-width) !important;
+}
+svg[name="Mention"] {
+    margin: 0px !important;
+}
+.channel-members-wrap .channel-members .old-h2:first-of-type {
+    margin-top: 0px !important;
+    border: none !important;
+}
+.channel-members {
+    padding: 0px !important;
+}
+.channel-members-wrap .channel-members .old-h2 {
+    padding: 0px !important;
+    padding-left: 30px !important;
+    margin: 0px !important;
+    margin-top: 16px !important;
+    margin-bottom: 6px !important;
+}
+
 /* Things */
 .attachPopout-gjwHsr {
     background: rgba(0,0,0,.8) !important;
@@ -799,4 +850,5 @@ span[class^="searchAnswer"] {
 .background-2k0Oi2 {
     background: transparent !important;
 }
+
 /* Kek */

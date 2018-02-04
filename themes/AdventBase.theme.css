@@ -774,15 +774,15 @@ span[class^="searchAnswer"] {
 }
 
 /* New users panel layout */
-svg[name="QuestionMark"] {
+.chat svg[name="QuestionMark"] {
     margin: 0px !important;
     margin-right: var(--bar-size) !important;
     visibility: hidden !important;
     opacity: 0 !important;
     z-index: -1 !important;
 }
-svg[name="QuestionMark"] g path,
-svg[name="QuestionMark"] g {
+.chat svg[name="QuestionMark"] g path,
+.chat svg[name="QuestionMark"] g {
     display: none !important;
 }
 .channel-members-wrap {
@@ -802,7 +802,7 @@ svg[name="QuestionMark"] g {
     display: flex !important;
     width: var(--form-width) !important;
 }
-svg[name="Mention"] {
+.chat svg[name="Mention"] {
     margin: 0px !important;
 }
 .channel-members-wrap .channel-members .old-h2:first-of-type {

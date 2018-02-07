@@ -19,6 +19,7 @@
     --chat-width: calc(100% - 240px);
     --form-width: calc(100% - 260px);
     --bar-size: calc(260px - 48px);
+    --neutral-color: rgba(127, 127, 127, .75);
 }
 
 /* Head */
@@ -786,7 +787,7 @@ span[class^="searchAnswer"] {
     display: none !important;
 }
 .channel-members-wrap {
-    display: flex !important;
+    display: flex;
     position: absolute !important;
     top: 0px !important;
     right: 0px !important;
@@ -796,11 +797,11 @@ span[class^="searchAnswer"] {
 }
 .content .flex-spacer.flex-vertical[style="position: relative;"] .messages-wrapper {
     display: flex !important;
-    width: var(--chat-width) !important;
+    width: var(--chat-width);
 }
 .content .flex-spacer.flex-vertical[style="position: relative;"] form {
     display: flex !important;
-    width: var(--form-width) !important;
+    width: var(--form-width);
 }
 .chat svg[name="Mention"] {
     margin: 0px !important;
@@ -849,6 +850,14 @@ span[class^="searchAnswer"] {
 .content-1RjmSK,
 .background-2k0Oi2 {
     background: transparent !important;
+}
+#AdventButtonOpen,
+#AdventButtonClose,
+#AdventButtonOpen2,
+#AdventButtonClose2,
+#AdventButtonCloseUsers,
+#AdventButtonOpenUsers {
+    color: var(--neutral-color) !important;
 }
 
 /* Kek */

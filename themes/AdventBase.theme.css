@@ -20,6 +20,7 @@
     --form-width: calc(100% - 260px);
     --bar-size: calc(260px - 48px);
     --neutral-color: rgba(127, 127, 127, .75);
+	--adjusted-users-panel: calc(100% - 52px);
 }
 
 /* Head */
@@ -77,6 +78,7 @@ body {
 .app,
 .layers-20RVFW,
 .layer-kosS71,
+.flexChild-1KGW5q,
 .ui-standard-sidebar-view,
 .sidebar-region,
 .content-region,
@@ -229,6 +231,14 @@ div[class^="unread-mentions-indicator"] {
 .wrapper-2ldvyE,
 .wrapper-VSYYTS {
     background: transparent !important;
+}
+.container-iksrDt {
+    display: flex;
+    position: absolute !important;
+    bottom: 0px !important;
+    right: 0px !important;
+    z-index: 9999 !important;
+    width: 220px !important;
 }
 .contentSelectedText-3j5CXt,
 .contentHoveredText-2HYGIY {
@@ -792,8 +802,7 @@ span[class^="searchAnswer"] {
     top: 0px !important;
     right: 0px !important;
     margin-top: 18px !important;
-    z-index: 999999999 !important;
-    height: var(--users-lazy-load) !important;
+    height: 100% !important;
 }
 .content .flex-spacer.flex-vertical[style="position: relative;"] .messages-wrapper {
     display: flex !important;
@@ -811,7 +820,7 @@ span[class^="searchAnswer"] {
     border: none !important;
 }
 .channel-members {
-    padding: 0px !important;
+    height: var(--adjusted-users-panel) !important;
 }
 .channel-members-wrap .channel-members .old-h2 {
     padding: 0px !important;

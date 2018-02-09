@@ -20,7 +20,7 @@
     --form-width: calc(100% - 260px);
     --bar-size: calc(260px - 48px);
     --neutral-color: rgba(127, 127, 127, .75);
-	--adjusted-users-panel: calc(100% - 52px);
+    --adjusted-users-panel: calc(100% - 52px);
 }
 
 /* Head */

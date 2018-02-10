@@ -237,7 +237,7 @@ div[class^="unread-mentions-indicator"] {
     position: absolute !important;
     bottom: 0px !important;
     right: 0px !important;
-    z-index: 9999 !important;
+    z-index: 999 !important;
     width: 220px !important;
 }
 .contentSelectedText-3j5CXt,
@@ -803,6 +803,7 @@ span[class^="searchAnswer"] {
     right: 0px !important;
     margin-top: 18px !important;
     height: 100% !important;
+    z-index: 998 !important;
 }
 .content .flex-spacer.flex-vertical[style="position: relative;"] .messages-wrapper {
     display: flex !important;
@@ -834,6 +835,7 @@ span[class^="searchAnswer"] {
 .attachPopout-gjwHsr {
     background: rgba(0,0,0,.8) !important;
 }
+
 .jump-to-present-bar {
     display: none !important;
     visibility: hidden !important;

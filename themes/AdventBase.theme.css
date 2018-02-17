@@ -868,6 +868,10 @@ span[class^="searchAnswer"] {
 .background-2k0Oi2 {
     background: transparent !important;
 }
+.container-1WaXoH header,
+.container-1WaXoH section {
+    background: rgba(0,0,0,.8) !important;
+}
 #AdventButtonOpen,
 #AdventButtonClose,
 #AdventButtonOpen2,

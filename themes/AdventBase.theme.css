@@ -482,9 +482,9 @@ span.embedImage-1JnXMa div.imageZoom-2suFUV:after {
 }
 
 /* User Panel */
-.header-3mZJcV,
-.body-3rkFrF,
-.footer-2J5zqP,
+.header-3budic,
+.body-3ljq11,
+.footer-2wFs91,
 input[class^="quick"] {
     background: rgba(0,0,0,.8) !important;
 }
@@ -493,7 +493,7 @@ div[class^="protip"] {
     visibility: hidden !important;
     opacity: 0 !important;
 }
-.userPopout-4pfA0d {
+.userPopout-11hFKo {
     box-shadow: none !important;
 }
 .member:hover,

@@ -20,7 +20,7 @@
     --form-width: calc(100% - 260px);
     --bar-size: calc(260px - 48px);
     --neutral-color: rgba(127, 127, 127, .75);
-    --adjusted-users-panel: calc(100% - 73px);
+    --adjusted-users-panel: calc(100% - 123px);
 }
 
 /* Head */
@@ -232,6 +232,16 @@ div[class^="unread-mentions-indicator"] {
 .wrapper-VSYYTS {
     background: transparent !important;
 }
+.container-3lnMWU {
+    display: flex !important;
+    border: none !important;
+    background: transparent !important;
+    position: absolute !important;
+    bottom: 52px !important;
+    right: 0px !important;
+    width: 220px !important;
+    z-index: 999 !important;
+}
 .container-iksrDt {
     display: flex;
     position: absolute !important;
@@ -282,10 +292,6 @@ div[class^="unread-mentions-indicator"] {
 }
 .channelNotice-cQsVXw {
     background-color: transparent !important;
-}
-.container-3lnMWU {
-    border: none !important;
-    background: transparent !important;
 }
 
 /* Chat */

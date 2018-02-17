@@ -660,6 +660,12 @@ div[class^="splashArt"],
 .sectionLine-3fsQAf {
     background: var(--gray-scale) !important;
 }
+.carousel-28zrtT,
+.section-14gtwb.sectionBottomPadding-2gD6ON {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
 
 /* Friends */
 #friends,

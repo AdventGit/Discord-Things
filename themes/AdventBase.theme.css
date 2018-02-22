@@ -154,6 +154,7 @@ div[class^="unread-mentions-indicator"] {
 }
 .guild-separator:after {
     height: 1px !important;
+    margin-top: 5px !important;
     margin-bottom: 7px !important;
     left: 0% !important;
     right: 0% !important;

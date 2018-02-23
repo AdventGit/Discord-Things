@@ -421,35 +421,6 @@ pre {
 	overflow: visible !important;
 }
 
-/* Dead Embeds */
-.embedImage-1JnXMa div div div {
-    width: 0 !important;
-    height: 0 !important;
-    margin: 0px !important;
-    padding: 0px !important;
-    background-image: none !important;
-    background: none !important;
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-}
-span.embedImage-1JnXMa div.imageZoom-2suFUV {
-    display: block !important;
-    float: left !important;
-    position: absolute !important;
-    text-align: left !important;
-    font-size: 135% !important;
-    width: inherit !important;
-    height: inherit !important;
-    right: 2px !important;
-    bottom: 8px !important;
-    word-wrap: normal !important;
-}
-span.embedImage-1JnXMa div.imageZoom-2suFUV:after {
-    content: "x" !important;
-    color: #FF0000 !important;
-}
-
 /* Users Panel */
 .channel-members-wrap,
 .channel-members,
@@ -886,5 +857,34 @@ span[class^="searchAnswer"] {
 #AdventButtonOpenUsers {
     color: var(--neutral-color) !important;
 }
+
+/* Dead Embeds
+.embedImage-1JnXMa div div div {
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0px !important;
+    padding: 0px !important;
+    background-image: none !important;
+    background: none !important;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+span.embedImage-1JnXMa div.imageZoom-2suFUV {
+    display: block !important;
+    float: left !important;
+    position: absolute !important;
+    text-align: left !important;
+    font-size: 135% !important;
+    width: inherit !important;
+    height: inherit !important;
+    right: 2px !important;
+    bottom: 8px !important;
+    word-wrap: normal !important;
+}
+span.embedImage-1JnXMa div.imageZoom-2suFUV:after {
+    content: "x" !important;
+    color: #FF0000 !important;
+} */
 
 /* Kek */

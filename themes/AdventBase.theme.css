@@ -849,6 +849,9 @@ span[class^="searchAnswer"] {
 .container-1WaXoH section {
     background: rgba(0,0,0,.8) !important;
 }
+.attachment-1Vom9D {
+    max-width: inherit !important;
+}
 #AdventButtonOpen,
 #AdventButtonClose,
 #AdventButtonOpen2,

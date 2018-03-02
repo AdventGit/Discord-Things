@@ -1,2 +1,11 @@
 /* Global Vars */
 :root {}
+
+/* Chat */
+.message-group .mentioned .message-text {
+    background: var(--user-color-semi-trans) !important;
+}
+.message-group .mentioned .message-text:after {
+    background: var(--user-color-semi-trans) !important;
+    border-left: 4px solid var(--user-color)
+}

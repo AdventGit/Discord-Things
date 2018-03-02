@@ -1,11 +1,264 @@
-/* Global Vars */
-:root {}
+:root {
+    --font-size-pre: calc(var(--guild-size) * 2.2);
+    --font-size: calc(var(--font-size-pre) / 10);
+    --read-all-font-size-pre: calc(var(--guild-size) * 2.4);
+    --read-all-font-size: calc(var(--read-all-font-size-pre) / 10);
+    --friend-icon-size: calc(var(--guild-size) / 1.35);
+    --guild-add-size-h-pre1: calc(var(--guild-size) * -1);
+    --guild-add-size-h-pre2: calc(var(--guild-size) * 2);
+    --guild-add-size-h-pre3: calc(var(--guild-add-size-h-pre1) / 2);
+    --guild-add-size-h-pre4: calc(var(--guild-add-size-h-pre2) / 100);
+    --guild-add-size-h: calc(var(--guild-add-size-h-pre3) + var(--guild-add-size-h-pre4));
+    --guild-add-size-v-pre1: calc(var(--guild-add-size-h-pre1) * 2);
+    --guild-add-size-v-pre2: calc(var(--guild-add-size-v-pre1) / 100);
+    --guild-add-size-v-pre3: calc(var(--guild-size) / 150);
+    --guild-add-size-v: calc(var(--guild-add-size-v-pre2) + var(--guild-add-size-v-pre3));
+}
+
+/* Base Theming */
+html,
+head,
+body,
+#app-mount,
+#app-mount > [class*="titleBar"]:first-child,
+#app-mount > [class*="app"]:nth-of-type(2),
+.app,
+.app > [class*="layers"]:first-child,
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child,
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child,
+.guilds-wrapper,
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2),
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2),
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="channels"]:first-child,
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="channels"]:first-child > [class*="flex"]:first-child,
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="channels"]:first-child > [class*="container"]:nth-of-type(2),
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2),
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="titleWrapper"]:first-child,
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="titleWrapper"]:first-child > [class*="flex"]:first-child,
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2),
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="flex"]:first-child,
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="flex"]:first-child > [class*="message"]:first-child,
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="flex"]:first-child > form,
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="flex"]:first-child > form > [class*="typing"]:nth-of-type(2),
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="flex"]:first-child > form > [class*="channel"]:first-child,
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="flex"]:first-child > form > [class*="channel"]:first-child > [class*="inner"]:first-child,
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="channel"]:nth-of-type(2),
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="channel"]:nth-of-type(2) > [class*="scroll"]:first-child,
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="channel"]:nth-of-type(2) > [class*="scroll"]:first-child > [class*="scroll"]:first-child {
+    background: transparent !important;
+}
+
+/* TitleBar */
+#app-mount > [class*="titleBar"]:first-child [class*="wordmark"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* App */
+.app {
+    text-rendering: geometricPrecision !important;
+}
+
+/* Guilds */
+.guilds-wrapper [class^="unread-mentions-indicator"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+.guilds-wrapper {
+    width: inherit !important;
+}
+.guilds-wrapper div {
+    margin: 0px !important;
+}
+.guilds-wrapper .scroller-wrap {
+    width: 100% !important;
+    padding-right: 10px !important;
+}
+.guilds-wrapper .scroller-wrap ::-webkit-scrollbar {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0px !important;
+    background: transparent !important;
+}
+.guilds-wrapper .guilds > [class*="guild"]:first-child .guild-inner {
+    height: var(--guild-size) !important;
+    width: var(--guild-size) !important;
+}
+.guilds-wrapper .guilds .friends-icon {
+    height: var(--guild-size) !important;
+    width: var(--guild-size) !important;
+    background-size: var(--friend-icon-size) !important;
+}
+.guilds-wrapper .guilds .guild {
+    height: var(--guild-size) !important;
+    width: var(--guild-size) !important;
+}
+.guilds-wrapper .guilds .guild:nth-of-type(n+2) {
+    margin-top: 7px !important;
+}
+.guilds-wrapper .guilds .guild:nth-of-type(n+4) .guild-inner a{
+    height: var(--guild-size) !important;
+    width: var(--guild-size) !important;
+}
+.guilds-wrapper .guilds .guild:nth-of-type(n+4) .avatar-small {
+    background-size: var(--guild-size) !important;
+}
+.guilds-wrapper .guilds .guild .guild-inner {
+    background-color: transparent !important;
+}
+.guilds-wrapper .guilds .dms {
+    position: relative !important;
+    margin-left: 0px !important;
+    margin-bottom: 7px !important;
+    margin-top: -4px !important;
+    margin-right: 0px !important;
+    transform: translate(7px) !important;
+    z-index: 0 !important;
+}
+.guilds-wrapper .guilds .dms .guild {
+    height: var(--guild-size) !important;
+    width: var(--guild-size) !important;
+    right: 7px !important;
+}
+.guilds-wrapper .guilds .dms .guild-inner {
+    height: var(--guild-size) !important;
+    width: var(--guild-size) !important;
+    margin-top: 7px !important;
+}
+.guilds-wrapper .guilds .dms .guild-inner .avatar-small {
+    height: var(--guild-size) !important;
+    width: var(--guild-size) !important;
+    background-size: var(--guild-size) !important;
+}
+.guilds-wrapper .guilds .guild-separator {
+    height: 1px !important;
+    width: var(--guild-size) !important;
+    margin-bottom: 7px !important;
+}
+.guilds-wrapper .guilds .guild-separator:after {
+    height: 1px !important;
+    margin-top: 2px !important;
+    left: 0% !important;
+    right: 0% !important;
+    width: 100% !important;
+    background: var(--user-color) !important;
+}
+.guilds-wrapper .guilds .friends-online{
+    font-size: var(--font-size) !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+    width: var(--guild-size) !important;
+    word-wrap: normal !important;
+}
+.guilds-wrapper .guilds .guild.unread:before,
+.guilds-wrapper .guilds .guild.selected:before {
+    background: var(--user-color) !important;
+}
+.guilds-wrapper .guilds .guilds-add {
+    background: transparent !important;
+    margin-top: 7px !important;
+    height: var(--guild-size) !important;
+    width: var(--guild-size) !important;
+    border: 2px dashed var(--gray-scale) !important;
+}
+.guilds-wrapper .guilds .guilds-add:hover {
+    border: 2px dashed var(--user-color) !important;
+}
+.guilds-wrapper .guilds .guilds-add:after {
+    content: "+" !important;
+    color: var(--gray-scale) !important;
+    position: absolute !important;
+    height: var(--guild-size) !important;
+    width: var(--guild-size) !important;
+    font-size: var(--guild-size) !important;
+    line-height: 0px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    margin-left: var(--guild-add-size-h) !important;
+    margin-top: var(--guild-add-size-v) !important;
+}
+.guilds-wrapper .guilds .guilds-add:hover:after {
+    color: var(--user-color) !important;
+}
+.guilds-wrapper .guilds .guilds-add-inner {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Server Channels */
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="channels"]:first-child > [class*="flex"]:first-child > [class*="positionedContainer"],
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="channels"]:first-child > [class*="flex"]:first-child > [class*="unreadBottom"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
 
 /* Chat */
-.message-group .mentioned .message-text {
-    background: var(--user-color-semi-trans) !important;
+.messages.scroller::-webkit-scrollbar {
+    background: transparent !important;
+    width: 10px !important;
 }
-.message-group .mentioned .message-text:after {
-    background: var(--user-color-semi-trans) !important;
-    border-left: 4px solid var(--user-color)
+.messages.scroller::-webkit-scrollbar-button {
+    background: transparent !important;
+}
+.messages.scroller::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+.messages.scroller::-webkit-scrollbar-track-piece {
+    background: transparent !important;
+    border: none !important;
+}
+.messages.scroller::-webkit-scrollbar-thumb {
+    background: var(--user-color) !important;
+    border: none !important;
+}
+.messages.scroller::-webkit-scrollbar-corner {
+    background: transparent !important;
+}
+.messages.scroller::-webkit-resizer {
+    background: transparent !important;
+}
+.chat .divider {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    margin: 0px !important;
+    padding: 0px !important;
+    height: 0px !important;
+    width: 0px !important;
+    background: none !important;
+    position: absolute !important;
+}
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="flex"]:first-child > [class*="message"]:first-child > [class*="message"] {
+    background: var(--gray-scale-third) !important;
+    color: var(--user-color) !important;
+}
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="flex"]:first-child > [class*="message"]:first-child > [class*="scroll"]:first-child > [class*="message"]:first-child [class*="mentioned"] [class*="message-text"] {
+    background-color: var(--user-color-semi-trans) !important;
+}
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="flex"]:first-child > [class*="message"]:first-child > [class*="scroll"]:first-child > [class*="message"]:first-child [class*="mentioned"] [class*="message-text"]:after {
+    border-left: 4px solid var(--user-color) !important;
+}
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="flex"]:first-child > [class*="message"]:first-child > [class*="scroll"]:first-child > [class*="message"]:first-child span[class*="mention"] {
+    color: var(--user-color) !important;
+    background-color: var(--user-color-semi-trans) !important;
+}
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="flex"]:first-child > [class*="message"]:first-child > [class*="scroll"]:first-child > [class*="message"]:first-child [class*="mentioned"] span[class*="mention"] {
+    color: var(--user-color) !important;
+    background-color: transparent !important;
+}
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="flex"]:first-child > form > [class*="channel"]:first-child > [class*="inner"]:first-child {
+    border: 1px solid var(--gray-scale) !important;
+}
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="flex"]:first-child > form {
+    box-shadow: none !important;
+}
+
+/* Status-es */
+.status-online {
+    background-color: var(--user-color) !important;
 }

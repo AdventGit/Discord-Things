@@ -261,6 +261,11 @@ body,
 .app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="flex"]:first-child > [class*="message"]:first-child > [class*="scroll"]:first-child > [class*="message"]:first-child [class*="default"] {
     background: transparent !important;
 }
+[class*="typing"] > [class*="ellipsis"]:first-child {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
 
 /* Embeds */
 [class*="embedPill"] {
@@ -314,7 +319,33 @@ body,
     box-shadow: none !important;
 }
 
+/* Badges */
+.badge {
+    background: rgba(0, 0, 0, 1) !important;
+    border: 2px solid var(--user-color) !important;
+    border-radius: 50% !important;
+    padding: 0px !important;
+    height: var(--badge-size) !important;
+    width: var(--badge-size) !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    line-height: var(--badge-size) !important;
+}
+
 /* Status-es */
 .status-online {
     background-color: var(--user-color) !important;
+}
+.status.status-typing {
+    width: 77% !important;
+    right: 0px !important;
+    left: 11px !important;
+}
+.status-typing {
+    background: #000000 !important;
+    border: 2px solid var(--user-color) !important;
+}
+.status-typing .spinner .spinner-item {
+    background: var(--user-color) !important;
+    opacity: 1 !important;
 }

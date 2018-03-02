@@ -234,6 +234,28 @@ body,
     background: none !important;
     position: absolute !important;
 }
+.message-group .message.mentioned .message-text {
+    display: flex !important;
+    left: 0px !important;
+    white-space: nowrap !important;
+    width: fit-content !important;
+}
+.message-group .message.mentioned .message-text .btn-reaction {
+    display: block !important;
+    position: absolute !important;
+    float: right !important;
+    left: calc(100% + 4px) !important;
+    top: 4px !important;
+}
+.message-group .message.mentioned .message-text .btn-option {
+    display: block !important;
+    position: absolute !important;
+    left: calc(100% + 24px) !important;
+    top: 4px !important;
+}
+.message-group .message.mentioned .message-text:after {
+    background: none !important;
+}
 .app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="flex"]:first-child > [class*="message"]:first-child > [class*="message"] {
     background: var(--gray-scale-third) !important;
     color: var(--user-color) !important;

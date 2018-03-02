@@ -268,6 +268,9 @@ body,
 .app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="flex"]:first-child > form {
     box-shadow: none !important;
 }
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="content"]:nth-of-type(2) > [class*="flex"]:first-child > [class*="message"]:first-child > [class*="scroll"]:first-child > [class*="message"]:first-child [class*="default"] {
+    background: transparent !important;
+}
 
 /* Fuck Clyde */
 [class*="is-local-bot"] {

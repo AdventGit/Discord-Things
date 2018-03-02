@@ -134,17 +134,6 @@ body,
     width: var(--guild-size) !important;
     background-size: var(--guild-size) !important;
 }
-.guilds-wrapper .guilds .guild .badge {
-    background: rgba(0, 0, 0, 1) !important;
-    border: 2px solid var(--user-color) !important;
-    border-radius: 50% !important;
-    padding: 0px !important;
-    height: var(--badge-size) !important;
-    width: var(--badge-size) !important;
-    text-align: center !important;
-    vertical-align: middle !important;
-    line-height: var(--badge-size) !important;
-}
 .guilds-wrapper .guilds .guild-separator {
     height: 1px !important;
     width: var(--guild-size) !important;

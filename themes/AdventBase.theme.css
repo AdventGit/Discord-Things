@@ -301,6 +301,13 @@ body,
 }
 [class*="contextMenu"] {
     background: var(--gray-scale-third) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+[class*="contextMenu"] [class*="item"] [class*="itemSubMenu"] {
+    background-color: var(--gray-scale-third) !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 /* Emotes */

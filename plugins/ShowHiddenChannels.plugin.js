@@ -2,12 +2,12 @@
 
 class ShowHiddenChannels {
 	constructor () {
-		this.channelListObserver = new MutationObserver(() => {});
+		this.updateHiddenCategory = false;
 		
 		this.categoryMarkup = 
 			`<div class="container-hidden">
 				<div class="containerDefault-1bbItS">
-					<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw flex-3B1Tl4 directionRow-yNbSvJ justifyStart-2yIZo0 alignStart-pnSyE6 noWrap-v6g9vO wrapperDefault-1Dl4SS cursorPointer-3oKATS" style="flex: 1 1 auto;">
+					<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw directionRow-yNbSvJ justifyStart-2yIZo0 alignCenter-3VxkQP noWrap-v6g9vO wrapperDefault-1Dl4SS cursorPointer-3oKATS" style="flex: 1 1 auto;">
 						<svg class="iconDefault-xzclSQ iconTransition-VhWJ85" width="12" height="12" viewBox="0 0 24 24">
 							<path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 10L12 15 17 10"></path>
 						</svg>
@@ -27,7 +27,7 @@ class ShowHiddenChannels {
 							</svg>
 						</div>
 						<div class="nameDefaultText-QoumjC name-2SL4ev overflowEllipsis-3Rxxjf" style="flex: 1 1 auto;"></div>
-						<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw flex-3B1Tl4 directionRow-yNbSvJ justifyStart-2yIZo0 alignCenter-3VxkQP noWrap-v6g9vO marginReset-1YolDJ" style="flex: 0 1 auto;"></div>
+						<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw directionRow-yNbSvJ justifyStart-2yIZo0 alignCenter-3VxkQP noWrap-v6g9vO marginReset-1YolDJ" style="flex: 0 1 auto;"></div>
 					</div>
 				</div>
 			</div>`;
@@ -43,14 +43,14 @@ class ShowHiddenChannels {
 							</svg>
 						</div>
 						<div class="nameDefaultVoice-1swZoh name-2SL4ev overflowEllipsis-3Rxxjf" style="flex: 1 1 auto;"></div>
-						<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw flex-3B1Tl4 directionRow-yNbSvJ justifyStart-2yIZo0 alignCenter-3VxkQP noWrap-v6g9vO marginReset-1YolDJ" style="flex: 0 1 auto;"></div>
+						<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw directionRow-yNbSvJ justifyStart-2yIZo0 alignCenter-3VxkQP noWrap-v6g9vO marginReset-1YolDJ" style="flex: 0 1 auto;"></div>
 					</div>
 				</div>
 			</div>`;
 			
 		this.channelCategoryMarkup = 
 			`<div class="containerDefault-7RImuF">
-				<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw flex-3B1Tl4 directionRow-yNbSvJ justifyStart-2yIZo0 alignStart-pnSyE6 noWrap-v6g9vO cursorPointer-3oKATS wrapperCollapsed-18mf-c content-2mSKOj" style="flex: 1 1 auto;">
+				<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw directionRow-yNbSvJ justifyStart-2yIZo0 alignCenter-3VxkQP noWrap-v6g9vO cursorPointer-3oKATS wrapperCollapsed-18mf-c content-2mSKOj" style="flex: 1 1 auto;">
 					<svg class="iconTransition-VhWJ85 closed-2Hef-I iconCollapsed-1INdMX" width="12" height="12" viewBox="0 0 24 24">
 						<path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 10L12 15 17 10"></path>
 					</svg>
@@ -66,7 +66,9 @@ class ShowHiddenChannels {
 				showAllowedRoles:		{value:true,	description:"Show allowed Roles on hover:"},
 				showOverWrittenRoles:	{value:true,	description:"Include overwritten Roles in allowed Roles:"},
 				showDeniedRoles:		{value:true,	description:"Show denied Roles on hover:"},
-				showForNormal:			{value:false,	description:"Also show Roles for allowed channels:"}
+				showDeniedUsers:		{value:true,	description:"Show denied Users on hover:"},
+				showForNormal:			{value:false,	description:"Also show Roles/Users for allowed channels:"},
+				showTopic:				{value:false, 	description:"Show the topic of hidden channels:"}
 			}
 		};
 	}
@@ -75,7 +77,7 @@ class ShowHiddenChannels {
 
 	getDescription () {return "Displays channels that are hidden from you by role restrictions.";}
 
-	getVersion () {return "2.1.5";}
+	getVersion () {return "2.2.1";}
 
 	getAuthor () {return "DevilBro";}
 	
@@ -84,7 +86,7 @@ class ShowHiddenChannels {
 		var settings = BDfunctionsDevilBro.getAllData(this, "settings"); 
 		var settingshtml = `<div class="${this.getName()}-settings DevilBro-settings"><div class="titleDefault-1CWM9y title-3i-5G_ size18-ZM4Qv- height24-2pMcnc weightNormal-3gw0Lm marginBottom8-1mABJ4">${this.getName()}</div><div class="DevilBro-settings-inner">`;
 		for (let key in settings) {
-			settingshtml += `<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw flex-3B1Tl4 directionRow-yNbSvJ justifyStart-2yIZo0 alignStart-pnSyE6 noWrap-v6g9vO marginBottom8-1mABJ4" style="flex: 1 1 auto;"><h3 class="titleDefault-1CWM9y title-3i-5G_ marginReset-3hwONl weightMedium-13x9Y8 size16-3IvaX_ height24-2pMcnc flexChild-1KGW5q" style="flex: 1 1 auto;">${this.defaults.settings[key].description}</h3><div class="flexChild-1KGW5q switchEnabled-3CPlLV switch-3lyafC value-kmHGfs sizeDefault-rZbSBU size-yI1KRe themeDefault-3M0dJU" style="flex: 0 0 auto;"><input type="checkbox" value="${key}" class="checkboxEnabled-4QfryV checkbox-1KYsPm"${settings[key] ? " checked" : ""}></div></div>`;
+			settingshtml += `<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw directionRow-yNbSvJ justifyStart-2yIZo0 alignCenter-3VxkQP noWrap-v6g9vO marginBottom8-1mABJ4" style="flex: 1 1 auto;"><h3 class="titleDefault-1CWM9y title-3i-5G_ marginReset-3hwONl weightMedium-13x9Y8 size16-3IvaX_ height24-2pMcnc flexChild-1KGW5q" style="flex: 1 1 auto;">${this.defaults.settings[key].description}</h3><div class="flexChild-1KGW5q switchEnabled-3CPlLV switch-3lyafC value-kmHGfs sizeDefault-rZbSBU size-yI1KRe themeDefault-3M0dJU" style="flex: 0 0 auto;"><input type="checkbox" value="${key}" class="checkboxEnabled-4QfryV checkbox-1KYsPm"${settings[key] ? " checked" : ""}></div></div>`;
 		}
 		settingshtml += `</div></div>`;
 		
@@ -101,23 +103,34 @@ class ShowHiddenChannels {
 	//legacy
 	load () {}
 
-	start () { 
+	start () {
+		var libraryScript = null;
 		if (typeof BDfunctionsDevilBro !== "object" || BDfunctionsDevilBro.isLibraryOutdated()) {
 			if (typeof BDfunctionsDevilBro === "object") BDfunctionsDevilBro = "";
-			$('head script[src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDfunctionsDevilBro.js"]').remove();
-			$('head').append('<script src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDfunctionsDevilBro.js"></script>');
+			libraryScript = document.querySelector('head script[src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDfunctionsDevilBro.js"]');
+			if (libraryScript) libraryScript.remove();
+			libraryScript = document.createElement("script");
+			libraryScript.setAttribute("type", "text/javascript");
+			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDfunctionsDevilBro.js");
+			document.head.appendChild(libraryScript);
 		}
+		if (typeof BDfunctionsDevilBro === "object") this.initialize();
+		else libraryScript.addEventListener("load", () => {this.initialize();});
+	}
+
+	initialize () {
 		if (typeof BDfunctionsDevilBro === "object") {
 			BDfunctionsDevilBro.loadMessage(this);
 			
+			this.UserStore = BDfunctionsDevilBro.WebModules.findByProperties(["getUsers", "getUser"]);
 			this.MemberStore = BDfunctionsDevilBro.WebModules.findByProperties(["getMember", "getMembers"]);
 			this.ChannelStore = BDfunctionsDevilBro.WebModules.findByProperties(["getChannels", "getDMFromUserId"]);
 			this.GuildChannels = BDfunctionsDevilBro.WebModules.findByProperties(["getChannels", "getDefaultChannel"]);
 			this.Permissions = BDfunctionsDevilBro.WebModules.findByProperties(["Permissions", "ActivityTypes"]).Permissions;
 			
-			var observertarget = null;
+			var observer = null;
 
-			this.channelListObserver = new MutationObserver((changes, _) => {
+			observer = new MutationObserver((changes, _) => {
 				changes.forEach(
 					(change, i) => {
 						if (change.addedNodes) {
@@ -130,7 +143,24 @@ class ShowHiddenChannels {
 					}
 				);
 			});
-			if (observertarget = document.querySelector(".channels-3g2vYe")) this.channelListObserver.observe(observertarget, {childList: true, subtree: true});
+			BDfunctionsDevilBro.addObserver(this, ".channels-3g2vYe", {name:"channelListObserver",instance:observer}, {childList: true, subtree: true});
+			
+			observer = new MutationObserver((changes, _) => {
+				changes.forEach(
+					(change, i) => {
+						if (change.removedNodes) {
+							change.removedNodes.forEach((node) => {
+								if (this.updateHiddenCategory && node && node.tagName && node.getAttribute("layer-id") == "user-settings") {
+									document.querySelectorAll(".container-hidden").forEach(category => {category.remove();});
+									this.displayHiddenChannels();
+									this.updateHiddenCategory = false;
+								}
+							});
+						}
+					}
+				);
+			});
+			BDfunctionsDevilBro.addObserver(this, ".layers-20RVFW", {name:"settingsWindowObserver",instance:observer}, {childList:true});
 			
 			this.displayHiddenChannels();
 		}
@@ -142,7 +172,6 @@ class ShowHiddenChannels {
 	stop () {
 		if (typeof BDfunctionsDevilBro === "object") {
 			$(".container-hidden").remove();
-			this.channelListObserver.disconnect();
 			
 			BDfunctionsDevilBro.unloadMessage(this);
 		}
@@ -163,6 +192,7 @@ class ShowHiddenChannels {
 			settings[input.value] = input.checked;
 		}
 		BDfunctionsDevilBro.saveAllData(settings, this, "settings");
+		this.updateHiddenCategory = true;
 	}
 	
 	displayHiddenChannels () {
@@ -171,19 +201,24 @@ class ShowHiddenChannels {
 			var serverID = serverObj.id;
 			if (!document.querySelector(".container-hidden.server" + serverID)) {
 				$(".container-hidden").remove();
-				var types = [0,2,4];
+				var types = {
+					"text":0,
+					"voice":2,
+					"category":4
+				};
 				var allChannels = this.ChannelStore.getChannels();
 				var shownChannels = this.GuildChannels.getChannels(serverID);
 				var hiddenChannels = {};
-				for (let type of types) hiddenChannels[type] = [];
+				
+				for (let type in types) hiddenChannels[types[type]] = [];
 				
 				for (let channelID in allChannels) {
 					var channel = allChannels[channelID];
 					if (channel.guild_id == serverID) {
                         var isHidden = true;
-						if (channel.type == 4) {
-							for (let type of types) {
-								for (let shownChannel of shownChannels[type]) {
+						if (channel.type == types.category) {
+							for (let type in types) {
+								for (let shownChannel of shownChannels[types[type]]) {
 									if (!channel.id || shownChannel.channel.parent_id == channel.id) {
 										isHidden = false;
 										break;
@@ -205,10 +240,15 @@ class ShowHiddenChannels {
 					}
 				}
 				
+						
+				var settings = BDfunctionsDevilBro.getAllData(this, "settings"); 
 				var count = 0;
-				for (let type of types) {
-					BDfunctionsDevilBro.sortArrayByKey(hiddenChannels[type], "name");
-					count += hiddenChannels[type].length;
+				for (let type in types) {
+					if (!settings.showText && type == "text" || !settings.showVoice && type == "voice" || !settings.showCategory && type == "category") {
+						hiddenChannels[types[type]] = [];
+					}
+					BDfunctionsDevilBro.sortArrayByKey(hiddenChannels[types[type]], "name");
+					count += hiddenChannels[types[type]].length;
 				}
 				hiddenChannels.count = count;
 				
@@ -249,10 +289,8 @@ class ShowHiddenChannels {
 								name.classList.toggle("nameHoveredCollapsed-2c-EHI")
 							}
 						});
-						
-					var settings = BDfunctionsDevilBro.getAllData(this, "settings"); 
 					
-					if (settings.showText) for (let hiddenChannel of hiddenChannels[0]) {
+					for (let hiddenChannel of hiddenChannels[0]) {
 						let channel = $(this.channelTextMarkup)[0];
 						let channelwrapper = channel.querySelector(".wrapper-fDmxzK");
 						let channelicon = channel.querySelector(".content-2mSKOj");
@@ -277,7 +315,7 @@ class ShowHiddenChannels {
 							.appendTo(category);
 					}
 					
-					if (settings.showVoice) for (let hiddenChannel of hiddenChannels[2]) {
+					for (let hiddenChannel of hiddenChannels[2]) {
 						let channel = $(this.channelVoiceMarkup)[0];
 						let channelwrapper = channel.querySelector(".wrapper-fDmxzK");
 						let channelicon = channel.querySelector(".content-2mSKOj");
@@ -302,7 +340,7 @@ class ShowHiddenChannels {
 							.appendTo(category);
 					}
 					
-					if (settings.showCategory) for (let hiddenChannel of hiddenChannels[4]) {
+					for (let hiddenChannel of hiddenChannels[4]) {
 						let channel = $(this.channelCategoryMarkup)[0];
 						let channelwrapper = channel.querySelector(".wrapperCollapsed-18mf-c");
 						let channelsvg = channel.querySelector(".iconCollapsed-1INdMX");
@@ -350,11 +388,12 @@ class ShowHiddenChannels {
 		var settings = BDfunctionsDevilBro.getAllData(this, "settings");
 		if (!settings.showAllowedRoles && !settings.showDeniedRoles) return;
 		var myMember = this.MemberStore.getMember(serverObj.id, BDfunctionsDevilBro.myData.id);
-		var allowedRoles = [], overwrittenRoles = [], deniedRoles = [];
+		var allowedRoles = [], overwrittenRoles = [], deniedRoles = [], deniedUsers = [];
+		var everyoneDenied = false;
 		for (let id in channel.permissionOverwrites) {
 			if (settings.showAllowedRoles &&
 				channel.permissionOverwrites[id].type == "role" && 
-				(serverObj.roles[id].name != "@everyone" || allowed) &&
+				(serverObj.roles[id].name != "@everyone") &&
 				(channel.permissionOverwrites[id].allow | this.Permissions.VIEW_CHANNEL) == channel.permissionOverwrites[id].allow) {
 					if (myMember.roles.includes(id) && !allowed) {
 						if (settings.showOverWrittenRoles) overwrittenRoles.push(serverObj.roles[id]);
@@ -367,18 +406,32 @@ class ShowHiddenChannels {
 				channel.permissionOverwrites[id].type == "role" && 
 				(channel.permissionOverwrites[id].deny | this.Permissions.VIEW_CHANNEL) == channel.permissionOverwrites[id].deny) {
 					deniedRoles.push(serverObj.roles[id]);
+					if (serverObj.roles[id].name == "@everyone") everyoneDenied = true;
+			}
+			else if (settings.showDeniedUsers &&
+				channel.permissionOverwrites[id].type == "member" && 
+				(channel.permissionOverwrites[id].deny | this.Permissions.VIEW_CHANNEL) == channel.permissionOverwrites[id].deny) {
+					let user = this.UserStore.getUser(id);
+					let member = this.MemberStore.getMember(serverObj.id,id);
+					if (user && member) deniedUsers.push(Object.assign({name:user.username},member));
 			}
 		}
+		if (settings.showAllowedRoles && allowed && !everyoneDenied) {
+			allowedRoles.push({"name":"@everyone"});
+		}
 		var htmlString = ``;
+		if (settings.showTopic && !allowed && channel.topic) {
+			htmlString += `<div class="marginBottom4-_yArcI">Topic:</div><div class="flex-3B1Tl4 wrap-1da0e3"><li class="role-3rahR_ flex-3B1Tl4 alignCenter-3VxkQP size12-1IGJl9 weightMedium-13x9Y8 SHC-topic" style="border-color: rgba(255, 255, 255, 0.6); height: unset !important; padding-top: 5px; padding-bottom: 5px; max-width: ${window.outerWidth/3}px">${channel.topic}</li></div>`;
+		}
 		if (allowedRoles.length > 0 || overwrittenRoles.length > 0) {
 			htmlString += `<div class="marginBottom4-_yArcI">Allowed Roles:</div><div class="flex-3B1Tl4 wrap-1da0e3">`;
 			for (let role of allowedRoles) {
 				let color = role.colorString ? BDfunctionsDevilBro.color2COMP(role.colorString) : [255,255,255];
-				htmlString += `<li class="role-3rahR_ flex-3B1Tl4 alignCenter-3VxkQP size12-1IGJl9 weightMedium-13x9Y8" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="roleCircle-3-vPZq" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="roleName-DUQZ9m">${BDfunctionsDevilBro.encodeToHTML(role.name)}</div></li>`;
+				htmlString += `<li class="role-3rahR_ flex-3B1Tl4 alignCenter-3VxkQP size12-1IGJl9 weightMedium-13x9Y8 SHC-allowedrole" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="roleCircle-3-vPZq" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="roleName-DUQZ9m">${BDfunctionsDevilBro.encodeToHTML(role.name)}</div></li>`;
 			}
 			for (let role of overwrittenRoles) {
 				let color = role.colorString ? BDfunctionsDevilBro.color2COMP(role.colorString) : [255,255,255];
-				htmlString += `<li class="role-3rahR_ flex-3B1Tl4 alignCenter-3VxkQP size12-1IGJl9 weightMedium-13x9Y8" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="roleCircle-3-vPZq" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="roleName-DUQZ9m" style="text-decoration: line-through !important;">${BDfunctionsDevilBro.encodeToHTML(role.name)}</div></li>`;
+				htmlString += `<li class="role-3rahR_ flex-3B1Tl4 alignCenter-3VxkQP size12-1IGJl9 weightMedium-13x9Y8 SHC-overwrittenrole" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="roleCircle-3-vPZq" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="roleName-DUQZ9m" style="text-decoration: line-through !important;">${BDfunctionsDevilBro.encodeToHTML(role.name)}</div></li>`;
 			}
 			htmlString += `</div>`;
 		}
@@ -386,16 +439,25 @@ class ShowHiddenChannels {
 			htmlString += `<div class="marginBottom4-_yArcI">Denied Roles:</div><div class="flex-3B1Tl4 wrap-1da0e3">`;
 			for (let role of deniedRoles) {
 				let color = role.colorString ? BDfunctionsDevilBro.color2COMP(role.colorString) : [255,255,255];
-				htmlString += `<li class="role-3rahR_ flex-3B1Tl4 alignCenter-3VxkQP size12-1IGJl9 weightMedium-13x9Y8" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="roleCircle-3-vPZq" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="roleName-DUQZ9m">${BDfunctionsDevilBro.encodeToHTML(role.name)}</div></li>`;
+				htmlString += `<li class="role-3rahR_ flex-3B1Tl4 alignCenter-3VxkQP size12-1IGJl9 weightMedium-13x9Y8 SHC-deniedrole" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="roleCircle-3-vPZq" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="roleName-DUQZ9m">${BDfunctionsDevilBro.encodeToHTML(role.name)}</div></li>`;
+			}
+			htmlString += `</div>`;
+		}
+		if (deniedUsers.length > 0) {
+			htmlString += `<div class="marginBottom4-_yArcI">Denied Users:</div><div class="flex-3B1Tl4 wrap-1da0e3">`;
+			for (let user of deniedUsers) {
+				let color = user.colorString ? BDfunctionsDevilBro.color2COMP(user.colorString) : [255,255,255];
+				htmlString += `<li class="role-3rahR_ flex-3B1Tl4 alignCenter-3VxkQP size12-1IGJl9 weightMedium-13x9Y8 SHC-denieduser" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="roleCircle-3-vPZq" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="roleName-DUQZ9m">${BDfunctionsDevilBro.encodeToHTML(user.nick ? user.nick : user.name)}</div></li>`;
 			}
 			htmlString += `</div>`;
 		}
 		if (htmlString) {
 			var customTooltipCSS = `
 				.showhiddenchannels-tooltip {
-					max-width: ${window.outerHeight/2}px !important;
+					max-width: ${window.outerWidth/2}px !important;
 				}`;
 			var tooltip = BDfunctionsDevilBro.createTooltip(htmlString, e.currentTarget, {type:"right", selector:"showhiddenchannels-tooltip", html:true, css:customTooltipCSS});
+			tooltip.style.top = tooltip.style.top.replace("px","") - $(e.currentTarget).css("padding-bottom").replace("px","")/2 + $(e.currentTarget).css("padding-top").replace("px","")/2 + "px";
 		}
 	}
 	
@@ -407,7 +469,7 @@ class ShowHiddenChannels {
 			if (BDfunctionsDevilBro.getData("showForNormal", this, "settings")) {
 				var serverObj = BDfunctionsDevilBro.getSelectedServer();
 				if (serverObj) {
-					$(channelList).on("mouseenter." + this.getName(), ".containerDefault-7RImuF", (e) => {
+					$(channelList).on("mouseenter." + this.getName(), ".containerDefault-7RImuF, .containerDefault-1bbItS", (e) => {
 						var channel = BDfunctionsDevilBro.getKeyInformation({"node":e.currentTarget,"key":"channel"});
 						if (channel) this.showAccessRoles(serverObj, channel, e, true);
 					});

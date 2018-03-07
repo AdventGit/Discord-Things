@@ -214,6 +214,9 @@ body,
 [class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(4) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="wrapper"] [class*="Hover"]:hover * {
     background: none !important;
 }
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="channels"]:first-child > [class*="container"]:nth-of-type(2) {
+    border: none !important;
+}
 
 /* Chat */
 .messages.scroller::-webkit-scrollbar {
@@ -310,6 +313,15 @@ body,
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
+}
+.jump-to-present-bar,
+.has-more {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    border: none !important;
 }
 .small-popout-box {
     background: var(--gray-scale-third) !important;

@@ -542,8 +542,9 @@ button[id*="bda-qem"] {
     background: transparent !important;
 }
 
-/* Fuck Clyde */
-[class*="is-local-bot"] {
+/* Fuck These Things */
+[class*="is-local-bot"],
+[class*="noticePremium"] {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;

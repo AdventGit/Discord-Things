@@ -211,11 +211,11 @@ body,
 }
 .private-channels > [class*="scroll"]:nth-of-type(2) > [class*="scroll"]:first-child > [class*="select"],
 .private-channels > [class*="scroll"]:nth-of-type(2) > [class*="scroll"]:first-child > [class*="private"]:hover,
-[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(4) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="Select"] [class*="Select"],
-[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(4) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="wrapper"] [class*="content"]:hover,
-[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(4) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="wrapper"] [class*="Hover"],
-[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(4) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="wrapper"] [class*="Hover"]:hover,
-[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(4) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="Voice"] [class*="Voice"] [class*="flex"]:nth-of-type(3) div [class*="wrapper"] {
+[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(3) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="Select"] [class*="Select"],
+[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(3) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="wrapper"] [class*="content"]:hover,
+[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(3) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="wrapper"] [class*="Hover"],
+[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(3) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="wrapper"] [class*="Hover"]:hover,
+[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(3) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="Voice"] [class*="Voice"] [class*="flex"]:nth-of-type(3) div [class*="wrapper"] {
     background: var(--gray-scale) !important;
 }
 .private-channels > [class*="scroll"]:nth-of-type(2) > [class*="scroll"]:first-child > [class*="select"] a,

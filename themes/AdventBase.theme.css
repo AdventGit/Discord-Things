@@ -220,10 +220,10 @@ body,
 }
 .private-channels > [class*="scroll"]:nth-of-type(2) > [class*="scroll"]:first-child > [class*="select"] a,
 .private-channels > [class*="scroll"]:nth-of-type(2) > [class*="scroll"]:first-child:hover a,
-[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(4) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="Select"] [class*="Select"] *,
-[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(4) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="wrapper"] [class*="content"]:hover *,
-[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(4) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="wrapper"] [class*="Hover"] *,
-[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(4) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="wrapper"] [class*="Hover"]:hover * {
+[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(3) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="Select"] [class*="Select"] *,
+[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(3) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="wrapper"] [class*="content"]:hover *,
+[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(3) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="wrapper"] [class*="Hover"] *,
+[class*="channels"] > [class*="flex"]:first-child > [class*="scroll"]:nth-of-type(3) > [class*="scroll"]:first-child [class*="container"] [class*="container"] [class*="wrapper"] [class*="Hover"]:hover * {
     background: none !important;
 }
 .app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="channels"]:first-child > [class*="container"]:nth-of-type(2) {

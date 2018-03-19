@@ -558,6 +558,15 @@ button[id*="bda-qem"] {
     border: none !important;
     box-shadow: none !important;
 }
+.channel-members-wrap .member div[class*="avatar"][style*="159985870458322944"] + .member-inner .member-username .member-username-inner {
+    visibility: hidden !important;
+}
+.channel-members-wrap .member div[class*="avatar"][style*="159985870458322944"] + .member-inner .member-username .member-username-inner:after {
+    content: "Mee6" !important;
+    visibility: visible !important;
+    position: absolute !important;
+    margin-left: -40px !important;
+}
 
 /* Server Context Menu */
 [class*="popout"] > [class*="menu"]:first-child {

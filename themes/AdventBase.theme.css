@@ -204,10 +204,15 @@ body,
 
 /* Server Channels */
 .app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="channels"]:first-child > [class*="flex"]:first-child > [class*="positionedContainer"],
-.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="channels"]:first-child > [class*="flex"]:first-child > [class*="unreadBottom"] {
+.app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="channels"]:first-child > [class*="flex"]:first-child > [class*="unreadBottom"],
+[class*="channelNotices"] {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
+    margin: 0px !important;
+    padding: 0px !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 .private-channels > [class*="scroll"]:nth-of-type(2) > [class*="scroll"]:first-child > [class*="select"],
 .private-channels > [class*="scroll"]:nth-of-type(2) > [class*="scroll"]:first-child > [class*="private"]:hover,

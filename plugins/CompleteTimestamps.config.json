@@ -11,6 +11,6 @@
         "showOnHover": false
     },
     "formats": {
-        "ownFormat": "$hour:$minute:$second - $month/$day/$year ($weekdayL)"
+        "ownFormat": "$month/$day/$year ($weekdayL) - $hour:$minute:$second $timemode"
     }
 }

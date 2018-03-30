@@ -1,0 +1,54 @@
+//META{"name":"Advent","description":"Good Theme","author":"AdventDiscord","version":"1.1"}*//
+
+@import url("https://rawgit.com/AdventGit/Discord-Things/master/themes/AdventBase.theme.css");
+
+/* User Assigned */
+:root {
+    background-color: rgba(0, 0, 0, 1) !important;
+    --guild-size: 42px;
+    --badge-size: 18px;
+    --user-color: rgba(51, 181, 229, 1);
+    --user-color-semi-trans: rgba(51, 181, 229, .22);
+    --gray-scale: rgba(50, 50, 50, .5);
+    --gray-scale-third: rgba(0, 0, 0, .75);
+    --half-trans: rgba(0, 0, 0, .5);
+}
+
+/* Transparent Discord + Image 
+:root::after{
+    content: "";
+    width: inherit !important;
+    height: inherit !important;
+    background-image: url("https://puu.sh/zyWqu.png") !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    opacity: .15 !important;
+    z-index: -1 !important;
+}
+*/
+
+/* Tweaks */
+#RANbutton {
+    font-size: var(--read-all-font-size) !important;
+    word-wrap: normal !important;
+    white-space: nowrap !important;
+    color: hsla(0,0%,100%,.3) !important;
+}
+#RANbutton-frame a {
+    height: 0px !important;
+    width: 0px !important;
+}
+
+/* Fuck animations 
+*,
+*:before,
+*:after {
+animation: none !important;
+}
+*/

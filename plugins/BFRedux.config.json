@@ -1,0 +1,86 @@
+{
+    "settings": {
+        "formats": {
+            "fullwidth": true,
+            "leet": true,
+            "smallcaps": true,
+            "superscript": true,
+            "upsidedown": true,
+            "varied": true
+        },
+        "formatting": {
+            "fullWidthMap": true,
+            "reorderUpsidedown": true,
+            "startCaps": true
+        },
+        "plugin": {
+            "chainFormats": true,
+            "closeOnSend": true,
+            "hoverOpen": true,
+            "icons": true
+        },
+        "style": {
+            "fontSize": "85%",
+            "opacity": 1,
+            "rightSide": true
+        },
+        "toolbar": {
+            "bold": {
+                "enabled": true,
+                "order": 0
+            },
+            "code": {
+                "enabled": true,
+                "order": 4
+            },
+            "codeblock": {
+                "enabled": true,
+                "order": 5
+            },
+            "fullwidth": {
+                "enabled": true,
+                "order": 8
+            },
+            "italic": {
+                "enabled": true,
+                "order": 1
+            },
+            "leet": {
+                "enabled": true,
+                "order": 11
+            },
+            "smallcaps": {
+                "enabled": true,
+                "order": 7
+            },
+            "strikethrough": {
+                "enabled": true,
+                "order": 3
+            },
+            "superscript": {
+                "enabled": true,
+                "order": 6
+            },
+            "underline": {
+                "enabled": true,
+                "order": 2
+            },
+            "upsidedown": {
+                "enabled": true,
+                "order": 9
+            },
+            "varied": {
+                "enabled": true,
+                "order": 10
+            }
+        },
+        "wrappers": {
+            "fullwidth": "##",
+            "leet": "++",
+            "smallcaps": "%%",
+            "superscript": "^^",
+            "upsidedown": "&&",
+            "varied": "||"
+        }
+    }
+}

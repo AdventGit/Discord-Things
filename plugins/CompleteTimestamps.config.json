@@ -1,0 +1,16 @@
+{
+    "choices": {
+        "creationDateLang": "own"
+    },
+    "settings": {
+        "cutSeconds": false,
+        "displayDate": true,
+        "displayTime": true,
+        "forceZeros": true,
+        "otherOrder": true,
+        "showOnHover": false
+    },
+    "formats": {
+        "ownFormat": "$hour:$minute:$second - $month/$day/$year ($weekdayL)"
+    }
+}

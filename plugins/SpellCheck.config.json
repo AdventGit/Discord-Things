@@ -1,0 +1,11 @@
+{
+    "settings": {
+        "disableDiscordSpellcheck": false
+    },
+    "choices": {
+        "dictionaryLanguage": "en"
+    },
+    "amounts": {
+        "maxSimilarAmount": 10
+    }
+}

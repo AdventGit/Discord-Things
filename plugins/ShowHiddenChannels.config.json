@@ -1,0 +1,13 @@
+{
+    "settings": {
+        "showAllowedRoles": false,
+        "showCategory": true,
+        "showDeniedRoles": false,
+        "showDeniedUsers": false,
+        "showForNormal": false,
+        "showOverWrittenRoles": true,
+        "showText": true,
+        "showTopic": true,
+        "showVoice": true
+    }
+}

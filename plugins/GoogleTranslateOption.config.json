@@ -1,0 +1,14 @@
+{
+    "translators": {
+        "useGoogle": true
+    },
+    "choices": {
+        "inputContext": "auto",
+        "inputMessage": "auto",
+        "outputContext": "en-US",
+        "outputMessage": "en-US"
+    },
+    "settings": {
+        "sendOriginalMessage": false
+    }
+}

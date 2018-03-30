@@ -622,7 +622,8 @@ button[id*="bda-qem"] {
 }
 
 /* Status-es */
-.status-online {
+.status-online,
+[class*="statusOnline"] {
     background-color: var(--user-color) !important;
 }
 .status.status-typing {

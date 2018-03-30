@@ -9,5 +9,8 @@
         "showText": true,
         "showTopic": true,
         "showVoice": true
+    },
+    "categorystatus": {
+        "222215955563020288": true
     }
 }

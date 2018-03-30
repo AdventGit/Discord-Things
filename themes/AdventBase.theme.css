@@ -60,6 +60,9 @@ body,
 .app > [class*="layers"]:first-child > [class*="layer"]:first-child > [class*="flex"]:first-child > [class*="flex"]:nth-of-type(2) > [class*="flex"]:nth-of-type(2) > [class*="chat"]:nth-of-type(2) > [class*="video"]:nth-of-type(2) > [class*="flex"]:first-child {
     background: transparent !important;
 }
+#app-mount > [class*="app"] > [class*="container"] {
+    background: var(--half-trans) !important;
+}
 
 /* TitleBar */
 #app-mount > [class*="titleBar"]:first-child [class*="wordmark"] {

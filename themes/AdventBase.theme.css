@@ -553,7 +553,8 @@ button[id*="bda-qem"] {
 /* Fuck These Things */
 [class*="is-local-bot"],
 [class*="noticePremium"],
-[id*="bd-pub-li"] {
+[id*="bd-pub-li"],
+[class*="noticeDanger"] {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;

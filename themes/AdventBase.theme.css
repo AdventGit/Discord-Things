@@ -554,7 +554,9 @@ button[id*="bda-qem"] {
 [class*="is-local-bot"],
 [class*="noticePremium"],
 [id*="bd-pub-li"],
-[class*="noticeDanger"] {
+[class*="noticeDanger"],
+[class*="fools"],
+[id*="fools"] {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;

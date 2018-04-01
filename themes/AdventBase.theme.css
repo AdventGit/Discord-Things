@@ -267,12 +267,14 @@ body,
 .stickyHeader-3LjM5X {
     opacity: 0 !important;
 }
-.selected-1LQfcZ,
 button[id*="bda-qem"] {
     background: var(--neutral) !important;
     border: none !important;
     border-radius: 0px !important;
     box-shadow: none !important;
+}
+.selected-1LQfcZ {
+    background-color: transparent !important;
 }
 .categories-jw8z2h .selected-1LQfcZ {
     border: none !important;

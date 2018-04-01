@@ -24,6 +24,7 @@ body,
 .base-3AoPqv > .spacer-3Dkonz:nth-of-type(2),
 .channels-3g2vYe,
 .container-RYiLUQ,
+.container-3lnMWU,
 .container-iksrDt,
 .chat,
 .titleWrapper-3Vi_wz,
@@ -169,6 +170,12 @@ body,
 }
 .guilds-wrapper .guilds .guilds-add:hover:after {
     color: var(--user-color) !important;
+}
+
+/* Server Channels */
+.container-3lnMWU {
+    border: none !important;
+    box-shadow: none !important;
 }
 
 /* Chat */

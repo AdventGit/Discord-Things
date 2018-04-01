@@ -372,7 +372,6 @@ button[id*="bda-qem"] {
 /* Fuck these things */
 [class*="is-local-bot"],
 [class*="noticePremium"],
-[id*="bd-pub-li"],
 [class*="noticeDanger"],
 [class*="fools"],
 [id*="fools"],

@@ -1,23 +1,9 @@
 //META{"name":"Advent-Base","description":"Things to add to Base Theme","author":"AdventDiscord","version":"2"}*//
 
-:root {
-    --font-size-pre: calc(var(--guild-size) * 2.2);
-    --font-size: calc(var(--font-size-pre) / 10);
-    --read-all-font-size-pre: calc(var(--guild-size) * 2.5);
-    --read-all-font-size: calc(var(--read-all-font-size-pre) / 10);
-    --friend-icon-size: calc(var(--guild-size) / 1.35);
-    --guild-add-size-h-pre1: calc(var(--guild-size) * -1);
-    --guild-add-size-h-pre2: calc(var(--guild-size) * 2);
-    --guild-add-size-h-pre3: calc(var(--guild-add-size-h-pre1) / 2);
-    --guild-add-size-h-pre4: calc(var(--guild-add-size-h-pre2) / 100);
-    --guild-add-size-h: calc(var(--guild-add-size-h-pre3) + var(--guild-add-size-h-pre4));
-    --guild-add-size-v-pre1: calc(var(--guild-add-size-h-pre1) * 2);
-    --guild-add-size-v-pre2: calc(var(--guild-add-size-v-pre1) / 100);
-    --guild-add-size-v-pre3: calc(var(--guild-size) / 150);
-    --guild-add-size-v: calc(var(--guild-add-size-v-pre2) + var(--guild-add-size-v-pre3));
-}
+:root {}
 
 /* Base Themeing */
+:root,
 html,
 head,
 body,

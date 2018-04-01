@@ -1,4 +1,4 @@
-//META{"name":"Advent","description":"Good Theme","author":"AdventDiscord","version":"1.2"}*//
+//META{"name":"Advent","description":"Things to add to main theme","author":"AdventDiscord","version":"2"}*//
 
 @import url("https://rawgit.com/AdventGit/Discord-Things/master/themes/AdventBase.theme.css");
 
@@ -9,8 +9,9 @@
     --badge-size: 18px;
     --user-color: rgba(51, 181, 229, 1);
     --user-color-semi-trans: rgba(51, 181, 229, .22);
-    --gray-scale: rgba(50, 50, 50, .5);
-    --gray-scale-third: rgba(0, 0, 0, .75);
+    --dark: rgba(50, 50, 50, .5);
+    --light: rgba(205, 205, 205, .5);
+    --neutral: rgba(100, 100, 100, .5);
     --half-trans: rgba(0, 0, 0, .5);
 }
 
@@ -34,21 +35,48 @@
 */
 
 /* Tweaks */
+#bd-pub-li {
+    height: 14px !important;
+    margin: 0px !important;
+    padding: 0px !important;
+    margin-top: -2px !important;
+}
+#bd-pub-li .guild-inner {
+    height: inherit !important;
+    border-radius: 0px !important;
+}
+#bd-pub-button,
 #RANbutton {
     font-size: var(--read-all-font-size) !important;
     word-wrap: normal !important;
     white-space: nowrap !important;
     color: hsla(0,0%,100%,.3) !important;
 }
+#bd-pub-button {
+    visibility: hidden !important;
+    line-height: 18px !important;
+    position: absolute !important;
+    float: left !important;
+    left: 50% !important;
+    top: 45% !important;
+    transform: translate(-50%, -50%) !important;
+}
+#bd-pub-button:after {
+    content: "Server Menu" !important;
+    visibility: visible !important;
+    line-height: 18px !important;
+    position: absolute !important;
+    float: left !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+#bd-pub-li a,
 #RANbutton-frame a {
     height: 0px !important;
     width: 0px !important;
 }
-
-/* Fuck animations 
-*,
-*:before,
-*:after {
-animation: none !important;
+.friends-online {
+    height: 18px !important;
+    line-height: 18px !important;
 }
-*/

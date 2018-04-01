@@ -249,7 +249,7 @@ body,
     background: transparent !important;
 }
 .small-popout-box {
-    background: red !important;
+    background: transparent !important;
     border: 1px solid var(--neutral) !important;
     border-radius: 0px !important;
 }

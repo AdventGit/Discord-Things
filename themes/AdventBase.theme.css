@@ -1,4 +1,4 @@
-//META{"name":"Advent-Base","description":"Things to add to Base Theme","author":"AdventDiscord","version":"2"}*//
+//META{"name":"Advent-Base","description":"Backend Theme","author":"AdventDiscord","version":"2"}*//
 
 :root {}
 
@@ -63,7 +63,19 @@ body,
 #bda-qem-twitch-container .scroller::-webkit-resizer,
 #bda-qem-favourite-container .scroller::-webkit-resizer,
 .typing-3eiiL_,
-.messages [class*="default"] {
+.messages [class*="default"],
+.search-results-wrap,
+.search-header,
+.results-wrapper,
+.search-results,
+.channel-separator,
+.channel-separator .channel-name,
+.search-result,
+.search-result:before,
+.search-result:after,
+.search-result-message,
+.pagination,
+.search-popout .option:after {
     background: transparent !important;
 }
 
@@ -311,6 +323,38 @@ button[id*="bda-qem"] {
     margin: 0px !important;
 }
 
+/* Menus */
+.search-popout,
+.menu-3BZuDT {
+    background: var(--dark-o) !important;
+}
+.search-popout .option.selected,
+.item-rK1j5B:hover {
+    background: transparent !important;
+    border: 1px solid var(--neutral) !important;
+}
+.channel-separator:before,
+.search-result-message.before,
+.search-result-message.sibling,
+.search-result:before,
+.search-result,
+.search-result:after,
+.search-result-message.hit,
+.search-result-message.hit .message-group,
+.search-popout .results-group:before,
+.search-popout .search-query {
+    padding: 0px !important;
+    margin: 0px !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+.search-result-message.hit .message-group .avatar-large {
+    margin-top: 0px !important;
+}
+.search-result-message.hit {
+    margin-bottom: 20px !important;
+}
+
 /* Badges */
 .badge {
     background: rgba(0, 0, 0, 1) !important;
@@ -384,7 +428,11 @@ button[id*="bda-qem"] {
 .jump-to-present-bar,
 .has-more,
 .dimmer-jySV_v,
-.ellipsis--nKTEd {
+.ellipsis--nKTEd,
+.separator-1hpa3S,
+.search-result-message.before,
+.search-result-message.sibling,
+.search-result-message.after {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;

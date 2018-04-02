@@ -1,4 +1,4 @@
-//META{"name":"Advent","description":"Things to add to main theme","author":"AdventDiscord","version":"2"}*//
+//META{"name":"Advent","description":"Good Theme","author":"AdventDiscord","version":"2"}*//
 
 @import url("https://rawgit.com/AdventGit/Discord-Things/master/themes/AdventBase.theme.css");
 
@@ -9,10 +9,12 @@
     --badge-size: 18px;
     --user-color: rgba(51, 181, 229, 1);
     --user-color-semi-trans: rgba(51, 181, 229, .22);
-    --dark: rgba(50, 50, 50, .5);
+    --dark: rgba(0, 0, 0, .5);
     --light: rgba(205, 205, 205, .5);
     --neutral: rgba(100, 100, 100, .5);
-    --half-trans: rgba(0, 0, 0, .5);
+    --dark-o: rgba(0, 0, 0, .75);
+    --light-o: rgba(205, 205, 205, .75);
+    --neutral-o: rgba(100, 100, 100, .75);
     /* No touch below this line */
     --font-size-pre: calc(var(--guild-size) * 2.2);
     --font-size: calc(var(--font-size-pre) / 10);

@@ -408,6 +408,13 @@ button[id*="bda-qem"] {
     opacity: 1 !important;
 }
 
+/* Fuck animations */
+.layer-kosS71 *,
+.layer-kosS71 *:before,
+.layer-kosS71 *:after {
+    animation: none !important;
+}
+
 /* Fuck these things */
 [class*="is-local-bot"],
 [class*="noticePremium"],

@@ -433,7 +433,6 @@ button[id*="bda-qem"] {
     justify-content: inherit !important;
     pointer-events: none !important;
     z-index: 9999 !important;
-    border: 1px solid red !important;
 }
 .toast {
     background: var(--dark) !important;

@@ -3,7 +3,6 @@
 :root {}
 
 /* Base Themeing */
-:root,
 html,
 head,
 body,
@@ -78,9 +77,13 @@ body,
 .search-popout .option:after {
     background: transparent !important;
 }
-
 .app {
     text-rendering: geometricPrecision !important;
+}
+.noticeInfo-3v29SJ {
+    background-color: transparent !important;
+    border-bottom: 1px solid var(--user-color-semi-trans) !important;
+    box-shadow: none !important;
 }
 
 /* Guilds */
@@ -413,6 +416,39 @@ button[id*="bda-qem"] {
 .layer-kosS71 *:before,
 .layer-kosS71 *:after {
     animation: none !important;
+}
+
+/* BetterDiscord and Plugin re-themeing */
+.toasts {
+    display: block !important;
+    position: absolute !important;
+    width: inherit !important;
+    float: left !important;
+    bottom: 8% !important;
+    left: 0px !important;
+    right: 0px !important;
+    top: unset !important;
+    flex-direction: inherit !important;
+    align-items: baseline !important;
+    justify-content: inherit !important;
+    pointer-events: none !important;
+    z-index: 9999 !important;
+    border: 1px solid red !important;
+}
+.toast {
+    background: var(--dark) !important;
+    opacity: 1 !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    color: var(--user-color) !important;
+    user-select: text !important;
+    pointer-events: none !important;
+    transform: translateY(-10px) !important;
+    width: fit-content !important;
+    margin: 10px auto 0px auto !important;
+    padding: 10px !important;
 }
 
 /* Fuck these things */

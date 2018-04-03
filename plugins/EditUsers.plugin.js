@@ -19,7 +19,7 @@ class EditUsers {
 				white-space: nowrap;
 			}
 			
-			.user-tag.profile-tag {
+			.user-tag.profil-tag {
 				bottom: 1px;
 			}
 			.user-tag.popout-tag {
@@ -157,7 +157,7 @@ class EditUsers {
 				changeInDmsList:		{value:true, 	description:"Direct Message List"},
 				changeInFriendList:		{value:true, 	description:"Friend List"},
 				changeInUserPopout:		{value:true, 	description:"User Popouts"},
-				changeInUserProfile:		{value:true, 	description:"User Profile Modal"},
+				changeInUserProfil:		{value:true, 	description:"User Profil Modal"},
 				changeInUserAccount:	{value:true, 	description:"Your Account Information"}
 			}
 		};
@@ -167,7 +167,7 @@ class EditUsers {
 
 	getDescription () {return "Allows you to change the icon, name, tag and color of users. Does not work in compact mode.";}
 
-	getVersion () {return "2.2.0";}
+	getVersion () {return "2.2.1";}
 
 	getAuthor () {return "DevilBro";}
 	
@@ -296,7 +296,7 @@ class EditUsers {
 					}
 				);
 			});
-			BDfunctionsDevilBro.addObserver(this, ".channel-members", {name:"userListObserver",instance:observer}, {childList:true});
+			BDfunctionsDevilBro.addObserver(this, ".channel-members, .members-1bid1J", {name:"userListObserver",instance:observer}, {childList:true});
 			
 			observer = new MutationObserver((changes, _) => {
 				changes.forEach(
@@ -351,15 +351,15 @@ class EditUsers {
 					(change, i) => {
 						if (change.addedNodes) {
 							change.addedNodes.forEach((node) => {
-								if (node && node.tagName && node.querySelector("[class*='topSection']") && BDfunctionsDevilBro.getData("changeInUserProfile", this, "settings")) {
-									this.loadUser(node.querySelector("[class*='topSection']"), "profile", false);
+								if (node && node.tagName && node.querySelector("[class*='topSection']") && BDfunctionsDevilBro.getData("changeInUserProfil", this, "settings")) {
+									this.loadUser(node.querySelector("[class*='topSection']"), "profil", false);
 								}
 							});
 						}
 					}
 				);
 			});
-			BDfunctionsDevilBro.addObserver(this, ".app-XZYfmp ~ [class^='theme-']:not([class*='popouts'])", {name:"userProfileModalObserver",instance:observer}, {childList: true});
+			BDfunctionsDevilBro.addObserver(this, ".app-XZYfmp ~ [class^='theme-']:not([class*='popouts'])", {name:"userProfilModalObserver",instance:observer}, {childList: true});
 			
 			observer = new MutationObserver((changes, _) => {
 				changes.forEach(
@@ -394,7 +394,7 @@ class EditUsers {
 		if (typeof BDfunctionsDevilBro === "object") {
 			$(".titleText-2IfpkV[custom-editusers]").find(".channelName-1G03vu:not(.private-38vo6h)").css("color", "").css("background-color", "").parent().removeAttr("custom-editusers");
 			this.loadAllUsers();
-			BDfunctionsDevilBro.addObserver(this, ".channel-members", {name:"userListObserver"}, {childList:true});
+			BDfunctionsDevilBro.addObserver(this, ".channel-members, .members-1bid1J", {name:"userListObserver"}, {childList:true});
 			BDfunctionsDevilBro.addObserver(this, ".messages.scroller", {name:"chatWindowObserver"}, {childList:true, subtree:true});
 			BDfunctionsDevilBro.addObserver(this, "#friends", {name:"friendListObserver"}, {childList:true, subtree:true});
 		}
@@ -676,9 +676,9 @@ class EditUsers {
 				this.loadUser(user.parentElement, "popout", false);
 			}
 		}
-		if (settings.changeInUserProfile) {
+		if (settings.changeInUserProfil) {
 			for (let user of document.querySelectorAll(".topSectionPlaying-3jAH9b, .topSectionNormal-2LlRG1")) {
-				this.loadUser(user, "profile", false);
+				this.loadUser(user, "profil", false);
 			}
 		}
 	}
@@ -700,7 +700,7 @@ class EditUsers {
 			var serverObj = BDfunctionsDevilBro.getSelectedServer();
 			var member = serverObj ? this.MemberPerms.getMember(serverObj.id, info.id) : null;
 			if (username) {
-				var name = data.name ? data.name : (type == "info" || type == "profile" || !member || !member.nick ? info.username : member.nick);
+				var name = data.name ? data.name : (type == "info" || type == "profil" || !member || !member.nick ? info.username : member.nick);
 				var color1 = data.color1 ? BDfunctionsDevilBro.color2RGB(data.color1) : (member && member.colorString ? BDfunctionsDevilBro.color2RGB(member.colorString) : "");
 				var color2 = data.color2 ? BDfunctionsDevilBro.color2RGB(data.color2) : "";
 				BDfunctionsDevilBro.setInnerText(username, name);
@@ -719,7 +719,7 @@ class EditUsers {
 			}
 				
 			var tag = data.tag ? data.tag : null;
-			if (tag && wrapper && !wrapper.querySelector(".user-tag") && (type == "list" || type == "chat" || type == "popout" || type == "profile" || type == "dmheader")) {
+			if (tag && wrapper && !wrapper.querySelector(".user-tag") && (type == "list" || type == "chat" || type == "popout" || type == "profil" || type == "dmheader")) {
 				var color3 = data.ignoreTagColor ? 
 								(member && member.colorString ? BDfunctionsDevilBro.color2RGB(member.colorString) : "") :
 								(data.color3 ? BDfunctionsDevilBro.color2RGB(data.color3) : "");

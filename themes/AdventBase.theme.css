@@ -80,6 +80,9 @@ body,
 .app {
     text-rendering: geometricPrecision !important;
 }
+.container-2oOGIt {
+    background: var(--dark-o) !important;
+}
 .noticeInfo-3v29SJ {
     background-color: transparent !important;
     border-bottom: 1px solid var(--user-color-semi-trans) !important;

@@ -231,6 +231,18 @@ body,
 .message-group .message.mentioned .message-text:after {
     background: none !important;
 }
+.message-group:nth-of-type(2) {
+    border: none !important;
+}
+.message-group {
+    border: none !important;
+    border-top: 1px solid var(--neutral) !important;
+}
+.base-2KDOo9 {
+    margin: 0px 20px 0px 20px !important;
+    padding: 0px 0px 0px 0px !important;
+    height: unset !important;
+}
 .messages [class*="mentioned"] [class*="message-text"] {
     background-color: var(--user-color-semi-trans) !important;
 }
@@ -270,6 +282,47 @@ body,
     background: transparent !important;
     border: 1px solid var(--neutral) !important;
     border-radius: 0px !important;
+}
+@keyframes decay {
+    from {
+        opacity: 1;
+    }
+    
+    to {
+        opacity: 0;
+    }
+}
+@keyframes revive {
+    from {
+        opacity: 0;
+    }
+    
+    to {
+        opacity: 1;
+    }
+}
+.new-messages-bar {
+    display: flex !important;
+    background: var(--dark) !important;
+    background-color: unset !important;
+    animation: decay 4s linear 6s 1 normal forwards;
+    color: var(--user-color) !important;
+    position: absolute !important;
+    top: 0px !important;
+    bottom: unset !important;
+    left: 50% !important;
+    right: unset !important;
+    width: fit-content !important;
+    text-transform: unset !important;
+    transition: unset !important;
+    border-radius: 0px 0px 3px 3px !important;
+    transform: translate(-50%, 0%) !important;
+}
+.new-messages-bar:hover {
+    animation: revive 0s linear 0s 1 normal forwards;
+}
+.new-messages-bar button {
+    color: var(--user-color) !important;
 }
 
 /* Emotes */
@@ -327,6 +380,30 @@ button[id*="bda-qem"] {
     box-shadow: none !important;
     padding: 0px !important;
     margin: 0px !important;
+}
+
+/* Pins */
+.popouts .popout,
+.themed-popout,
+.messages-popout .message-group,
+.messages-popout-wrap .header,
+.messages-popout-wrap .message-group,
+.messages-popout-wrap .action-buttons,
+.messages-popout-wrap .jump-button {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+.messages-popout-wrap {
+    background: var(--dark) !important;
+    border-radius: 3px !important;
+}
+.messages-popout-wrap .action-buttons {
+    position: absolute !important;
+    top: 0px !important;
+    bottom: unset !important;
+    left: unset !important;
+    right: 0px !important;
 }
 
 /* Menus */
@@ -414,12 +491,12 @@ button[id*="bda-qem"] {
     opacity: 1 !important;
 }
 
-/* Fuck animations */
+/* Fuck animations 
 .layer-kosS71 *,
 .layer-kosS71 *:before,
 .layer-kosS71 *:after {
     animation: none !important;
-}
+}*/
 
 /* BetterDiscord and Plugin re-themeing */
 .toasts {
@@ -477,23 +554,40 @@ button[id*="bda-qem"] {
 .separator-1hpa3S,
 .search-result-message.before,
 .search-result-message.sibling,
-.search-result-message.after {
+.search-result-message.after,
+.memberGroupsPlaceholder-1M417G,
+.placeholder-1r59uP,
+.placeholderAvatar-2trNnW,
+.placeholderUsername-5-KmQU {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
-    padding: 0px !important;
-    margin: 0px !important;
-    border: none !important;
-    border-radius: 0px !important;
-    box-shadow: none !important;
+    padding: unset !important;
+    margin: unset !important;
+    border: unset !important;
+    border-radius: unset !important;
+    box-shadow: unset !important;
     background: transparent !important;
     position: absolute !important;
-    width: 0px !important;
-    height: 0px !important;
-    top: 0px !important;
-    left: 0px !important;
-    pointer-events: none !important;
-    transition: none !important;
+    width: unset !important;
+    height: unset !important;
+    top: unset !important;
+    bottom: unset !important;
+    left: unset !important;
+    right: unset !important;
+    pointer-events: unset !important;
+    transition: unset !important;
     z-index: 0 !important;
-    animation: none !important;
+    animation: unset !important;
+    overflow: unset !important;
+    box-sizing: unset !important;
+    cursor: unset !important;
+    -webkit-box-direction: unset !important;
+    -webkit-box-orient: unset !important;
+    flex-direction: unset !important;
+    flex-wrap: unset !important;
+    -webkit-box-pack: unset !important;
+    justify-content: unset !important;
+    outline: unset !important;
+    vertical-align: unset !important;
 }

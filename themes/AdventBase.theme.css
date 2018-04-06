@@ -195,6 +195,11 @@ body,
     border: none !important;
     box-shadow: none !important;
 }
+.contentSelectedText-3j5CXt,
+.contentHoveredText-2HYGIY,
+.wrapperHoveredVoice-3tbfNN {
+    background: var(--neutral) !important;
+}
 
 /* Chat */
 .messages.scroller::-webkit-scrollbar {
@@ -326,11 +331,19 @@ body,
 }
 
 /* Emotes */
+.autocomplete-1TnWNR {
+    background: var(--dark-o) !important;
+}
+.selectorSelected-2M0IGv {
+    background: var(--neutral) !important;
+}
 .emojiPicker-3g68GS,
+#bda-qem-twitch-container,
+#bda-qem-favourite-container,
 .header-27dQ-e .search-bar .search-bar-inner,
 .diversitySelector-O3ea2c .popout-2lja3I,
 .category-3rCtoh {
-    background: var(--neutral) !important;
+    background: var(--dark-o) !important;
     border: none !important;
     border-radius: 0px !important;
     box-shadow: none !important;
@@ -338,11 +351,40 @@ body,
 .stickyHeader-3LjM5X {
     opacity: 0 !important;
 }
+#bda-qem {
+    background: var(--dark-o) !important;
+    border: none !important;
+    border-radius: 3px 3px 0px 0px !important;
+    box-shadow: none !important;
+}
 button[id*="bda-qem"] {
-    background: var(--neutral) !important;
+    background: transparent !important;
     border: none !important;
     border-radius: 0px !important;
     box-shadow: none !important;
+    padding: 0px !important;
+    margin: 0px !important;
+}
+#bda-qem button.active {
+    background: var(--neutral) !important;
+}
+#bda-qem-emojis {
+    border-radius: 0px 3px 0px 0px !important;
+}
+#bda-qem-emojis:hover {
+    background: var(--neutral) !important;
+}
+#bda-qem-favourite {
+    border-radius: none !important;
+}
+#bda-qem-favourite:hover {
+    background: var(--neutral) !important;
+}
+#bda-qem-twitch {
+    border-radius: 3px 0px 0px 0px !important;
+}
+#bda-qem-twitch:hover {
+    background: var(--neutral) !important;
 }
 .selected-1LQfcZ {
     background-color: transparent !important;
@@ -368,18 +410,6 @@ button[id*="bda-qem"] {
 #bda-qem-favourite-container .scroller::-webkit-scrollbar-thumb {
     background: var(--user-color) !important;
     border: none !important;
-}
-#bda-qem-twitch-container,
-#bda-qem-favourite-container {
-    background: var(--neutral) !important;
-}
-#bda-qem {
-    background: var(--neutral) !important;
-    border: none !important;
-    border-radius: 0px !important;
-    box-shadow: none !important;
-    padding: 0px !important;
-    margin: 0px !important;
 }
 
 /* Pins */

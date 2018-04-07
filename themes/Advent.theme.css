@@ -4,18 +4,22 @@
 
 /* User Assigned */
 :root {
+    /* Things you can touch */
     background-color: rgba(0, 0, 0, 1) !important;
     --guild-size: 42px;
     --badge-size: 18px;
     --user-color: rgba(51, 181, 229, 1);
     --user-color-semi-trans: rgba(51, 181, 229, .22);
+    /* Things you can touch */
+    /* Things you can touch, but maybe shouldn't unless you know what it actually applies to */
     --dark: rgba(0, 0, 0, .5);
     --light: rgba(205, 205, 205, .5);
     --neutral: rgba(100, 100, 100, .5);
     --dark-o: rgba(0, 0, 0, .75);
     --light-o: rgba(205, 205, 205, .75);
     --neutral-o: rgba(100, 100, 100, .75);
-    /* No touch below this line */
+    /* Things you can touch, but maybe shouldn't unless you know what it actually applies to */
+    /* Bad Touch under this line... You really shouldn't mess with this m8y */
     --font-size-pre: calc(var(--guild-size) * 2.2);
     --font-size: calc(var(--font-size-pre) / 10);
     --read-all-font-size-pre: calc(var(--guild-size) * 2.5);
@@ -30,7 +34,7 @@
     --guild-add-size-v-pre2: calc(var(--guild-add-size-v-pre1) / 100);
     --guild-add-size-v-pre3: calc(var(--guild-size) / 150);
     --guild-add-size-v: calc(var(--guild-add-size-v-pre2) + var(--guild-add-size-v-pre3));
-    /* No touch above this line */
+    /* Bad Touch above this line... You really shouldn't mess with this m8y */
 }
 
 /* Transparent Discord + Image 

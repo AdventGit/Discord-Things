@@ -3,78 +3,126 @@
 :root {}
 
 /* Base Themeing */
-html,
-head,
+/* Elements */
 body,
+head,
+html,
+/* Elements */
+/* IDs */
 #app-mount,
-.titleBar-3_fDwJ,
-.app-XZYfmp,
+#bda-qem-favourite-container .scroller::-webkit-resizer,
+#bda-qem-favourite-container .scroller::-webkit-scrollbar,
+#bda-qem-favourite-container .scroller::-webkit-scrollbar-button,
+#bda-qem-favourite-container .scroller::-webkit-scrollbar-corner,
+#bda-qem-favourite-container .scroller::-webkit-scrollbar-track,
+#bda-qem-favourite-container .scroller::-webkit-scrollbar-track-piece,
+#bda-qem-twitch-container .scroller::-webkit-resizer,
+#bda-qem-twitch-container .scroller::-webkit-scrollbar,
+#bda-qem-twitch-container .scroller::-webkit-scrollbar-button,
+#bda-qem-twitch-container .scroller::-webkit-scrollbar-corner,
+#bda-qem-twitch-container .scroller::-webkit-scrollbar-track,
+#bda-qem-twitch-container .scroller::-webkit-scrollbar-track-piece,
+#friends,
+/* IDs */
+/* Classes */
+.activity-3NviKQ,
+.activityFeed--1mYMS,
 .app,
-.layers-20RVFW,
-.layer-kosS71,
-.ui-standard-sidebar-view,
-.sidebar-region,
-.content-region,
-.container-2OU7Cz,
-.guilds-wrapper,
-.guilds-wrapper .scroller-wrap,
-.guilds-wrapper .guilds,
-.base-3AoPqv,
+.app-XZYfmp,
 .base-3AoPqv > .spacer-3Dkonz:nth-of-type(2),
+.base-3AoPqv,
+.body-3ljq11,
+.body-3_tdh6,
+.body-8pBSC7,
+.channel-separator .channel-name,
+.channel-separator,
 .channels-3g2vYe,
-.container-RYiLUQ,
+.chat > .content > .flex-spacer,
+.chat > .content,
+.chat form,
+.chat form,
+.chat,
+.container-2OU7Cz,
 .container-3lnMWU,
 .container-iksrDt,
-.chat,
-.titleWrapper-3Vi_wz,
-.title-qAcLxz,
-.chat > .content,
-.chat > .content > .flex-spacer,
-.messages-wrapper,
-.chat form,
-.membersWrap-3wRngy,
-.membersWrap-3wRngy > .themeGhostHairline-2H8SiW,
-.members-1bid1J,
-.activityFeed--1mYMS,
-.headerBar-cxbhPD,
-#friends,
-.friends-table,
-.messages.scroller::-webkit-scrollbar-button,
-.messages.scroller::-webkit-scrollbar-track,
-.messages.scroller::-webkit-scrollbar-corner,
-.messages.scroller::-webkit-resizer,
-.header-27dQ-e,
-.header-27dQ-e .search-bar,
+.container-RYiLUQ,
+.content-region,
 .diversitySelector-O3ea2c,
-.scrollerWrap-EC-dSj,
-.scroller-2dsok0,
-.stickyHeader-3LjM5X,
-.scroller-2dsok0::-webkit-scrollbar-button,
-.scroller-2dsok0::-webkit-scrollbar-track,
-.scroller-2dsok0::-webkit-scrollbar-corner,
-.scroller-2dsok0::-webkit-resizer,
-#bda-qem-twitch-container .scroller::-webkit-scrollbar-button,
-#bda-qem-favourite-container .scroller::-webkit-scrollbar-button,
-#bda-qem-twitch-container .scroller::-webkit-scrollbar-track,
-#bda-qem-favourite-container .scroller::-webkit-scrollbar-track,
-#bda-qem-twitch-container .scroller::-webkit-scrollbar-corner,
-#bda-qem-favourite-container .scroller::-webkit-scrollbar-corner,
-#bda-qem-twitch-container .scroller::-webkit-resizer,
-#bda-qem-favourite-container .scroller::-webkit-resizer,
-.typing-3eiiL_,
+.embed,
+.embedInner-t4ag7g,
+.footer-2wFs91,
+.friends-table,
+.guilds-wrapper .guilds .guilds-add,
+.guilds-wrapper .guilds,
+.guilds-wrapper .scroller-wrap,
+.guilds-wrapper,
+.header-1qeJfQ,
+.header-27dQ-e .search-bar,
+.header-27dQ-e,
+.header-3budic,
+.headerBar-cxbhPD,
+.headerFill-TTyrtz,
+.inner-3if5cm,
+.item-rK1j5B:hover,
+.itemGroup-oViAgA,
+.layer-kosS71,
+.layers-20RVFW,
+.markup pre code,
+.markup pre,
+.markup,
+.members-1bid1J,
+.membersWrap-3wRngy > .themeGhostHairline-2H8SiW,
+.membersWrap-3wRngy,
 .messages [class*="default"],
-.search-results-wrap,
-.search-header,
-.results-wrapper,
-.search-results,
-.channel-separator,
-.channel-separator .channel-name,
-.search-result,
-.search-result:before,
-.search-result:after,
-.search-result-message,
+.messages-popout .message-group,
+.messages-popout-wrap .action-buttons,
+.messages-popout-wrap .header,
+.messages-popout-wrap .jump-button,
+.messages-popout-wrap .message-group,
+.messages-wrapper,
+.messages.scroller::-webkit-resizer,
+.messages.scroller::-webkit-scrollbar,
+.messages.scroller::-webkit-scrollbar-button,
+.messages.scroller::-webkit-scrollbar-corner,
+.messages.scroller::-webkit-scrollbar-track,
+.messages.scroller::-webkit-scrollbar-track-piece,
+.note-2AtC_s textarea:focus,
 .pagination,
-.search-popout .option:after {
+.popouts .popout,
+.results-wrapper,
+.scroller-2dsok0,
+.scroller-2dsok0::-webkit-resizer,
+.scroller-2dsok0::-webkit-scrollbar,
+.scroller-2dsok0::-webkit-scrollbar-button,
+.scroller-2dsok0::-webkit-scrollbar-corner,
+.scroller-2dsok0::-webkit-scrollbar-track,
+.scroller-2dsok0::-webkit-scrollbar-track-piece,
+.scrollerWrap-EC-dSj,
+.search-header,
+.search-popout .option.selected,
+.search-popout .option:after,
+.search-result,
+.search-result-message,
+.search-result:after,
+.search-result:before,
+.search-results,
+.search-results-wrap,
+.sidebar-region,
+.small-popout-box,
+.splashArt-va7TI-,
+.stickyHeader-3LjM5X,
+.themed-popout,
+.title-qAcLxz,
+.titleBar-3_fDwJ,
+.titleWrapper-3Vi_wz,
+.topSectionNormal-2LlRG1,
+.topSectionPlaying-3jAH9b,
+.typing-3eiiL_,
+.ui-standard-sidebar-view,
+/* Classes */
+/* Wild */
+button[id*="bda-qem"]
+/* Wild */ {
     background: transparent !important;
 }
 .app {
@@ -164,7 +212,6 @@ body,
     background: var(--user-color) !important;
 }
 .guilds-wrapper .guilds .guilds-add {
-    background: transparent !important;
     margin-top: 7px !important;
     height: var(--guild-size) !important;
     width: var(--guild-size) !important;
@@ -190,6 +237,15 @@ body,
     color: var(--user-color) !important;
 }
 
+/* Non-Server Channels */
+.private-channels .channel.selected a,
+.private-channels .channel:hover a {
+    background: var(--neutral) !important;
+    border: none !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+}
+
 /* Server Channels */
 .container-3lnMWU {
     border: none !important;
@@ -201,13 +257,45 @@ body,
     background: var(--neutral) !important;
 }
 
+/* Games */
+.header-3lra3f {
+    margin: 0px !important;
+}
+.card-2WxYqG {
+    background: var(--dark-o) !important;
+    border: none !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+}
+.header-1qeJfQ,
+.splashArt-va7TI-,
+.body-8pBSC7 {
+    border: none !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+    mask: none !important;
+    opacity: 1 !important;
+}
+.player-3apN7h {
+    border: none !important;
+}
+
+/* Friends */
+.friends-row:hover {
+    background: var(--neutral) !important;
+}
+.friends-action {
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+}
+
 /* Chat */
 .messages.scroller::-webkit-scrollbar {
-    background: transparent !important;
     width: 10px !important;
 }
 .messages.scroller::-webkit-scrollbar-track-piece {
-    background: transparent !important;
     border: none !important;
 }
 .messages.scroller::-webkit-scrollbar-thumb {
@@ -268,7 +356,6 @@ body,
 .markup,
 .markup pre,
 .markup pre code {
-    background: transparent !important;
     border: none !important;
     box-shadow: none !important;
 }
@@ -281,10 +368,8 @@ body,
 }
 .inner-3if5cm {
     border: 1px solid var(--neutral) !important;
-    background: transparent !important;
 }
 .small-popout-box {
-    background: transparent !important;
     border: 1px solid var(--neutral) !important;
     border-radius: 0px !important;
 }
@@ -330,6 +415,53 @@ body,
     color: var(--user-color) !important;
 }
 
+/* Chat Users */
+.member-2FrNV0:hover .content-3JzEqq {
+    background: var(--neutral) !important;
+}
+
+/* User Panels */
+.userPopout-11hFKo,
+.inner-1_1f7b {
+    background: var(--dark-o) !important; 
+    border: none !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+}
+.header-3budic,
+.body-3ljq11,
+.activity-3NviKQ,
+.footer-2wFs91,
+.topSectionNormal-2LlRG1,
+.topSectionPlaying-3jAH9b,
+.headerFill-TTyrtz,
+.body-3_tdh6,
+.note-2AtC_s textarea:focus {
+    border: none !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+}
+.quickMessage-318jK-,
+.button-2t3of8 {
+    background: var(--dark-o) !important;
+    border: 1px solid var(--neutral) !important;
+    border-radius: 3px !important;
+}
+.userInfoSection-2WJxMm,
+.tabBarContainer-3RVZc- {
+    border: none !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+}
+.connectedAccount-3mKaTA {
+    border: 1px solid var(--neutral) !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+}
+.button-2t3of8 {
+    color: white !important;
+}
+
 /* Emotes */
 .autocomplete-1TnWNR {
     background: var(--dark-o) !important;
@@ -358,7 +490,6 @@ body,
     box-shadow: none !important;
 }
 button[id*="bda-qem"] {
-    background: transparent !important;
     border: none !important;
     border-radius: 0px !important;
     box-shadow: none !important;
@@ -396,13 +527,11 @@ button[id*="bda-qem"] {
 .scroller-2dsok0::-webkit-scrollbar,
 #bda-qem-twitch-container .scroller::-webkit-scrollbar,
 #bda-qem-favourite-container .scroller::-webkit-scrollbar {
-    background: transparent !important;
     width: 10px !important;
 }
 .scroller-2dsok0::-webkit-scrollbar-track-piece,
 #bda-qem-twitch-container .scroller::-webkit-scrollbar-track-piece,
 #bda-qem-favourite-container .scroller::-webkit-scrollbar-track-piece {
-    background: transparent !important;
     border: none !important;
 }
 .scroller-2dsok0::-webkit-scrollbar-thumb,
@@ -420,7 +549,6 @@ button[id*="bda-qem"] {
 .messages-popout-wrap .message-group,
 .messages-popout-wrap .action-buttons,
 .messages-popout-wrap .jump-button {
-    background: transparent !important;
     border: none !important;
     box-shadow: none !important;
 }
@@ -443,7 +571,6 @@ button[id*="bda-qem"] {
 }
 .search-popout .option.selected,
 .item-rK1j5B:hover {
-    background: transparent !important;
     border: 1px solid var(--neutral) !important;
 }
 .channel-separator:before,
@@ -466,6 +593,28 @@ button[id*="bda-qem"] {
 }
 .search-result-message.hit {
     margin-bottom: 20px !important;
+}
+
+/* Context Menus */
+.contextMenu-uoJTbz {
+    background: var(--dark-o) !important;
+    border: none !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+}
+.itemGroup-oViAgA {
+    border: none !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+}
+.itemSubMenu-3ZgIw- {
+    background-color: transparent !important;
+}
+.item-1XYaYf:hover {
+    background: var(--neutral) !important;
+    border: none !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
 }
 
 /* Badges */
@@ -567,6 +716,7 @@ button[id*="bda-qem"] {
 [class*="fools"],
 [id*="fools"],
 [class*="channelNotices"],
+[class*="channelNotice"],
 .guilds-wrapper [class^="unread-mentions-indicator"],
 .wordmark-2L03Wr,
 .guilds-wrapper .scroller-wrap ::-webkit-scrollbar,
@@ -588,16 +738,12 @@ button[id*="bda-qem"] {
 .memberGroupsPlaceholder-1M417G,
 .placeholder-1r59uP,
 .placeholderAvatar-2trNnW,
-.placeholderUsername-5-KmQU {
+.placeholderUsername-5-KmQU,
+.protip-q743VF,
+.carousel-28zrtT,
+.section-fQIEsd.sectionBottomPadding-38xKlA,
+.sectionLine-3PSnnJ {
     display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    padding: unset !important;
-    margin: unset !important;
-    border: unset !important;
-    border-radius: unset !important;
-    box-shadow: unset !important;
-    background: transparent !important;
     position: absolute !important;
     width: unset !important;
     height: unset !important;
@@ -605,19 +751,28 @@ button[id*="bda-qem"] {
     bottom: unset !important;
     left: unset !important;
     right: unset !important;
-    pointer-events: unset !important;
-    transition: unset !important;
-    z-index: 0 !important;
-    animation: unset !important;
-    overflow: unset !important;
+    padding: unset !important;
+    margin: unset !important;
     box-sizing: unset !important;
-    cursor: unset !important;
     -webkit-box-direction: unset !important;
     -webkit-box-orient: unset !important;
+    -webkit-box-pack: unset !important;
     flex-direction: unset !important;
     flex-wrap: unset !important;
-    -webkit-box-pack: unset !important;
-    justify-content: unset !important;
-    outline: unset !important;
     vertical-align: unset !important;
+    justify-content: unset !important;
+    visibility: hidden !important;
+    overflow: unset !important;
+    animation: unset !important;
+    transform: none !important;
+    transition: unset !important;
+    opacity: 0 !important;
+    background: transparent !important;
+    border: unset !important;
+    border-radius: unset !important;
+    box-shadow: unset !important;
+    outline: unset !important;
+    cursor: unset !important;
+    pointer-events: unset !important;
+    z-index: 0 !important;
 }

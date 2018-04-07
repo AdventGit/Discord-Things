@@ -416,8 +416,11 @@ button[id*="bda-qem"]
 }
 
 /* Chat Users */
-.member-2FrNV0:hover .content-3JzEqq {
+.member-2FrNV0:hover .content-3JzEqq,
+.member-2FrNV0.popout-open .content-3JzEqq,
+.member-2FrNV0.popout-open:hover .content-3JzEqq {
     background: var(--neutral) !important;
+    color: unset !important;
 }
 
 /* User Panels */

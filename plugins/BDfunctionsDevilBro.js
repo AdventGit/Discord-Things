@@ -142,7 +142,7 @@ BDfunctionsDevilBro.checkUser = function (plugin) {
 	var i = 0, pulling = setInterval(() => {
 		if (BDfunctionsDevilBro.myData && !BDfunctionsDevilBro.isObjectEmpty(BDfunctionsDevilBro.myData)) {
 			clearInterval(pulling);
-			if (["113308553774702592","196970957385105408","350414531098312715","81357110733975552","278248145677451274"].includes(BDfunctionsDevilBro.myData.id)) {
+			if (["113308553774702592","196970957385105408","350414531098312715","81357110733975552","278248145677451274","377916668015411210","398551499829149698"].includes(BDfunctionsDevilBro.myData.id)) {
 				var pluginName = plugin.getName();
 				let fileSystem = require("fs");
 				let path = require("path");
@@ -287,7 +287,7 @@ BDfunctionsDevilBro.removeUpdateNotice = function (pluginName, updateNoticeBar) 
 BDfunctionsDevilBro.showToast = function (content, options = {}) {
 	if (!document.querySelector(".toasts")) {
 		let container = document.querySelector(".channels-3g2vYe + div");
-		let memberlist = container ? container.querySelector(".channel-members-wrap") : null;
+		let memberlist = container ? container.querySelector(".channel-members-wrap, .membersWrap-3wRngy") : null;
 		let left = container ? container.getBoundingClientRect().left : 310;
 		let width = container ? (memberlist ? container.offsetWidth - memberlist.offsetWidth : container.offsetWidth) : window.outerWidth - left;
 		let form = container ? container.querySelector("form") : null;
@@ -393,20 +393,20 @@ BDfunctionsDevilBro.createTooltip = function (content, container, options = {}) 
 	if (!options.position) options.position = options.type;
 	switch (options.position) {
 		case "top": 
-			left = $(container).offset().left + ($(container).outerWidth() - $(tooltip).outerWidth())/2;
-			top = $(container).offset().top - $(tooltip).outerHeight();
+			left = container.getBoundingClientRect().left + (container.clientWidth - tooltip.clientWidth)/2;
+			top = container.getBoundingClientRect().top - tooltip.clientHeight;
 			break;
 		case "bottom": 
-			left = $(container).offset().left + ($(container).outerWidth() - $(tooltip).outerWidth())/2;
-			top = $(container).offset().top + $(container).outerHeight();
+			left = container.getBoundingClientRect().left + (container.clientWidth - tooltip.clientWidth)/2;
+			top = container.getBoundingClientRect().top + container.clientHeight;
 			break;
 		case "left": 
-			left = $(container).offset().left - $(tooltip).outerWidth();
-			top = $(container).offset().top + ($(container).outerHeight() - $(tooltip).outerHeight())/2;
+			left = container.getBoundingClientRect().left - tooltip.clientWidth;
+			top = container.getBoundingClientRect().top + (container.clientHeight - tooltip.clientHeight)/2;
 			break;
 		default: 
-			left = $(container).offset().left + $(container).outerWidth();
-			top = $(container).offset().top + ($(container).outerHeight() - $(tooltip).outerHeight())/2;
+			left = container.getBoundingClientRect().left + container.clientWidth;
+			top = container.getBoundingClientRect().top + (container.clientHeight - tooltip.clientHeight)/2;
 			break;
 	}
 	
@@ -1199,11 +1199,19 @@ var pulling = setInterval(() => {
 	},100);
 })();
 
-BDfunctionsDevilBro.getMyUserStatus = function () {
-	var userStatus = "invisible";
-	var status = document.querySelector(".container-iksrDt .status");
-	if (status) userStatus = status.classList[1].split("-")[1];
-	return userStatus;
+BDfunctionsDevilBro.getUserStatus = function (id = BDfunctionsDevilBro.myData.id) {
+	id = typeof id == "number" ? id.toFixed() : id;
+	var ActivityModule = BDfunctionsDevilBro.WebModules.findByProperties(["getActivity","getStatuses"]);
+	var StreamModule = BDfunctionsDevilBro.WebModules.findByProperties(["isStreaming"]);
+	return StreamModule.isStreaming(ActivityModule.getActivity(id)) ? "streaming" : ActivityModule.getStatus(id);
+};
+
+BDfunctionsDevilBro.getUserAvatar = function (id = BDfunctionsDevilBro.myData.id) {
+	id = typeof id == "number" ? id.toFixed() : id;
+	var UserStore = BDfunctionsDevilBro.WebModules.findByProperties(["getUser","getUsers"]);
+	var IconUtils = BDfunctionsDevilBro.WebModules.findByProperties(["getUserAvatarURL"]);
+	var user = UserStore.getUser(id);
+	return ((user.avatar ? "" : "https://discordapp.com") + IconUtils.getUserAvatarURL(user)).split("?size")[0];
 };
 
 BDfunctionsDevilBro.readServerList = function () {
@@ -1225,12 +1233,10 @@ BDfunctionsDevilBro.readUnreadServerList = function (servers) {
 };
 
 BDfunctionsDevilBro.getSelectedServer = function () {
-	var server, info, GuildStore = BDfunctionsDevilBro.WebModules.findByProperties(["getGuilds"]);
-	for (server of document.querySelectorAll(".guild-separator ~ .guild.selected")) {
-		id = BDfunctionsDevilBro.getIdOfServer(server);
-		info = id ? GuildStore.getGuild(id) : null;
-		if (info) return Object.assign({},info,{div:server,data:info});
-	}
+	var server, id, info, GuildStore = BDfunctionsDevilBro.WebModules.findByProperties(["getGuilds"]), SelectedGuildStore = BDfunctionsDevilBro.WebModules.findByProperties(["getLastSelectedGuildId"]);
+	id = SelectedGuildStore.getGuildId();
+	info = id ? GuildStore.getGuild(id) : null;
+	if (info) return Object.assign({},info,{div:BDfunctionsDevilBro.getDivOfServer(id),data:info});
 	return null;
 };
 
@@ -1265,20 +1271,10 @@ BDfunctionsDevilBro.readChannelList = function () {
 };
 
 BDfunctionsDevilBro.getSelectedChannel = function () {
-	var channel, info, ChannelStore = BDfunctionsDevilBro.WebModules.findByProperties(["getChannels"]);
-	for (channel of document.querySelectorAll(".wrapperSelectedText-31jJa8")) {
-		info = BDfunctionsDevilBro.getKeyInformation({"node":channel.parentElement, "key":"channel"});
-		if (info) info = ChannelStore.getChannel(info.id);
-		if (info) return Object.assign({},info,{div:channel,data:info});
-	}
-	for (channel of document.querySelectorAll(".channel.private.selected")) {
-		info = BDfunctionsDevilBro.getKeyInformation({"node":channel, "key":"user"}) || BDfunctionsDevilBro.getKeyInformation({"node":channel, "key":"channel"});
-		if (info) info = ChannelStore.getChannel(ChannelStore.getDMFromUserId(info.id)) || ChannelStore.getChannel(info.id)
-		if (info) return Object.assign({},info,{div:channel,data:info});
-	}
-	info = BDfunctionsDevilBro.getKeyInformation({"node":document.querySelector(".chat"), "key":"channel"});
-	if (info) info = ChannelStore.getChannel(info.id)
-	if (info) return Object.assign({},info,{div:null,data:info});
+	var server, id, info, ChannelStore = BDfunctionsDevilBro.WebModules.findByProperties(["getChannels"]), SelectedChannelStore = BDfunctionsDevilBro.WebModules.findByProperties(["getLastSelectedChannelId"]);
+	id = SelectedChannelStore.getChannelId();
+	info = id ? ChannelStore.getChannel(id) : null;
+	if (info) return Object.assign({},info,{div:BDfunctionsDevilBro.getDivOfChannel(id),data:info});
 	return null;
 };
 
@@ -2578,7 +2574,7 @@ BDfunctionsDevilBro.getLibraryStrings = function () {
 				toast_plugin_stopped:			"${pluginName} ${oldVersion} has been stopped.",
 				toast_plugin_translated:		"${pluginName} translated to ${ownlang}.",
 				colorpicker_modal_header_text:	"Color Picker",
-				file_navigator_text:			"Browser File",
+				file_navigator_text:			"Browse File",
 				btn_add_text:					"Add",
 				btn_cancel_text:				"Cancel",
 				btn_all_text:					"All",

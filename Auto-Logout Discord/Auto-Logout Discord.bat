@@ -6,5 +6,5 @@ set "DataBase=%appdata%/discordptb/Local Storage"
 sqlite3.exe "%DataBase%/https_ptb.discordapp.com_0.localstorage" < commands.txt
 cd "%Discord%"
 start /wait DiscordPTB.exe
-sqlite3.exe "%DataBase%/test.db" < commands.txt
+sqlite3.exe "%DataBase%/https_ptb.discordapp.com_0.localstorage" < commands.txt
 exit

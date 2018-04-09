@@ -291,6 +291,13 @@ button[id*="bda-qem"]
     border-radius: 3px !important;
     box-shadow: none !important;
 }
+.tab-bar-item:hover {
+    background: var(--neutral) !important;
+}
+.tab-bar-item.selected {
+    background-color: var(--neutral) !important;
+    color: white !important;
+}
 
 /* Chat */
 .messages.scroller::-webkit-scrollbar {
@@ -761,7 +768,8 @@ button[id*="bda-qem"] {
 .protip-q743VF,
 .carousel-28zrtT,
 .section-fQIEsd.sectionBottomPadding-38xKlA,
-.sectionLine-3PSnnJ {
+.sectionLine-3PSnnJ,
+.noticeFacebook-1eAoSW {
     display: none !important;
     position: absolute !important;
     width: 0px !important;

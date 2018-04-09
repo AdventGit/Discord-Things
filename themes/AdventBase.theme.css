@@ -415,6 +415,21 @@ button[id*="bda-qem"]
 .new-messages-bar button {
     color: var(--user-color) !important;
 }
+.attachment-1Vom9D {
+    background: transparent !important;
+    border: 1px solid var(--neutral) !important;
+    border-radius: 3px !important;
+    max-width: unset !important;
+    width: fit-content !important;
+    padding: 7px !important;
+}
+.filenameLinkWrapper-3y3Hx0,
+.message-group a {
+    color: var(--user-color) !important;
+}
+.downloadButton-NPl2PI {
+    color: var(--neutral) !important;
+}
 
 /* Chat Users */
 .member-2FrNV0:hover .content-3JzEqq,
@@ -749,15 +764,15 @@ button[id*="bda-qem"] {
 .sectionLine-3PSnnJ {
     display: none !important;
     position: absolute !important;
-    width: unset !important;
-    height: unset !important;
+    width: 0px !important;
+    height: 0px !important;
     top: unset !important;
     bottom: unset !important;
     left: unset !important;
     right: unset !important;
-    padding: unset !important;
-    margin: unset !important;
-    box-sizing: unset !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    box-sizing: 0px !important;
     -webkit-box-direction: unset !important;
     -webkit-box-orient: unset !important;
     -webkit-box-pack: unset !important;
@@ -767,16 +782,16 @@ button[id*="bda-qem"] {
     justify-content: unset !important;
     visibility: hidden !important;
     overflow: unset !important;
-    animation: unset !important;
+    animation: none !important;
     transform: none !important;
-    transition: unset !important;
+    transition: none !important;
     opacity: 0 !important;
     background: transparent !important;
-    border: unset !important;
-    border-radius: unset !important;
-    box-shadow: unset !important;
-    outline: unset !important;
+    border: none !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+    outline: none !important;
     cursor: unset !important;
     pointer-events: unset !important;
-    z-index: 0 !important;
+    z-index: -1 !important;
 }

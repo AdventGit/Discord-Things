@@ -1,6 +1,9 @@
 :root,
+html,
+head,
+body,
+#notifications-mount,
 #notifications,
-.notifications.in,
-.notifications.out {
+.notification {
       background: transparent !important;
 }

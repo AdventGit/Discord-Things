@@ -145,7 +145,7 @@ function initializeMenuItems() {
     click: onCheckForUpdates
   };
   menuItems[MenuItems.QUIT] = {
-    label: 'Quit BetterDiscord-PTB ' + _Constants.APP_NAME,
+    label: 'Quit BetterDiscord-PTB',
     role: 'quit'
   };
 }

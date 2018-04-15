@@ -10,7 +10,7 @@ exports.setMainWindowVisible = setMainWindowVisible;
 var _require = require('electron'),
     Menu = _require.Menu;
 
-var app = _electron.app;
+var app = _require.app;
 app.commandLine.appendSwitch('enable-transparent-visuals'),
 app.commandLine.appendSwitch('disable-gpu');
 

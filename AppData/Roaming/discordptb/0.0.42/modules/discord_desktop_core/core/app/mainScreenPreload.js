@@ -2,9 +2,9 @@
 
 // App preload script, used to provide a replacement native API now that
 // we turned off node integration.
-var _electron = require('electron');
+var electron = require('electron');
 
-var app = _electron.app;
+var app = electron.app;
 app.commandLine.appendSwitch('enable-transparent-visuals'),
 app.commandLine.appendSwitch('disable-gpu');
 

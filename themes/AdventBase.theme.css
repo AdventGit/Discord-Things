@@ -100,14 +100,17 @@ html,
 .scroller-2dsok0::-webkit-scrollbar-track-piece,
 .scrollerWrap-EC-dSj,
 .search-header,
-.search-popout .option.selected,
-.search-popout .option:after,
+.searchAnswer-yD90ey,
+.searchFilter-1fJ0cd,
+.selected-_bTXUG,
+.searchPopout-38pRYh .searchOption-vKNX73:after,
 .search-result,
 .search-result-message,
 .search-result:after,
 .search-result:before,
 .search-results,
 .search-results-wrap,
+.selected-_bTXUG,
 .sidebar-region,
 .small-popout-box,
 .splashArt-va7TI-,
@@ -591,11 +594,15 @@ button[id*="bda-qem"] {
 }
 
 /* Menus */
-.search-popout,
+.searchPopout-38pRYh {
+    border: none !important;
+    box-shadow: none !important;
+}
+.searchPopout-38pRYh,
 .menu-3BZuDT {
     background: var(--dark-o) !important;
 }
-.search-popout .option.selected,
+.selected-_bTXUG,
 .item-rK1j5B:hover {
     border: 1px solid var(--neutral) !important;
 }
@@ -607,8 +614,8 @@ button[id*="bda-qem"] {
 .search-result:after,
 .search-result-message.hit,
 .search-result-message.hit .message-group,
-.search-popout .results-group:before,
-.search-popout .search-query {
+.searchPopout-38pRYh .results-group:before,
+.searchPopout-38pRYh .search-query {
     padding: 0px !important;
     margin: 0px !important;
     border: none !important;

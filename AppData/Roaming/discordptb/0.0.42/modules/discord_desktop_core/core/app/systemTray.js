@@ -33,14 +33,12 @@ var TrayIconNames = {
 };
 
 var MenuItems = {
-  SECRET: 'SECRET',
   MUTE: 'MUTE',
   DEAFEN: 'DEAFEN',
   OPEN: 'OPEN',
   VOICE_SETTINGS: 'VOICE_SETTINGS',
   CHECK_UPDATE: 'CHECK_UPDATE',
-  QUIT: 'QUIT',
-  ACKNOWLEDGEMENTS: 'ACKNOWLEDGEMENTS'
+  QUIT: 'QUIT'
 };
 
 var hasInit = exports.hasInit = false;
@@ -115,11 +113,6 @@ function initializeMenuItems() {
 
   var voiceConnected = currentIcon !== trayIcons.DEFAULT && currentIcon !== trayIcons.UNREAD;
 
-  menuItems[MenuItems.SECRET] = {
-    label: 'Top Secret Control Panel',
-    icon: trayIcons.DEFAULT,
-    enabled: false
-  };
   menuItems[MenuItems.MUTE] = {
     label: 'Mute',
     type: 'checkbox',
@@ -147,29 +140,21 @@ function initializeMenuItems() {
     click: onOpenVoiceSettings
   };
   menuItems[MenuItems.CHECK_UPDATE] = {
-    label: 'Check for Updates...',
+    label: 'Find reasons to hate life...',
     type: 'normal',
     visible: process.platform !== 'darwin',
     click: onCheckForUpdates
   };
   menuItems[MenuItems.QUIT] = {
-    label: 'Quit ' + _Constants.APP_NAME,
+    label: 'Quit BetterDiscordPTB (0.0.42)',
     role: 'quit'
-  };
-  menuItems[MenuItems.ACKNOWLEDGEMENTS] = {
-    label: 'Acknowledgements',
-    type: 'normal',
-    visible: process.platform !== 'darwin',
-    click: function click() {
-      return _electron.shell.openExternal('https://discordapp.com/acknowledgements');
-    }
   };
 }
 
 function buildContextMenu() {
   var separator = { type: 'separator' };
 
-  contextMenu = [menuItems[MenuItems.SECRET], separator, menuItems[MenuItems.OPEN], menuItems[MenuItems.MUTE], menuItems[MenuItems.DEAFEN], menuItems[MenuItems.VOICE_SETTINGS], menuItems[MenuItems.CHECK_UPDATE], menuItems[MenuItems.ACKNOWLEDGEMENTS], separator, menuItems[MenuItems.QUIT]];
+  contextMenu = [menuItems[MenuItems.OPEN], menuItems[MenuItems.MUTE], menuItems[MenuItems.DEAFEN], menuItems[MenuItems.VOICE_SETTINGS], separator, menuItems[MenuItems.CHECK_UPDATE], menuItems[MenuItems.QUIT]];
 }
 
 function setTrayIcon(icon) {

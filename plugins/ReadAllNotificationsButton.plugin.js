@@ -3,7 +3,7 @@
 class ReadAllNotificationsButton {
 	constructor () {
 		this.RANbuttonMarkup = 
-			`<div class="guild" id="RANbutton-frame" style="height: 14px !important; margin: 0px !important; padding: 0px !important; margin-top: 0px !important;">
+			`<div class="guild" id="RANbutton-frame" style="height: 14px !important; margin: 0px !important; padding: 0px !important; margin-top: -1px !important;">
 				<div class="guild-inner" style="border-radius: 0px;">
 					<a>
 						<div id="RANbutton" style="line-height: 18px; position: absolute !important; float: left !important; left: 50%; top: 50%; transform: translate(-50%, -50%) !important;">Read All</div>
@@ -13,7 +13,7 @@ class ReadAllNotificationsButton {
 			
 		this.RAMbuttonMarkup = 
 			`<button type="button" id="RAMbutton" class="flexChild-1KGW5q button-2t3of8 lookFilled-luDKDo colorBrand-3PmwCE sizeMin-1Wh1KC grow-25YQ8u" style="flex: 0 0 auto; margin-top: -5px; height: 25px;">
-				<div class="contents-4L4hQM">Clear All Mentions</div>
+				<div class="contents-4L4hQM">Clear all Mentions</div>
 			</button>`;
 	}
 
@@ -21,7 +21,7 @@ class ReadAllNotificationsButton {
 
 	getDescription () {return "Adds a button to clear all notifications.";}
 
-	getVersion () {return "1.2.8";}
+	getVersion () {return "1.2.9";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -80,7 +80,7 @@ class ReadAllNotificationsButton {
 					}
 				);
 			});
-			BDfunctionsDevilBro.addObserver(this, ".popouts", {name:"mentionsPopoutObserver",instance:observer}, {childList: true});
+			BDfunctionsDevilBro.addObserver(this, ".popouts-1TN9u9", {name:"mentionsPopoutObserver",instance:observer}, {childList: true});
 			
 			$(this.RANbuttonMarkup).insertBefore(".dms")
 				.on("click", "#RANbutton", () => {
@@ -99,7 +99,6 @@ class ReadAllNotificationsButton {
 			$("#RANbutton-frame, #RAMbutton").remove();
 			
 			$(".RAN-added").removeClass("RAN-added");
-			$(".RAM-added").removeClass("RAM-added");
 			
 			BDfunctionsDevilBro.unloadMessage(this);
 		}

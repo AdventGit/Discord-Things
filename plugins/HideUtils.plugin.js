@@ -229,7 +229,7 @@ class HideUtils {
 						if(node.nodeType === 1 && node.classList && node.classList.contains('contextMenu-uoJTbz')) {
 							this.userContext(node);
 						}
-						if(node.nodeType === 1 && node.classList && ( node.classList.contains('chat') || node.classList.contains('messages-wrapper') || node.classList.contains('channel-members-wrap') )) {
+						if(node.nodeType === 1 && node.classList && ( node.classList.contains('chat') || node.classList.contains('messages-wrapper') || node.classList.contains('membersWrap-3wRngy') )) {
 							this.auditUsers();
 							this.userDiscon();
 							this.userObs();
@@ -694,7 +694,7 @@ class HideUtils {
 	}
 	
 	userObs() {
-		const memWrap = document.querySelector('.channel-members-wrap');
+		const memWrap = document.querySelector('.membersWrap-3wRngy');
 		if(!memWrap) return;
 		this.userMO.observe(memWrap, { childList: true, subtree: true });
 	}
@@ -802,7 +802,7 @@ class HideUtils {
 		const settings = bdPluginStorage.get('HideUtils', 'new-settings');
 		if(settings) {
 			const parsed = JSON.parse(settings);
-			if(parsed && parsed.length) {
+			if(parsed instanceof Object && parsed.hasOwnProperty('channels')) {
 				for(const [key, data] of Object.entries(parsed)) {
 					for(const entry of data) {
 						this.hid[key].set(entry[0], entry[1]);
@@ -927,15 +927,15 @@ class HideUtils {
 			<div id="HideUtils-plugin-settings-div" class="container">
 				<h3>HideUtils Plugin \u2192 Settings \u2192 Instructions</h3><br/>
 				<p id="HideUtils-instructions" class="instructions">
-				[ A ]:<br/><br/>
-				0) Right-click on a channel, server, or user.<br/>
-				1) Left-click the hide option.<br/><br/>
-				[ B ]:<br/><br/>
-				0) User Settings \u2192 Appearence \u2192 Developer Mode, then right-click a user, channel, or server, and "Copy ID".<br/>
-				1) Insert the ID.<br/>
-				2) Click "apply."<br/><br/>
-				[ NOTE ]:<br/><br/>
-				* Unhiding requires use of the settings-panel, and is not handled within a context-menu.
+				<b>[ A ]:</b><br/><br/>
+				\u2022 Right-click on a channel, server, or user.<br/>
+				\u2022\u2022 Left-click the hide option.<br/><br/>
+				<b>[ B ]:</b><br/><br/>
+				\u2022 User Settings \u2192 Appearance \u2192 Developer Mode, then right-click a user, channel, or server, and "Copy ID."<br/>
+				\u2022\u2022 Insert the ID.<br/>
+				\u2022\u2022\u2022 Click "apply."<br/><br/>
+				<b>[ NOTE ]:</b><br/><br/>
+				\u2022 Unhiding requires use of the settings-panel, and is not handled within a context-menu.
 				</p><br/>
 				<button id="HideUtils-Return" class="button returnButton" onclick=BdApi.getPlugin("${this.getName()}").returnSettings()>Return</button><br/>
 			</div>
@@ -994,7 +994,7 @@ class HideUtils {
 	}
 
 	getVersion() {
-		return '1.1.4';
+		return '1.1.5';
 	}
 
 	getDescription() {

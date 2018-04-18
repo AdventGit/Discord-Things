@@ -47,6 +47,7 @@ html,
 .container-iksrDt,
 .container-RYiLUQ,
 .content-region,
+.contentHoveredVoice-3qGNKh,
 .contentSelectedVoice-gTtYM9,
 .diversitySelector-O3ea2c,
 .embed,
@@ -90,6 +91,7 @@ html,
 .note-2AtC_s textarea:focus,
 .pagination,
 .popouts .popout,
+.private-channel-call,
 .results-wrapper,
 .scroller-2dsok0,
 .scroller-2dsok0::-webkit-resizer,
@@ -123,6 +125,7 @@ html,
 .topSectionPlaying-3jAH9b,
 .typing-3eiiL_,
 .ui-standard-sidebar-view,
+.video-3lOWa6,
 /* Classes */
 /* Wild */
 button[id*="bda-qem"]
@@ -440,6 +443,20 @@ button[id*="bda-qem"]
 .downloadButton-NPl2PI {
     color: var(--neutral) !important;
 }
+.message-group .message-text .markup .emoji.jumboable {
+    object-fit: scale-down !important;
+    width: 32px !important;
+    height: 32px !important;
+    margin: 0px 0px 0px 0px !important;
+    padding: none !important;
+}
+.message-group .message-text .markup .emoji {
+    object-fit: scale-down !important;
+    width: 22px !important;
+    height: 22px !important;
+    margin: 0px 0px 0px 0px !important;
+    padding: none !important;
+}
 
 /* Chat Users */
 .member-2FrNV0:hover .content-3JzEqq,
@@ -604,7 +621,17 @@ button[id*="bda-qem"] {
 }
 .selected-_bTXUG,
 .item-rK1j5B:hover {
-    border: 1px solid var(--neutral) !important;
+    border-top: 1px solid var(--neutral) !important;
+    border-bottom: 1px solid var(--neutral) !important;
+    border-left: none !important;
+    border-right: none !important;
+}
+.item-rK1j5B:hover:first-of-type {
+    border-radius: 5px 5px 0px 0px !important;
+}
+.item-rK1j5B:hover:last-of-type {
+    border-radius: 0px 0px 5px 5px !important;
+    padding-bottom: 8px !important;
 }
 .channel-separator:before,
 .search-result-message.before,

@@ -342,8 +342,22 @@ button[id*="bda-qem"]
     border: none !important;
 }
 .message-group {
+    box-sizing: unset !important;
+    margin: -1px 10px 0px 20px !important;
+    padding: 20px 0px 20px 0px !important;
     border: none !important;
     border-top: 1px solid var(--neutral) !important;
+}
+.chat form {
+    margin: 0px !important;
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+.inner-3if5cm {
+    border: 1px solid var(--neutral) !important;
+    border-radius: 3px !important;
 }
 .base-2KDOo9 {
     margin: 0px 20px 0px 20px !important;
@@ -379,9 +393,6 @@ button[id*="bda-qem"]
 .markup pre code {
     border-left: 4px solid var(--user-color) !important;
     border-radius: 3px 0px 0px 3px !important;
-}
-.inner-3if5cm {
-    border: 1px solid var(--neutral) !important;
 }
 .small-popout-box {
     border: 1px solid var(--neutral) !important;

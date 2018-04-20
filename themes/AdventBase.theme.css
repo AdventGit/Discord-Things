@@ -155,7 +155,7 @@ button[id*="bda-qem"]
     width: 100% !important;
     padding-right: 10px !important;
 }
-.guilds-wrapper .guilds > [class*="guild"]:first-child .guild-inner,
+.guilds-wrapper .guilds > .guild:first-child .guild-inner,
 .guilds-wrapper .guilds .guild,
 .guilds-wrapper .guilds .guild:nth-of-type(n+4) .guild-inner a{
     height: var(--guild-size) !important;
@@ -316,28 +316,42 @@ button[id*="bda-qem"]
     background: var(--user-color) !important;
     border: none !important;
 }
-.message-group .message.mentioned .message-text {
-    display: flex !important;
-    left: 0px !important;
-    white-space: nowrap !important;
-    width: fit-content !important;
+.messages .markup .mention {
+    color: var(--user-color) !important;
+    background-color: var(--user-color-semi-trans) !important;
 }
+.messages .message.mentioned .mention {
+    background-color: transparent !important;
+}
+.message-group .message.mentioned .message-text {
+    background-color: var(--user-color-semi-trans) !important;
+    margin-left: -4px !important;
+    border-left: 4px solid transparent !important;
+    border-radius: 3px !important;
+}
+.message-group .message.mentioned .message-text:after {
+    border-left: 4px solid var(--user-color) !important;
+    border-radius: 3px !important;
+    margin-left: 0px !important;
+    background: none !important;
+}
+/*
 .message-group .message.mentioned .message-text .btn-reaction {
     display: block !important;
+    visibility: visible !important;
     position: absolute !important;
     float: right !important;
-    left: calc(100% + 4px) !important;
-    top: 4px !important;
+    left: calc(96% + 2px) !important;
+    top: 0px !important;
 }
 .message-group .message.mentioned .message-text .btn-option {
     display: block !important;
+    visibility: visible !important;
     position: absolute !important;
-    left: calc(100% + 24px) !important;
-    top: 4px !important;
+    left: calc(96% + 22px) !important;
+    top: 0px !important;
 }
-.message-group .message.mentioned .message-text:after {
-    background: none !important;
-}
+*/
 .message-group:nth-of-type(2) {
     border: none !important;
 }
@@ -364,20 +378,6 @@ button[id*="bda-qem"]
     padding: 0px 0px 0px 0px !important;
     height: unset !important;
 }
-.messages [class*="mentioned"] [class*="message-text"] {
-    background-color: var(--user-color-semi-trans) !important;
-}
-.messages [class*="mentioned"] [class*="message-text"]:after {
-    border-left: 4px solid var(--user-color) !important;
-}
-.messages span[class*="mention"] {
-    color: var(--user-color) !important;
-    background-color: var(--user-color-semi-trans) !important;
-}
-.messages [class*="mentioned"] span[class*="mention"] {
-    color: var(--user-color) !important;
-    background-color: transparent !important;
-}
 .embed,
 .embedInner-t4ag7g,
 .chat form,
@@ -387,7 +387,7 @@ button[id*="bda-qem"]
     border: none !important;
     box-shadow: none !important;
 }
-.embed [class*="embedPill"] {
+.embed .embedPill-3sYS1X {
     background: var(--user-color) !important;
 }
 .markup pre code {

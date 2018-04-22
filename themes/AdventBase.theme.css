@@ -2,13 +2,6 @@
 
 :root {}
 
-/* Base Themeing */
-/* Elements */
-body,
-head,
-html,
-/* Elements */
-/* IDs */
 #app-mount,
 #bda-qem-favourite-container .scroller::-webkit-resizer,
 #bda-qem-favourite-container .scroller::-webkit-scrollbar,
@@ -23,16 +16,14 @@ html,
 #bda-qem-twitch-container .scroller::-webkit-scrollbar-track,
 #bda-qem-twitch-container .scroller::-webkit-scrollbar-track-piece,
 #friends,
-/* IDs */
-/* Classes */
 .activity-3NviKQ,
 .activityFeed--1mYMS,
 .app,
 .app-XZYfmp,
 .base-3AoPqv > .spacer-3Dkonz:nth-of-type(2),
 .base-3AoPqv,
-.body-3ljq11,
 .body-3_tdh6,
+.body-3ljq11,
 .body-8pBSC7,
 .channel-separator .channel-name,
 .channel-separator,
@@ -40,12 +31,11 @@ html,
 .chat > .content > .flex-spacer,
 .chat > .content,
 .chat form,
-.chat form,
 .chat,
 .container-2OU7Cz,
 .container-3lnMWU,
-.container-iksrDt,
 .container-RYiLUQ,
+.container-iksrDt,
 .content-region,
 .contentHoveredVoice-3qGNKh,
 .contentSelectedVoice-gTtYM9,
@@ -76,11 +66,6 @@ html,
 .membersWrap-3wRngy > .themeGhostHairline-2H8SiW,
 .membersWrap-3wRngy,
 .messages [class*="default"],
-.messages-popout .message-group,
-.messages-popout-wrap .action-buttons,
-.messages-popout-wrap .header,
-.messages-popout-wrap .jump-button,
-.messages-popout-wrap .message-group,
 .messages-wrapper,
 .messages.scroller::-webkit-resizer,
 .messages.scroller::-webkit-scrollbar,
@@ -88,9 +73,13 @@ html,
 .messages.scroller::-webkit-scrollbar-corner,
 .messages.scroller::-webkit-scrollbar-track,
 .messages.scroller::-webkit-scrollbar-track-piece,
+.messagesPopout-MzE43I .actionButtons-LKmOj2,
+.messagesPopout-MzE43I .jumpButton-1CVJpO,
+.messagesPopout-MzE43I .message-group,
+.messagesPopoutWrap-1VBR-j .header-y_zptc,
 .note-2AtC_s textarea:focus,
 .pagination,
-.popouts .popout,
+.popouts-1TN9u9 .popout,
 .private-channel-call,
 .results-wrapper,
 .scroller-2dsok0,
@@ -102,16 +91,15 @@ html,
 .scroller-2dsok0::-webkit-scrollbar-track-piece,
 .scrollerWrap-EC-dSj,
 .search-header,
-.searchAnswer-yD90ey,
-.searchFilter-1fJ0cd,
-.selected-_bTXUG,
-.searchPopout-38pRYh .searchOption-vKNX73:after,
 .search-result,
 .search-result-message,
 .search-result:after,
 .search-result:before,
 .search-results,
 .search-results-wrap,
+.searchAnswer-yD90ey,
+.searchFilter-1fJ0cd,
+.searchPopout-38pRYh .searchOption-vKNX73:after,
 .selected-_bTXUG,
 .sidebar-region,
 .small-popout-box,
@@ -126,10 +114,10 @@ html,
 .typing-3eiiL_,
 .ui-standard-sidebar-view,
 .video-3lOWa6,
-/* Classes */
-/* Wild */
-button[id*="bda-qem"]
-/* Wild */ {
+body,
+button[id*="bda-qem"],
+head,
+html {
     background: transparent !important;
 }
 .app {
@@ -334,6 +322,16 @@ button[id*="bda-qem"]
     border-radius: 3px !important;
     margin-left: 0px !important;
     background: none !important;
+}
+.message-group .reactions .reaction {
+    background: var(--user-color-semi-trans) !important;
+    border-radius: 3px !important;
+}
+.message-group .reactions .reaction .reaction-count {
+    color: var(--neutral) !important;
+}
+.message-group .reactions .reaction-me .reaction-count {
+    color: var(--user-color) !important;
 }
 /*
 .message-group .message.mentioned .message-text .btn-reaction {
@@ -599,21 +597,20 @@ button[id*="bda-qem"] {
 }
 
 /* Pins */
-.popouts .popout,
-.themed-popout,
-.messages-popout .message-group,
-.messages-popout-wrap .header,
-.messages-popout-wrap .message-group,
-.messages-popout-wrap .action-buttons,
-.messages-popout-wrap .jump-button {
+.popouts-1TN9u9 .popout-2RRwAO,
+.messagesPopoutWrap-1VBR-j,
+.messagesPopoutWrap-1VBR-j .header-y_zptc,
+.messagesPopout-MzE43I .message-group,
+.messagesPopout-MzE43I .actionButtons-LKmOj2,
+.messagesPopout-MzE43I .jumpButton-1CVJpO {
     border: none !important;
     box-shadow: none !important;
 }
-.messages-popout-wrap {
-    background: var(--dark) !important;
+.messagesPopoutWrap-1VBR-j {
+    background: var(--dark-o) !important;
     border-radius: 3px !important;
 }
-.messages-popout-wrap .action-buttons {
+.messagesPopout-MzE43I .actionButtons-LKmOj2 {
     position: absolute !important;
     top: 0px !important;
     bottom: unset !important;
@@ -724,7 +721,8 @@ button[id*="bda-qem"] {
 
 /* Status-es */
 .status-online,
-[class*="statusOnline"] {
+[class*="statusOnline"],
+.iconBadge-1FYlQB {
     background-color: var(--user-color) !important;
 }
 .status.status-typing {
@@ -781,40 +779,41 @@ button[id*="bda-qem"] {
 }
 
 /* Fuck these things */
-[class*="is-local-bot"],
-[class*="noticePremium"],
-[class*="noticeDanger"],
-[class*="fools"],
-[id*="fools"],
-[class*="channelNotices"],
-[class*="channelNotice"],
-.guilds-wrapper [class^="unread-mentions-indicator"],
-.wordmark-2L03Wr,
-.guilds-wrapper .scroller-wrap ::-webkit-scrollbar,
-.guilds-wrapper .guilds .guilds-add-inner,
-.positionedContainer-1vzMMH,
-.unreadBottom-2LxhSR,
-.welcomeMessage-1U7Ntv,
-.chat .divider,
-.channel-members-loading,
+.carousel-28zrtT,
 .channel-members-loading .background,
-.jump-to-present-bar,
-.has-more,
+.channel-members-loading,
+.chat .divider,
 .dimmer-jySV_v,
 .ellipsis--nKTEd,
-.separator-1hpa3S,
-.search-result-message.before,
-.search-result-message.sibling,
-.search-result-message.after,
+.footer-1aZ98z,
+.guilds-wrapper .guilds .guilds-add-inner,
+.guilds-wrapper .scroller-wrap ::-webkit-scrollbar,
+.guilds-wrapper [class^="unread-mentions-indicator"],
+.has-more,
+.jump-to-present-bar,
 .memberGroupsPlaceholder-1M417G,
+.noticeFacebook-1eAoSW,
 .placeholder-1r59uP,
 .placeholderAvatar-2trNnW,
 .placeholderUsername-5-KmQU,
+.positionedContainer-1vzMMH,
 .protip-q743VF,
-.carousel-28zrtT,
+.search-result-message.after,
+.search-result-message.before,
+.search-result-message.sibling,
 .section-fQIEsd.sectionBottomPadding-38xKlA,
 .sectionLine-3PSnnJ,
-.noticeFacebook-1eAoSW {
+.separator-1hpa3S,
+.unreadBottom-2LxhSR,
+.welcomeMessage-1U7Ntv,
+.wordmark-2L03Wr,
+[class*="channelNotice"],
+[class*="channelNotices"],
+[class*="fools"],
+[class*="is-local-bot"],
+[class*="noticeDanger"],
+[class*="noticePremium"],
+[id*="fools"] {
     display: none !important;
     position: absolute !important;
     width: 0px !important;

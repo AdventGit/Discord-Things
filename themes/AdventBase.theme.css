@@ -120,6 +120,9 @@
 .small-popout-box,
 .splashArt-va7TI-,
 .stickyHeader-3LjM5X,
+.tab-bar-item,
+.tab-bar-item.selected,
+.tab-bar-item:hover,
 .themed-popout,
 .title-qAcLxz,
 .titleBar-3_fDwJ,
@@ -141,6 +144,9 @@ html {
 body {
     font-weight: 400 !important;
     font-style: none !important;
+}
+a {
+    color: var(--user-color);
 }
 .guilds #bd-pub-li #bd-pub-button,
 .guilds .friends-online,
@@ -173,11 +179,25 @@ body {
 .nameDefaultVoice-1swZoh,
 .nameUnreadText-1pxldj,
 .nameUnreadVoice-QK4gxH,
-.wrapper-2ldvyE {
+.wrapper-2ldvyE,
+.chat .message-group .accessory .embed .embedAuthorNameLink-x26ET8,
+.channel-name,
+.discord-tag,
+.status-text,
+.username-24t9uh,
+.tab-bar-item.selected,
+.inner-1_1f7b .discriminator,
+.creationDate,
+.tab-bar-item,
+.contents-4L4hQM,
+.userInfoSectionHeader-pmdPGs,
+.note-2AtC_s textarea {
     -webkit-text-stroke: .45px hsla(0, 0%, 100%, .1) !important;
 }
 .message-group a,
-.nameSpeaking-3ROx9q {
+.nameSpeaking-3ROx9q,
+.chat .message-group .accessory .embed .embedProviderLink-2k6W5T,
+.chat .message-group .accessory .embed .embedTitleLink-1IGDvg {
     -webkit-text-stroke: .45px var(--user-color-font-smooth) !important;
 }
 .container-2oOGIt {
@@ -340,7 +360,7 @@ body {
 }
 .nameDefault-Lnjrwm {
     font-weight: 500 !important;
-    color: hsla(0, 0%, 100%, .4) !important;
+    color: var(--neutral-text) !important;
 }
 .nameHovered-1YFSWq,
 .nameHoveredCollapsed-2c-EHI {
@@ -380,7 +400,7 @@ body {
 .nameUnreadText-1pxldj,
 .nameUnreadVoice-QK4gxH {
     font-weight: 400 !important;
-    color: hsla(0, 0%, 100%, .4) !important;
+    color: var(--neutral-text) !important;
 }
 .avatarSpeaking-3teDH6 {
     box-shadow: 0 0 0 2px var(--user-color) !important;
@@ -389,13 +409,13 @@ body {
     color: var(--user-color) !important;
 }
 .wrapper-2ldvyE {
-    border-left: 2px solid hsla(0, 0%, 100%, .4) !important;
-    border-right: 2px solid hsla(0, 0%, 100%, .4) !important;
+    border-left: 2px solid var(--neutral-text) !important;
+    border-right: 2px solid var(--neutral-text) !important;
     border-radius: 8px !important;
     padding-left: 2px !important;
     padding-right: 2px !important;
     font-weight: 400 !important;
-    color: hsla(0, 0%, 100%, .4) !important;
+    color: var(--neutral-text) !important;
 }
 
 /* Games */
@@ -431,12 +451,17 @@ body {
     border-radius: 3px !important;
     box-shadow: none !important;
 }
-.tab-bar-item:hover {
-    background: var(--neutral) !important;
+.discord-tag,
+.status-text {
+    color: var(--neutral-text) !important;
 }
-.tab-bar-item.selected {
-    background-color: var(--neutral) !important;
-    color: white !important;
+.friends-row:hover .discord-tag,
+.friends-row:hover .status-text {
+    color: #FFFFFF !important;
+}
+.friends-row:hover .friends-column a:hover {
+    border: 2px solid var(--user-color) !important;
+    border-radius: 100% !important;
 }
 
 /* Chat */
@@ -474,7 +499,7 @@ body {
     border-radius: 3px !important;
 }
 .message-group .reactions .reaction .reaction-count {
-    color: var(--neutral) !important;
+    color: var(--neutral-text) !important;
 }
 .message-group .reactions .reaction-me .reaction-count {
     color: var(--user-color) !important;
@@ -533,6 +558,10 @@ body {
 }
 .embed .embedPill-3sYS1X {
     background: var(--user-color) !important;
+}
+.chat .message-group .accessory .embed .embedProviderLink-2k6W5T,
+.chat .message-group .accessory .embed .embedTitleLink-1IGDvg {
+    color: var(--user-color) !important;
 }
 .markup pre code {
     border-left: 4px solid var(--user-color) !important;
@@ -653,6 +682,13 @@ body {
     border-radius: 0px !important;
     box-shadow: none !important;
 }
+.tab-bar-item.selected {
+    color: white !important;
+}
+.tab-bar-item:hover {
+    border-bottom-color: none !important;
+    border-bottom: 2px solid var(--neutral) !important;
+}
 .connectedAccount-3mKaTA {
     border: 1px solid var(--neutral) !important;
     border-radius: 3px !important;
@@ -660,6 +696,24 @@ body {
 }
 .button-2t3of8 {
     color: white !important;
+}
+.username-24t9uh,
+.tab-bar-item.selected,
+.contents-4L4hQM {
+    color: #FFFFFF !important;
+}
+.inner-1_1f7b .discriminator,
+.creationDate,
+.tab-bar-item {
+    color: var(--neutral-text) !important;
+}
+.userInfoSectionHeader-pmdPGs {
+    font-weight: 500 !important;
+    color: var(--neutral-text) !important;
+}
+.note-2AtC_s textarea {
+    font-weight: 400 !important;
+    color: var(--neutral-text) !important;
 }
 
 /* Emotes */

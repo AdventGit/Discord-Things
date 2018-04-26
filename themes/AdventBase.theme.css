@@ -1,18 +1,8 @@
 //META{"name":"Advent-Base","description":"Backend Theme","author":"AdventDiscord","version":"2"}*//
 
 @font-face {
-    font-family: 'iWhitney';
-    src: url('https://rawgit.com/AdventGit/Discord-Things/master/Fonts/Whitney_Light.woff2') format('woff2');
-    src: url('https://rawgit.com/AdventGit/Discord-Things/master/Fonts/Whitney_Semibold.woff') format('woff'),
-         url('https://rawgit.com/AdventGit/Discord-Things/master/Fonts/Whitney_Light.eot'),
-         url('https://rawgit.com/AdventGit/Discord-Things/master/Fonts/Whitney_Light.eot?#iefix') format('embedded-opentype'),
-         url('https://rawgit.com/AdventGit/Discord-Things/master/Fonts/Whitney_Light.svg#svgiWhitney') format('svg'),
-         url('https://rawgit.com/AdventGit/Discord-Things/master/Fonts/Whitney_Light.ttf') format('truetype');
-}
-
-@font-face {
     font-family: 'lWhitney';
-    src: local('C:\Users\Advent\AppData\Roaming\BetterDiscord\Fonts\whitney-medium.woff') format('woff');
+    src: url('https://rawgit.com/AdventGit/Discord-Things/master/Fonts/whitney-medium.woff') format('woff');
 }
 
 :root {
@@ -146,7 +136,7 @@ html {
     background: transparent !important;
 }
 body {
-    font-family: lWhitney !important;
+    font-family: lWhitney, Whitney !important;
     font-style: none !important;
 }
 .container-2oOGIt {
@@ -351,6 +341,9 @@ body {
 }
 
 /* Chat */
+.chat .message-group .markup {
+    font-family: Arial !important;
+}
 .messages.scroller::-webkit-scrollbar {
     width: 10px !important;
 }

@@ -141,7 +141,7 @@ html {
     background: transparent !important;
 }
 body {
-    font-family: iWhitney !important;
+    font-family: iWhitney, Consolas !important;
 }
 .container-2oOGIt {
     background: var(--dark-o) !important;

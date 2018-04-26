@@ -1002,6 +1002,16 @@ button[id*="bda-qem"] {
     padding: 10px !important;
 }
 
+/* Outlines to Nuke */
+.header-1tSljs,
+.title-qAcLxz,
+.search-bar,
+.headerBar-cxbhPD {
+    border: none !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+}
+
 /* Fuck these things */
 .carousel-28zrtT,
 .channel-members-loading .background,

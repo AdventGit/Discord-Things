@@ -2,12 +2,12 @@
 
 @font-face {
     font-family: 'iWhitney';
-    src: url('') format('woff2');
-    src: url('#svgWhitney') format('svg'),
-         url('') format('woff'),
-         url(''),
-         url('?#iefix') format('embedded-opentype'),
-         url('') format('truetype');
+    src: url('https://rawgit.com/AdventGit/Discord-Things/master/Fonts/custom.woff2') format('woff2');
+    src: url('https://rawgit.com/AdventGit/Discord-Things/master/Fonts/custom.woff') format('woff'),
+         url('https://rawgit.com/AdventGit/Discord-Things/master/Fonts/custom.eot'),
+         url('https://rawgit.com/AdventGit/Discord-Things/master/Fonts/custom.eot?#iefix') format('embedded-opentype'),
+         url('https://rawgit.com/AdventGit/Discord-Things/master/Fonts/custom.svg#svgiWhitney') format('svg'),
+         url('https://rawgit.com/AdventGit/Discord-Things/master/Fonts/custom.ttf') format('truetype');
 }
 
 :root {
@@ -141,7 +141,7 @@ html {
     background: transparent !important;
 }
 body {
-    font-family: Whitney !important;
+    font-family: iWhitney !important;
 }
 .container-2oOGIt {
     background: var(--dark-o) !important;

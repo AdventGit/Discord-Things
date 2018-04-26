@@ -172,7 +172,8 @@ body {
 .nameDefaultText-QoumjC,
 .nameDefaultVoice-1swZoh,
 .nameUnreadText-1pxldj,
-.nameUnreadVoice-QK4gxH {
+.nameUnreadVoice-QK4gxH,
+.wrapper-2ldvyE {
     -webkit-text-stroke: .45px hsla(0, 0%, 100%, .1) !important;
 }
 .message-group a,
@@ -386,6 +387,15 @@ body {
 }
 .nameSpeaking-3ROx9q {
     color: var(--user-color) !important;
+}
+.wrapper-2ldvyE {
+    border-left: 2px solid hsla(0, 0%, 100%, .4) !important;
+    border-right: 2px solid hsla(0, 0%, 100%, .4) !important;
+    border-radius: 8px !important;
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+    font-weight: 400 !important;
+    color: hsla(0, 0%, 100%, .4) !important;
 }
 
 /* Games */

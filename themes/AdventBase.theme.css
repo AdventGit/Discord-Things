@@ -1,17 +1,17 @@
 //META{"name":"Advent-Base","description":"Backend Theme","author":"AdventDiscord","version":"2"}*//
 
-@font-face {
-    font-family: 'lWhitney';
-    src: url('https://rawgit.com/AdventGit/Discord-Things/master/Fonts/whitney-medium.woff') format('woff');
-}
-
 :root {
     text-rendering: geometricPrecision !important;
-    font-smooth: always !important;
+    font-smoothing: antialiased !important;
     -webkit-font-smoothing: antialiased !important;
+    -moz-font-smoothing: unset !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+    -moz-backface-visibility: hidden !important;
+    font-smooth: always !important;
     font-variant-ligatures: none !important;
     font-feature-settings: none !important;
-    -webkit-text-stroke: 0.45px rgba(127, 127, 127, 0.1) !important;
 }
 
 #app-mount,
@@ -136,8 +136,15 @@ html {
     background: transparent !important;
 }
 body {
-    font-family: lWhitney, Whitney !important;
+    font-weight: 400 !important;
     font-style: none !important;
+}
+.guilds #bd-pub-li #bd-pub-button,
+.guilds .friends-online,
+.guilds #RANbutton-frame #RANbutton,
+.chat .message-group .old-h2 .timestamp,
+.chat .message-group .message-text .markup {
+    -webkit-text-stroke: .45px hsla(0, 0%, 100%, .1) !important;
 }
 .container-2oOGIt {
     background: var(--dark-o) !important;
@@ -341,9 +348,6 @@ body {
 }
 
 /* Chat */
-.chat .message-group .markup {
-    font-family: Arial !important;
-}
 .messages.scroller::-webkit-scrollbar {
     width: 10px !important;
 }

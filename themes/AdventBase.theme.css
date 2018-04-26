@@ -1,6 +1,23 @@
 //META{"name":"Advent-Base","description":"Backend Theme","author":"AdventDiscord","version":"2"}*//
 
-:root {}
+@font-face {
+    font-family: 'iWhitney';
+    src: url('') format('woff2');
+    src: url('#svgWhitney') format('svg'),
+         url('') format('woff'),
+         url(''),
+         url('?#iefix') format('embedded-opentype'),
+         url('') format('truetype');
+}
+
+:root {
+    text-rendering: geometricPrecision !important;
+    font-smooth: always !important;
+    -webkit-font-smoothing: antialiased !important;
+    font-variant-ligatures: none !important;
+    font-feature-settings: none !important;
+    -webkit-text-stroke: 0.45px rgba(127, 127, 127, 0.1) !important;
+}
 
 #app-mount,
 #bda-qem-favourite-container .scroller::-webkit-resizer,
@@ -123,8 +140,8 @@ head,
 html {
     background: transparent !important;
 }
-.app {
-    text-rendering: geometricPrecision !important;
+body {
+    font-family: Whitney !important;
 }
 .container-2oOGIt {
     background: var(--dark-o) !important;

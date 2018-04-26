@@ -10,6 +10,7 @@
     --badge-size: 18px;
     --user-color: rgba(51, 181, 229, 1);
     --user-color-semi-trans: rgba(51, 181, 229, .22);
+    --user-color-font-smooth: rgba(51, 181, 229, .1);
     /* Things you can touch */
     /* Things you can touch, but maybe shouldn't unless you know what it actually applies to */
     --dark: rgba(0, 0, 0, .5);

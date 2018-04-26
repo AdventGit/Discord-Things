@@ -32,6 +32,7 @@
 .activityFeed--1mYMS,
 .app,
 .app-XZYfmp,
+.attachment-1Vom9D,
 .base-3AoPqv > .spacer-3Dkonz:nth-of-type(2),
 .base-3AoPqv,
 .bda-slist li,
@@ -57,6 +58,7 @@
 .embedInner-t4ag7g,
 .footer-2wFs91,
 .friends-table,
+.guilds-error,
 .guilds-wrapper .guilds .guilds-add,
 .guilds-wrapper .guilds,
 .guilds-wrapper .scroller-wrap,
@@ -129,6 +131,7 @@
 .ui-standard-sidebar-view,
 .userHovered-3tfm93,
 .video-3lOWa6,
+.wrapper-2ldvyE,
 body,
 button[id*="bda-qem"],
 head,
@@ -143,8 +146,35 @@ body {
 .guilds .friends-online,
 .guilds #RANbutton-frame #RANbutton,
 .chat .message-group .old-h2 .timestamp,
-.chat .message-group .message-text .markup {
+.chat .message-group .message-text .markup,
+.chat .message-group .message-text .markup .edited,
+.chat .content form textarea,
+.edit-message textarea,
+.membersGroup-3_dP5E,
+.nameDefault-Lnjrwm,
+.nameHovered-1YFSWq,
+.nameHoveredCollapsed-2c-EHI,
+.iconDefault-xzclSQ,
+.iconHovered-3PRzOR,
+.iconHoveredCollapsed-jNYgOD,
+.nameCollapsed-3_ChMu,
+.nameMutedText-1YDcP-,
+.nameMutedVoice-26k4cP,
+.nameLockedText-2fGz07,
+.nameLockedVoice-wNOMNa,
+.iconCollapsed-1INdMX,
+.nameHoveredText-2FFqiz,
+.nameHoveredVoice-TIoHRJ,
+.nameSelectedText-32NDX5,
+.nameSelectedVoice-XpjYTw,
+.nameDefaultText-QoumjC,
+.nameDefaultVoice-1swZoh,
+.nameUnreadText-1pxldj,
+.nameUnreadVoice-QK4gxH {
     -webkit-text-stroke: .45px hsla(0, 0%, 100%, .1) !important;
+}
+.message-group a {
+    -webkit-text-stroke: .45px var(--user-color-font-smooth) !important;
 }
 .container-2oOGIt {
     background: var(--dark-o) !important;
@@ -260,7 +290,6 @@ body {
     margin-top: 7px !important;
     height: var(--guild-size) !important;
     width: var(--guild-size) !important;
-    background: transparent !important;
     border: 2px dashed var(--neutral) !important;
     font-size: 0px !important;
     line-height: 0px !important;
@@ -302,8 +331,47 @@ body {
 }
 .contentSelectedText-3j5CXt,
 .contentHoveredText-2HYGIY,
-.wrapperHoveredVoice-3tbfNN {
+.contentHoveredVoice-3qGNKh {
     background: var(--neutral) !important;
+}
+.nameDefault-Lnjrwm {
+    font-weight: 500 !important;
+    color: hsla(0, 0%, 100%, .4) !important;
+}
+.nameHovered-1YFSWq,
+.nameHoveredCollapsed-2c-EHI {
+    font-weight: 500 !important;
+    color: #FFFFFF !important;
+}
+.iconDefault-xzclSQ,
+.iconHovered-3PRzOR,
+.iconHoveredCollapsed-jNYgOD {
+    color: hsla(0, 0%, 100%, .56) !important;
+}
+.nameCollapsed-3_ChMu,
+.nameMutedText-1YDcP-,
+.nameMutedVoice-26k4cP,
+.nameLockedText-2fGz07,
+.nameLockedVoice-wNOMNa {
+    font-weight: 400 !important;
+    color: hsla(0, 0%, 100%, .2) !important;
+}
+.iconCollapsed-1INdMX {
+    color: hsla(0, 0%, 100%, .36) !important;
+}
+.nameHoveredText-2FFqiz,
+.nameHoveredVoice-TIoHRJ,
+.nameSelectedText-32NDX5,
+.nameSelectedVoice-XpjYTw {
+    font-weight: 400 !important;
+    color: #FFFFFF !important;
+}
+.nameDefaultText-QoumjC,
+.nameDefaultVoice-1swZoh,
+.nameUnreadText-1pxldj,
+.nameUnreadVoice-QK4gxH {
+    font-weight: 400 !important;
+    color: hsla(0, 0%, 100%, .4) !important;
 }
 
 /* Games */
@@ -492,7 +560,6 @@ body {
     color: var(--user-color) !important;
 }
 .attachment-1Vom9D {
-    background: transparent !important;
     border: 1px solid var(--neutral) !important;
     border-radius: 3px !important;
     max-width: unset !important;
@@ -918,7 +985,7 @@ button[id*="bda-qem"] {
     transform: none !important;
     transition: none !important;
     opacity: 0 !important;
-    background: transparent !important;
+    background: none !important;
     border: none !important;
     border-radius: 0px !important;
     box-shadow: none !important;

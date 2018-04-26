@@ -163,17 +163,20 @@ body {
 .nameLockedText-2fGz07,
 .nameLockedVoice-wNOMNa,
 .iconCollapsed-1INdMX,
+.nameHovered-28u_Fz,
 .nameHoveredText-2FFqiz,
 .nameHoveredVoice-TIoHRJ,
 .nameSelectedText-32NDX5,
 .nameSelectedVoice-XpjYTw,
+.nameDefault-1I0lx8,
 .nameDefaultText-QoumjC,
 .nameDefaultVoice-1swZoh,
 .nameUnreadText-1pxldj,
 .nameUnreadVoice-QK4gxH {
     -webkit-text-stroke: .45px hsla(0, 0%, 100%, .1) !important;
 }
-.message-group a {
+.message-group a,
+.nameSpeaking-3ROx9q {
     -webkit-text-stroke: .45px var(--user-color-font-smooth) !important;
 }
 .container-2oOGIt {
@@ -359,6 +362,10 @@ body {
 .iconCollapsed-1INdMX {
     color: hsla(0, 0%, 100%, .36) !important;
 }
+.unread-23Kvxk {
+    background-color: var(--user-color) !important;
+}
+.nameHovered-28u_Fz,
 .nameHoveredText-2FFqiz,
 .nameHoveredVoice-TIoHRJ,
 .nameSelectedText-32NDX5,
@@ -366,12 +373,19 @@ body {
     font-weight: 400 !important;
     color: #FFFFFF !important;
 }
+.nameDefault-1I0lx8,
 .nameDefaultText-QoumjC,
 .nameDefaultVoice-1swZoh,
 .nameUnreadText-1pxldj,
 .nameUnreadVoice-QK4gxH {
     font-weight: 400 !important;
     color: hsla(0, 0%, 100%, .4) !important;
+}
+.avatarSpeaking-3teDH6 {
+    box-shadow: 0 0 0 2px var(--user-color) !important;
+}
+.nameSpeaking-3ROx9q {
+    color: var(--user-color) !important;
 }
 
 /* Games */

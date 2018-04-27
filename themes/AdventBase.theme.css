@@ -148,6 +148,8 @@ body {
 a {
     color: var(--user-color);
 }
+.addFriendHint-3YUuew,
+.addFriendInput-wjMghP,
 .channel-name,
 .chat .content form textarea,
 .chat .message-group .accessory .embed .embedAuthorNameLink-x26ET8,
@@ -158,6 +160,8 @@ a {
 .creationDate,
 .discord-tag,
 .edit-message textarea,
+.friend-table-add-description,
+.friends-table-add .old-h2,
 .guilds #RANbutton-frame #RANbutton,
 .guilds #bd-pub-li #bd-pub-button,
 .guilds .friends-online,
@@ -456,16 +460,31 @@ a {
     box-shadow: none !important;
 }
 .discord-tag,
-.status-text {
+.status-text,
+.friend-table-add-description,
+.addFriendHint-3YUuew {
     color: var(--neutral-text) !important;
 }
 .friends-row:hover .discord-tag,
-.friends-row:hover .status-text {
+.friends-row:hover .status-text,
+.friends-table-add .old-h2,
+.addFriendInput-wjMghP {
     color: #FFFFFF !important;
 }
 .friends-row:hover .friends-column a:hover {
     border: 2px solid var(--user-color) !important;
     border-radius: 100% !important;
+}
+.friend-table-add-header {
+    background: transparent !important;
+}
+.friends-table-add form {
+    background: transparent !important;
+    border: 1px solid var(--neutral) !important;
+    border-radius: 3px !important;
+}
+.tab-bar-separator {
+    background-color: hsla(0, 0%, 100%, .36) !important;
 }
 
 /* Chat */
@@ -1003,10 +1022,11 @@ button[id*="bda-qem"] {
 }
 
 /* Outlines to Nuke */
+.friend-table-suggestions-header,
 .header-1tSljs,
-.title-qAcLxz,
+.headerBar-cxbhPD,
 .search-bar,
-.headerBar-cxbhPD {
+.title-qAcLxz {
     border: none !important;
     border-radius: 0px !important;
     box-shadow: none !important;
@@ -1046,6 +1066,7 @@ button[id*="bda-qem"] {
 .unreadBottom-2LxhSR,
 .welcomeMessage-1U7Ntv,
 .wordmark-2L03Wr,
+[class*="activityInviteEducation"],
 [class*="channelNotice"],
 [class*="channelNotices"],
 [class*="fools"],

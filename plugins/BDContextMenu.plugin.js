@@ -1,12 +1,12 @@
 //META{"name":"BDContextMenu"}*//
 
-/* global PluginUtilities:false, PluginContextMenu:false */
+/* global PluginUtilities:false, PluginContextMenu:false, DiscordModules:false */
 
 class BDContextMenu {
 	getName() { return "BDContextMenu"; }
 	getShortName() { return "BDContextMenu"; }
 	getDescription() { return "Adds BD shortcuts to the settings context menu. Support Server: bit.ly/ZeresServer"; }
-	getVersion() { return "0.0.6"; }
+	getVersion() { return "0.0.8"; }
 	getAuthor() { return "Zerebos"; }
 
 	constructor() {
@@ -35,7 +35,7 @@ class BDContextMenu {
 	initialize() {
 		this.initialized = true;
         PluginUtilities.checkForUpdate(this.getName(), this.getVersion());
-        $('.container-iksrDt div.button-1aU9q1').on('contextmenu.bdcs', () => { this.bindContextMenus(); });
+        $(`.${DiscordModules.AccountDetailsClasses.container} > div > .${DiscordModules.AccountDetailsClasses.button}`).on('contextmenu.bdcs', () => { this.bindContextMenus(); });
 		PluginUtilities.showToast(this.getName() + " " + this.getVersion() + " has started.");
 	}
 	
@@ -43,11 +43,11 @@ class BDContextMenu {
         $('*').off('.bdcs');
     }
 
-    observer(e) {
+    /*observer(e) {
         if (!e.addedNodes.length || !(e.addedNodes[0] instanceof Element) || !e.addedNodes[0].classList) return;
-        if (!e.addedNodes[0].querySelector('.container-iksrDt div.button-1aU9q1')) return;
-        $('.container-iksrDt div.button-1aU9q1').on('contextmenu.bdcs', () => { this.bindContextMenus(); });
-    }
+        if (!e.addedNodes[0].querySelector(`.${DiscordModules.AccountDetailsClasses.container} > div > .${DiscordModules.AccountDetailsClasses.button}`)) return;
+        $(`.${DiscordModules.AccountDetailsClasses.container} > div > .${DiscordModules.AccountDetailsClasses.button}`).on('contextmenu.bdcs', () => { this.bindContextMenus(); });
+    }*/
     
     bindContextMenus() {
 		this.contextObserver.observe(document.querySelector('#app-mount'), {childList: true, subtree: true});
@@ -60,7 +60,7 @@ class BDContextMenu {
 	observeContextMenus(e) {
 		if (!e.addedNodes.length || !(e.addedNodes[0] instanceof Element) || !e.addedNodes[0].classList) return;
 		let elem = e.addedNodes[0];
-		let isContext = elem.classList.contains('contextMenu-uoJTbz');
+		let isContext = elem.classList.contains(DiscordModules.ContextMenuClasses.contextMenu);
         if (!isContext) return;
         let contextMenu = $(elem);
 
@@ -201,7 +201,7 @@ class BDContextMenu {
             }
         });
         observer.observe(document.querySelector('.app'), {childList: true, subtree: true});
-        $('.container-iksrDt div.button-1aU9q1').click();
+        $(`.${DiscordModules.AccountDetailsClasses.container} > div > .${DiscordModules.AccountDetailsClasses.button}`).click();
     }
     
 }

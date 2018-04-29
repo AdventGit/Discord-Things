@@ -5,7 +5,6 @@
 /* User Assigned */
 :root {
     /* Things you can touch */
-    background-color: rgba(0, 0, 0, 1) !important;
     --guild-size: 42px;
     --badge-size: 18px;
     --user-color: rgba(51, 181, 229, 1);
@@ -20,6 +19,7 @@
     --dark-o: rgba(0, 0, 0, .75);
     --light-o: rgba(205, 205, 205, .75);
     --neutral-o: rgba(100, 100, 100, .75);
+    --neutral-smooth: hsla(0, 0%, 100%, .1);
     /* Things you can touch, but maybe shouldn't unless you know what it actually applies to */
     /* Bad Touch under this line... You really shouldn't mess with this m8y */
     --font-size-pre: calc(var(--guild-size) * 2.2);
@@ -41,6 +41,10 @@
     --guild-error-size-pre3: calc(var(--guild-error-size-pre2) + 0px);
     --guild-error-size-v: calc(var(--guild-error-size-pre3) + var(--guild-error-size-pre3));
     /* Bad Touch above this line... You really shouldn't mess with this m8y */
+}
+
+#app-mount {
+    background-color: rgba(0, 0, 0, 1) !important;
 }
 
 /* Transparent Discord + Image 

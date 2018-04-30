@@ -47,6 +47,7 @@
 .messages.scroller::-webkit-scrollbar-track,
 .messages.scroller::-webkit-scrollbar-track-piece,
 .content form,
+.typing-2GQL18,
 .channelTextArea-1LDbYG,
 .channelTextArea-rNsIhG,
 .inner-zqa7da,
@@ -64,6 +65,7 @@
 .markup pre code {
     background: transparent !important;
 }
+/*
 .wordmark-2iDDfm {
     visibility: hidden !important;
     padding: 0px !important;
@@ -80,6 +82,7 @@
     visibility: visible !important;
     font-size: 15px !important;
 }
+*/
 
 /* Guilds */
 .guilds-wrapper {
@@ -212,8 +215,12 @@
 }
 
 /* Font Smoothing List */
-.wordmark-2iDDfm:after {
+.wordmark-2iDDfm:after,
+.app .notice span {
     -webkit-text-stroke: .45px var(--neutral-smooth) !important;
+}
+.app .notice #outdatedPlugins span {
+    -webkit-text-stroke: .45px var(--user-color-font-smooth) !important;
 }
 
 /* Chat */
@@ -445,7 +452,152 @@
     opacity: 1 !important;
 }
 
+/* BetterDiscord and Plugins Retheme */
+.bda-slist li {
+    background: var(--dark-o);
+    border: 1px solid var(--neutral) !important;
+    border-radius: 3px !important;
+}
+.bda-header,
+.bda-description-wrap,
+.bda-footer {
+    border: none !important;
+}
+#bd-settings-sidebar .ui-tab-bar-header {
+    color: #72767D !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    line-height: 16px !important;
+    text-transform: uppercase !important;
+}
+.toasts {
+    display: block !important;
+    position: absolute !important;
+    width: inherit !important;
+    float: left !important;
+    bottom: 8% !important;
+    left: 0px !important;
+    right: 0px !important;
+    top: unset !important;
+    flex-direction: inherit !important;
+    align-items: baseline !important;
+    justify-content: inherit !important;
+    pointer-events: none !important;
+    z-index: 9999 !important;
+}
+.toast {
+    background: var(--dark) !important;
+    opacity: 1 !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    color: var(--user-color) !important;
+    user-select: text !important;
+    pointer-events: none !important;
+    transform: translateY(-10px) !important;
+    width: fit-content !important;
+    margin: 10px auto 0px auto !important;
+    padding: 10px !important;
+}
+.notice-3I4-y_ {
+    background: transparent !important;
+    -webkit-app-region: no-drag !important;
+    border-bottom: 1px solid var(--user-color) !important;
+    border-radius: 0px !important;
+    width: fit-content !important;
+    left: calc(50% - 13px) !important;
+    transform: translate(-50%, 0%) !important;
+}
+.notice-3I4-y_ .notice-message {
+    padding: 0px 20px 0px 0px !important;
+}
+.dismiss-1QjyJW {
+    width: 36px !important;
+    height: 36px !important;
+    background-position: 0% !important;
+    background-size: 10px !important;
+    bottom: 0px !important;
+    right: -26px !important;
+    left: unset !important;
+    top: 0px !important;
+    opacity: 1 !important;
+    transition: none !important;
+}
+
+/* Not used anymore... maybe? */
+/*
+.app .notice {
+    display: block !important;
+    position: absolute !important;
+    float: left !important;
+    bottom: 0px !important;
+    right: 0px !important;
+    left: calc(50% - 150px) !important;
+    top: calc(50% - 100px) !important;
+    background: #FFFFFF !important;
+    border: none !important;
+    border-radius: 4px !important;
+    width: 300px !important;
+    height: 200px !important;
+    z-index: 9998 !important;
+    -webkit-app-region: no-drag !important;
+}
+.app .notice .notice-dismiss {
+    background: var(--dark-o) !important;
+    display: block !important;
+    position: absolute !important;
+    width: 9999% !important;
+    height: 9999% !important;
+    bottom: 0px !important;
+    right: 0px !important;
+    left: 0px !important;
+    top: 0px !important;
+    transform: translate(-5%, -5%) !important;
+    z-index: -1 !important;
+}
+.app .notice span {
+    color: white !important;
+    font-size: 16px !important;
+    z-index: 9997 !important;
+}
+.app .notice .notice-message {
+    position: absolute !important;
+    left: 50% !important;
+    top: 8px !important;
+    transform: translate(-50%, 0%) !important;
+    width: max-content !important;
+    z-index: 9997 !important;
+}
+.app .notice #outdatedPlugins {
+    position: absolute !important;
+    top: 26% !important;
+    bottom: 0px !important;
+    left: 26% !important;
+    right: 0px !important;
+    transform: translate(-18%, 0%) !important;
+    z-index: 9997 !important;
+}
+.app .notice #outdatedPlugins span {
+    display: block !important;
+    height: 16px !important;
+    width: fit-content !important;
+    margin: auto !important;
+    color: var(--user-color) !important;
+    z-index: 9997 !important;
+}
+.app .notice #outdatedPlugins .separator {
+    visibility: hidden !important;
+    height: 0px !important;
+    width: 0px !important;
+}
+.app .notice #outdatedPlugins .separator:after {
+    content: "" !important;
+    visibility: visible !important;
+}*/
+
 /* Things to Nuke */
+.wordmark-2iDDfm,
 .wordmark-2iDDfm svg,
 .carousel-28zrtT,
 .channel-members-loading .background,
@@ -453,7 +605,7 @@
 .chat .divider,
 .content-1Cut5s .downloadLink-wANcd8,
 .dimmer-jySV_v,
-.ellipsis--nKTEd,
+.ellipsis-19qdx6,
 .footer-1aZ98z,
 .guilds-wrapper .guilds .guilds-add-inner,
 .guilds-wrapper .scroller-wrap ::-webkit-scrollbar,
@@ -523,6 +675,7 @@
     z-index: -1 !important;
 }
 
+/* OLD THEME */
 /*
 #bda-qem-favourite-container .scroller::-webkit-resizer,
 #bda-qem-favourite-container .scroller::-webkit-scrollbar,

@@ -58,13 +58,13 @@
 #bda-qem-twitch-container .scroller::-webkit-scrollbar-corner,
 #bda-qem-twitch-container .scroller::-webkit-scrollbar-track,
 #bda-qem-twitch-container .scroller::-webkit-scrollbar-track-piece,
-.scroller-2FKFPG,
-.scroller-2FKFPG::-webkit-resizer,
-.scroller-2FKFPG::-webkit-scrollbar,
-.scroller-2FKFPG::-webkit-scrollbar-button,
-.scroller-2FKFPG::-webkit-scrollbar-corner,
-.scroller-2FKFPG::-webkit-scrollbar-track,
-.scroller-2FKFPG::-webkit-scrollbar-track-piece,
+.emojiPicker-3m1S-j .scroller-2FKFPG,
+.emojiPicker-3m1S-j .scroller-2FKFPG::-webkit-resizer,
+.emojiPicker-3m1S-j .scroller-2FKFPG::-webkit-scrollbar,
+.emojiPicker-3m1S-j .scroller-2FKFPG::-webkit-scrollbar-button,
+.emojiPicker-3m1S-j .scroller-2FKFPG::-webkit-scrollbar-corner,
+.emojiPicker-3m1S-j .scroller-2FKFPG::-webkit-scrollbar-track,
+.emojiPicker-3m1S-j .scroller-2FKFPG::-webkit-scrollbar-track-piece,
 .content form,
 .typing-2GQL18,
 .channelTextArea-1LDbYG,
@@ -72,7 +72,7 @@
 .inner-zqa7da,
 .membersWrap-2h-GB4,
 .membersWrap-2h-GB4 .scrollerWrap-2lJEkd,
-.scroller-2FKFPG,
+.membersWrap-2h-GB4 .scrollerWrap-2lJEkd .scroller-2FKFPG,
 .ui-standard-sidebar-view,
 .sidebar-region,
 .content-region,
@@ -494,17 +494,17 @@ button[id*="bda-qem"] {
     border: none !important;
     border-bottom: 2px solid var(--user-color) !important;
 }
-.scroller-2FKFPG::-webkit-scrollbar,
+.emojiPicker-3m1S-j .scroller-2FKFPG::-webkit-scrollbar,
 #bda-qem-twitch-container .scroller::-webkit-scrollbar,
 #bda-qem-favourite-container .scroller::-webkit-scrollbar {
     width: 10px !important;
 }
-.scroller-2FKFPG::-webkit-scrollbar-track-piece,
+.emojiPicker-3m1S-j .scroller-2FKFPG::-webkit-scrollbar-track-piece,
 #bda-qem-twitch-container .scroller::-webkit-scrollbar-track-piece,
 #bda-qem-favourite-container .scroller::-webkit-scrollbar-track-piece {
     border: none !important;
 }
-.scroller-2FKFPG::-webkit-scrollbar-thumb,
+.emojiPicker-3m1S-j .scroller-2FKFPG::-webkit-scrollbar-thumb,
 #bda-qem-twitch-container .scroller::-webkit-scrollbar-thumb,
 #bda-qem-favourite-container .scroller::-webkit-scrollbar-thumb {
     background: var(--user-color) !important;
@@ -710,6 +710,7 @@ button[id*="bda-qem"] {
 }*/
 
 /* Things to Nuke */
+.message-group-blocked,
 .wordmark-2iDDfm,
 .wordmark-2iDDfm svg,
 .carousel-28zrtT,

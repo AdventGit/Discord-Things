@@ -46,6 +46,25 @@
 .messages.scroller::-webkit-scrollbar-corner,
 .messages.scroller::-webkit-scrollbar-track,
 .messages.scroller::-webkit-scrollbar-track-piece,
+#bda-qem-favourite-container .scroller::-webkit-resizer,
+#bda-qem-favourite-container .scroller::-webkit-scrollbar,
+#bda-qem-favourite-container .scroller::-webkit-scrollbar-button,
+#bda-qem-favourite-container .scroller::-webkit-scrollbar-corner,
+#bda-qem-favourite-container .scroller::-webkit-scrollbar-track,
+#bda-qem-favourite-container .scroller::-webkit-scrollbar-track-piece,
+#bda-qem-twitch-container .scroller::-webkit-resizer,
+#bda-qem-twitch-container .scroller::-webkit-scrollbar,
+#bda-qem-twitch-container .scroller::-webkit-scrollbar-button,
+#bda-qem-twitch-container .scroller::-webkit-scrollbar-corner,
+#bda-qem-twitch-container .scroller::-webkit-scrollbar-track,
+#bda-qem-twitch-container .scroller::-webkit-scrollbar-track-piece,
+.scroller-2FKFPG,
+.scroller-2FKFPG::-webkit-resizer,
+.scroller-2FKFPG::-webkit-scrollbar,
+.scroller-2FKFPG::-webkit-scrollbar-button,
+.scroller-2FKFPG::-webkit-scrollbar-corner,
+.scroller-2FKFPG::-webkit-scrollbar-track,
+.scroller-2FKFPG::-webkit-scrollbar-track-piece,
 .content form,
 .typing-2GQL18,
 .channelTextArea-1LDbYG,
@@ -65,7 +84,17 @@
 .markup pre code {
     background: transparent !important;
 }
-/*
+
+/* Font Smoothing List */
+.wordmark-2iDDfm:after,
+.app .notice span {
+    -webkit-text-stroke: .45px var(--neutral-smooth) !important;
+}
+.app .notice #outdatedPlugins span {
+    -webkit-text-stroke: .45px var(--user-color-font-smooth) !important;
+}
+
+/* Random Thing
 .wordmark-2iDDfm {
     visibility: hidden !important;
     padding: 0px !important;
@@ -214,15 +243,6 @@
     color: red !important;
 }
 
-/* Font Smoothing List */
-.wordmark-2iDDfm:after,
-.app .notice span {
-    -webkit-text-stroke: .45px var(--neutral-smooth) !important;
-}
-.app .notice #outdatedPlugins span {
-    -webkit-text-stroke: .45px var(--user-color-font-smooth) !important;
-}
-
 /* Chat */
 .messages.scroller::-webkit-scrollbar {
     width: 10px !important;
@@ -363,6 +383,7 @@
     border-radius: 0px 0px 3px 3px !important;
     transform: translate(-50%, 0%) !important;
 }
+/* To Fix */
 .new-messages-bar:hover {
     animation: revive 0s linear 0s 1 normal forwards;
 }
@@ -383,6 +404,7 @@
 .downloadButton-NPl2PI {
     color: var(--neutral) !important;
 }
+/* End Fix */
 .message-group .message-text .markup .emoji.jumboable {
     object-fit: scale-down !important;
     width: 32px !important;
@@ -396,6 +418,97 @@
     height: 22px !important;
     margin: 0px 0px 0px 0px !important;
     padding: none !important;
+}
+
+/* Emotes */
+.autocomplete-1vrmpx {
+    background: var(--dark-o) !important;
+}
+.selectorSelected-1_M1WV {
+    background: var(--neutral) !important;
+}
+.emojiPicker-3m1S-j,
+#bda-qem-twitch-container,
+#bda-qem-favourite-container {
+    background: var(--dark-o) !important;
+    border: none !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+}
+.header-1nkwgG .search-bar .search-bar-inner,
+.diversitySelector-tmmMv0,
+.categories-1feg4n {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+}
+.header-1nkwgG .search-bar .search-bar-inner input {
+    color: white !important;
+}
+.header-1nkwgG .search-bar .search-bar-inner input::-webkit-input-placeholder {
+    color: var(--neutral-text) !important;
+    opacity: 1 !important;
+}
+.stickyHeader-1SS0JU {
+    opacity: 0 !important;
+}
+#bda-qem {
+    background: var(--dark-o) !important;
+    border: none !important;
+    border-radius: 3px 3px 0px 0px !important;
+    box-shadow: none !important;
+}
+button[id*="bda-qem"] {
+    border: none !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+    padding: 0px !important;
+    margin: 0px !important;
+}
+#bda-qem button.active {
+    background: var(--neutral) !important;
+}
+#bda-qem-emojis {
+    border-radius: 0px 3px 0px 0px !important;
+}
+#bda-qem-emojis:hover {
+    background: var(--neutral) !important;
+}
+#bda-qem-favourite {
+    border-radius: none !important;
+}
+#bda-qem-favourite:hover {
+    background: var(--neutral) !important;
+}
+#bda-qem-twitch {
+    border-radius: 3px 0px 0px 0px !important;
+}
+#bda-qem-twitch:hover {
+    background: var(--neutral) !important;
+}
+.selected-39BZ4S {
+    background-color: transparent !important;
+}
+.categories-1feg4n .selected-39BZ4S {
+    border: none !important;
+    border-bottom: 2px solid var(--user-color) !important;
+}
+.scroller-2FKFPG::-webkit-scrollbar,
+#bda-qem-twitch-container .scroller::-webkit-scrollbar,
+#bda-qem-favourite-container .scroller::-webkit-scrollbar {
+    width: 10px !important;
+}
+.scroller-2FKFPG::-webkit-scrollbar-track-piece,
+#bda-qem-twitch-container .scroller::-webkit-scrollbar-track-piece,
+#bda-qem-favourite-container .scroller::-webkit-scrollbar-track-piece {
+    border: none !important;
+}
+.scroller-2FKFPG::-webkit-scrollbar-thumb,
+#bda-qem-twitch-container .scroller::-webkit-scrollbar-thumb,
+#bda-qem-favourite-container .scroller::-webkit-scrollbar-thumb {
+    background: var(--user-color) !important;
+    border: none !important;
 }
 
 /* Badges */
@@ -604,7 +717,7 @@
 .channel-members-loading,
 .chat .divider,
 .content-1Cut5s .downloadLink-wANcd8,
-.dimmer-jySV_v,
+.dimmer-3iH-5D,
 .ellipsis-19qdx6,
 .footer-1aZ98z,
 .guilds-wrapper .guilds .guilds-add-inner,

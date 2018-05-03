@@ -29,6 +29,7 @@
 .base-3dtUhz,
 .channels-Ie2l6A,
 .container-PNkimc,
+.container-1UB9sr,
 .container-2Thooq,
 .wrapper-2NJDcI,
 .chat,
@@ -83,6 +84,9 @@
 .markup pre,
 .markup pre code {
     background: transparent !important;
+}
+.container-16j22k {
+    background: var(--dark-o) !important;
 }
 
 /* Font Smoothing List */
@@ -241,6 +245,11 @@
 }
 .guilds-error:hover:after {
     color: red !important;
+}
+
+/* Server Channels */
+.container-1UB9sr {
+    border: none !important;
 }
 
 /* Chat */
@@ -710,6 +719,7 @@ button[id*="bda-qem"] {
 }*/
 
 /* Things to Nuke */
+.unread-nWfX3W,
 .message-group-blocked,
 .wordmark-2iDDfm,
 .wordmark-2iDDfm svg,

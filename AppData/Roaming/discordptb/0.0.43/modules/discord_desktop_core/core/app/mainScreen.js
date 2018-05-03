@@ -307,7 +307,6 @@ function launchMainAppWindow(isVisible) {
 
   var mainWindowOptions = {
     title: 'Discord',
-    backgroundColor: '#0000000',
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT,
     minWidth: MIN_WIDTH,

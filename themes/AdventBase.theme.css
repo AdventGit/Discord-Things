@@ -85,7 +85,8 @@
 .markup pre,
 .markup pre code,
 .attachment-33OFj0,
-.userHovered-2_fT4Z {
+.userHovered-2_fT4Z,
+.coverImageWrapper-22d5LB {
     background: transparent !important;
 }
 .container-16j22k {
@@ -132,7 +133,8 @@
 .nameUnreadVoice-EVo-wI,
 .wrapper-2NJDcI,
 .nameDefault-2s3kbY,
-#placeholder-910mn {
+#placeholder-910mn,
+.markup pre code {
     -webkit-text-stroke: .45px var(--neutral-smooth) !important;
 }
 .app .notice #outdatedPlugins span,
@@ -478,6 +480,7 @@
     color: var(--user-color) !important;
 }
 .markup pre code {
+    color: var(--neutral-text) !important;
     border-left: 4px solid var(--user-color) !important;
     border-radius: 3px 0px 0px 3px !important;
 }
@@ -576,6 +579,18 @@
     height: 22px !important;
     margin: 0px 0px 0px 0px !important;
     padding: none !important;
+}
+.wrapper-35wsBm,
+.game-invite-embed {
+    background: transparent !important;
+    border: 1px solid var(--neutral) !important;
+    border-radius: 3px !important;
+}
+.button-3To2tQ {
+    background: var(--user-color) !important;
+}
+.disabled-9aF2ug {
+    background: var(--neutral) !important;
 }
 
 /* Emotes */
@@ -706,8 +721,14 @@ button[id*="bda-qem"] {
 /* Status-es */
 .status-online,
 [class*="statusOnline"],
-.iconBadge-1FYlQB {
+.iconBadge-2dji3k {
     background-color: var(--user-color) !important;
+}
+.status-offline,
+[class*="statusOffline"],
+.status-invisible,
+[class*="statusInvisible"] {
+    background: rgb(90, 90, 90) !important;
 }
 .status.status-typing {
     width: 77% !important;

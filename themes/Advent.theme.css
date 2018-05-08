@@ -16,7 +16,7 @@
     --dark: rgba(0, 0, 0, .5);
     --light: rgba(205, 205, 205, .5);
     --neutral: rgba(100, 100, 100, .5);
-    --neutral-text: hsla(0, 0%, 100%, .4);
+    --neutral-text: hsla(0, 0%, 100%, .5);
     --dark-o: rgba(0, 0, 0, .75);
     --light-o: rgba(205, 205, 205, .75);
     --neutral-o: rgba(100, 100, 100, .75);

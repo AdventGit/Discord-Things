@@ -814,77 +814,39 @@ button[id*="bda-qem"] {
     transition: none !important;
     border-bottom: 1px solid var(--user-color) !important;
 }
-
-/* Not used anymore... maybe? */
-/*
-.app .notice {
+.bd-toasts {
     display: block !important;
     position: absolute !important;
+    width: inherit !important;
     float: left !important;
-    bottom: 0px !important;
-    right: 0px !important;
-    left: calc(50% - 150px) !important;
-    top: calc(50% - 100px) !important;
-    background: #FFFFFF !important;
-    border: none !important;
-    border-radius: 4px !important;
-    width: 300px !important;
-    height: 200px !important;
-    z-index: 9998 !important;
-    -webkit-app-region: no-drag !important;
-}
-.app .notice .notice-dismiss {
-    background: var(--dark-o) !important;
-    display: block !important;
-    position: absolute !important;
-    width: 9999% !important;
-    height: 9999% !important;
-    bottom: 0px !important;
-    right: 0px !important;
-    left: 0px !important;
-    top: 0px !important;
-    transform: translate(-5%, -5%) !important;
-    z-index: -1 !important;
-}
-.app .notice span {
-    color: white !important;
-    font-size: 16px !important;
-    z-index: 9997 !important;
-}
-.app .notice .notice-message {
-    position: absolute !important;
+    bottom: 8% !important;
     left: 50% !important;
-    top: 8px !important;
-    transform: translate(-50%, 0%) !important;
-    width: max-content !important;
-    z-index: 9997 !important;
-}
-.app .notice #outdatedPlugins {
-    position: absolute !important;
-    top: 26% !important;
-    bottom: 0px !important;
-    left: 26% !important;
     right: 0px !important;
-    transform: translate(-18%, 0%) !important;
-    z-index: 9997 !important;
+    top: unset !important;
+    transform: translate(-50%, 0%) !important;
+    flex-direction: inherit !important;
+    align-items: baseline !important;
+    justify-content: inherit !important;
+    pointer-events: none !important;
+    width: max-content !important;
+    height: max-content !important;
+    z-index: 9999 !important;
 }
-.app .notice #outdatedPlugins span {
-    display: block !important;
-    height: 16px !important;
-    width: fit-content !important;
-    margin: auto !important;
+.bd-toast {
+    background: var(--dark) !important;
+    opacity: 1 !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
     color: var(--user-color) !important;
-    z-index: 9997 !important;
+    user-select: none !important;
+    pointer-events: none !important;
+    width: fit-content !important;
+    margin: 10px auto 0px auto !important;
+    padding: 10px !important;
+    transform: none !important;
 }
-.app .notice #outdatedPlugins .separator {
-    visibility: hidden !important;
-    height: 0px !important;
-    width: 0px !important;
-}
-.app .notice #outdatedPlugins .separator:after {
-    content: "" !important;
-    visibility: visible !important;
-}*/
 
 /* Things to Nuke */
 .unread-nWfX3W,

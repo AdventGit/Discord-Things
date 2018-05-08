@@ -39,7 +39,7 @@ var MenuItems = {
   VOICE_SETTINGS: 'VOICE_SETTINGS',
   CHECK_UPDATE: 'CHECK_UPDATE',
   QUIT: 'QUIT',
-  ACKNOWLEDGEMENTS: 'ACKNOWLEDGEMENTS'
+  SETTINGS: 'SETTINGS'
 };
 
 var hasInit = exports.hasInit = false;
@@ -110,7 +110,8 @@ function initializeMenuItems() {
       onToggleDeafen = _options2.onToggleDeafen,
       onTrayClicked = _options2.onTrayClicked,
       onOpenVoiceSettings = _options2.onOpenVoiceSettings,
-      onCheckForUpdates = _options2.onCheckForUpdates;
+      onCheckForUpdates = _options2.onCheckForUpdates,
+      onOpenSettings = _options2.onOpenSettings;
 
   var voiceConnected = currentIcon !== trayIcons.DEFAULT && currentIcon !== trayIcons.UNREAD;
 
@@ -150,12 +151,17 @@ function initializeMenuItems() {
     label: 'Quit BetterDiscordPTB (0.0.43)',
     role: 'quit'
   };
+  menuItems[MenuItems.SETTINGS] = {
+    label: 'Settings',
+    type: 'normal',
+    click: onOpenSettings
+  }
 }
 
 function buildContextMenu() {
   var separator = { type: 'separator' };
 
-  contextMenu = [menuItems[MenuItems.OPEN], menuItems[MenuItems.MUTE], menuItems[MenuItems.DEAFEN], menuItems[MenuItems.VOICE_SETTINGS], menuItems[MenuItems.CHECK_UPDATE], menuItems[MenuItems.QUIT]];
+  contextMenu = [menuItems[MenuItems.OPEN], menuItems[MenuItems.MUTE], menuItems[MenuItems.DEAFEN], menuItems[MenuItems.SETTINGS], menuItems[MenuItems.VOICE_SETTINGS], separator, menuItems[MenuItems.CHECK_UPDATE], menuItems[MenuItems.QUIT]];
 }
 
 function setTrayIcon(icon) {
@@ -216,7 +222,7 @@ function show() {
   if (atomTray != null) return;
 
   atomTray = new _electron.Tray(currentIcon); // Initialize with last set icon
-  atomTray.setToolTip(_Constants.APP_NAME);
+  atomTray.setToolTip('BetterDiscordPTB (0.0.43)');
 
   // Set tray context menu
   setContextMenu();

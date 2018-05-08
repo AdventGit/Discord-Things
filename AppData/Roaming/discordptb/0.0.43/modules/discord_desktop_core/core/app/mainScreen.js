@@ -258,6 +258,7 @@ function setupSystemTray() {
         return setWindowVisible(true, true);
       },
       onOpenVoiceSettings: openVoiceSettings,
+      onOpenSettings: openSettings,
       onToggleMute: toggleMute,
       onToggleDeafen: toggleDeafen
     });
@@ -278,6 +279,11 @@ function setupAppConfig() {
   if (!appConfig.hasInit) {
     appConfig.init();
   }
+}
+
+function openSettings() {
+  setWindowVisible(true, true);
+  webContentsSend('USER_SETTINGS_OPEN');
 }
 
 function openVoiceSettings() {
@@ -413,17 +419,17 @@ function launchMainAppWindow(isVisible) {
     webContentsSend('MAIN_WINDOW_FOCUS');
   });
 
-  mainWindow.on('blur', function () {
-    webContentsSend('MAIN_WINDOW_BLUR');
-  });
+  //mainWindow.on('blur', function () {
+  //  webContentsSend('MAIN_WINDOW_BLUR');
+  //});
 
   mainWindow.on('page-title-updated', function (e, title) {
     if (mainWindow === null) {
       return;
     }
     e.preventDefault();
-    if (!title.endsWith('Discord')) {
-      title += ' - Discord';
+    if (!title.endsWith('BetterDiscord')) {
+      title += ' - BetterDiscord';
     }
     mainWindow.setTitle(title);
   });
@@ -449,7 +455,7 @@ function launchMainAppWindow(isVisible) {
         // this means we're quitting
         return;
       }
-      webContentsSend('MAIN_WINDOW_BLUR');
+      //webContentsSend('MAIN_WINDOW_BLUR');
 
       // Save our app settings
       saveWindowConfig(mainWindow);

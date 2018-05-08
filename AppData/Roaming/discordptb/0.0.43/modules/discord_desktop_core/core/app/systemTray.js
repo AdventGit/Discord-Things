@@ -161,7 +161,7 @@ function initializeMenuItems() {
 function buildContextMenu() {
   var separator = { type: 'separator' };
 
-  contextMenu = [menuItems[MenuItems.OPEN], menuItems[MenuItems.MUTE], menuItems[MenuItems.DEAFEN], menuItems[MenuItems.SETTINGS], menuItems[MenuItems.VOICE_SETTINGS], separator, menuItems[MenuItems.CHECK_UPDATE], menuItems[MenuItems.QUIT]];
+  contextMenu = [menuItems[MenuItems.OPEN], menuItems[MenuItems.MUTE], menuItems[MenuItems.DEAFEN], menuItems[MenuItems.VOICE_SETTINGS], menuItems[MenuItems.SETTINGS], separator, menuItems[MenuItems.CHECK_UPDATE], menuItems[MenuItems.QUIT]];
 }
 
 function setTrayIcon(icon) {

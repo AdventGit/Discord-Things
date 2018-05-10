@@ -165,7 +165,6 @@ function setWindowVisible(isVisible, andUnminimize) {
       webContentsSend('MAIN_WINDOW_FOCUS');
     }
   } else {
-    webContentsSend('MAIN_WINDOW_BLUR');
     mainWindow.hide();
     if (systemTray.hasInit) {
       systemTray.displayHowToCloseHint();
@@ -376,7 +375,7 @@ function launchMainAppWindow(isVisible) {
       insideAuthFlow = false;
     }
 
-    webContentsSend(mainWindow.isFocused() ? 'MAIN_WINDOW_FOCUS' : 'MAIN_WINDOW_BLUR');
+    webContentsSend(mainWindow.isFocused() ? 'MAIN_WINDOW_FOCUS' : 'MAIN_WINDOW_FOCUS');
     if (!lastPageLoadFailed) {
       connectionBackoff.succeed();
       splashScreen.pageReady();
@@ -419,18 +418,11 @@ function launchMainAppWindow(isVisible) {
     webContentsSend('MAIN_WINDOW_FOCUS');
   });
 
-  //mainWindow.on('blur', function () {
-  //  webContentsSend('MAIN_WINDOW_BLUR');
-  //});
-
   mainWindow.on('page-title-updated', function (e, title) {
     if (mainWindow === null) {
       return;
     }
     e.preventDefault();
-    if (!title.endsWith('BetterDiscord')) {
-      title += ' - BetterDiscord';
-    }
     mainWindow.setTitle(title);
   });
 
@@ -455,7 +447,6 @@ function launchMainAppWindow(isVisible) {
         // this means we're quitting
         return;
       }
-      //webContentsSend('MAIN_WINDOW_BLUR');
 
       // Save our app settings
       saveWindowConfig(mainWindow);

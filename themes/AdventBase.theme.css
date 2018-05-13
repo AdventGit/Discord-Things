@@ -86,7 +86,9 @@
 .markup pre code,
 .attachment-33OFj0,
 .userHovered-2_fT4Z,
-.coverImageWrapper-22d5LB {
+.coverImageWrapper-22d5LB,
+.private-channel-call,
+.video-1FfuMD {
     background: transparent !important;
 }
 .container-16j22k {
@@ -565,6 +567,16 @@
 .filenameLinkWrapper-1-14c5,
 .message-group a {
     color: var(--user-color) !important;
+}
+.message-group a {
+    font-weight: 600 !important;
+}
+code.inline {
+    color: #000000 !important;
+    -webkit-text-stroke: .18px #000000 !important;
+    background: var(--neutral) !important;
+    border: none !important;
+    border-radius: 3px !important;
 }
 .message-group .message-text .markup .emoji.jumboable {
     object-fit: scale-down !important;

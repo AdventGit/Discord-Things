@@ -37,6 +37,7 @@
     --guild-add-size-v-pre2: calc(var(--guild-add-size-v-pre1) / 100);
     --guild-add-size-v-pre3: calc(var(--guild-size) / 150);
     --guild-add-size-v: calc(var(--guild-add-size-v-pre2) + var(--guild-add-size-v-pre3));
+    --guild-error-size-h: calc(var(--guild-add-size-h) - 1px);
     --guild-error-size-pre1: calc(var(--guild-add-size-h-pre2) / 2);
     --guild-error-size-pre2: calc(var(--guild-error-size-pre1) / 4.6);
     --guild-error-size-pre3: calc(var(--guild-error-size-pre2) + 0px);

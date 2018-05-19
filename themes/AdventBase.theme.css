@@ -141,7 +141,8 @@
 .text-1y-e8-,
 .embedProvider-3k5pfl,
 .activityText-sLG0UL,
-.activityText-sLG0UL strong {
+.activityText-sLG0UL strong,
+.channelName-3ZF3rq {
     -webkit-text-stroke: .45px var(--neutral-smooth) !important;
 }
 .app .notice #outdatedPlugins span,
@@ -621,7 +622,8 @@ code.inline {
 [href*="https://www.patreon.com/yggdiscord"]:hover {
     text-decoration: none !important;
 }
-[href*="https://www.patreon.com/yggdiscord"] code {
+[href*="https://www.patreon.com/yggdiscord"] code,
+[href*="youtube.com"] + code {
     letter-spacing: -1px !important;
 }
 .speaking-oCqYMI {
@@ -639,8 +641,17 @@ code.inline {
     font-weight: 500 !important;
 }
 .activityText-sLG0UL,
-.activityText-sLG0UL strong {
+.activityText-sLG0UL strong,
+.channelName-3ZF3rq {
     color: var(--neutral-text) !important;
+}
+[name=ChannelVoice] path {
+    fill: var(--neutral-text) !important;
+}
+.botTagRegular-2HEhHi {
+    background: var(--user-color) !important;
+    color: #000000 !important;
+    font-weight: 600 !important;
 }
 
 /* Emotes */

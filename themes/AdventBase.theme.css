@@ -142,7 +142,9 @@
 .embedProvider-3k5pfl,
 .activityText-sLG0UL,
 .activityText-sLG0UL strong,
-.channelName-3ZF3rq {
+.channelName-3ZF3rq,
+.guildDetail-1nRKNE span,
+.wrapper-35wsBm h5 {
     -webkit-text-stroke: .45px var(--neutral-smooth) !important;
 }
 .app .notice #outdatedPlugins span,
@@ -642,7 +644,9 @@ code.inline {
 }
 .activityText-sLG0UL,
 .activityText-sLG0UL strong,
-.channelName-3ZF3rq {
+.channelName-3ZF3rq,
+.guildDetail-1nRKNE span,
+.wrapper-35wsBm h5 {
     color: var(--neutral-text) !important;
 }
 [name=ChannelVoice] path {

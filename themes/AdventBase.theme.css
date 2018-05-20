@@ -680,6 +680,12 @@ code.inline {
     color: #000000 !important;
     font-weight: 600 !important;
 }
+.header-2o-2hj,
+.title-3qD0b-,
+.search-bar {
+    border: none !important;
+    box-shadow: none !important;
+}
 
 /* Games */
 .headerBar-UHpsPw,

@@ -148,13 +148,13 @@
 .state-Tt0LO3 span,
 .status-text,
 .system-message-timestamp,
+.tab-bar-item:not(.selected),
 .text-1y-e8-,
 .timestamp,
 .wordmark-2iDDfm:after,
 .wrapper-2NJDcI,
 .wrapper-35wsBm h5,
-[class*="playTime"],
-.tab-bar-item:not(.selected) {
+[class*="playTime"] {
     -webkit-text-stroke: .45px var(--neutral-smooth) !important;
 }
 .app .notice #outdatedPlugins span,
@@ -394,6 +394,9 @@
     padding-right: 2px !important;
     font-weight: 400 !important;
     color: var(--neutral-text) !important;
+}
+.accountDetails-3k9g4n .username {
+    font-weight: 500 !important;
 }
 
 /* Non-Server Channels */
@@ -1074,12 +1077,6 @@ button[id*="bda-qem"] {
 }
 
 /* Things to Nuke */
-.sectionLine-JjseS9,
-.section-2UZnnA.sectionBottomPadding-3Asj7V,
-.unread-nWfX3W,
-.message-group-blocked,
-.wordmark-2iDDfm,
-.wordmark-2iDDfm svg,
 .carousel-28zrtT,
 .channel-members-loading .background,
 .channel-members-loading,
@@ -1090,11 +1087,12 @@ button[id*="bda-qem"] {
 .footer-1aZ98z,
 .guilds-wrapper .guilds .guilds-add-inner,
 .guilds-wrapper .scroller-wrap ::-webkit-scrollbar,
-.guilds-wrapper .unread-mentions-indicator-top,
 .guilds-wrapper .unread-mentions-indicator-bottom,
+.guilds-wrapper .unread-mentions-indicator-top,
 .has-more,
 .jump-to-present-bar,
 .memberGroupsPlaceholder-1M417G,
+.message-group-blocked,
 .noticeFacebook-1eAoSW,
 .placeholder-1r59uP,
 .placeholderAvatar-2trNnW,
@@ -1104,26 +1102,31 @@ button[id*="bda-qem"] {
 .search-result-message.after,
 .search-result-message.before,
 .search-result-message.sibling,
+.section-2UZnnA.sectionBottomPadding-3Asj7V,
 .section-fQIEsd.sectionBottomPadding-38xKlA,
 .sectionLine-3PSnnJ,
+.sectionLine-JjseS9,
 .separator-1hpa3S,
-.sidebar .separator-3z7STW:nth-of-type(6),
 .sidebar .separator-3z7STW:nth-of-type(20),
 .sidebar .separator-3z7STW:nth-of-type(26),
+.sidebar .separator-3z7STW:nth-of-type(6),
 .sidebar .socialLinks-1oZoF3,
+.unread-nWfX3W,
 .unreadBottom-2LxhSR,
 .welcomeMessage-3_Mcht,
 .wordmark-2L03Wr,
+.wordmark-2iDDfm svg,
+.wordmark-2iDDfm,
 [class*="activityInviteEducation"],
+[class*="applicationDock"],
 [class*="channelNotice"],
 [class*="channelNotices"],
+[class*="feedCarousel"],
 [class*="fools"],
 [class*="is-local-bot"],
 [class*="noticeDanger"],
 [class*="noticePremium"],
-[id*="fools"],
-.carousel-22Gq5X,
-.applicationDock-1E52dE {
+[id*="fools"] {
     display: none !important;
     position: absolute !important;
     width: 0px !important;

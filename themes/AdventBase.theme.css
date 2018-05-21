@@ -125,6 +125,7 @@
 .iconHoveredCollapsed-3caIIZ,
 .iconMuted-1HVBGH,
 .markup pre code,
+.membersGroup-v9BXpm,
 .message-group .markup,
 .metadata-3WGS0M,
 .nameCollapsed-34uFWo,
@@ -700,6 +701,9 @@ code.inline {
 .member-3W1lQa.popout-open .content-OzHfo4,
 .member-3W1lQa.popout-open:hover .content-OzHfo4 {
     background: var(--neutral) !important;
+}
+.membersGroup-v9BXpm {
+    color: var(--neutral-text) !important;
 }
 
 /* User Popouts */

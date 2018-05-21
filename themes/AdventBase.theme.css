@@ -95,6 +95,10 @@
 .container-16j22k {
     background: var(--dark-o) !important;
 }
+.backdrop-1ocfXc {
+    background: var(--dark-o) !important;
+    opacity: 1 !important;
+}
 
 /* Font Smoothing List */
 #placeholder-910mn,
@@ -680,7 +684,8 @@ code.inline {
 [name=ChannelVoice] path {
     fill: var(--neutral-text) !important;
 }
-.botTagRegular-2HEhHi {
+.botTagRegular-2HEhHi,
+.botTagInvert-18-95s {
     background: var(--user-color) !important;
     color: #000000 !important;
     font-weight: 600 !important;
@@ -690,6 +695,64 @@ code.inline {
 .search-bar {
     border: none !important;
     box-shadow: none !important;
+}
+.member-3W1lQa:hover .content-OzHfo4,
+.member-3W1lQa.popout-open .content-OzHfo4,
+.member-3W1lQa.popout-open:hover .content-OzHfo4 {
+    background: var(--neutral) !important;
+}
+
+/* User Popouts */
+.userPopout-3XzG_A {
+    background: var(--dark-o) !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 3px !important;
+}
+.userPopout-3XzG_A div[class*="header"],
+.userPopout-3XzG_A [class*="body"],
+.userPopout-3XzG_A [class*="footer"],
+.userPopout-3XzG_A [class*="footer"] input {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+.inner-1JeGVc {
+    background: var(--dark-o) !important;
+}
+.inner-1JeGVc [class*="top"],
+.inner-1JeGVc [class*="body"],
+.inner-1JeGVc [class*="top"] div[class*="header"] {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+.inner-1JeGVc [class*="top"] [class*="header"] [class*="tabBarC"],
+.inner-1JeGVc [class*="userI"] {
+    border: none !important;
+    box-shadow: none !important;
+}
+.inner-1JeGVc [class*="top"] [class*="assets"] [class*="Large"] {
+    mask: none !important;
+    -webkit-mask: none !important;
+}
+.inner-1JeGVc .tab-bar-item.selected {
+    background: none !important;
+    border-bottom: 1px solid var(--neutral) !important;
+}
+.inner-1JeGVc .tab-bar-item:hover:not(.selected) {
+    background: none !important;
+    border-bottom: 1px solid var(--neutral) !important;
+}
+.inner-1JeGVc [class*="userI"] [class*="con"] [class*="dir"] {
+    border: 1px solid var(--neutral) !important;
+}
+.inner-1JeGVc [class*="userI"] textarea:focus {
+    background: transparent !important;
+}
+.inner-1JeGVc [class*="top"] button {
+    background: transparent !important;
+    color: #FFFFFF !important;
 }
 
 /* Games */
@@ -1126,7 +1189,16 @@ button[id*="bda-qem"] {
 [class*="is-local-bot"],
 [class*="noticeDanger"],
 [class*="noticePremium"],
-[id*="fools"] {
+[id*="fools"],
+[class*="protip"],
+[class*="proTip"],
+[class*="Protip"],
+[class*="ProTip"],
+[id*="protip"],
+[id*="proTip"],
+[id*="Protip"],
+[id*="ProTip"],
+.inner-1JeGVc [class*="top"] [class*="assets"] [class*="Small"] {
     display: none !important;
     position: absolute !important;
     width: 0px !important;

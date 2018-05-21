@@ -1144,6 +1144,10 @@ button[id*="bda-qem"] {
 .channel-members-loading .background,
 .channel-members-loading,
 .chat .divider,
+.chat [class*="PlaceHolder"],
+.chat [class*="Placeholder"],
+.chat [class*="placeHolder"],
+.chat [class*="placeholder"],
 .content-1Cut5s .downloadLink-wANcd8,
 .dimmer-3iH-5D,
 .ellipsis-19qdx6,
@@ -1153,6 +1157,7 @@ button[id*="bda-qem"] {
 .guilds-wrapper .unread-mentions-indicator-bottom,
 .guilds-wrapper .unread-mentions-indicator-top,
 .has-more,
+.inner-1JeGVc [class*="top"] [class*="assets"] [class*="Small"],
 .jump-to-present-bar,
 .memberGroupsPlaceholder-1M417G,
 .message-group-blocked,
@@ -1180,6 +1185,8 @@ button[id*="bda-qem"] {
 .wordmark-2L03Wr,
 .wordmark-2iDDfm svg,
 .wordmark-2iDDfm,
+[class*="ProTip"],
+[class*="Protip"],
 [class*="activityInviteEducation"],
 [class*="applicationDock"],
 [class*="channelNotice"],
@@ -1189,48 +1196,49 @@ button[id*="bda-qem"] {
 [class*="is-local-bot"],
 [class*="noticeDanger"],
 [class*="noticePremium"],
-[id*="fools"],
-[class*="protip"],
 [class*="proTip"],
-[class*="Protip"],
-[class*="ProTip"],
-[id*="protip"],
-[id*="proTip"],
-[id*="Protip"],
+[class*="protip"],
 [id*="ProTip"],
-.inner-1JeGVc [class*="top"] [class*="assets"] [class*="Small"] {
-    display: none !important;
-    position: absolute !important;
-    width: 0px !important;
-    height: 0px !important;
-    top: unset !important;
-    bottom: unset !important;
-    left: unset !important;
-    right: unset !important;
-    padding: 0px !important;
-    margin: 0px !important;
-    box-sizing: 0px !important;
+[id*="Protip"],
+[id*="fools"],
+[id*="proTip"],
+[id*="protip"] {
     -webkit-box-direction: unset !important;
     -webkit-box-orient: unset !important;
     -webkit-box-pack: unset !important;
+    animation: none !important;
+    background: none !important;
+    border-radius: 0px !important;
+    border: none !important;
+    bottom: unset !important;
+    box-shadow: none !important;
+    box-sizing: unset !important;
+    color: unset !important;
+    cursor: unset !important;
+    display: none !important;
     flex-direction: unset !important;
     flex-wrap: unset !important;
-    vertical-align: unset !important;
+    font-size: 0px !important;
+    height: 0px !important;
     justify-content: unset !important;
-    visibility: hidden !important;
+    left: unset !important;
+    letter-spacing: 0px !important;
+    line-height: 0px !important;
+    margin: 0px !important;
+    opacity: 0 !important;
+    outline: none !important;
     overflow: unset !important;
-    animation: none !important;
+    padding: 0px !important;
+    pointer-events: unset !important;
+    position: absolute !important;
+    right: unset !important;
+    top: unset !important;
     transform: none !important;
     transition: none !important;
-    opacity: 0 !important;
-    background: none !important;
-    border: none !important;
-    border-radius: 0px !important;
-    box-shadow: none !important;
-    outline: none !important;
-    cursor: unset !important;
-    pointer-events: unset !important;
-    z-index: -1 !important;
+    vertical-align: unset !important;
+    visibility: hidden !important;
+    width: 0px !important;
+    z-index: -99999 !important;
 }
 
 /* OLD THEME */

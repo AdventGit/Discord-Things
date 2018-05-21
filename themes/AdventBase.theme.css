@@ -67,6 +67,13 @@
 .emojiPicker-3m1S-j .scroller-2FKFPG::-webkit-scrollbar-corner,
 .emojiPicker-3m1S-j .scroller-2FKFPG::-webkit-scrollbar-track,
 .emojiPicker-3m1S-j .scroller-2FKFPG::-webkit-scrollbar-track-piece,
+.body-3ND3kc .scroller-2FKFPG,
+.body-3ND3kc .scroller-2FKFPG::-webkit-resizer,
+.body-3ND3kc .scroller-2FKFPG::-webkit-scrollbar,
+.body-3ND3kc .scroller-2FKFPG::-webkit-scrollbar-button,
+.body-3ND3kc .scroller-2FKFPG::-webkit-scrollbar-corner,
+.body-3ND3kc .scroller-2FKFPG::-webkit-scrollbar-track,
+.body-3ND3kc .scroller-2FKFPG::-webkit-scrollbar-track-piece,
 .content form,
 .typing-2GQL18,
 .channelTextArea-1LDbYG,
@@ -704,6 +711,16 @@ code.inline {
 }
 .membersGroup-v9BXpm {
     color: var(--neutral-text) !important;
+}
+.body-3ND3kc .scroller-2FKFPG::-webkit-scrollbar {
+    width: 10px !important;
+}
+.body-3ND3kc .scroller-2FKFPG::-webkit-scrollbar-track-piece {
+    border: none !important;
+}
+.body-3ND3kc .scroller-2FKFPG::-webkit-scrollbar-thumb {
+    background: var(--user-color) !important;
+    border: none !important;
 }
 
 /* User Popouts */

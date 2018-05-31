@@ -96,7 +96,10 @@
 .coverImageWrapper-22d5LB,
 .private-channel-call,
 .video-1FfuMD,
-.members-1998pB {
+.members-1998pB,
+.contentHoveredText-2D9B-x,
+.contentHoveredVoice-3p_NEO:active,
+.contentSelectedVoice-1WDIBM:active {
     background: transparent !important;
 }
 .container-16j22k {
@@ -104,6 +107,19 @@
 }
 .backdrop-1ocfXc {
     background: var(--dark-o) !important;
+    opacity: 1 !important;
+}
+.chat div::selection,
+.chat span::selection,
+.chat strong::selection,
+.chat a::selection,
+.chat h1::selection,
+.chat h2::selection,
+.chat h3::selection,
+.chat img::selection,
+.chat pre::selection,
+.chat code::selection {
+    background: var(--user-color-semi-trans) !important;
     opacity: 1 !important;
 }
 
@@ -166,7 +182,8 @@
 .wordmark-2iDDfm:after,
 .wrapper-2NJDcI,
 .wrapper-35wsBm h5,
-[class*="playTime"] {
+[class*="playTime"],
+.metadataSize-2UOOLK {
     -webkit-text-stroke: .45px var(--neutral-smooth) !important;
 }
 .app .notice #outdatedPlugins span,
@@ -722,6 +739,30 @@ code.inline {
     background: var(--user-color) !important;
     border: none !important;
 }
+.wrapperAudio-1jDe0Q {
+    background: transparent !important;
+    border: 1px solid var(--neutral) !important;
+    box-shadow: none !important;
+    border-radius: 3px !important;
+}
+.metadataSize-2UOOLK {
+    color: var(--neutral-text) !important;
+}
+.wrapperAudio-1jDe0Q polygon,
+.wrapperAudio-1jDe0Q .flex-1O1GKY path,
+.wrapperAudio-1jDe0Q  a svg path:nth-of-type(2) {
+    fill: var(--neutral-o) !important;
+}
+.mediaBarWrapper-3D7r67,
+.mediaBarWrapper-3D7r67:before,
+.mediaBarWrapper-3D7r67:after {
+    background: var(--neutral) !important;
+}
+.mediaBarProgress-1xaPtl,
+.mediaBarProgress-1xaPtl:before,
+.mediaBarProgress-1xaPtl:after {
+    background: var(--user-color) !important;
+}
 
 /* User Popouts */
 .userPopout-3XzG_A {
@@ -1223,7 +1264,8 @@ button[id*="bda-qem"] {
 [id*="Protip"],
 [id*="fools"],
 [id*="proTip"],
-[id*="protip"] {
+[id*="protip"],
+.quickLauncher-1cRAKX {
     -webkit-box-direction: unset !important;
     -webkit-box-orient: unset !important;
     -webkit-box-pack: unset !important;

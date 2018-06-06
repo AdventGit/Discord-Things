@@ -162,6 +162,7 @@
 .answer-1n6g43,
 .app .notice span,
 .cancelButton-3hVEV6,
+.category-2U57w6,
 .channel-name div,
 .channel-name,
 .channelName-3ZF3rq,
@@ -590,10 +591,6 @@
 .inner-zqa7da {
     border: 1px solid var(--neutral) !important;
     border-radius: 3px !important;
-}
-.inner-zqa7da div[style="flex: 1 1 auto;"] {
-    width: 45px !important;
-    height: 45px !important;
 }
 .base-2KDOo9 {
     margin: 0px 20px 0px 20px !important;

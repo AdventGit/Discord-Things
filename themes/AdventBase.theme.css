@@ -896,6 +896,9 @@ code.inline {
     background: transparent !important;
     color: #FFFFFF !important;
 }
+.note-3kmerW textarea:focus {
+    background: transparent !important;
+}
 
 /* Games */
 .headerBar-UHpsPw,
@@ -1516,6 +1519,7 @@ button[id*="bda-qem"] {
 .dimmer-3iH-5D,
 .ellipsis-19qdx6,
 .footer-1aZ98z,
+.footer-1fjuF6,
 .footer-SRC48P,
 .guilds-wrapper .guilds .guilds-add-inner,
 .guilds-wrapper .scroller-wrap ::-webkit-scrollbar,

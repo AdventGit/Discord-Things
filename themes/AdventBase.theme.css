@@ -591,6 +591,10 @@
     border: 1px solid var(--neutral) !important;
     border-radius: 3px !important;
 }
+.inner-zqa7da div[style="flex: 1 1 auto;"] {
+    width: 45px !important;
+    height: 45px !important;
+}
 .base-2KDOo9 {
     margin: 0px 20px 0px 20px !important;
     padding: 0px 0px 0px 0px !important;
@@ -1421,6 +1425,10 @@ button[id*="bda-qem"] {
 }
 .downloadLink-2oSgiF:hover {
     text-decoration: none !important;
+}
+.translate-button {
+    width: 22px !important;
+    height: 22px !important;
 }
 .toasts {
     display: block !important;

@@ -1066,6 +1066,13 @@ code.inline {
 .stickyHeader-1SS0JU {
     opacity: 0 !important;
 }
+.category-2U57w6 {
+    background: transparent !important;
+    color: var(--neutral-text) !important;
+}
+.emote-container:hover {
+    background: var(--neutral) !important;
+}
 #bda-qem {
     background: var(--dark-o) !important;
     border: none !important;

@@ -1326,7 +1326,8 @@ button[id*="bda-qem"] {
 .item-1Yvehc {
     color: var(--neutral-text) !important;
 }
-.item-1Yvehc:hover {
+.item-1Yvehc:hover,
+.item-1Yvehc.resetsettings-item.disabled-2xniQf {
     color: var(--neutral-text) !important;
     background: var(--user-color-semi-trans) !important;
 }

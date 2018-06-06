@@ -233,7 +233,7 @@ function setupNotificationScreen(mainWindow) {
     notificationScreen.init({
       mainWindow: mainWindow,
       title: 'Discord Notifications',
-      maxVisible: 9999999999999999999999999999,
+      maxVisible: 999,
       screenPosition: 'bottom'
     });
 

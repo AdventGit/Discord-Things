@@ -1405,6 +1405,21 @@ button[id*="bda-qem"] {
     line-height: 16px !important;
     text-transform: uppercase !important;
 }
+.thumbQuicksave {
+    background: var(--dark-o) !important;
+    color: var(--neutral-text) !important;
+    display: block !important;
+    position: absolute !important;
+    top: 4px !important;
+    left: 4px !important;
+    margin: 0px !important;
+    padding: 3px 5px 3px 5px !important;
+    border-radius: 3px !important;
+    opacity: 1 !important;
+}
+.downloadLink-2oSgiF:hover {
+    text-decoration: none !important;
+}
 .toasts {
     display: block !important;
     position: absolute !important;

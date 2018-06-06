@@ -10,11 +10,17 @@ class FixBS {
 	start () {
 		var libraryScript = null;
         var libraryScript2 = null;
+        var redunt = null;
+        var redunt2 = null;
         if (typeof BDFDB === "object") BDFDB = "";
         libraryScript = document.querySelector('head script[src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js"]');
-        libraryScript = document.querySelector('head script[src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDfunctionsDevilBro.js"]');
+        libraryScript2 = document.querySelector('head script[src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDfunctionsDevilBro.js"]');
+        redunt = document.querySelector('head script[src="https://rawgit.com/AdventGit/BetterDiscordAddons/patch-1/Plugins/BDFDB.js"]');
+        redunt2 = document.querySelector('head script[src="https://rawgit.com/AdventGit/BetterDiscordAddons/patch-1/Plugins/BDfunctionsDevilBro.js"]');
         if (libraryScript) libraryScript.remove();
         if (libraryScript2) libraryScript2.remove();
+        if (redunt) redunt.remove();
+        if (redunt2) redunt2.remove();
         libraryScript = document.createElement("script");
         libraryScript2 = document.createElement("script");
         libraryScript.setAttribute("type", "text/javascript");

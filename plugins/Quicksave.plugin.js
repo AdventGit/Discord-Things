@@ -132,10 +132,10 @@ class Quicksave {
 
 	injectThumbIcons() {
 		var fs = require('fs');
-		let list = document.querySelectorAll("img");
+		let list = document.querySelectorAll('img:not(.emoji)');
 		for (let i = 0; i < list.length; i++) {
 			let elem = list[i].parentElement;
-			//console.log(elem);
+			//console.log(list_test);
 			
 			if(	!elem.href
 			 || !elem.classList.contains('imageWrapper-2p5ogY')

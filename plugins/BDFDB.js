@@ -1,48 +1,50 @@
-var BDfunctionsDevilBro = {$: BDfunctionsDevilBro && BDfunctionsDevilBro.$ ? BDfunctionsDevilBro.$ : global.$, BDv2Api: BDfunctionsDevilBro && BDfunctionsDevilBro.BDv2Api ? BDfunctionsDevilBro.BDv2Api : undefined, creationTime:performance.now(), myData:{}, pressedKeys:[], mousePosition:{x:0,y:0}};
+var BDFDB = {$: BDFDB && BDFDB.$ ? BDFDB.$ : global.$, BDv2Api: BDFDB && BDFDB.BDv2Api ? BDFDB.BDv2Api : undefined, creationTime:performance.now(), myData:{}, pressedKeys:[], mousePosition:{x:0,y:0}};
 
-BDfunctionsDevilBro.isLibraryOutdated = function () {
-	return performance.now() - BDfunctionsDevilBro.creationTime > 600000;
+BDFDB.isLibraryOutdated = function () {
+	return performance.now() - BDFDB.creationTime > 600000;
 };
 
-BDfunctionsDevilBro.loadMessage = function (plugin) {
-	BDfunctionsDevilBro.clearStarttimout(plugin);
+BDFDB.loadMessage = function (plugin) {
+	BDFDB.clearStarttimout(plugin);
 	var pluginName = plugin.name ? plugin.name : plugin.getName();
 	var oldVersion = plugin.version ? plugin.version : plugin.getVersion();
 	if (!plugin.appReload) {
 		if (typeof plugin.getDescription === "function") {
 			var oldDescription = plugin.getDescription();
 			if (oldDescription.indexOf("http://bit.ly/DevilBrosHaus") == -1) {
-				plugin.getDescription = function () {return oldDescription + "\n\nMy Support Server: http://bit.ly/DevilBrosHaus or https://discordapp.com/invite/Jx3TjNS";}
+				plugin.getDescription = function () {return oldDescription + "\n\nMy Support Server: http://bit.ly/DevilBrosHaus or https://discordapp.com/invite/Jx3TjNS";};
 			}
 		}
-		var loadMessage = BDfunctionsDevilBro.getLibraryStrings().toast_plugin_started.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion);
+		var loadMessage = BDFDB.getLibraryStrings().toast_plugin_started.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion);
 		console.log(loadMessage);
-		if (!(BDfunctionsDevilBro.zacksFork() && settingsCookie["fork-ps-2"] && settingsCookie["fork-ps-2"] == true)) {
-			BDfunctionsDevilBro.showToast(loadMessage, {selector:"plugin-started-toast"});
+		if (!(BDFDB.zacksFork() && settingsCookie["fork-ps-2"] && settingsCookie["fork-ps-2"] === true)) {
+			BDFDB.showToast(loadMessage, {selector:"plugin-started-toast"});
 		}
 	}
 	
-	BDfunctionsDevilBro.checkUser(plugin);
+	BDFDB.checkUser(plugin);
 	
-	var downloadUrl = "https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/" + pluginName + "/" + pluginName + ".plugin.js";
-	BDfunctionsDevilBro.checkUpdate(pluginName, downloadUrl);
+	var downloadUrl = typeof plugin.getRawUrl == "function" && typeof plugin.getRawUrl() == "string" ? plugin.getRawUrl() : `https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/${pluginName}/${pluginName}.plugin.js`;
 	
-	if (typeof plugin.css === "string") BDfunctionsDevilBro.appendLocalStyle(pluginName, plugin.css);
-	BDfunctionsDevilBro.addOnSwitchListener(plugin);
-	BDfunctionsDevilBro.addReloadListener(plugin);
-	BDfunctionsDevilBro.addSettingsButtonListener(plugin);
-	BDfunctionsDevilBro.translatePlugin(plugin);
+	BDFDB.checkUpdate(pluginName, downloadUrl);
+	
+	if (typeof plugin.initConstructor === "function") plugin.initConstructor();
+	if (typeof plugin.css === "string") BDFDB.appendLocalStyle(pluginName, plugin.css);
+	BDFDB.addOnSwitchListener(plugin);
+	BDFDB.addReloadListener(plugin);
+	BDFDB.addSettingsButtonListener(plugin);
+	BDFDB.translatePlugin(plugin);
 	
 	if (typeof window.PluginUpdates !== "object" || !window.PluginUpdates) window.PluginUpdates = {plugins:{}};
 	window.PluginUpdates.plugins[downloadUrl] = {name:pluginName, raw:downloadUrl, version:oldVersion};
 	
 	if (typeof window.PluginUpdates.interval === "undefined") {
 		window.PluginUpdates.interval = setInterval(() => {
-			BDfunctionsDevilBro.checkAllUpdates();
+			BDFDB.checkAllUpdates();
 		},7200000);
 	}
 	var layers = null;
-	if (typeof window.PluginUpdates.observer === "undefined" && (layers = document.querySelector(".layers-20RVFW")) != null) {
+	if (typeof window.PluginUpdates.observer === "undefined" && (layers = document.querySelector(BDFDB.dotCN.layers)) != null) {
 		window.PluginUpdates.observer = new MutationObserver((changes, _) => {
 			changes.forEach(
 				(change, i) => {
@@ -73,7 +75,7 @@ BDfunctionsDevilBro.loadMessage = function (plugin) {
 			);
 		});
 		
-		var settingswindow = document.querySelector(".layer[layer-id='user-settings'], .layer-kosS71[layer-id='user-settings']");
+		var settingswindow = document.querySelector(BDFDB.dotCN.layer + "[layer-id='user-settings']");
 		if (settingswindow) {
 			innerSettingsWindowObserver.observe(settingswindow, {childList:true, subtree:true});
 			addCheckButton(settingswindow);
@@ -91,7 +93,7 @@ BDfunctionsDevilBro.loadMessage = function (plugin) {
 				if (buttonbar && buttonbar.tagName) {
 					var header = buttonbar.querySelector("h2");
 					if (header && header.innerText.toUpperCase() === "PLUGINS") {
-						buttonbar.insertBefore(BDfunctionsDevilBro.createUpdateButton(), folderbutton.nextSibling);
+						buttonbar.insertBefore(BDFDB.createUpdateButton(), folderbutton.nextSibling);
 					}
 				}
 			}
@@ -99,64 +101,64 @@ BDfunctionsDevilBro.loadMessage = function (plugin) {
 	}
 };
 
-BDfunctionsDevilBro.unloadMessage = function (plugin) { 
-	BDfunctionsDevilBro.clearStarttimout(plugin);
+BDFDB.unloadMessage = function (plugin) { 
+	BDFDB.clearStarttimout(plugin);
 	var pluginName = plugin.name ? plugin.name : plugin.getName();
 	var oldVersion = plugin.version ? plugin.version : plugin.getVersion();
 	if (!plugin.appReload) {
-		var unloadMessage = BDfunctionsDevilBro.getLibraryStrings().toast_plugin_stopped.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion);
+		var unloadMessage = BDFDB.getLibraryStrings().toast_plugin_stopped.replace("${pluginName}", pluginName).replace("${oldVersion}", oldVersion);
 		console.log(unloadMessage);
-		if (!(BDfunctionsDevilBro.zacksFork() && settingsCookie["fork-ps-2"] && settingsCookie["fork-ps-2"] == true)) {
-			BDfunctionsDevilBro.showToast(unloadMessage, {selector:"plugin-stopped-toast"});
+		if (!(BDFDB.zacksFork() && settingsCookie["fork-ps-2"] && settingsCookie["fork-ps-2"] === true)) {
+			BDFDB.showToast(unloadMessage, {selector:"plugin-stopped-toast"});
 		}
 	}
 	
-	if (typeof plugin.css === "string") BDfunctionsDevilBro.removeLocalStyle(pluginName);
-	BDfunctionsDevilBro.removeOnSwitchListener(plugin);
-	BDfunctionsDevilBro.removeReloadListener(plugin);
-	BDfunctionsDevilBro.removeSettingsButtonListener(plugin);
+	if (typeof plugin.css === "string") BDFDB.removeLocalStyle(pluginName);
+	BDFDB.removeOnSwitchListener(plugin);
+	BDFDB.removeReloadListener(plugin);
+	BDFDB.removeSettingsButtonListener(plugin);
 	
-	BDfunctionsDevilBro.$(document).off("." + pluginName);
-	BDfunctionsDevilBro.$("*").off("." + pluginName);
+	BDFDB.$(document).off("." + pluginName);
+	BDFDB.$("*").off("." + pluginName);
 	
-	if (!BDfunctionsDevilBro.isObjectEmpty(plugin.observers)) {
+	if (!BDFDB.isObjectEmpty(plugin.observers)) {
 		for (var name in plugin.observers) {
 			for (var subinstance of plugin.observers[name]) subinstance.disconnect();
 		}
 		delete plugin.observers;
 	}
 	
-	var downloadUrl = "https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/" + pluginName + "/" + pluginName + ".plugin.js";
+	var downloadUrl = typeof plugin.getRawUrl == "function" && typeof plugin.getRawUrl() == "string" ? plugin.getRawUrl() : `https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/${pluginName}/${pluginName}.plugin.js`;
 	
 	delete window.PluginUpdates.plugins[downloadUrl];
 	
-	if (BDfunctionsDevilBro.isObjectEmpty(window.PluginUpdates.plugins)) {
+	if (BDFDB.isObjectEmpty(window.PluginUpdates.plugins)) {
 		window.PluginUpdates.observer.disconnect();
 		delete window.PluginUpdates.observer;
-		BDfunctionsDevilBro.$("#bd-settingspane-container .bd-pfbtn.bd-updatebtn").remove();
+		BDFDB.$("#bd-settingspane-container .bd-pfbtn.bd-updatebtn").remove();
 	}
 	
 	plugin.started = false;
 };
 
-BDfunctionsDevilBro.clearStarttimout = function (plugin) {
+BDFDB.clearStarttimout = function (plugin) {
 	if (plugin.startTimeout) {
 		clearTimeout(plugin.startTimeout);
 		delete plugin.startTimeout;
 	}
 };
 
-BDfunctionsDevilBro.checkUser = function (plugin) {
+BDFDB.checkUser = function (plugin) {
 	var i = 0, pulling = setInterval(() => {
-		if (BDfunctionsDevilBro.myData && !BDfunctionsDevilBro.isObjectEmpty(BDfunctionsDevilBro.myData)) {
+		if (BDFDB.myData && !BDFDB.isObjectEmpty(BDFDB.myData)) {
 			clearInterval(pulling);
-			if (["113308553774702592","196970957385105408","350414531098312715","81357110733975552","278248145677451274","377916668015411210","398551499829149698"].includes(BDfunctionsDevilBro.myData.id)) {
+			if (["113308553774702592","196970957385105408","350414531098312715","81357110733975552","278248145677451274","377916668015411210","398551499829149698","288053351579648000","335464988036694021","300986355083640832","400612488196128768","394310795720261632","279501218525741056"].includes(BDFDB.myData.id)) {
 				var pluginName = plugin.name ? plugin.name : plugin.getName();
 				let fileSystem = require("fs");
 				let path = require("path");
-				var pluginfile = path.join(BDfunctionsDevilBro.getPluginsFolder(), pluginName + ".plugin.js");
+				var pluginfile = path.join(BDFDB.getPluginsFolder(), pluginName + ".plugin.js");
 				fileSystem.unlink(pluginfile, (error) => {});
-				var configfile = path.join(BDfunctionsDevilBro.getPluginsFolder(), pluginName + ".config.json");
+				var configfile = path.join(BDFDB.getPluginsFolder(), pluginName + ".config.json");
 				fileSystem.unlink(configfile, (error) => {});
 				pluginCookie[pluginName] = false;
 				delete bdplugins[pluginName];
@@ -171,8 +173,8 @@ BDfunctionsDevilBro.checkUser = function (plugin) {
 	},100);
 };
 
-BDfunctionsDevilBro.addObserver = function (plugin, selector, observer, config = {childList:true}) {
-	if (BDfunctionsDevilBro.isObjectEmpty(plugin.observers)) plugin.observers = {};
+BDFDB.addObserver = function (plugin, selector, observer, config = {childList:true}) {
+	if (BDFDB.isObjectEmpty(plugin.observers)) plugin.observers = {};
 	if (!Array.isArray(plugin.observers[observer.name])) plugin.observers[observer.name] = [];
 	if (!observer.multi) for (var subinstance of plugin.observers[observer.name]) subinstance.disconnect();
 	if (observer.instance) plugin.observers[observer.name].push(observer.instance);
@@ -184,8 +186,8 @@ BDfunctionsDevilBro.addObserver = function (plugin, selector, observer, config =
 };
 
 // plugin update notifications created in cooperation with Zerebos https://github.com/rauenzi/BetterDiscordAddons/blob/master/Plugins/PluginLibrary.js
-BDfunctionsDevilBro.checkUpdate = function (pluginName, downloadUrl) {
-	if (BDfunctionsDevilBro.isBDv2()) return;
+BDFDB.checkUpdate = function (pluginName, downloadUrl) {
+	if (BDFDB.isBDv2()) return;
 	let request = require("request");
 	request(downloadUrl, (error, response, result) => {
 		if (error) return;
@@ -199,45 +201,45 @@ BDfunctionsDevilBro.checkUpdate = function (pluginName, downloadUrl) {
 		else if (ver[0] == lver[0] && ver[1] > lver[1]) hasUpdate = true;
 		else if (ver[0] == lver[0] && ver[1] == lver[1] && ver[2] > lver[2]) hasUpdate = true;
 		else hasUpdate = false;
-		if (hasUpdate) BDfunctionsDevilBro.showUpdateNotice(pluginName, downloadUrl);
-		else BDfunctionsDevilBro.removeUpdateNotice(pluginName);
+		if (hasUpdate) BDFDB.showUpdateNotice(pluginName, downloadUrl);
+		else BDFDB.removeUpdateNotice(pluginName);
 	});
 };
 
-BDfunctionsDevilBro.showUpdateNotice = function (pluginName, downloadUrl) {
+BDFDB.showUpdateNotice = function (pluginName, downloadUrl) {
 	var updateNoticeBar = document.querySelector("#pluginNotice");
 	if (!updateNoticeBar) {
-		updateNoticeBar = BDfunctionsDevilBro.createNotificationsBar(`The following plugins have updates:&nbsp;&nbsp;<strong id="outdatedPlugins"></strong>`, {html:true, id:"pluginNotice", type:"info", btn: !BDfunctionsDevilBro.isRestartNoMoreEnabled() ? "Reload" : ""});
-		BDfunctionsDevilBro.$(updateNoticeBar)
-			.on("click", ".dismiss-1QjyJW", () => {
-				BDfunctionsDevilBro.$(updateNoticeBar).slideUp({complete: () => {
+		updateNoticeBar = BDFDB.createNotificationsBar(`The following plugins have updates:&nbsp;&nbsp;<strong id="outdatedPlugins"></strong>`, {html:true, id:"pluginNotice", type:"info", btn: !BDFDB.isRestartNoMoreEnabled() ? "Reload" : ""});
+		BDFDB.$(updateNoticeBar)
+			.on("click", BDFDB.dotCN.noticedismiss, () => {
+				BDFDB.$(updateNoticeBar).slideUp({complete: () => {
 					updateNoticeBar.remove();
 				}});
 			})
-			.on("click", ".button-2TvR03", (e) => {
+			.on("click", BDFDB.dotCN.noticebutton, (e) => {
 				e.preventDefault();
 				window.location.reload(false);
 			})
-			.on("mouseenter", ".button-2TvR03", (e) => {
-				if (window.PluginUpdates.downloaded) BDfunctionsDevilBro.createTooltip(window.PluginUpdates.downloaded.join(", "), e.currentTarget, {type:"bottom", selector:"update-notice-tooltip"});
+			.on("mouseenter", BDFDB.dotCN.noticebutton, (e) => {
+				if (window.PluginUpdates.downloaded) BDFDB.createTooltip(window.PluginUpdates.downloaded.join(", "), e.currentTarget, {type:"bottom", selector:"update-notice-tooltip"});
 			})
-			.find(".button-2TvR03").hide();
+			.find(BDFDB.dotCN.noticebutton).hide();
 	}
 	if (updateNoticeBar) {
 		let outdatedContainer = updateNoticeBar.querySelector("#outdatedPlugins");
 		let pluginNoticeID = pluginName + "-notice";
 		if (outdatedContainer && !outdatedContainer.querySelector("#" + pluginNoticeID)) {
-			let pluginNoticeElement = BDfunctionsDevilBro.$(`<span id="${pluginNoticeID}">${pluginName}</span>`);
+			let pluginNoticeElement = BDFDB.$(`<span id="${pluginNoticeID}">${pluginName}</span>`);
 			pluginNoticeElement.on("click", () => {
-				BDfunctionsDevilBro.downloadPlugin(pluginName, downloadUrl, updateNoticeBar);
+				BDFDB.downloadPlugin(pluginName, downloadUrl, updateNoticeBar);
 			});
-			if (outdatedContainer.querySelector("span")) BDfunctionsDevilBro.$(outdatedContainer).append(`<span class="separator">, </span>`);
-			BDfunctionsDevilBro.$(outdatedContainer).append(pluginNoticeElement);
+			if (outdatedContainer.querySelector("span")) BDFDB.$(outdatedContainer).append(`<span class="separator">, </span>`);
+			BDFDB.$(outdatedContainer).append(pluginNoticeElement);
 		}
 	}
 };
 
-BDfunctionsDevilBro.downloadPlugin = function (pluginName, downloadUrl, updateNoticeBar) {
+BDFDB.downloadPlugin = function (pluginName, downloadUrl, updateNoticeBar) {
 	let request = require("request");
 	let fileSystem = require("fs");
 	let path = require("path");
@@ -247,25 +249,19 @@ BDfunctionsDevilBro.downloadPlugin = function (pluginName, downloadUrl, updateNo
 		remoteVersion = remoteVersion.toString().replace(/['"]/g, "");
 		let filename = downloadUrl.split("/");
 		filename = filename[filename.length - 1];
-		var file = path.join(BDfunctionsDevilBro.getPluginsFolder(), filename);
+		var file = path.join(BDFDB.getPluginsFolder(), filename);
 		fileSystem.writeFileSync(file, body);
-		// REMOVE IN SOME TIME (29.01.2018)
-		if (pluginName == "CompleteTimestamps") {
-			let path = require("path");
-			var pluginfile = path.join(BDfunctionsDevilBro.getPluginsFolder(), "CompleteTimestamp.plugin.js");
-			fileSystem.unlink(pluginfile, (error) => {});
-		}
-		BDfunctionsDevilBro.showToast(`${pluginName} ${window.PluginUpdates.plugins[downloadUrl].version} has been replaced by ${pluginName} ${remoteVersion}`, {selector:"plugin-updated-toast"});
-		if (updateNoticeBar.querySelector(".button-2TvR03")) {
+		BDFDB.showToast(`${pluginName} ${window.PluginUpdates.plugins[downloadUrl].version} has been replaced by ${pluginName} ${remoteVersion}`, {selector:"plugin-updated-toast"});
+		if (updateNoticeBar.querySelector(BDFDB.dotCN.noticebutton)) {
 			window.PluginUpdates.plugins[downloadUrl].version = remoteVersion;
 			if (!window.PluginUpdates.downloaded) window.PluginUpdates.downloaded = [];
 			if (!window.PluginUpdates.downloaded.includes(pluginName)) window.PluginUpdates.downloaded.push(pluginName);
 		}
-		BDfunctionsDevilBro.removeUpdateNotice(pluginName, updateNoticeBar);
+		BDFDB.removeUpdateNotice(pluginName, updateNoticeBar);
 	});
 };
 
-BDfunctionsDevilBro.removeUpdateNotice = function (pluginName, updateNoticeBar) {
+BDFDB.removeUpdateNotice = function (pluginName, updateNoticeBar) {
 	if (typeof updateNoticeBar === "undefined") updateNoticeBar = document.querySelector("#pluginNotice");
 	if (updateNoticeBar) {
 		let outdatedContainer = updateNoticeBar.querySelector("#outdatedPlugins");
@@ -280,23 +276,23 @@ BDfunctionsDevilBro.removeUpdateNotice = function (pluginName, updateNoticeBar) 
 			}
 
 			if (!outdatedContainer.querySelector("span")) {
-				var reloadbutton = updateNoticeBar.querySelector(".button-2TvR03");
+				var reloadbutton = updateNoticeBar.querySelector(BDFDB.dotCN.noticebutton);
 				if (reloadbutton) {
 					updateNoticeBar.querySelector(".notice-message").innerText = "To finish updating you need to reload.";
 					reloadbutton.style.display = "inline-block";
 				}
 				else {
-					updateNoticeBar.querySelector(".dismiss-1QjyJW").click();
+					updateNoticeBar.querySelector(BDFDB.dotCN.noticedismiss).click();
 				}
 			} 
 		}
 	}
 };
 
-BDfunctionsDevilBro.showToast = function (content, options = {}) {
+BDFDB.showToast = function (content, options = {}) {
 	if (!document.querySelector(".toasts")) {
-		let container = document.querySelector(".channels-3g2vYe + div");
-		let memberlist = container ? container.querySelector(".channel-members-wrap, .membersWrap-3wRngy") : null;
+		let container = document.querySelector(BDFDB.dotCNS.channels + "+ div");
+		let memberlist = container ? container.querySelector(BDFDB.dotCNS.memberswrap) : null;
 		let left = container ? container.getBoundingClientRect().left : 310;
 		let width = container ? (memberlist ? container.offsetWidth - memberlist.offsetWidth : container.offsetWidth) : window.outerWidth - left;
 		let form = container ? container.querySelector("form") : null;
@@ -306,7 +302,7 @@ BDfunctionsDevilBro.showToast = function (content, options = {}) {
 		toastWrapper.style.setProperty("left", left + "px");
 		toastWrapper.style.setProperty("width", width + "px");
 		toastWrapper.style.setProperty("bottom", bottom + "px");
-		document.querySelector(".app").appendChild(toastWrapper);
+		document.querySelector(BDFDB.dotCN.appold).appendChild(toastWrapper);
 	}
 	const {type = "", icon = true, timeout = 3000, html = false, selector = ""} = options;
 	let toastElem = document.createElement("div");
@@ -327,27 +323,27 @@ BDfunctionsDevilBro.showToast = function (content, options = {}) {
 				if (!document.querySelectorAll(".toasts .toast").length) document.querySelector(".toasts").remove();
 			}, 300);
 		}
-	}
+	};
 	setTimeout(() => {
 		toastElem.close();
 	}, timeout > 0 ? timeout : 60000);
 	return toastElem;
 };
 
-BDfunctionsDevilBro.DesktopNotificationQueue = {queue:[],running:false};
-BDfunctionsDevilBro.showDesktopNotification = function (parsedcontent, parsedoptions = {}) {
+BDFDB.DesktopNotificationQueue = {queue:[],running:false};
+BDFDB.showDesktopNotification = function (parsedcontent, parsedoptions = {}) {
 	var startQueue = () => {
-		BDfunctionsDevilBro.DesktopNotificationQueue.queue.push({parsedcontent,parsedoptions});
+		BDFDB.DesktopNotificationQueue.queue.push({parsedcontent,parsedoptions});
 		runQueue();
-	}
+	};
 	var runQueue = () => {
-		if (!BDfunctionsDevilBro.DesktopNotificationQueue.running) {
-			let notifyconfig = BDfunctionsDevilBro.DesktopNotificationQueue.queue.shift();
+		if (!BDFDB.DesktopNotificationQueue.running) {
+			let notifyconfig = BDFDB.DesktopNotificationQueue.queue.shift();
 			if (notifyconfig) notify(notifyconfig.parsedcontent, notifyconfig.parsedoptions);
 		}
-	}
+	};
 	var notify = (content, options) => {
-		BDfunctionsDevilBro.DesktopNotificationQueue.running = true;
+		BDFDB.DesktopNotificationQueue.running = true;
 		let mute = options.silent;
 		options.silent = options.silent || options.sound ? true : false;
 		let notificationEle = new Notification(content, options);
@@ -357,18 +353,18 @@ BDfunctionsDevilBro.showDesktopNotification = function (parsedcontent, parsedopt
 			clearTimeout(closeTimeout);
 			close();
 			options.click();
-		}
+		};
 		if (!mute && options.sound) {
 			audio.src = options.sound;
-			audio.play()
+			audio.play();
 		}
 		var close = () => {
 			audio.pause();
 			notificationEle.close();
-			BDfunctionsDevilBro.DesktopNotificationQueue.running = false;
+			BDFDB.DesktopNotificationQueue.running = false;
 			setTimeout(() => {runQueue();},1000);
-		}
-	}
+		};
+	};
 	if (!("Notification" in window)) {
 		// do nothing
 	}
@@ -384,18 +380,18 @@ BDfunctionsDevilBro.showDesktopNotification = function (parsedcontent, parsedopt
 	}
 };
 
-BDfunctionsDevilBro.createTooltip = function (content, anker, options = {}) {
+BDFDB.createTooltip = function (content, anker, options = {}) {
 	if (!content || !anker || !document.contains(anker)) return null;
-	let tooltipcontainer = document.querySelector(".tooltips");
+	let tooltipcontainer = document.querySelector(BDFDB.dotCN.tooltips);
 	if (!tooltipcontainer) return null;
 	
 	let id = Math.round(Math.random()*10000000000000000);
 	let tooltip = document.createElement("div");
-	tooltip.className = "tooltip tooltip-black DevilBro-tooltip";
-	if (options.type) tooltip.classList.add("tooltip-" + options.type);
+	tooltip.className = BDFDB.disCNS.tooltip + BDFDB.disCNS.tooltipblack + "DevilBro-tooltip";
+	if (options.type) tooltip.classList.add(BDFDB.disCN["tooltip" + options.type]);
 	if (options.id) tooltip.id = options.id.split(" ")[0];
 	if (options.selector) options.selector.split(" ").forEach(selector => {if(selector) tooltip.classList.add(selector);});
-	if (options.css) BDfunctionsDevilBro.appendLocalStyle("customTooltipDevilBro" + id, options.css);
+	if (options.css) BDFDB.appendLocalStyle("BDFDBcustomTooltip" + id, options.css);
 	if (options.html === true) tooltip.innerHTML = content;
 	else tooltip.innerText = content;
 	
@@ -426,6 +422,7 @@ BDfunctionsDevilBro.createTooltip = function (content, anker, options = {}) {
 	tooltip.style.setProperty("top", top + "px");
 	
 	var tooltipObserver = new MutationObserver((mutations) => {
+		var now = performance.now();
 		mutations.forEach((mutation) => {
 			var nodes = Array.from(mutation.removedNodes);
 			var ownMatch = nodes.indexOf(tooltip) > -1;
@@ -434,58 +431,58 @@ BDfunctionsDevilBro.createTooltip = function (content, anker, options = {}) {
 			if (ownMatch || directMatch || parentMatch) {
 				tooltipObserver.disconnect();
 				tooltip.remove();
-				BDfunctionsDevilBro.$(anker).off("mouseleave.BDfunctionsDevilBroTooltip" + id);
-				BDfunctionsDevilBro.removeLocalStyle("customTooltipDevilBro" + id);
+				BDFDB.$(anker).off("mouseleave.BDFDBTooltip" + id);
+				BDFDB.removeLocalStyle("BDFDBcustomTooltip" + id);
 			}
 		});
 	});
 	tooltipObserver.observe(document.body, {subtree: true, childList: true});
 	
-	BDfunctionsDevilBro.$(anker).on("mouseleave.BDfunctionsDevilBroTooltip" + id, () => {
+	BDFDB.$(anker).on("mouseleave.BDFDBTooltip" + id, () => {
 		tooltip.remove();
 	});
 	
 	return tooltip;
 };
 
-BDfunctionsDevilBro.createNotificationsBar = function (content, options = {}) {
+BDFDB.createNotificationsBar = function (content, options = {}) {
 	if (!content) return;
 	let id = Math.round(Math.random()*10000000000000000);
 	let notifiybar = document.createElement("div");
-	notifiybar.className = "notice-3I4-y_ notice-2FJMB4 size14-1wjlWP size14-3iUx6q weightMedium-13x9Y8 weightMedium-2iZe9B height36-13sPn7 height36-36OHCc DevilBro-notice notice-" + id;
-	notifiybar.innerHTML = `<div class="dismiss-1QjyJW dismiss-SCAH9H"></div><span class="notice-message"></span></strong>`;
-	BDfunctionsDevilBro.$(".app .guilds-wrapper + div > div:first > div:first").append(notifiybar);
+	notifiybar.className = BDFDB.disCNS.notice + BDFDB.disCNS.size14 + BDFDB.disCNS.weightmedium + BDFDB.disCNS.height36 + "DevilBro-notice notice-" + id;
+	notifiybar.innerHTML = `<div class="${BDFDB.disCNS.noticedismiss}"></div><span class="notice-message"></span></strong>`;
+	BDFDB.$(BDFDB.dotCNS.app + BDFDB.dotCNS.guildswrapper + " + div > div:first > div:first").append(notifiybar);
 	var notifiybarinner = notifiybar.querySelector(".notice-message");
 	if (options.icon) {
 		var icons = {
-			"android":			{name:"iconAndroid-cnqiCY iconAndroid-3HTSwF icon-4jKckW icon-KgjVwm",						size:"small"},
-			"apple":			{name:"iconApple-2ZQIid iconApple-1hp9Sq icon-4jKckW icon-KgjVwm",							size:"small"},
-			"windows":			{name:"iconWindows-11s3sD iconWindows-1KG_XN icon-4jKckW icon-KgjVwm",						size:"small"},
-			"androidBig":		{name:"iconAndroid-cnqiCY iconAndroid-3HTSwF platformIcon-1JFXvA platformIcon-2NdO9F",		size:"big"},
-			"appleBig":			{name:"iconApple-2ZQIid iconApple-1hp9Sq platformIcon-1JFXvA platformIcon-2NdO9F",			size:"big"},
-			"windowsBig":		{name:"iconWindows-11s3sD iconWindows-1KG_XN platformIcon-1JFXvA platformIcon-2NdO9F",		size:"big"}
+			"android":			{name:BDFDB.disCNS.noticeiconandroid + BDFDB.disCN.noticeicon,			size:"small"},
+			"apple":			{name:BDFDB.disCNS.noticeiconapple + BDFDB.disCN.noticeicon,			size:"small"},
+			"windows":			{name:BDFDB.disCNS.noticeiconwindows + BDFDB.disCN.noticeicon,			size:"small"},
+			"androidBig":		{name:BDFDB.disCNS.noticeiconandroid + BDFDB.disCN.noticeplatformicon,	size:"big"},
+			"appleBig":			{name:BDFDB.disCNS.noticeiconapple + BDFDB.disCN.noticeplatformicon,	size:"big"},
+			"windowsBig":		{name:BDFDB.disCNS.noticeiconwindows + BDFDB.disCN.noticeplatformicon,	size:"big"}
 		};
 		for (let icon of options.icon.split(" ")) {
 			icon = icons[icon];
 			if (icon) {
-				if (icon.size == "small") 		BDfunctionsDevilBro.$(`<i class="${icon.name}"></i>`).insertAfter(notifiybarinner);
-				else if (icon.size == "big") 	BDfunctionsDevilBro.$(`<i class="${icon.name}"></i>`).insertBefore(notifiybarinner);
+				if (icon.size == "small") 		BDFDB.$(`<i class="${icon.name}"></i>`).insertAfter(notifiybarinner);
+				else if (icon.size == "big") 	BDFDB.$(`<i class="${icon.name}"></i>`).insertBefore(notifiybarinner);
 			}
 		}
 		
 	}
-	if (options.btn) BDfunctionsDevilBro.$(`<button class="button-2TvR03 button-1MICoQ size14-1wjlWP size14-3iUx6q weightMedium-13x9Y8 weightMedium-2iZe9B">${options.btn}</button>`).insertAfter(notifiybarinner);
+	if (options.btn) BDFDB.$(`<button class="${BDFDB.disCNS.noticebutton + BDFDB.disCNS.size14 + BDFDB.disCN.weightmedium}">${options.btn}</button>`).insertAfter(notifiybarinner);
 	if (options.id) notifiybar.id = options.id.split(" ")[0];
 	if (options.selector) options.selector.split(" ").forEach(selector => {if(selector) notifiybar.classList.add(selector);});
-	if (options.css) BDfunctionsDevilBro.appendLocalStyle("customNotificationsBarDevilBro" + id, options.css);
+	if (options.css) BDFDB.appendLocalStyle("BDFDBcustomNotificationsBar" + id, options.css);
 	if (options.html === true) notifiybarinner.innerHTML = content;
 	else {
 		var urltest = document.createElement("a");
 		var newcontent = [];
 		for (let word of content.split(" ")) {
-			let encodedword = BDfunctionsDevilBro.encodeToHTML(word);
+			let encodedword = BDFDB.encodeToHTML(word);
 			urltest.href = word;
-			newcontent.push((urltest.host && urltest.host != window.location.host) ? `<label class="textLink-3eOiS- textLink-27KAGV">${encodedword}</label>` : encodedword);
+			newcontent.push((urltest.host && urltest.host != window.location.host) ? `<label class="${BDFDB.disCN.textlink}">${encodedword}</label>` : encodedword);
 		}
 		notifiybarinner.innerHTML = newcontent.join(" ");
 	}
@@ -493,56 +490,52 @@ BDfunctionsDevilBro.createNotificationsBar = function (content, options = {}) {
 	var type = null;
 	if (options.type) {
 		var types = {
-			"brand":		"noticeBrand-3o3fQA noticeBrand-3nQBC_",
-			"danger":		"noticeDanger-1SIxaf noticeDanger-7u-yT9",
-			"default":		"noticeDefault-16Om2m noticeDefault-362Ko2",
-			"facebook":		"noticeFacebook-1eAoSW noticeFacebook-3equ5g",
-			"info":			"noticeInfo-3v29SJ noticeInfo-3_iTE1",
-			"premium":		"noticePremium-2x9Tv2 noticePremium-12Zvj9",
-			"spotify":		"noticeSpotify-27AKmv noticeSpotify-27dhr0 flex-3B1Tl4 flex-1O1GKY alignCenter-3VxkQP alignCenter-1dQNNs justifyCenter-29N31w justifyCenter-3D2jY",
-			"streamer":		"noticeStreamerMode-1OlfKV noticeStreamerMode-2TSQpg",
-			"success":		"noticeSuccess-P1EnBb noticeSuccess-3Y62ob"
+			"brand":		BDFDB.disCN.noticebrand,
+			"danger":		BDFDB.disCN.noticedanger,
+			"default":		BDFDB.disCN.noticedefault,
+			"facebook":		BDFDB.disCN.noticefacebook,
+			"info":			BDFDB.disCN.noticeinfo,
+			"premium":		BDFDB.disCN.noticepremium,
+			"spotify":		BDFDB.disCNS.noticespotify + BDFDB.disCNS.flex + BDFDB.disCNS.aligncenter + BDFDB.disCN.justifycenter,
+			"streamer":		BDFDB.disCN.noticestreamer,
+			"success":		BDFDB.disCN.noticesuccess
 		};
 		if (type = types[options.type]) type.split(" ").forEach(selector => {if(selector) notifiybar.classList.add(selector);});
 		if (options.type == "premium") {
-			var button = notifiybar.querySelector(".button-2TvR03");
-			if (button) {
-				button.classList.add("premiumAction-2lj9ha");
-				button.classList.add("premiumAction-3Tcani");
-			}
-			notifiybarinner.classList.add("premiumText-2gecpf");
-			notifiybarinner.classList.add("premiumText-C5NcRe");
-			BDfunctionsDevilBro.$(`<i class="premiumLogo-2PV9qw premiumLogo-30dge3"></i>`).insertBefore(notifiybarinner);
+			var button = notifiybar.querySelector(BDFDB.dotCN.noticebutton);
+			if (button) button.classList.add(BDFDB.disCN.noticepremiumaction);
+			notifiybarinner.classList.add(BDFDB.disCN.noticepremiumtext);
+			BDFDB.$(`<i class="${BDFDB.disCN.noticepremiumlogo}"></i>`).insertBefore(notifiybarinner);
 		}
 	}
 	if (!type) {
-		var comp = BDfunctionsDevilBro.color2COMP(options.color);
+		var comp = BDFDB.color2COMP(options.color);
 		var color = comp && comp[0] > 180 && comp[1] > 180 && comp[2] > 180 ? "#000" : "#FFF";
-		var bgColor = comp ? BDfunctionsDevilBro.color2HEX(comp) : "#F26522";
+		var bgColor = comp ? BDFDB.color2HEX(comp) : "#F26522";
 		var dismissFilter = comp && comp[0] > 180 && comp[1] > 180 && comp[2] > 180 ? "brightness(0%)" : "brightness(100%)";
-		BDfunctionsDevilBro.appendLocalStyle("customNotificationsBarColorCorrectionDevilBro" + id, 
+		BDFDB.appendLocalStyle("BDFDBcustomNotificationsBarColorCorrection" + id, 
 			`.DevilBro-notice.notice-${id} {
 				background-color: ${bgColor} !important;
 			}
 			.DevilBro-notice.notice-${id} .notice-message {
 				color: ${color} !important;
 			}
-			.DevilBro-notice.notice-${id} .button-2TvR03 {
+			.DevilBro-notice.notice-${id} ${BDFDB.dotCN.noticebutton} {
 				color: ${color} !important;
 				border-color: ${color} !important;
 			}
-			.DevilBro-notice.notice-${id} .button-2TvR03:hover {
+			.DevilBro-notice.notice-${id} ${BDFDB.dotCN.noticebutton}:hover {
 				color: ${bgColor} !important;
 				background-color: ${color} !important;
 			}
-			.DevilBro-notice.notice-${id} .dismiss-1QjyJW {
+			.DevilBro-notice.notice-${id} ${BDFDB.dotCN.noticedismiss} {
 				filter: ${dismissFilter} !important;
 			}`);
 	}
-	BDfunctionsDevilBro.$(notifiybar).on("click", ".dismiss-1QjyJW", () => {
-		BDfunctionsDevilBro.$(notifiybar).slideUp({complete: () => {
-			BDfunctionsDevilBro.removeLocalStyle("customNotificationsBarDevilBro" + id);
-			BDfunctionsDevilBro.removeLocalStyle("customNotificationsBarColorCorrectionDevilBro" + id);
+	BDFDB.$(notifiybar).on("click", BDFDB.dotCN.noticedismiss, () => {
+		BDFDB.$(notifiybar).slideUp({complete: () => {
+			BDFDB.removeLocalStyle("BDFDBcustomNotificationsBar" + id);
+			BDFDB.removeLocalStyle("BDFDBcustomNotificationsBarColorCorrection" + id);
 			notifiybar.remove();
 		}});
 	});
@@ -551,7 +544,7 @@ BDfunctionsDevilBro.createNotificationsBar = function (content, options = {}) {
 };
 
 // Plugins/Themes folder resolver from Square
-BDfunctionsDevilBro.getPluginsFolder = function () {
+BDFDB.getPluginsFolder = function () {
 	let process = require("process");
 	let path = require("path");
 	switch (process.platform) {
@@ -564,7 +557,7 @@ BDfunctionsDevilBro.getPluginsFolder = function () {
 	}
 };
 
-BDfunctionsDevilBro.getThemesFolder = function () {
+BDFDB.getThemesFolder = function () {
 	let process = require("process");
 	let path = require("path");
 	switch (process.platform) {
@@ -577,15 +570,15 @@ BDfunctionsDevilBro.getThemesFolder = function () {
 	}
 };
 
-BDfunctionsDevilBro.createUpdateButton = function () {
+BDFDB.createUpdateButton = function () {
 	var updateButton = document.createElement("button");
 	updateButton.className = "bd-pfbtn bd-updatebtn";
 	updateButton.innerText = "Check for Updates";
 	updateButton.onclick = function () {
-		BDfunctionsDevilBro.checkAllUpdates();
+		BDFDB.checkAllUpdates();
 	};			
 	updateButton.onmouseenter = function () {
-		BDfunctionsDevilBro.createTooltip("Only checks for updates of plugins, which support the updatecheck. Rightclick for a list.", updateButton, {type:"top",selector:"update-button-tooltip"});
+		BDFDB.createTooltip("Only checks for updates of plugins, which support the updatecheck. Rightclick for a list.", updateButton, {type:"top",selector:"update-button-tooltip"});
 		
 	};
 	updateButton.oncontextmenu = function () {
@@ -594,36 +587,36 @@ BDfunctionsDevilBro.createUpdateButton = function () {
 			for (var plugin in window.PluginUpdates.plugins) {
 				list.push(window.PluginUpdates.plugins[plugin].name);
 			}
-			BDfunctionsDevilBro.createTooltip(list.sort().join(", "), updateButton, {type:"bottom",selector:"update-list-tooltip"});
+			BDFDB.createTooltip(list.sort().join(", "), updateButton, {type:"bottom",selector:"update-list-tooltip"});
 		}
 	};
 	return updateButton;
 };
 
-BDfunctionsDevilBro.checkAllUpdates = function () {
+BDFDB.checkAllUpdates = function () {
 	for (let key in window.PluginUpdates.plugins) {
 		let plugin = window.PluginUpdates.plugins[key];
-		BDfunctionsDevilBro.checkUpdate(plugin.name, plugin.raw);
+		BDFDB.checkUpdate(plugin.name, plugin.raw);
 	}
 };
 
-BDfunctionsDevilBro.translatePlugin = function (plugin) {
+BDFDB.translatePlugin = function (plugin) {
 	if (typeof plugin.setLabelsByLanguage === "function" || typeof plugin.changeLanguageStrings === "function") {
 		var translateInterval = setInterval(() => {
 			if (document.querySelector("html").lang) {
 				clearInterval(translateInterval);
-				var language = BDfunctionsDevilBro.getDiscordLanguage();
+				var language = BDFDB.getDiscordLanguage();
 				if (typeof plugin.setLabelsByLanguage === "function") 		plugin.labels = plugin.setLabelsByLanguage(language.id);
 				if (typeof plugin.changeLanguageStrings === "function") 	plugin.changeLanguageStrings();
 				if (!plugin.appReload) {
-					console.log(BDfunctionsDevilBro.getLibraryStrings().toast_plugin_translated.replace("${pluginName}", plugin.name ? plugin.name : plugin.getName()).replace("${ownlang}", language.ownlang));
+					console.log(BDFDB.getLibraryStrings().toast_plugin_translated.replace("${pluginName}", plugin.name ? plugin.name : plugin.getName()).replace("${ownlang}", language.ownlang));
 				}
 			}
 		},100);
 	}
 };
 
-BDfunctionsDevilBro.languages = {
+BDFDB.languages = {
 	"$discord":	{name:"Discord (English (US))",		id:"en-US",		ownlang:"English (US)",				integrated:false,		dic:false,		deepl:false},
 	"af":		{name:"Afrikaans",					id:"af",		ownlang:"Afrikaans",				integrated:false,		dic:true,		deepl:false},
 	"sq":		{name:"Albanian",					id:"sq",		ownlang:"Shqiptar",					integrated:false,		dic:false,		deepl:false},
@@ -743,44 +736,43 @@ var pulling = setInterval(() => {
 		var languageID = document.querySelector("html").lang;
 		if (languageID) {
 			clearInterval(pulling);
-			BDfunctionsDevilBro.languages.$discord.name = "Discord (" + BDfunctionsDevilBro.languages[languageID].name + ")";
-			BDfunctionsDevilBro.languages.$discord.id = BDfunctionsDevilBro.languages[languageID].id;
-			BDfunctionsDevilBro.languages.$discord.ownlang = BDfunctionsDevilBro.languages[languageID].ownlang;
+			BDFDB.languages.$discord.name = "Discord (" + BDFDB.languages[languageID].name + ")";
+			BDFDB.languages.$discord.id = BDFDB.languages[languageID].id;
+			BDFDB.languages.$discord.ownlang = BDFDB.languages[languageID].ownlang;
 		}
 	},100);
 })();
 
-BDfunctionsDevilBro.getDiscordBuilt = function () {
+BDFDB.getDiscordBuilt = function () {
 	return require(require('electron').remote.app.getAppPath() + "/build_info.json").releaseChannel.toLowerCase();
 };
 
-BDfunctionsDevilBro.getDiscordVersion = function () {
+BDFDB.getDiscordVersion = function () {
 	return require(require('electron').remote.app.getAppPath() + "/build_info.json").version.toLowerCase();
 };
 
-BDfunctionsDevilBro.getDiscordLanguage = function () {
+BDFDB.getDiscordLanguage = function () {
 	var languageCode = document.querySelector("html").lang || "en-US";
 	var codeParts = languageCode.split("-");
 	var prefix = codeParts[0];
 	var suffix = codeParts[1] ? codeParts[1] : "";
 	languageCode = suffix && prefix.toUpperCase() != suffix.toUpperCase() ? prefix + "-" + suffix : prefix;
-	return BDfunctionsDevilBro.languages[languageCode] || BDfunctionsDevilBro.languages["en-US"];
+	return BDFDB.languages[languageCode] || BDFDB.languages["en-US"];
 };
 
-BDfunctionsDevilBro.getDiscordTheme = function () {
-	if (BDfunctionsDevilBro.$(".theme-light").length > BDfunctionsDevilBro.$(".theme-dark").length) return "theme-light";
-	else return "theme-dark";
+BDFDB.getDiscordTheme = function () {
+	return document.querySelectorAll(BDFDB.dotCN.themelight).length > document.querySelectorAll(BDFDB.dotCN.themedark).length ? BDFDB.disCN.themelight : BDFDB.disCN.themedark;
 };
 	
-BDfunctionsDevilBro.getReactInstance = function (node) { 
+BDFDB.getReactInstance = function (node) { 
 	if (!node) return null;
 	return node[Object.keys(node).find((key) => key.startsWith("__reactInternalInstance"))];
 };
 
-BDfunctionsDevilBro.getOwnerInstance = function (config) { 
+BDFDB.getOwnerInstance = function (config) { 
 	if (config === undefined) return null;
 	if (!config.node || (!config.name && (!config.props || !Array.isArray(config.props)))) return null;
-	var inst = BDfunctionsDevilBro.getReactInstance(config.node);
+	var inst = BDFDB.getReactInstance(config.node);
 	if (!inst) return null;
 	
 	var depth = -1;
@@ -797,11 +789,11 @@ BDfunctionsDevilBro.getOwnerInstance = function (config) {
 	
 	function searchOwnerInReact (ele) {
 		depth++;
-		if (!ele || BDfunctionsDevilBro.getReactInstance(ele) || depth > maxDepth || performance.now() - start > maxTime) result = null;
+		if (!ele || BDFDB.getReactInstance(ele) || depth > maxDepth || performance.now() - start > maxTime) result = null;
 		else {
 			var keys = Object.getOwnPropertyNames(ele);
 			var result = null;
-			for (var i = 0; result === null && i < keys.length; i++) {
+			for (var i = 0; result == null && i < keys.length; i++) {
 				var key = keys[i];
 				var value = ele[keys[i]];
 				
@@ -821,11 +813,11 @@ BDfunctionsDevilBro.getOwnerInstance = function (config) {
 	}
 };
 
-BDfunctionsDevilBro.getKeyInformation = function (config) {
+BDFDB.getKeyInformation = function (config) {
 	if (config === undefined) return null;
 	if (!config.node || !config.key) return null;
 	
-	var inst = BDfunctionsDevilBro.getReactInstance(config.node);
+	var inst = BDFDB.getReactInstance(config.node);
 	if (!inst) return null;
 	
 	var depth = -1;
@@ -863,11 +855,11 @@ BDfunctionsDevilBro.getKeyInformation = function (config) {
 
 	function searchKeyInReact (ele) {
 		depth++;
-		if (!ele || BDfunctionsDevilBro.getReactInstance(ele) || depth > maxDepth || performance.now() - start > maxTime) result = null;
+		if (!ele || BDFDB.getReactInstance(ele) || depth > maxDepth || performance.now() - start > maxTime) result = null;
 		else {
 			var keys = Object.getOwnPropertyNames(ele);
 			var result = null;
-			for (var i = 0; result === null && i < keys.length; i++) {
+			for (var i = 0; result == null && i < keys.length; i++) {
 				var key = keys[i];
 				var value = ele[keys[i]];
 				
@@ -882,7 +874,7 @@ BDfunctionsDevilBro.getKeyInformation = function (config) {
 						else if (config.noCopies) {
 							var included = false;
 							for (var j = 0; j < resultArray.length; j++) {
-								if (BDfunctionsDevilBro.equals(value, resultArray[j])) {
+								if (BDFDB.equals(value, resultArray[j])) {
 									included = true;
 									break;
 								}
@@ -901,10 +893,10 @@ BDfunctionsDevilBro.getKeyInformation = function (config) {
 	}
 };
 
-BDfunctionsDevilBro.WebModules = {};
+BDFDB.WebModules = {};
 // code in this closure based on code by samogot and edited by myself
 // https://github.com/samogot/betterdiscord-plugins/blob/master/v2/1Lib%20Discord%20Internals/plugin.js
-BDfunctionsDevilBro.WebModules.find = function (filter) {
+BDFDB.WebModules.find = function (filter) {
 	const req = typeof(webpackJsonp) === "function" ? webpackJsonp([], {
 		'__extra_id__': (module, exports, req) => exports.default = req
 	}, ['__extra_id__']).default : webpackJsonp.push([[], {
@@ -921,19 +913,19 @@ BDfunctionsDevilBro.WebModules.find = function (filter) {
 	}
 };
 
-BDfunctionsDevilBro.WebModules.findByProperties = function (properties) {
-	return BDfunctionsDevilBro.WebModules.find((module) => properties.every(prop => module[prop] !== undefined));
+BDFDB.WebModules.findByProperties = function (properties) {
+	return BDFDB.WebModules.find((module) => properties.every(prop => module[prop] !== undefined));
 };
 
-BDfunctionsDevilBro.WebModules.findByName = function (name) {
-	return BDfunctionsDevilBro.WebModules.find((module) => module.displayName === name);
+BDFDB.WebModules.findByName = function (name) {
+	return BDFDB.WebModules.find((module) => module.displayName === name);
 };
 
-BDfunctionsDevilBro.WebModules.findByPrototypes = function (prototypes) {
-	return BDfunctionsDevilBro.WebModules.find((module) => module.prototype && prototypes.every(proto => module.prototype[proto] !== undefined));
+BDFDB.WebModules.findByPrototypes = function (prototypes) {
+	return BDFDB.WebModules.find((module) => module.prototype && prototypes.every(proto => module.prototype[proto] !== undefined));
 };
 
-BDfunctionsDevilBro.WebModules.addListener = function (internalModule, moduleFunction, callback) {
+BDFDB.WebModules.addListener = function (internalModule, moduleFunction, callback) {
 	if (typeof internalModule !== "object" || !moduleFunction || typeof callback !== "function") return;
 	if (!internalModule[moduleFunction] || typeof(internalModule[moduleFunction]) !== "function") return;
 	if (!internalModule.__internalListeners) internalModule.__internalListeners = {};
@@ -941,7 +933,7 @@ BDfunctionsDevilBro.WebModules.addListener = function (internalModule, moduleFun
 	
 	if (!internalModule.__listenerPatches) internalModule.__listenerPatches = {};
 	if (!internalModule.__listenerPatches[moduleFunction]) {
-		internalModule.__listenerPatches[moduleFunction] = BDfunctionsDevilBro.WebModules.monkeyPatch(internalModule, moduleFunction, {after: (data) => {
+		internalModule.__listenerPatches[moduleFunction] = BDFDB.WebModules.monkeyPatch(internalModule, moduleFunction, {after: (data) => {
 			for (let listener of internalModule.__internalListeners[moduleFunction]) listener();
 		}});
 	}
@@ -949,7 +941,7 @@ BDfunctionsDevilBro.WebModules.addListener = function (internalModule, moduleFun
 	internalModule.__internalListeners[moduleFunction].add(callback);
 };
 
-BDfunctionsDevilBro.WebModules.removeListener = function (internalModule, moduleFunction, callback) {
+BDFDB.WebModules.removeListener = function (internalModule, moduleFunction, callback) {
 	if (typeof internalModule !== "object" || !moduleFunction || typeof callback !== "function") return;
 	if (!internalModule[moduleFunction] || typeof(internalModule[moduleFunction]) !== "function") return;
 	if (!internalModule.__internalListeners || !internalModule.__internalListeners[moduleFunction] || !internalModule.__internalListeners[moduleFunction].size) return;
@@ -962,7 +954,7 @@ BDfunctionsDevilBro.WebModules.removeListener = function (internalModule, module
 	}
 };
 
-BDfunctionsDevilBro.WebModules.monkeyPatch = function (internalModule, moduleFunction, {before, after, instead, once = false, silent = false} = options) {
+BDFDB.WebModules.monkeyPatch = function (internalModule, moduleFunction, {before, after, instead, once = false, silent = false} = options) {
 	const origMethod = internalModule[moduleFunction];
 	const cancel = function () {
 		internalModule[moduleFunction] = origMethod;
@@ -1001,7 +993,7 @@ BDfunctionsDevilBro.WebModules.monkeyPatch = function (internalModule, moduleFun
 	return cancel;
 };
 
-BDfunctionsDevilBro.WebModules.findFunction = function (filter) {
+BDFDB.WebModules.findFunction = function (filter) {
 	const req = webpackJsonp([], {"__extra_id__": (module, exports, req) => exports.default = req}, ["__extra_id__"]).default;
 	delete req.c["__extra_id__"];
 	for (let i in req.m) { 
@@ -1014,7 +1006,7 @@ BDfunctionsDevilBro.WebModules.findFunction = function (filter) {
 	return null;
 };
 
-BDfunctionsDevilBro.WebModules.patchFunction = function (newOutput, index) {
+BDFDB.WebModules.patchFunction = function (newOutput, index) {
 	const req = webpackJsonp([], {"__extra_id__": (module, exports, req) => exports.default = req}, ["__extra_id__"]).default;
 	try {
 		var output = {};
@@ -1036,25 +1028,25 @@ BDfunctionsDevilBro.WebModules.patchFunction = function (newOutput, index) {
 		};
 	}
 	catch (err) {
-		console.warn("BDfunctionsDevilBro: Could not patch Function. Error: " + err);
+		console.warn("BDFDB: Could not patch Function. Error: " + err);
 	}
 };
 
-BDfunctionsDevilBro.addOnSwitchListener = function (plugin) {
+BDFDB.addOnSwitchListener = function (plugin) {
 	if (typeof plugin.onSwitch === "function") {
-		BDfunctionsDevilBro.removeOnSwitchListener(plugin);
-		if (!BDfunctionsDevilBro.zacksFork()) {
+		BDFDB.removeOnSwitchListener(plugin);
+		if (!BDFDB.zacksFork()) {
 			plugin.onSwitch = plugin.onSwitch.bind(plugin);
 			require("electron").remote.getCurrentWindow().webContents.addListener("did-navigate-in-page", plugin.onSwitch);
 		}
-		var chatspacer = document.querySelector(".guilds-wrapper + * > .spacer-3Dkonz");
+		var chatspacer = document.querySelector(BDFDB.dotCN.guildswrapper + " + * > " + BDFDB.dotCN.chatspacer);
 		if (chatspacer) {
 			plugin.onSwitchFix = new MutationObserver((changes, _) => {
 				changes.forEach(
 					(change, i) => {
 						if (change.addedNodes) {
 							change.addedNodes.forEach((node) => {
-								if (node && node.classList && (node.classList.contains("chat") || node.classList.contains("noChannel-2EQ0a9"))) {
+								if (node && node.classList && (node.classList.contains(BDFDB.disCN.chat) || node.classList.contains(BDFDB.disCN.nochannel))) {
 									attributeObserver.observe(node, {attributes:true});
 								}
 							});
@@ -1067,36 +1059,36 @@ BDfunctionsDevilBro.addOnSwitchListener = function (plugin) {
 			var attributeObserver = new MutationObserver((changes, _) => {
 				changes.forEach(
 					(change, i) => {
-						if (change.target && change.target.classList && change.target.classList.contains("noChannel-2EQ0a9")) plugin.onSwitch();
+						if (change.target && change.target.classList && change.target.classList.contains(BDFDB.disCN.nochannel)) plugin.onSwitch();
 					}
 				);
 			});
-			var chat = chatspacer.querySelector(".chat, .noChannel-2EQ0a9");
+			var chat = chatspacer.querySelector(BDFDB.dotCNC.chat + BDFDB.dotCN.nochannel);
 			if (chat) attributeObserver.observe(chat, {attributes:true});
 		}
 	}
 };
 
-BDfunctionsDevilBro.removeOnSwitchListener = function (plugin) {
+BDFDB.removeOnSwitchListener = function (plugin) {
 	if (typeof plugin.onSwitch === "function") {
-		if (!BDfunctionsDevilBro.zacksFork()) {
+		if (!BDFDB.zacksFork()) {
 			require("electron").remote.getCurrentWindow().webContents.removeListener("did-navigate-in-page", plugin.onSwitch);
 		}
 		if (typeof plugin.onSwitchFix === "object") plugin.onSwitchFix.disconnect();
 	}
 };
 
-BDfunctionsDevilBro.addReloadListener = function (plugin) {
+BDFDB.addReloadListener = function (plugin) {
 	if (typeof plugin.initialize === "function") {
-		BDfunctionsDevilBro.removeReloadListener(plugin);
-		var appwindow = document.querySelector(".app-XZYfmp");
+		BDFDB.removeReloadListener(plugin);
+		var appwindow = document.querySelector(BDFDB.dotCN.app);
 		if (appwindow) {
 			plugin.reloadFix = new MutationObserver((changes, _) => {
 				changes.forEach(
 					(change, i) => {
 						if (change.addedNodes) {
 							change.addedNodes.forEach((node) => {
-								if (node && node.classList && node.classList.contains("app")) {
+								if (node && node.classList && node.classList.contains(BDFDB.disCN.appold)) {
 									if (window.PluginUpdates && window.PluginUpdates.observer) {
 										window.PluginUpdates.observer.disconnect();
 										delete window.PluginUpdates.observer;
@@ -1114,16 +1106,16 @@ BDfunctionsDevilBro.addReloadListener = function (plugin) {
 	}
 };
 
-BDfunctionsDevilBro.removeReloadListener = function (plugin) {
+BDFDB.removeReloadListener = function (plugin) {
 	if (typeof plugin.initialize === "function" && typeof plugin.reloadFix === "object") {
 		plugin.reloadFix.disconnect();
 	}
 };
 
-BDfunctionsDevilBro.addSettingsButtonListener = function (plugin) {
-	if (BDfunctionsDevilBro.isBDv2() && typeof plugin.getSettingsPanel === "function") {
-		BDfunctionsDevilBro.removeSettingsButtonListener(plugin);
-		BDfunctionsDevilBro.appendSettingsButton(plugin);
+BDFDB.addSettingsButtonListener = function (plugin) {
+	if (BDFDB.isBDv2() && typeof plugin.getSettingsPanel === "function") {
+		BDFDB.removeSettingsButtonListener(plugin);
+		BDFDB.appendSettingsButton(plugin);
 		var bdsettings = document.querySelector(".bd-content-region > .bd-content");
 		if (bdsettings) {
 			plugin.settingsButtonObserver = new MutationObserver((changes, _) => {
@@ -1132,7 +1124,7 @@ BDfunctionsDevilBro.addSettingsButtonListener = function (plugin) {
 						if (change.addedNodes) {
 							change.addedNodes.forEach((node) => {
 								if (node.tagName && node.classList.contains("active")) {
-									BDfunctionsDevilBro.appendSettingsButton(plugin);
+									BDFDB.appendSettingsButton(plugin);
 								}
 							});
 						}
@@ -1144,33 +1136,56 @@ BDfunctionsDevilBro.addSettingsButtonListener = function (plugin) {
 	}
 };
 
-BDfunctionsDevilBro.appendSettingsButton = function (plugin) {
+BDFDB.appendSettingsButton = function (plugin) {
 	let plugincard = document.querySelector(`.bd-card[data-plugin-id=${plugin.id}]`);
 	if (plugincard) {
-		let settingsbutton = BDfunctionsDevilBro.$(`<div class="DevilBro-settingsbutton bd-button"><span class="bd-material-design-icon"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M12,15.5C10.07,15.5 8.5,13.93 8.5,12C8.5,10.07 10.07,8.5 12,8.5C13.93,8.5 15.5,10.07 15.5,12C15.5,13.93 13.93,15.5 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"></path></svg></span></div>`);
-		BDfunctionsDevilBro.$(settingsbutton)
-			.on("mouseenter.BDfunctionsDevilBroSettingsButtonListener", (e) => {BDfunctionsDevilBro.createTooltip("Settings", e.currentTarget, {type:"top"});})
-			.on("click.BDfunctionsDevilBroSettingsButtonListener", (e) => {
-				var settingsmodal = BDfunctionsDevilBro.$(`<span class="DevilBro-modal DevilBro-settingsmodal ${plugin.id}-settingsmodal"><div class="backdrop-2ohBEd"></div><div class="modal-2LIEKY"><div class="inner-1_1f7b"><div class="modal-3HOjGZ sizeMedium-1-2BNS"><div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw directionRow-yNbSvJ justifyStart-2yIZo0 alignCenter-3VxkQP noWrap-v6g9vO header-3sp3cE" style="flex: 0 0 auto;"><div class="flexChild-1KGW5q" style="flex: 1 1 auto;"><h4 class="h4-2IXpeI title-1pmpPr size16-3IvaX_ height20-165WbF weightSemiBold-T8sxWH defaultColor-v22dK1 defaultMarginh4-jAopYe marginReset-3hwONl">REPLACE_modal_header_text</h4></div><svg class="btn-cancel close-3ejNTg flexChild-1KGW5q" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 12 12"><g fill="none" fill-rule="evenodd"><path d="M0 0h12v12H0"></path><path class="fill" fill="currentColor" d="M9.5 3.205L8.795 2.5 6 5.295 3.205 2.5l-.705.705L5.295 6 2.5 8.795l.705.705L6 6.705 8.795 9.5l.705-.705L6.705 6"></path></g></svg></div><div class="scrollerWrap-2uBjct content-1Cut5s scrollerThemed-19vinI themeGhostHairline-2H8SiW"><div class="scroller-fzNley inner-tqJwAU"></div></div></div></div></div></span>`);
-				settingsmodal.find(".title-1pmpPr").text(plugin.name + " Settings");
-				settingsmodal.find(".inner-tqJwAU").append(plugin.getSettingsPanel());
+		let settingsbutton = BDFDB.$(`<div class="DevilBro-settingsbutton bd-button"><span class="bd-material-design-icon"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M12,15.5C10.07,15.5 8.5,13.93 8.5,12C8.5,10.07 10.07,8.5 12,8.5C13.93,8.5 15.5,10.07 15.5,12C15.5,13.93 13.93,15.5 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"></path></svg></span></div>`);
+		BDFDB.$(settingsbutton)
+			.on("mouseenter.BDFDBSettingsButtonListener", (e) => {BDFDB.createTooltip("Settings", e.currentTarget, {type:"top"});})
+			.on("click.BDFDBSettingsButtonListener", (e) => {
+				var settingsModalMarkup = 
+					`<span class="DevilBro-modal DevilBro-settingsmodal ${plugin.id}-settingsmodal">
+						<div class="${BDFDB.disCN.backdrop}"></div>
+							<div class="${BDFDB.disCN.modal}">
+								<div class="${BDFDB.disCN.modalinner}">
+									<div class="${BDFDB.disCNS.modalsub + BDFDB.disCN.modalsizemedium}">
+										<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.modalheader}" style="flex: 0 0 auto;">
+											<div class="${BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">
+												<h4 class="${BDFDB.disCNS.h4 + BDFDB.disCNS.headertitle + BDFDB.disCNS.size16 + BDFDB.disCNS.height20 + BDFDB.disCNS.weightsemibold + BDFDB.disCNS.defaultcolor + BDFDB.disCNS.h4defaultmargin + BDFDB.disCN.marginreset}">${plugin.name} Settings</h4>
+											</div>
+											<svg class="${BDFDB.disCNS.modalclose + BDFDB.disCN.flexchild}" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 12 12">
+												<g fill="none" fill-rule="evenodd">
+													<path d="M0 0h12v12H0"></path>
+													<path class="fill" fill="currentColor" d="M9.5 3.205L8.795 2.5 6 5.295 3.205 2.5l-.705.705L5.295 6 2.5 8.795l.705.705L6 6.705 8.795 9.5l.705-.705L6.705 6"></path>
+												</g>
+											</svg>
+										</div>
+									<div class="${BDFDB.disCNS.scrollerwrap + BDFDB.disCNS.modalcontent + BDFDB.disCNS.scrollerthemed + BDFDB.disCN.themeghosthairline}">
+										<div class="${BDFDB.disCNS.scroller + BDFDB.disCN.modalsubinner}"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</span>`;
+				var settingsModal = BDFDB.$(settingsModalMarkup);
+				settingsModal.find(BDFDB.dotCN.modalsubinner).append(plugin.getSettingsPanel());
 				if (typeof plugin.onSettingsClosed === "function") {
-					settingsmodal.on("click.BDfunctionsDevilBroCloseListener", ".close-3ejNTg, .backdrop-2ohBEd", () => {plugin.onSettingsClosed();});
+					settingsModal.on("click.BDFDBCloseListener", BDFDB.dotCNC.modalclose + BDFDB.dotCN.backdrop, () => {plugin.onSettingsClosed();});
 				}
-				BDfunctionsDevilBro.appendModal(settingsmodal);
+				BDFDB.appendModal(settingsModal);
 			})
 			.insertBefore(plugincard.querySelector(".bd-button"));
 	}
 };
 
-BDfunctionsDevilBro.removeSettingsButtonListener = function (plugin) {
-	if (BDfunctionsDevilBro.isBDv2() && typeof plugin.settingsButtonObserver === "object") {
-		BDfunctionsDevilBro.$(`.bd-card[data-plugin-id=${plugin.id}] .DevilBro-settingsbutton`).remove();
+BDFDB.removeSettingsButtonListener = function (plugin) {
+	if (BDFDB.isBDv2() && typeof plugin.settingsButtonObserver === "object") {
+		BDFDB.$(`.bd-card[data-plugin-id=${plugin.id}] .DevilBro-settingsbutton`).remove();
 		plugin.settingsButtonObserver.disconnect();
 	}
 };
 
-BDfunctionsDevilBro.getLanguageTable = function (lang) {
+BDFDB.getLanguageTable = function (lang) {
 	var ti = {
 		"bg":		"холандски",		//bulgarian
 		"cs":		"Nizozemština",		//czech
@@ -1200,13 +1215,27 @@ BDfunctionsDevilBro.getLanguageTable = function (lang) {
 		"zh-CN":	"荷兰语",			//chinese(china)
 		"zh-TW":	"荷蘭文"				//chinese(traditional)
 	};
-	lang = lang ? lang : BDfunctionsDevilBro.getDiscordLanguage().id;
-	return BDfunctionsDevilBro.WebModules.find(function (m) {
+	lang = lang ? lang : BDFDB.getDiscordLanguage().id;
+	return BDFDB.WebModules.find(function (m) {
 		return m.nl === ti[lang];
 	});
 };
 
-BDfunctionsDevilBro.equals = function (check1, check2, compareOrder) {
+BDFDB.LanguageStrings = new Proxy(Object.create(null), {
+	get: function() {
+		var languageStrings = BDFDB.getLanguageTable();
+		if (!languageStrings[arguments[1]]) {
+			var englishStrings = BDFDB.getLanguageTable("en-US");
+			if (!englishStrings[arguments[1]]) {
+				throw new Error(arguments[1] + " not found in BDFDB.getLanguageTable");
+			}
+			return englishStrings[arguments[1]];
+		}
+		return languageStrings[arguments[1]];
+	}
+});
+
+BDFDB.equals = function (check1, check2, compareOrder) {
 	var depth = -1;
 	
 	if (compareOrder === undefined || typeof compareOrder !== "boolean") compareOrder = false;
@@ -1246,163 +1275,171 @@ BDfunctionsDevilBro.equals = function (check1, check2, compareOrder) {
 	}
 };
 
-BDfunctionsDevilBro.filterObject = function (obj, predicate) {
+BDFDB.filterObject = function (obj, predicate) {
 return Object.keys(obj).filter(key => predicate(obj[key])).reduce((res, key) => (res[key] = obj[key], res), {});
 };
 
-BDfunctionsDevilBro.isObjectEmpty = function (obj) {
+BDFDB.isObjectEmpty = function (obj) {
 	return typeof obj !== "object" || Object.getOwnPropertyNames(obj).length == 0;
 };
 
-BDfunctionsDevilBro.removeFromArray = function (array, value) {
+BDFDB.removeFromArray = function (array, value) {
 	if (!array || !value || !Array.isArray(array) || !array.includes(value)) return;
 	array.splice(array.indexOf(value), 1);
 };
 
 (() => {
 var pulling = setInterval(() => {
-		var UserActions = BDfunctionsDevilBro.WebModules.findByProperties(["getCurrentUser"]);
+		var UserActions = BDFDB.WebModules.findByProperties(["getCurrentUser"]);
 		var userData = UserActions && typeof UserActions.getCurrentUser == "function" ? UserActions.getCurrentUser() : null;
-		if (userData && !BDfunctionsDevilBro.isObjectEmpty(userData)) {
+		if (userData && !BDFDB.isObjectEmpty(userData)) {
 			clearInterval(pulling);
-			BDfunctionsDevilBro.myData = userData;
+			BDFDB.myData = userData;
 		}
 	},100);
 })();
 
-BDfunctionsDevilBro.getUserStatus = function (id = BDfunctionsDevilBro.myData.id) {
+BDFDB.getUserStatus = function (id = BDFDB.myData.id) {
 	id = typeof id == "number" ? id.toFixed() : id;
-	var ActivityModule = BDfunctionsDevilBro.WebModules.findByProperties(["getActivity","getStatuses"]);
-	var StreamModule = BDfunctionsDevilBro.WebModules.findByProperties(["isStreaming"]);
+	var ActivityModule = BDFDB.WebModules.findByProperties(["getActivity","getStatuses"]);
+	var StreamModule = BDFDB.WebModules.findByProperties(["isStreaming"]);
 	return StreamModule.isStreaming(ActivityModule.getActivity(id)) ? "streaming" : ActivityModule.getStatus(id);
 };
 
-BDfunctionsDevilBro.getUserAvatar = function (id = BDfunctionsDevilBro.myData.id) {
+BDFDB.getUserAvatar = function (id = BDFDB.myData.id) {
 	id = typeof id == "number" ? id.toFixed() : id;
-	var UserStore = BDfunctionsDevilBro.WebModules.findByProperties(["getUser","getUsers"]);
-	var IconUtils = BDfunctionsDevilBro.WebModules.findByProperties(["getUserAvatarURL"]);
+	var UserStore = BDFDB.WebModules.findByProperties(["getUser","getUsers"]);
+	var IconUtils = BDFDB.WebModules.findByProperties(["getUserAvatarURL"]);
 	var user = UserStore.getUser(id);
-	return ((user.avatar ? "" : "https://discordapp.com") + IconUtils.getUserAvatarURL(user)).split("?size")[0];
+	return ((user && user.avatar ? "" : "https://discordapp.com") + IconUtils.getUserAvatarURL(user)).split("?size")[0];
 };
 
-BDfunctionsDevilBro.getChannelAvatar = function (id) {
+BDFDB.getChannelAvatar = function (id) {
 	id = typeof id == "number" ? id.toFixed() : id;
-	var ChannelStore = BDfunctionsDevilBro.WebModules.findByProperties(["getChannel","getChannels"]);
-	var IconUtils = BDfunctionsDevilBro.WebModules.findByProperties(["getChannelIconURL"]);
+	var ChannelStore = BDFDB.WebModules.findByProperties(["getChannel","getChannels"]);
+	var IconUtils = BDFDB.WebModules.findByProperties(["getChannelIconURL"]);
 	var channel = ChannelStore.getChannel(id);
-	return ((channel.icon ? "" : "https://discordapp.com") + IconUtils.getChannelIconURL(channel)).split("?size")[0];
+	return ((channel && channel.icon ? "" : "https://discordapp.com") + IconUtils.getChannelIconURL(channel)).split("?size")[0];
+};
+	
+BDFDB.getParsedLength = function (string) {
+	let channel = BDFDB.WebModules.findByProperties(["getChannels", "getChannel"]).getChannel(BDFDB.WebModules.findByProperties(["getLastSelectedChannelId"]).getChannelId());
+	let length = string.indexOf("/") == 0 || string.indexOf("s/") == 0 || string.indexOf("+:") == 0 ? 
+		string.length : 
+		BDFDB.WebModules.findByProperties(["parse","isMentioned"]).parse(channel, string).content.length;
+	return length > string.length ? length : string.length;
 };
 
-BDfunctionsDevilBro.readServerList = function () {
-	var server, id, info, foundServers = [], GuildStore = BDfunctionsDevilBro.WebModules.findByProperties(["getGuilds"]);
-	for (server of document.querySelectorAll(".guild-separator ~ .guild")) {
-		id = BDfunctionsDevilBro.getIdOfServer(server);
+BDFDB.readServerList = function () {
+	var server, id, info, foundServers = [], GuildStore = BDFDB.WebModules.findByProperties(["getGuilds"]);
+	for (server of document.querySelectorAll(BDFDB.dotCN.guildseparator + " ~ " + BDFDB.dotCN.guild)) {
+		id = BDFDB.getIdOfServer(server);
 		info = id ? GuildStore.getGuild(id) : null;
 		if (info) foundServers.push(Object.assign({},info,{div:server,data:info}));
 	}
 	return foundServers;
 };
 
-BDfunctionsDevilBro.readUnreadServerList = function (servers) {
+BDFDB.readUnreadServerList = function (servers) {
 	var serverObj, foundServers = [];
-	for (serverObj of (servers === undefined || !Array.isArray(servers) ? BDfunctionsDevilBro.readServerList() : servers)) {
-		if (serverObj && serverObj.div && (serverObj.div.classList.contains("unread") || serverObj.div.querySelector(".badge"))) foundServers.push(serverObj);
+	for (serverObj of (servers === undefined || !Array.isArray(servers) ? BDFDB.readServerList() : servers)) {
+		if (serverObj && serverObj.div && (serverObj.div.classList.contains(BDFDB.disCN.guildunread) || serverObj.div.querySelector(BDFDB.dotCN.badge))) foundServers.push(serverObj);
 	}
 	return foundServers;
 };
 
-BDfunctionsDevilBro.getSelectedServer = function () {
+BDFDB.getSelectedServer = function () {
 	var serverObj, id, info;
-	id = BDfunctionsDevilBro.WebModules.findByProperties(["getLastSelectedGuildId"]).getGuildId();
-	info = id ? BDfunctionsDevilBro.WebModules.findByProperties(["getGuilds"]).getGuild(id) : null;
+	id = BDFDB.WebModules.findByProperties(["getLastSelectedGuildId"]).getGuildId();
+	info = id ? BDFDB.WebModules.findByProperties(["getGuilds"]).getGuild(id) : null;
 	if (info) {
-		serverObj = BDfunctionsDevilBro.getDivOfServer(id);
+		serverObj = BDFDB.getDivOfServer(id);
 		return serverObj ? serverObj : Object.assign({},info,{div:null,data:info});
 	}
 	else return null;
 };
 
-BDfunctionsDevilBro.getIdOfServer = function (server) {
-	if (!server || !server.classList || !server.classList.contains("guild") || server.classList.contains("copy") || server.classList.contains("folder")) return;
+BDFDB.getIdOfServer = function (server) {
+	if (!server || !server.classList || !server.classList.contains(BDFDB.disCN.guild) || server.classList.contains("copy") || server.classList.contains("folder")) return;
 	var switchlink, id;
 	switchlink = server.querySelector("a");
 	id = switchlink && switchlink.href ? switchlink.href.split("/") : null;
 	return id && id.length > 3 && !isNaN(parseInt(id[4])) ? id[4] : null;
 };
 
-BDfunctionsDevilBro.getDivOfServer = function (id) {
-	for (var serverObj of BDfunctionsDevilBro.readServerList()) {
+BDFDB.getDivOfServer = function (id) {
+	for (var serverObj of BDFDB.readServerList()) {
 		if (serverObj && serverObj.id == id) return serverObj;
 	}
 	return null;
 };
 
-BDfunctionsDevilBro.readChannelList = function () {
-	var channel, info, foundChannels = [], ChannelStore = BDfunctionsDevilBro.WebModules.findByProperties(["getChannels"]);
-	for (channel of document.querySelectorAll(".containerDefault-7RImuF, .containerDefault-1bbItS")) {
-		info = BDfunctionsDevilBro.getKeyInformation({"node":channel, "key":"channel"});
+BDFDB.readChannelList = function () {
+	var channel, info, foundChannels = [], ChannelStore = BDFDB.WebModules.findByProperties(["getChannels"]);
+	for (channel of document.querySelectorAll(BDFDB.dotCNC.channelcontainerdefault + BDFDB.dotCN.categorycontainerdefault)) {
+		info = BDFDB.getKeyInformation({"node":channel, "key":"channel"});
 		if (info) info = ChannelStore.getChannel(info.id);
 		if (info) foundChannels.push(Object.assign({},info,{div:channel,data:info}));
 	}
-	for (channel of document.querySelectorAll(".channel.private")) {
-		info = BDfunctionsDevilBro.getKeyInformation({"node":channel, "key":"user"}) || BDfunctionsDevilBro.getKeyInformation({"node":channel, "key":"channel"});
+	for (channel of document.querySelectorAll(BDFDB.dotCN.dmchannel + BDFDB.dotCN.dmchannelprivate)) {
+		info = BDFDB.getKeyInformation({"node":channel, "key":"user"}) || BDFDB.getKeyInformation({"node":channel, "key":"channel"});
 		if (info) info = ChannelStore.getChannel(ChannelStore.getDMFromUserId(info.id)) || ChannelStore.getChannel(info.id)
 		if (info) foundChannels.push(Object.assign({},info,{div:channel,data:info}));
 	}
 	return foundChannels;
 };
 
-BDfunctionsDevilBro.getSelectedChannel = function () {
+BDFDB.getSelectedChannel = function () {
 	var channelObj, id, info;
-	id = BDfunctionsDevilBro.WebModules.findByProperties(["getLastSelectedChannelId"]).getChannelId();
-	info = id ? BDfunctionsDevilBro.WebModules.findByProperties(["getChannels"]).getChannel(id) : null;
+	id = BDFDB.WebModules.findByProperties(["getLastSelectedChannelId"]).getChannelId();
+	info = id ? BDFDB.WebModules.findByProperties(["getChannels"]).getChannel(id) : null;
 	if (info) {
-		channelObj = BDfunctionsDevilBro.getDivOfChannel(id);
+		channelObj = BDFDB.getDivOfChannel(id);
 		return channelObj ? channelObj : Object.assign({},info,{div:null,data:info});
 	}
 	else return null;
 };
 
-BDfunctionsDevilBro.getDivOfChannel = function (id) {
-	for (var channelObj of BDfunctionsDevilBro.readChannelList()) {
+BDFDB.getDivOfChannel = function (id) {
+	for (var channelObj of BDFDB.readChannelList()) {
 		if (channelObj && channelObj.id == id) return channelObj;
 	}
 	return null;
 };
 
-BDfunctionsDevilBro.readDmList = function () {
-	var dm, info, foundDMs = [], ChannelStore = BDfunctionsDevilBro.WebModules.findByProperties(["getChannels"]);
-	for (dm of document.querySelectorAll(".dms > .guild")) {
-		id = BDfunctionsDevilBro.getIdOfDM(dm);
+BDFDB.readDmList = function () {
+	var dm, info, foundDMs = [], ChannelStore = BDFDB.WebModules.findByProperties(["getChannels"]);
+	for (dm of document.querySelectorAll(BDFDB.dotCN.dms + " > " + BDFDB.dotCN.guild)) {
+		id = BDFDB.getIdOfDM(dm);
 		info = id ? ChannelStore.getChannel(id) : null;
 		if (info) foundDMs.push(Object.assign({},info,{div:dm,data:info}));
 	}
 	return foundDMs;
 };
 
-BDfunctionsDevilBro.getIdOfDM = function (dm) {
-	if (!dm || !dm.classList || !dm.classList.contains("guild") || dm.classList.contains("copy") || dm.classList.contains("folder")) return;
-	if (!dm.parentElement || !dm.parentElement.classList || !dm.parentElement.classList.contains("dms")) return;
+BDFDB.getIdOfDM = function (dm) {
+	if (!dm || !dm.classList || !dm.classList.contains(BDFDB.disCN.guild) || dm.classList.contains("copy") || dm.classList.contains("folder")) return;
+	if (!dm.parentElement || !dm.parentElement.classList || !dm.parentElement.classList.contains(BDFDB.disCN.dms)) return;
 	var switchlink, id;
 	switchlink = dm.querySelector("a");
 	id = switchlink && switchlink.href ? switchlink.href.split("/") : null;
 	return id && id.length > 3 && !isNaN(parseInt(id[5])) ? id[5] : null;
 };
 
-BDfunctionsDevilBro.getDivOfDM = function (id) {
-	for (var dmObj of BDfunctionsDevilBro.readDmList()) {
+BDFDB.getDivOfDM = function (id) {
+	for (var dmObj of BDFDB.readDmList()) {
 		if (dmObj && dmObj.id == id) return dmObj;
 	}
 	return null;
 };
 
-BDfunctionsDevilBro.saveAllData = function (settings, plugin, keyName) {
-	if (!BDfunctionsDevilBro.isBDv2()) {
+BDFDB.saveAllData = function (settings, plugin, keyName) {
+	if (!BDFDB.isBDv2()) {
 		bdPluginStorage.set(typeof plugin === "string" ? plugin : plugin.getName(), keyName, settings);
 	}
 	else {
 		let pluginid = typeof plugin === "string" ? plugin.toLowerCase() : null;
-		let directory = pluginid ? (BDfunctionsDevilBro.Plugins[pluginid] ? BDfunctionsDevilBro.Plugins[pluginid].contentPath : null) : plugin.contentPath;
+		let directory = pluginid ? (BDFDB.Plugins[pluginid] ? BDFDB.Plugins[pluginid].contentPath : null) : plugin.contentPath;
 		if (!directory) return;
 		let fs = require("fs");
 		let filepath = require("path").join(directory, "settings.json");
@@ -1412,13 +1449,13 @@ BDfunctionsDevilBro.saveAllData = function (settings, plugin, keyName) {
 	}
 };
 
-BDfunctionsDevilBro.loadAllData = function (plugin, keyName) {
-	if (!BDfunctionsDevilBro.isBDv2()) {
+BDFDB.loadAllData = function (plugin, keyName) {
+	if (!BDFDB.isBDv2()) {
 		return bdPluginStorage.get(typeof plugin === "string" ? plugin : plugin.getName(), keyName) || {};
 	}
 	else {
 		let pluginid = typeof plugin === "string" ? plugin.toLowerCase() : null;
-		let directory = pluginid ? (BDfunctionsDevilBro.Plugins[pluginid] ? BDfunctionsDevilBro.Plugins[pluginid].contentPath : null) : plugin.contentPath;
+		let directory = pluginid ? (BDFDB.Plugins[pluginid] ? BDFDB.Plugins[pluginid].contentPath : null) : plugin.contentPath;
 		if (!directory) return {};
 		let fs = require("fs");
 		let filepath = require("path").join(directory, "settings.json");
@@ -1428,13 +1465,13 @@ BDfunctionsDevilBro.loadAllData = function (plugin, keyName) {
 	}
 };
 
-BDfunctionsDevilBro.removeAllData = function (plugin, keyName) {
-	if (!BDfunctionsDevilBro.isBDv2()) {
-		BDfunctionsDevilBro.saveAllData({}, plugin, keyName);
+BDFDB.removeAllData = function (plugin, keyName) {
+	if (!BDFDB.isBDv2()) {
+		BDFDB.saveAllData({}, plugin, keyName);
 	}
 	else {
 		let pluginid = typeof plugin === "string" ? plugin.toLowerCase() : null;
-		let directory = pluginid ? (BDfunctionsDevilBro.Plugins[pluginid] ? BDfunctionsDevilBro.Plugins[pluginid].contentPath : null) : plugin.contentPath;
+		let directory = pluginid ? (BDFDB.Plugins[pluginid] ? BDFDB.Plugins[pluginid].contentPath : null) : plugin.contentPath;
 		if (!directory) return;
 		let fs = require("fs");
 		let filepath = require("path").join(directory, "settings.json");
@@ -1445,9 +1482,9 @@ BDfunctionsDevilBro.removeAllData = function (plugin, keyName) {
 	}
 };
 
-BDfunctionsDevilBro.getAllData = function (plugin, keyName, compareObject) {
+BDFDB.getAllData = function (plugin, keyName, compareObject) {
 	if (!plugin.defaults || !plugin.defaults[keyName]) return {};
-	let oldData = BDfunctionsDevilBro.loadAllData(plugin, keyName), newData = {}, saveData = false;
+	let oldData = BDFDB.loadAllData(plugin, keyName), newData = {}, saveData = false;
 	for (let key in plugin.defaults[keyName]) {
 		if (oldData[key] == null) {
 			newData[key] = plugin.defaults[keyName][key].value;
@@ -1461,85 +1498,89 @@ BDfunctionsDevilBro.getAllData = function (plugin, keyName, compareObject) {
 			saveData = true;
 		}
 	}
-	if (saveData) BDfunctionsDevilBro.saveAllData(newData, plugin, keyName);
+	if (saveData) BDFDB.saveAllData(newData, plugin, keyName);
 	return newData;
 };
 
-BDfunctionsDevilBro.saveData = function (id, value, plugin, keyName) {
-	let data = BDfunctionsDevilBro.loadAllData(plugin, keyName);
+BDFDB.saveData = function (id, value, plugin, keyName) {
+	let data = BDFDB.loadAllData(plugin, keyName);
 	
 	data[id] = value;
 	
-	BDfunctionsDevilBro.saveAllData(data, plugin, keyName);
+	BDFDB.saveAllData(data, plugin, keyName);
 };
 
-BDfunctionsDevilBro.loadData = function (id, plugin, keyName) {
-	let data = BDfunctionsDevilBro.loadAllData(plugin, keyName);
+BDFDB.loadData = function (id, plugin, keyName) {
+	let data = BDFDB.loadAllData(plugin, keyName);
 	
 	let value = data[id];
 	
 	return value === undefined ? null : value;
 };
 	
-BDfunctionsDevilBro.removeData = function (id, plugin, keyName) {
-	let data = BDfunctionsDevilBro.loadAllData(plugin, keyName);
+BDFDB.removeData = function (id, plugin, keyName) {
+	let data = BDFDB.loadAllData(plugin, keyName);
 	
 	delete data[id];
 	
-	BDfunctionsDevilBro.saveAllData(data, plugin, keyName);
+	BDFDB.saveAllData(data, plugin, keyName);
 };
 
-BDfunctionsDevilBro.getData = function (id, plugin, keyName, compareObject) {
-	let data = BDfunctionsDevilBro.getAllData(plugin, keyName, compareObject);
+BDFDB.getData = function (id, plugin, keyName, compareObject) {
+	let data = BDFDB.getAllData(plugin, keyName, compareObject);
 	
 	let value = data[id];
 	
 	return value === undefined ? null : value;
 };
 
-BDfunctionsDevilBro.appendWebScript = function (filepath) {
-	BDfunctionsDevilBro.$('head script[src="' + filepath + '"]').remove();
+BDFDB.appendWebScript = function (filepath) {
+	if (!document.head.querySelector("bd-head bd-styles")) BDFDB.$("head").append(`<bd-head><bd-styles></bd-styles></bd-head>`);
 	
 	var ele = document.createElement("script");
-	BDfunctionsDevilBro.$(ele)
-		.attr("src", filepath);
-	BDfunctionsDevilBro.$("head").append(ele);
+	ele.setAttribute("src", filepath);
+	
+	document.head.querySelector("bd-head bd-styles").appendChild(ele);
 };
 
-BDfunctionsDevilBro.appendWebStyle = function (filepath) {
-	if (!document.head.querySelector("bd-head bd-styles")) BDfunctionsDevilBro.$("head").append(`<bd-head><bd-styles></bd-styles></bd-head>`);
+BDFDB.removeWebScript = function (cssname) {
+	document.head.querySelectorAll('bd-head bd-styles link[src="' + filepath + '"]').forEach((ele) => {ele.remove();});
+};
+
+BDFDB.appendWebStyle = function (filepath) {
+	if (!document.head.querySelector("bd-head bd-styles")) BDFDB.$("head").append(`<bd-head><bd-styles></bd-styles></bd-head>`);
 	
-	BDfunctionsDevilBro.removeWebStyle(filepath);
+	BDFDB.removeWebStyle(filepath);
 
 	var ele = document.createElement("link");
-	BDfunctionsDevilBro.$(ele)
-		.attr("type", "text/css")
-		.attr("rel", "Stylesheet")
-		.attr("href", filepath);
+	ele.setAttribute("type", "text/css");
+	ele.setAttribute("rel", "Stylesheet");
+	ele.setAttribute("href", filepath);
+	
 	document.head.querySelector("bd-head bd-styles").appendChild(ele);
 };
 
-BDfunctionsDevilBro.removeWebStyle = function (cssname) {
-	BDfunctionsDevilBro.$('head bd-head bd-styles link[href="' + filepath + '"]').remove();
+BDFDB.removeWebStyle = function (cssname) {
+	document.head.querySelectorAll('bd-head bd-styles link[href="' + filepath + '"]').forEach((ele) => {ele.remove();});
 };
 
-BDfunctionsDevilBro.appendLocalStyle = function (cssname, css) {
-	if (!document.head.querySelector("bd-head bd-styles")) BDfunctionsDevilBro.$("head").append(`<bd-head><bd-styles></bd-styles></bd-head>`);
+BDFDB.appendLocalStyle = function (cssname, css) {
+	if (!document.head.querySelector("bd-head bd-styles")) BDFDB.$("head").append(`<bd-head><bd-styles></bd-styles></bd-head>`);
 	
-	BDfunctionsDevilBro.removeLocalStyle(cssname);
+	BDFDB.removeLocalStyle(cssname);
 
 	var ele = document.createElement("style");
-	BDfunctionsDevilBro.$(ele)
-		.attr("id", cssname + "CSS")
-		.text(css);
+	ele.id = cssname + "CSS";
+	ele.innerText = css;
+	
 	document.head.querySelector("bd-head bd-styles").appendChild(ele);
 };
 
-BDfunctionsDevilBro.removeLocalStyle = function (cssname) {
-	BDfunctionsDevilBro.$('head bd-head bd-styles style[id="' + cssname + 'CSS"]').remove();
+BDFDB.removeLocalStyle = function (cssname) {
+	document.head.querySelectorAll('bd-head bd-styles style[id="' + cssname + 'CSS"]').forEach((ele) => {ele.remove();});
 };
 
-BDfunctionsDevilBro.sortArrayByKey = function (array, key, except) {
+BDFDB.sortArrayByKey = function (array, key, except) {
 	if (except === undefined) except = null;
 	return array.sort(function (a, b) {
 		var x = a[key]; var y = b[key];
@@ -1549,15 +1590,15 @@ BDfunctionsDevilBro.sortArrayByKey = function (array, key, except) {
 	});
 };
 
-BDfunctionsDevilBro.highlightText = function (string, searchstring) {
-	if (!(searchstring.length > 0)) return string;
-	var added = 0, copy = string, wrapperopen = `<span class="highlight">`, wrapperclose = `</span>`;
-	BDfunctionsDevilBro.getAllIndexes(string.toUpperCase(), searchstring.toUpperCase()).forEach((start) => {
+BDFDB.highlightText = function (string, searchstring) {
+	if (searchstring.length < 1) return string;
+	var added = 0, copy = string, wrapperopen = `<span class="${BDFDB.disCN.highlight}">`, wrapperclose = `</span>`;
+	BDFDB.getAllIndexes(string.toUpperCase(), searchstring.toUpperCase()).forEach((start) => {
 		let offset = added*(wrapperopen.length + wrapperclose.length);
 		start = start + offset;
 		let end = start + searchstring.length;
-		let openIndexes = [-1].concat(BDfunctionsDevilBro.getAllIndexes(string.substring(0, start), "<"));
-		let closedIndexes = [-1].concat(BDfunctionsDevilBro.getAllIndexes(string.substring(0, start), ">"));
+		let openIndexes = [-1].concat(BDFDB.getAllIndexes(string.substring(0, start), "<"));
+		let closedIndexes = [-1].concat(BDFDB.getAllIndexes(string.substring(0, start), ">"));
 		if (openIndexes[openIndexes.length-1] > closedIndexes[closedIndexes.length-1]) return;
 		string = string.substring(0, start) + wrapperopen + string.substring(start, end) + wrapperclose + string.substring(end);
 		added++;
@@ -1565,7 +1606,7 @@ BDfunctionsDevilBro.highlightText = function (string, searchstring) {
 	return string ? string : copy;
 };
 
-BDfunctionsDevilBro.getAllIndexes = function (array, val) {
+BDFDB.getAllIndexes = function (array, val) {
 	var indexes = [], i = -1;
 	while ((i = array.indexOf(val, i+1)) != -1){
 		indexes.push(i);
@@ -1573,16 +1614,16 @@ BDfunctionsDevilBro.getAllIndexes = function (array, val) {
 	return indexes;
 };
 
-BDfunctionsDevilBro.formatBytes = function (a, b) {
+BDFDB.formatBytes = function (a, b) {
 	if (a == 0) return "0 Bytes";
 	if (a == 1) return "1 Byte";
 	var c = 1024, d = b < 1 ? 0 : b > 20 ? 20: b || 2, e = ["Bytes","KB","MB","GB","TB","PB","EB","ZB","YB"], f = Math.floor(Math.log(a)/Math.log(c));
 	return parseFloat((a/Math.pow(c,f)).toFixed(d)) + " " + e[f];
 };
 
-BDfunctionsDevilBro.color2COMP = function (color) {
+BDFDB.color2COMP = function (color) {
 	if (color) {
-		switch (BDfunctionsDevilBro.checkColorType(color)) {
+		switch (BDFDB.checkColorType(color)) {
 			case "comp":
 				return color;
 			case "rgb":
@@ -1615,17 +1656,17 @@ BDfunctionsDevilBro.color2COMP = function (color) {
 	return null;
 };
 
-BDfunctionsDevilBro.color2RGB = function (color) {
+BDFDB.color2RGB = function (color) {
 	if (color) {
-		switch (BDfunctionsDevilBro.checkColorType(color)) {
+		switch (BDFDB.checkColorType(color)) {
 			case "comp":
 				return "rgb(" + (color[0]) + ", " + (color[1]) + ", " + (color[2]) + ")";
 			case "rgb":
 				return color;
 			case "hsl":
-				return BDfunctionsDevilBro.color2RGB(BDfunctionsDevilBro.color2COMP(color));
+				return BDFDB.color2RGB(BDFDB.color2COMP(color));
 			case "hex":
-				return BDfunctionsDevilBro.color2RGB(BDfunctionsDevilBro.color2COMP(color));
+				return BDFDB.color2RGB(BDFDB.color2COMP(color));
 			default:
 				return null;
 		}
@@ -1633,9 +1674,9 @@ BDfunctionsDevilBro.color2RGB = function (color) {
 	return null;
 };
 
-BDfunctionsDevilBro.color2HSL = function (color) {
+BDFDB.color2HSL = function (color) {
 	if (color) {
-		switch (BDfunctionsDevilBro.checkColorType(color)) {
+		switch (BDFDB.checkColorType(color)) {
 			case "comp":
 				var r = parseInt(color[0]), g = parseInt(color[1]), b = parseInt(color[2]);
 				var max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min, h, s = (max === 0 ? 0 : d / max), l = max / 255;
@@ -1647,11 +1688,11 @@ BDfunctionsDevilBro.color2HSL = function (color) {
 				}
 				return "hsl(" + Math.round(h*360) + ", " + s + ", " + l + ")";
 			case "rgb":
-				return BDfunctionsDevilBro.color2HSL(BDfunctionsDevilBro.color2COMP(color));
+				return BDFDB.color2HSL(BDFDB.color2COMP(color));
 			case "hsl":
 				return color;
 			case "hex":
-				return BDfunctionsDevilBro.color2HSL(BDfunctionsDevilBro.color2COMP(color));
+				return BDFDB.color2HSL(BDFDB.color2COMP(color));
 			default:
 				return null;
 		}
@@ -1659,15 +1700,15 @@ BDfunctionsDevilBro.color2HSL = function (color) {
 	return null;
 };
 
-BDfunctionsDevilBro.color2HEX = function (color) {
+BDFDB.color2HEX = function (color) {
 	if (color) {
-		switch (BDfunctionsDevilBro.checkColorType(color)) {
+		switch (BDFDB.checkColorType(color)) {
 			case "comp":
 				return ("#" + (0x1000000 + ((color[2]) | ((color[1]) << 8) | ((color[0]) << 16))).toString(16).slice(1)).toUpperCase();
 			case "rgb":
-				return BDfunctionsDevilBro.color2HEX(BDfunctionsDevilBro.color2COMP(color));
+				return BDFDB.color2HEX(BDFDB.color2COMP(color));
 			case "hsl":
-				return BDfunctionsDevilBro.color2HEX(BDfunctionsDevilBro.color2COMP(color));
+				return BDFDB.color2HEX(BDFDB.color2COMP(color));
 			case "hex":
 				return color;
 			default:
@@ -1677,21 +1718,21 @@ BDfunctionsDevilBro.color2HEX = function (color) {
 	return null;
 };
 
-BDfunctionsDevilBro.colorCHANGE = function (color, value) {
+BDFDB.colorCHANGE = function (color, value) {
 	if (color) {
-		var comp = BDfunctionsDevilBro.color2COMP(color);
+		var comp = BDFDB.color2COMP(color);
 		if (!comp || value === undefined || typeof value != "number") return null;
 		comp = comp.map(Number);
 		comp = [(comp[0]+value).toString(),(comp[1]+value).toString(),(comp[2]+value).toString()];
-		switch (BDfunctionsDevilBro.checkColorType(color)) {
+		switch (BDFDB.checkColorType(color)) {
 			case "comp":
 				return comp;
 			case "rgb":
-				return BDfunctionsDevilBro.color2RGB(comp);
+				return BDFDB.color2RGB(comp);
 			case "hsl":
-				return BDfunctionsDevilBro.color2HSL(comp);
+				return BDFDB.color2HSL(comp);
 			case "hex":
-				return BDfunctionsDevilBro.color2HEX(comp);
+				return BDFDB.color2HEX(comp);
 			default:
 				return null;
 		}
@@ -1699,43 +1740,43 @@ BDfunctionsDevilBro.colorCHANGE = function (color, value) {
 	return null;
 };
 
-BDfunctionsDevilBro.colorCOMPARE = function (color1, color2) {
+BDFDB.colorCOMPARE = function (color1, color2) {
 	if (color1 && color2) {
-		color1 = BDfunctionsDevilBro.color2RGB(color1);
-		color2 = BDfunctionsDevilBro.color2RGB(color2);
-		return BDfunctionsDevilBro.equals(color1,color2);
+		color1 = BDFDB.color2RGB(color1);
+		color2 = BDFDB.color2RGB(color2);
+		return BDFDB.equals(color1,color2);
 	}
 	return null;
 };
 
-BDfunctionsDevilBro.colorINV = function (color, conv) {
+BDFDB.colorINV = function (color, conv) {
 	if (color) {
-		var type = BDfunctionsDevilBro.checkColorType(color);
+		var type = BDFDB.checkColorType(color);
 		if (type) {
 			if (conv === undefined) {
-				var inv = BDfunctionsDevilBro.color2COMP(color);
+				var inv = BDFDB.color2COMP(color);
 				inv = [(255-inv[0]), (255-inv[1]), (255-inv[2])];
-				switch (BDfunctionsDevilBro.checkColorType(color)) {
+				switch (BDFDB.checkColorType(color)) {
 					case "comp":
 						return inv;
 					case "rgb":
-						return BDfunctionsDevilBro.color2RGB(inv);
+						return BDFDB.color2RGB(inv);
 					case "hsl":
-						return BDfunctionsDevilBro.color2HSL(inv);
+						return BDFDB.color2HSL(inv);
 					case "hex":
-						return BDfunctionsDevilBro.color2HEX(inv);
+						return BDFDB.color2HEX(inv);
 				}
 			}
 			else {
 				switch (conv.toLowerCase()) {
 					case "comp":
-						return BDfunctionsDevilBro.colorINV(BDfunctionsDevilBro.color2COMP(color));
+						return BDFDB.colorINV(BDFDB.color2COMP(color));
 					case "rgb":
-						return BDfunctionsDevilBro.colorINV(BDfunctionsDevilBro.color2RGB(color));
+						return BDFDB.colorINV(BDFDB.color2RGB(color));
 					case "hsl":
-						return BDfunctionsDevilBro.colorINV(BDfunctionsDevilBro.color2HSL(color));
+						return BDFDB.colorINV(BDFDB.color2HSL(color));
 					case "hex":
-						return BDfunctionsDevilBro.colorINV(BDfunctionsDevilBro.color2HEX(color));
+						return BDFDB.colorINV(BDFDB.color2HEX(color));
 					default:
 						return null;
 				}
@@ -1745,7 +1786,7 @@ BDfunctionsDevilBro.colorINV = function (color, conv) {
 	return null;
 };
 
-BDfunctionsDevilBro.checkColorType = function (color) {
+BDFDB.checkColorType = function (color) {
 	if (color) {
 		if (typeof color === "object" && color.length == 3) {
 			return "comp";
@@ -1763,38 +1804,38 @@ BDfunctionsDevilBro.checkColorType = function (color) {
 	return null;
 };
 
-BDfunctionsDevilBro.setInnerText = function (div, text) {
+BDFDB.setInnerText = function (div, text) {
 	if (!div) return;
-	var textNode = BDfunctionsDevilBro.$(div).contents().filter(function () {return this.nodeType == Node.TEXT_NODE;})[0];
+	var textNode = BDFDB.$(div).contents().filter(function () {return this.nodeType == Node.TEXT_NODE;})[0];
 	if (textNode) textNode.textContent = text;
 };
 	
-BDfunctionsDevilBro.getInnerText = function (div) {
+BDFDB.getInnerText = function (div) {
 	if (!div) return;
-	var textNode = BDfunctionsDevilBro.$(div).contents().filter(function () {return this.nodeType == Node.TEXT_NODE;})[0];
+	var textNode = BDFDB.$(div).contents().filter(function () {return this.nodeType == Node.TEXT_NODE;})[0];
 	return textNode ? textNode.textContent : undefined;
 };
 	
-BDfunctionsDevilBro.encodeToHTML = function (string) {
+BDFDB.encodeToHTML = function (string) {
 	var ele = document.createElement("div");
 	ele.innerText = string;
 	return ele.innerHTML;
 };
 
-BDfunctionsDevilBro.regEscape = function (string) {
+BDFDB.regEscape = function (string) {
 	return string.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
 };
 
-BDfunctionsDevilBro.insertNRST = function (string) {
+BDFDB.insertNRST = function (string) {
 	return string
-		.replace(new RegExp(BDfunctionsDevilBro.regEscape("\\n"),"g"),"\n")
-		.replace(new RegExp(BDfunctionsDevilBro.regEscape("\\r"),"g"),"\r")
-		.replace(new RegExp(BDfunctionsDevilBro.regEscape("\\s"),"g")," ")
-		.replace(new RegExp(BDfunctionsDevilBro.regEscape("\\t"),"g"),"\t");
+		.replace(new RegExp(BDFDB.regEscape("\\n"),"g"),"\n")
+		.replace(new RegExp(BDFDB.regEscape("\\r"),"g"),"\r")
+		.replace(new RegExp(BDFDB.regEscape("\\s"),"g")," ")
+		.replace(new RegExp(BDFDB.regEscape("\\t"),"g"),"\t");
 };
 
-BDfunctionsDevilBro.clearReadNotifications = function (servers) {
-	var GuildActions = BDfunctionsDevilBro.WebModules.findByProperties(["markGuildAsRead"]);
+BDFDB.clearReadNotifications = function (servers) {
+	var GuildActions = BDFDB.WebModules.findByProperties(["markGuildAsRead"]);
 	if (!servers || !GuildActions) return;
 	servers = Array.isArray(servers) ? servers : Array.from(servers);
 	servers.forEach((serverObj, i) => {
@@ -1803,7 +1844,7 @@ BDfunctionsDevilBro.clearReadNotifications = function (servers) {
 	}); 
 };
 
-BDfunctionsDevilBro.triggerSend = function (textarea) {
+BDFDB.triggerSend = function (textarea) {
 	setImmediate(() => {
 		var press = new KeyboardEvent("keypress", {key: "Enter", code: "Enter", which: 13, keyCode: 13, bubbles: true});
 		Object.defineProperty(press, "keyCode", {value: 13});
@@ -1812,20 +1853,20 @@ BDfunctionsDevilBro.triggerSend = function (textarea) {
 	});
 };
 
-BDfunctionsDevilBro.initElements = function (container) {
-	BDfunctionsDevilBro.$(container)
+BDFDB.initElements = function (container) {
+	BDFDB.$(container)
 		.off(".BDFDBinitElements")
-		.on("click.BDFDBinitElements", ".checkbox-1KYsPm", (e) => {
+		.on("click.BDFDBinitElements", BDFDB.dotCN.switchinner, (e) => {
 			var checked = e.currentTarget.checked;
-			BDfunctionsDevilBro.$(e.currentTarget.parentElement)
-				.toggleClass("valueChecked-3Bzkbm", checked)
-				.toggleClass("valueUnchecked-XR6AOk", !checked);
+			BDFDB.$(e.currentTarget.parentElement)
+				.toggleClass(BDFDB.disCN.switchvaluechecked, checked)
+				.toggleClass(BDFDB.disCN.switchvalueunchecked, !checked);
 		})
-		.on("click.BDFDBinitElements", ".checkboxWrapper-2Yvr_Y .input-oWyROL", (e) => {
+		.on("click.BDFDBinitElements", BDFDB.dotCNS.checkboxwrapper + BDFDB.dotCN.checkboxinput, (e) => {
 			var checked = e.currentTarget.checked;
-			var checkBoxStyle = e.currentTarget.parentElement.querySelector(".checkbox-1QwaS4");
-			BDfunctionsDevilBro.$(checkBoxStyle)
-				.toggleClass("checked-2TahvT", checked)
+			var checkBoxStyle = e.currentTarget.parentElement.querySelector(BDFDB.dotCN.checkbox);
+			BDFDB.$(checkBoxStyle)
+				.toggleClass(BDFDB.disCN.checkboxchecked, checked)
 				.css("background-color", checked ? "rgb(67, 181, 129)" : "")
 				.css("border-color", checked ? "rgb(67, 181, 129)" : "")
 				.find("polyline")
@@ -1841,26 +1882,27 @@ BDfunctionsDevilBro.initElements = function (container) {
 			var file = e.currentTarget.files[0];
 			if (file && fileoutput) fileoutput.value = file.path;
 		})
-		.on("keyup.BDFDBinitElements", ".searchBar-YMJBu9 .input-yt44Uw", (e) => {
+		.on("keyup.BDFDBinitElements", BDFDB.dotCNS.searchbar + BDFDB.dotCN.searchbarinput, (e) => {
 			var input = e.currentTarget;
-			input.parentElement.querySelector(".eyeGlass-6rahZf").classList.toggle("visible-4lw4vs", !input.value);
-			input.parentElement.querySelector(".clear-4pSDsx").classList.toggle("visible-4lw4vs", input.value);
+			input.parentElement.querySelector(BDFDB.dotCN.searchbareyeglass).classList.toggle(BDFDB.disCN.searchbarvisible, !input.value);
+			input.parentElement.querySelector(BDFDB.dotCN.searchbarclear).classList.toggle(BDFDB.disCN.searchbarvisible, input.value);
 		})
-		.on("click.BDFDBinitElements", ".searchBar-YMJBu9 .clear-4pSDsx.visible-4lw4vs", (e) => {
+		.on("click.BDFDBinitElements", BDFDB.dotCNS.searchbar + BDFDB.dotCN.searchbarclear + BDFDB.dotCN.searchbarvisible, (e) => {
 			var clear = e.currentTarget;
-			clear.parentElement.parentElement.querySelector(".input-yt44Uw").value = "";
-			clear.parentElement.querySelector(".eyeGlass-6rahZf").classList.add("visible-4lw4vs");
-			clear.classList.remove("visible-4lw4vs");
+			clear.parentElement.parentElement.querySelector(BDFDB.dotCN.searchbarinput).value = "";
+			clear.parentElement.querySelector(BDFDB.dotCN.searchbareyeglass).classList.add(BDFDB.disCN.searchbarvisible);
+			clear.classList.remove(BDFDB.disCN.searchbarvisible);
 		})
 		.on("click.BDFDBinitElements", ".numberinput-button-up", (e) => {
 			var input = e.currentTarget.parentElement.parentElement.querySelector("input");
+			var min = parseInt(input.getAttribute("min"));
 			var max = parseInt(input.getAttribute("max"));
 			var newvalue = parseInt(input.value) + 1;
 			if (isNaN(max) || (!isNaN(max) && newvalue <= max)) {
 				e.currentTarget.parentElement.classList.add("pressed");
 				clearTimeout(e.currentTarget.parentElement.pressedTimeout);
-				input.value = newvalue;
-				BDfunctionsDevilBro.$(input).trigger("input");
+				input.value = (isNaN(min) || (!isNaN(min) && newvalue >= min)) ? newvalue : min;
+				BDFDB.$(input).trigger("input");
 				e.currentTarget.parentElement.pressedTimeout = setTimeout(() => {
 					e.currentTarget.parentElement.classList.remove("pressed");
 				},3000);
@@ -1869,49 +1911,49 @@ BDfunctionsDevilBro.initElements = function (container) {
 		.on("click.BDFDBinitElements", ".numberinput-button-down", (e) => {
 			var input = e.currentTarget.parentElement.parentElement.querySelector("input");
 			var min = parseInt(input.getAttribute("min"));
+			var max = parseInt(input.getAttribute("max"));
 			var newvalue = parseInt(input.value) - 1;
 			if (isNaN(min) || (!isNaN(min) && newvalue >= min)) {
 				e.currentTarget.parentElement.classList.add("pressed");
 				clearTimeout(e.currentTarget.parentElement.pressedTimeout);
-				input.value = newvalue;
-				BDfunctionsDevilBro.$(input).trigger("input");
+				input.value = (isNaN(max) || (!isNaN(max) && newvalue <= max)) ? newvalue : max;
+				BDFDB.$(input).trigger("input");
 				e.currentTarget.parentElement.pressedTimeout = setTimeout(() => {
 					e.currentTarget.parentElement.classList.remove("pressed");
 				},3000);
 			}
 		})
 		.on("click.BDFDBinitElements", ".tab", (e) => {
-			BDfunctionsDevilBro.$(container).find(".tab-content.open").removeClass("open");
-			BDfunctionsDevilBro.$(container).find(".tab.selected").removeClass("selected");
-			BDfunctionsDevilBro.$(container).find(".tab-content[tab='" + BDfunctionsDevilBro.$(e.currentTarget).attr("tab") + "']").addClass("open");	
-			BDfunctionsDevilBro.$(e.currentTarget).addClass("selected");
+			BDFDB.$(container).find(".tab-content.open").removeClass("open");
+			BDFDB.$(container).find(".tab.selected").removeClass("selected");
+			BDFDB.$(container).find(".tab-content[tab='" + BDFDB.$(e.currentTarget).attr("tab") + "']").addClass("open");	
+			BDFDB.$(e.currentTarget).addClass("selected");
 		});
 		
-	BDfunctionsDevilBro.$(container).find(".tab").first().addClass("selected");
-	BDfunctionsDevilBro.$(container).find(".tab-content").first().addClass("open");
+	BDFDB.$(container).find(".tab").first().addClass("selected");
+	BDFDB.$(container).find(".tab-content").first().addClass("open");
 	
-	var libraryStrings = BDfunctionsDevilBro.getLibraryStrings();
-	BDfunctionsDevilBro.$(container).find(".btn-save .contents-4L4hQM").text(libraryStrings.btn_save_text);
-	BDfunctionsDevilBro.$(container).find(".btn-cancel .contents-4L4hQM").text(libraryStrings.btn_cancel_text);
-	BDfunctionsDevilBro.$(container).find(".btn-all .contents-4L4hQM").text(libraryStrings.btn_all_text);
-	BDfunctionsDevilBro.$(container).find(".btn-add .contents-4L4hQM").text(libraryStrings.btn_add_text);
-	BDfunctionsDevilBro.$(container).find(".btn-ok .contents-4L4hQM").text(libraryStrings.btn_ok_text);
-	BDfunctionsDevilBro.$(container).find(".file-navigator .contents-4L4hQM").text(libraryStrings.file_navigator_text);
-	BDfunctionsDevilBro.$(container).find(".searchBar-YMJBu9 .input-yt44Uw").attr("placeholder", libraryStrings.search_placeholder);
+	var libraryStrings = BDFDB.getLibraryStrings();
+	BDFDB.$(container).find(".btn-save " + BDFDB.dotCN.buttoncontents).text(libraryStrings.btn_save_text);
+	BDFDB.$(container).find(".btn-cancel " + BDFDB.dotCN.buttoncontents).text(libraryStrings.btn_cancel_text);
+	BDFDB.$(container).find(".btn-all " + BDFDB.dotCN.buttoncontents).text(libraryStrings.btn_all_text);
+	BDFDB.$(container).find(".btn-add " + BDFDB.dotCN.buttoncontents).text(libraryStrings.btn_add_text);
+	BDFDB.$(container).find(".btn-ok " + BDFDB.dotCN.buttoncontents).text(libraryStrings.btn_ok_text);
+	BDFDB.$(container).find(".file-navigator " + BDFDB.dotCN.buttoncontents).text(libraryStrings.file_navigator_text);
+	BDFDB.$(container).find(BDFDB.dotCNS.searchbar + BDFDB.dotCN.searchbarinput).attr("placeholder", libraryStrings.search_placeholder);
 		
-	BDfunctionsDevilBro.$(container)
-		.find(".checkbox-1KYsPm").each((_, checkBox) => {
-			BDfunctionsDevilBro.$(checkBox.parentElement)
-				.toggleClass("valueChecked-3Bzkbm", checkBox.checked)
-				.toggleClass("valueUnchecked-XR6AOk", !checkBox.checked);
+	BDFDB.$(container)
+		.find(BDFDB.dotCN.switchinner).each((_, switchinner) => {
+			BDFDB.$(switchinner.parentElement)
+				.toggleClass(BDFDB.disCN.switchvaluechecked, switchinner.checked)
+				.toggleClass(BDFDB.disCN.switchvalueunchecked, !switchinner.checked);
 		});
 		
-	BDfunctionsDevilBro.$(container)
-		.find(".checkboxWrapper-2Yvr_Y .input-oWyROL").each((_, checkBox) => {
+	BDFDB.$(container)
+		.find(BDFDB.dotCNS.checkboxwrapper + BDFDB.dotCN.checkboxinput).each((_, checkBox) => {
 			if (checkBox.checked) {
-				var checkBoxStyle = checkBox.parentElement.querySelector(".checkbox-1QwaS4");
-				BDfunctionsDevilBro.$(checkBoxStyle)
-					.addClass("checked-2TahvT")
+				BDFDB.$(checkBox.parentElement.querySelector(BDFDB.dotCN.checkbox))
+					.addClass(BDFDB.disCN.checkboxchecked)
 					.css("background-color", "rgb(67, 181, 129)")
 					.css("border-color", "rgb(67, 181, 129)")
 					.find("polyline")
@@ -1920,113 +1962,111 @@ BDfunctionsDevilBro.initElements = function (container) {
 		});
 };
 
-BDfunctionsDevilBro.appendModal = function (modal) {
+BDFDB.appendModal = function (modal) {
 	let id = Math.round(Math.random()*10000000000000000);
-	var container = document.querySelector(".app-XZYfmp ~ [class^='theme-']:not([class*='popouts'])");
+	var container = document.querySelector(BDFDB.dotCN.app + " ~ [class^='theme']:not([class*='popouts'])");
 	if (!container) return;
 	
-	BDfunctionsDevilBro.$(modal)
+	BDFDB.$(modal)
 		.appendTo(container)
-		.on("click", ".backdrop-2ohBEd, .btn-save, .btn-send, .btn-cancel, .btn-ok", () => {
-			BDfunctionsDevilBro.$(document).off("keydown.modalEscapeListenerDevilBro" + id);
-			BDfunctionsDevilBro.$(modal).addClass("closing");
+		.on("click", BDFDB.dotCNC.backdrop + BDFDB.dotCNC.modalclose + ".btn-save, .btn-send, .btn-cancel, .btn-ok", () => {
+			BDFDB.$(document).off("keydown.BDFDBmodalEscapeListener" + id);
+			BDFDB.$(modal).addClass("closing");
 			setTimeout(() => {modal.remove();}, 300);
 		});
 		
 	
-	BDfunctionsDevilBro.initElements(modal);
+	BDFDB.initElements(modal);
 		
-	BDfunctionsDevilBro.$(document)
-		.off("keydown.modalEscapeListenerDevilBro" + id)
-		.on("keydown.modalEscapeListenerDevilBro" + id, (e) => {
-			if (e.which == 27) BDfunctionsDevilBro.$(modal).find(".backdrop-2ohBEd").click();
+	BDFDB.$(document)
+		.off("keydown.BDFDBmodalEscapeListener" + id)
+		.on("keydown.BDFDBmodalEscapeListener" + id, (e) => {
+			if (e.which == 27) BDFDB.$(modal).find(BDFDB.dotCN.backdrop).click();
 		});
 };
 
-BDfunctionsDevilBro.updateContextPosition = function (context) {
-	var app = document.querySelector(".appMount-14L89u");
-	var menuWidth = BDfunctionsDevilBro.$(context).outerWidth();
-	var menuHeight = BDfunctionsDevilBro.$(context).outerHeight();
-	var position = BDfunctionsDevilBro.mousePosition;
+BDFDB.updateContextPosition = function (context) {
+	var app = document.querySelector(BDFDB.dotCN.appmount);
+	var menuWidth = BDFDB.$(context).outerWidth();
+	var menuHeight = BDFDB.$(context).outerHeight();
+	var position = BDFDB.mousePosition;
 	var newposition = {
 		x: position.x - menuWidth,
 		y: position.y - menuHeight
 	};
-	BDfunctionsDevilBro.$(context)
+	BDFDB.$(context)
 		.css("left", (position.x + menuWidth > app.offsetWidth ? (newposition.x < 0 ? 10 : newposition.x) : position.x) + "px")
 		.css("top", (position.y + menuHeight > app.offsetHeight ? (newposition.y < 0 ? 10 : newposition.y) : position.y) + "px");
 };
 
-BDfunctionsDevilBro.appendContextMenu = function (context, e) {
-	BDfunctionsDevilBro.$(".tooltips").before(context);
-	var app = document.querySelector(".appMount-14L89u");
-	var menuWidth = BDfunctionsDevilBro.$(context).outerWidth();
-	var menuHeight = BDfunctionsDevilBro.$(context).outerHeight();
-	BDfunctionsDevilBro.$(context)
-		.toggleClass("invertX", e.pageX + menuWidth > app.offsetWidth)
-		.toggleClass("invertChildX", e.pageX + menuWidth > app.offsetWidth)
-		.toggleClass("invertY", e.pageY + menuHeight > app.offsetHeight)
-		.addClass(BDfunctionsDevilBro.getDiscordTheme());
+BDFDB.appendContextMenu = function (context, e) {
+	BDFDB.$(BDFDB.dotCN.tooltips).before(context);
+	var menusizes = context.getBoundingClientRect();
+	BDFDB.$(context)
+		.toggleClass("invertX", e.pageX + menusizes.width > document.body.firstElementChild.offsetWidth)
+		.toggleClass(BDFDB.disCN.contextmenuinvertchildx, e.pageX + menusizes.width > document.body.firstElementChild.offsetWidth)
+		.toggleClass("invertY", e.pageY + menusizes.height > document.body.firstElementChild.offsetHeight)
+		.addClass(BDFDB.getDiscordTheme());
 		
-	BDfunctionsDevilBro.updateContextPosition(context);
+	BDFDB.updateContextPosition(context);
 	
-	BDfunctionsDevilBro.$(document).on("mousedown.BDfunctionsDevilBroContextMenu", (e2) => {
-		if (BDfunctionsDevilBro.$(context).has(e2.target).length == 0 && context != e2.target) {
-			BDfunctionsDevilBro.$(document).off("mousedown.BDfunctionsDevilBroContextMenu");
+	BDFDB.$(document).on("mousedown.BDFDBContextMenu", (e2) => {
+		if (BDFDB.$(context).has(e2.target).length == 0 && context != e2.target) {
+			BDFDB.$(document).off("mousedown.BDFDBContextMenu");
 			context.remove();
 		}
 		else {
-			var item = BDfunctionsDevilBro.$(".item-1XYaYf").has(e2.target)[0];
-			if (item && !BDfunctionsDevilBro.$(item).hasClass("disabled-dlOjhg") && !BDfunctionsDevilBro.$(item).hasClass("itemSubMenu-3ZgIw-") && !BDfunctionsDevilBro.$(item).hasClass("itemToggle-e7vkml")) {
-				BDfunctionsDevilBro.$(document).off("mousedown.BDfunctionsDevilBroContextMenu");
+			var item = BDFDB.$(BDFDB.dotCN.contextmenuitem).has(e2.target)[0];
+			if (item && !item.classList.contains(BDFDB.disCN.contextmenuitemdisabled) && !item.classList.contains(BDFDB.disCN.contextmenuitemsubmenu) && !item.classList.contains(BDFDB.disCN.contextmenuitemtoggle)) {
+				BDFDB.$(document).off("mousedown.BDFDBContextMenu");
 			}
 		}
 	});
 };
 
-BDfunctionsDevilBro.appendSubMenu = function (target, menu) {
-	BDfunctionsDevilBro.$(target).append(menu);
-	var offsets = BDfunctionsDevilBro.$(target).offset();
-	var menuHeight = BDfunctionsDevilBro.$(menu).outerHeight();
-	BDfunctionsDevilBro.$(menu)
-		.addClass(BDfunctionsDevilBro.getDiscordTheme())
+BDFDB.appendSubMenu = function (target, menu) {
+	BDFDB.$(target).append(menu);
+	var offsets = BDFDB.$(target).offset();
+	var menuHeight = BDFDB.$(menu).outerHeight();
+	BDFDB.$(menu)
+		.addClass(BDFDB.getDiscordTheme())
 		.css("left", offsets.left + "px")
-		.css("top", offsets.top + menuHeight > window.outerHeight ? (offsets.top - menuHeight + BDfunctionsDevilBro.$(target).outerHeight()) + "px" : offsets.top + "px");
+		.css("top", offsets.top + menuHeight > window.outerHeight ? (offsets.top - menuHeight + BDFDB.$(target).outerHeight()) + "px" : offsets.top + "px");
 		
-	BDfunctionsDevilBro.$(target).on("mouseleave.BDfunctionsDevilBroSubContextMenu", () => {
-		BDfunctionsDevilBro.$(target).off("mouseleave.BDfunctionsDevilBroSubContextMenu");
+	BDFDB.$(target).on("mouseleave.BDFDBSubContextMenu", () => {
+		BDFDB.$(target).off("mouseleave.BDFDBSubContextMenu");
 		menu.remove();
 	});
 };
 
-BDfunctionsDevilBro.setColorSwatches = function (currentCOMP, wrapper, swatch) {
-	var wrapperDiv = BDfunctionsDevilBro.$(wrapper);
+BDFDB.setColorSwatches = function (currentCOMP, wrapper, swatch) {
+	var wrapperDiv = BDFDB.$(wrapper);
 		
 	var colourList = 
 		["rgb(82, 233, 30)","rgb(46, 204, 113)","rgb(26, 188, 156)","rgb(52, 152, 219)","rgb(52, 84, 219)","rgb(134, 30, 233)","rgb(155, 89, 182)","rgb(233, 30, 99)","rgb(233, 65, 30)","rgb(231, 76, 60)","rgb(230, 126, 34)","rgb(241, 196, 15)","rgb(199, 204, 205)","rgb(112, 128, 136)","rgb(99, 99, 99)",
 		"rgb(255, 255, 255)","rgb(59, 173, 20)","rgb(31, 139, 76)","rgb(17, 128, 106)","rgb(32, 102, 148)","rgb(32, 57, 148)","rgb(109, 20, 173)","rgb(113, 54, 138)","rgb(173, 20, 87)","rgb(173, 32, 20)","rgb(153, 45, 34)","rgb(168, 67, 0)","rgb(194, 124, 14)","rgb(151, 156, 159)","rgb(93, 104, 109)","rgb(44, 44, 44)"];
 		
 	var swatches = 
-		`<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw flex-3B1Tl4 directionRow-yNbSvJ justifyStart-2yIZo0 alignStretch-1hwxMa noWrap-v6g9vO" style="flex: 1 1 auto; margin-top: 5px;">
+		`<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignstretch + BDFDB.disCN.nowrap}" style="flex: 1 1 auto; margin-top: 5px;">
 			<div class="ui-color-picker-${swatch} large custom" style="background-color: rgb(0, 0, 0);">
 				<svg class="color-picker-dropper-${swatch}" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16">
 					<path class="color-picker-dropper-fg-${swatch}" fill="#ffffff" d="M14.994 1.006C13.858-.257 11.904-.3 10.72.89L8.637 2.975l-.696-.697-1.387 1.388 5.557 5.557 1.387-1.388-.697-.697 1.964-1.964c1.13-1.13 1.3-2.985.23-4.168zm-13.25 10.25c-.225.224-.408.48-.55.764L.02 14.37l1.39 1.39 2.35-1.174c.283-.14.54-.33.765-.55l4.808-4.808-2.776-2.776-4.813 4.803z"></path>
 				</svg>
 			</div>
-			<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw flex-3B1Tl4 directionRow-yNbSvJ justifyStart-2yIZo0 alignStretch-1hwxMa wrap-1da0e3ui-color-picker-row" style="flex: 1 1 auto; display: flex; flex-wrap: wrap; overflow: visible !important;">
+			<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignstretch + BDFDB.disCN.wrap} ui-color-picker-row" style="flex: 1 1 auto; display: flex; flex-wrap: wrap; overflow: visible !important;">
 				<div class="ui-color-picker-${swatch} nocolor" style="background-color: null;">
-					<svg class="nocolor-cross" height="22" width="22">
-						<path d="m 3 2 l 17 18 m 0 -18 l -17 18" stroke="red" stroke-width="3" fill="none"/>
+					<svg class="nocolor-cross" height="21" width="21">
+						<path d="m 3 2 l 17 17 m 0 -17 l -17 17" stroke="red" stroke-width="3" fill="none"/>
 					</svg>
 				</div>
 				${ colourList.map((val, i) => `<div class="ui-color-picker-${swatch}" style="background-color: ${val};"></div>`).join("")}
 			</div>
 		</div>`;
-	BDfunctionsDevilBro.$(swatches).appendTo(wrapperDiv);
+	BDFDB.$(swatches).appendTo(wrapperDiv);
 	
 	if (currentCOMP) {
-		var currentRGB = BDfunctionsDevilBro.color2RGB(currentCOMP);
-		var invRGB = BDfunctionsDevilBro.colorINV(currentRGB);
+		var currentRGB = BDFDB.color2RGB(currentCOMP);
+		var invRGB = BDFDB.colorINV(currentRGB);
 		
 		var selection = colourList.indexOf(currentRGB);
 		
@@ -2037,25 +2077,25 @@ BDfunctionsDevilBro.setColorSwatches = function (currentCOMP, wrapper, swatch) {
 				.css("border", "4px solid " + invRGB);
 		} 
 		else {
-			BDfunctionsDevilBro.$(".custom", wrapperDiv)
+			BDFDB.$(".custom", wrapperDiv)
 				.addClass("selected")
 				.css("background-color", currentRGB)
 				.css("border", "4px solid " + invRGB);
 			
-			BDfunctionsDevilBro.$(".color-picker-dropper-fg", wrapperDiv)
+			BDFDB.$(".color-picker-dropper-fg", wrapperDiv)
 				.attr("fill", currentCOMP[0] > 150 && currentCOMP[1] > 150 && currentCOMP[2] > 150 ? "#000000" : "#ffffff");
 		}
 	}
 	else {
-		BDfunctionsDevilBro.$(".nocolor", wrapperDiv)
+		BDFDB.$(".nocolor", wrapperDiv)
 			.addClass("selected")
 			.css("border", "4px solid black");
 	}
 	
 	wrapperDiv.on("click", ".ui-color-picker-" + swatch + ":not(.custom)", (e) => {
 		if (wrapperDiv.hasClass("disabled")) return;
-		var bgColor = BDfunctionsDevilBro.$(e.target).css("background-color");
-		var newInvRGB = BDfunctionsDevilBro.checkColorType(bgColor) ? BDfunctionsDevilBro.colorINV(bgColor,"rgb") : "black";
+		var bgColor = BDFDB.$(e.target).css("background-color");
+		var newInvRGB = BDFDB.checkColorType(bgColor) ? BDFDB.colorINV(bgColor,"rgb") : "black";
 		
 		wrapperDiv.find(".ui-color-picker-" + swatch + ".selected.nocolor")
 			.removeClass("selected")
@@ -2065,19 +2105,19 @@ BDfunctionsDevilBro.setColorSwatches = function (currentCOMP, wrapper, swatch) {
 			.removeClass("selected")
 			.css("border", "4px solid transparent");
 			
-		BDfunctionsDevilBro.$(e.currentTarget)
+		BDFDB.$(e.currentTarget)
 			.addClass("selected")
 			.css("border", "4px solid " + newInvRGB);
 	});
 	
 	wrapperDiv.on("click", ".ui-color-picker-" + swatch + ".custom", (e) => {
 		if (wrapperDiv.hasClass("disabled")) return;
-		BDfunctionsDevilBro.openColorPicker(e.currentTarget.style.backgroundColor, swatch);
+		BDFDB.openColorPicker(e.currentTarget.style.backgroundColor, swatch);
 	});
 };
 
-BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
-	var libraryStrings = BDfunctionsDevilBro.getLibraryStrings();
+BDFDB.openColorPicker = function (currentColor, swatch) {
+	var libraryStrings = BDFDB.getLibraryStrings();
 	var inputs = {
 		HEX: 	{type:"text", 		name:"hex",				group:"hex", 	min:null,	max:null,	length:7,		default:"#000000"},
 		R: 		{type:"number", 	name:"red",				group:"rgb", 	min:0,		max:255,	length:null,	default:0},
@@ -2090,23 +2130,22 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 	
 	var colorPickerModalMarkup = 
 		`<span class="colorpicker-modal DevilBro-modal">
-			<div class="backdrop-2ohBEd"></div>
-			<div class="modal-2LIEKY">
-				<div class="inner-1_1f7b">
-					<div class="modal-3HOjGZ">
-						<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw flex-3B1Tl4 directionRow-yNbSvJ justifyStart-2yIZo0 alignCenter-3VxkQP noWrap-v6g9vO header-3sp3cE" style="flex: 0 0 auto;">
-							<div class="flexChild-1KGW5q" style="flex: 1 1 auto;">
-								<h4 class="h4-2IXpeI title-1pmpPr size16-3IvaX_ height20-165WbF weightSemiBold-T8sxWH defaultColor-v22dK1 defaultMarginh4-jAopYe marginReset-3hwONl">${libraryStrings.colorpicker_modal_header_text}</h4>
-								<div class="guildName-1u0hy7 small-3-03j1 size12-1IGJl9 height16-1qXrGy primary-2giqSn"></div>
+			<div class="${BDFDB.disCN.backdrop}"></div>
+			<div class="${BDFDB.disCN.modal}">
+				<div class="${BDFDB.disCN.modalinner}">
+					<div class="${BDFDB.disCNS.modalsub + BDFDB.disCN.modalsizemedium}">
+						<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.modalheader}" style="flex: 0 0 auto;">
+							<div class="${BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">
+								<h4 class="${BDFDB.disCNS.h4 + BDFDB.disCNS.headertitle + BDFDB.disCNS.size16 + BDFDB.disCNS.height20 + BDFDB.disCNS.weightsemibold + BDFDB.disCNS.defaultcolor + BDFDB.disCNS.h4defaultmargin + BDFDB.disCN.marginreset}">${libraryStrings.colorpicker_modal_header_text}</h4>
 							</div>
-							<svg class="btn-cancel close-3ejNTg flexChild-1KGW5q" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 12 12">
+							<svg class="${BDFDB.disCNS.modalclose + BDFDB.disCN.flexchild}" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 12 12">
 								<g fill="none" fill-rule="evenodd">
 									<path d="M0 0h12v12H0"></path>
 									<path class="fill" fill="currentColor" d="M9.5 3.205L8.795 2.5 6 5.295 3.205 2.5l-.705.705L5.295 6 2.5 8.795l.705.705L6 6.705 8.795 9.5l.705-.705L6.705 6"></path>
 								</g>
 							</svg>
 						</div>
-						<div class="flex-lFgbSz flex-3B1Tl4 inner-tqJwAU vertical-3X17r5 flex-3B1Tl4 directionColumn-2h-LPR justifyStart-2yIZo0 alignStretch-1hwxMa noWrap-v6g9vO colorpicker-container" style="flex: 1 1 auto;">
+						<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.vertical + BDFDB.disCNS.modalsubinner + BDFDB.disCNS.directioncolumn + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignstretch + BDFDB.disCN.nowrap} colorpicker-container" style="flex: 1 1 auto;">
 							<div class="colorpicker-color">
 								<div class="colorpicker-white" style="background: linear-gradient(to right, #fff, rgba(255,255,255,0))">
 									<div class="colorpicker-black" style="background: linear-gradient(to top, #000, rgba(0,0,0,0))">
@@ -2132,23 +2171,23 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 									<div class="colorpicker-preview-0 selected" style="background-color:#808080;"></div>
 									<div class="colorpicker-preview-2" style="background-color:#808080;"></div>
 								</div>
-								<div class="colorpicker-inputs card-3DrRmC cardPrimaryEditable-2IQ7-V">
+								<div class="colorpicker-inputs ${BDFDB.disCNS.card + BDFDB.disCN.cardprimaryeditable}">
 									${Object.keys(inputs).map((key, i) => 
-									`<div class="colorpicker-input flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw flex-3B1Tl4 directionRow-yNbSvJ justifyCenter-29N31w alignCenter-3VxkQP noWrap-v6g9vO marginTop4-2rEBfJ marginBottom4-_yArcI">
-										<div class="flex-lFgbSz flex-3B1Tl4 horizontal-2BEEBe horizontal-2VE-Fw flex-3B1Tl4 directionRow-yNbSvJnoWrap-v6g9vO"style="flex: 1 1 20%">
-											<h5 class="h5-3KssQU size12-1IGJl9 height16-1qXrGy weightSemiBold-T8sxWH">${key}:</h5>
+									`<div class="colorpicker-input ${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.aligncenter + BDFDB.disCNS.justifycenter + BDFDB.disCNS.margintop4 + BDFDB.disCNS.marginbottom4 + BDFDB.disCN.nowrap}">
+										<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCN.nowrap}" style="flex: 1 1 20%">
+											<h5 class="${BDFDB.disCNS.h5 + BDFDB.disCNS.size12 + BDFDB.disCNS.height16 + BDFDB.disCN.weightsemibold}">${key}:</h5>
 										</div>
-										<div class="inputWrapper-3xoRWR${inputs[key].type == 'number' ? ' inputNumberWrapper inputNumberWrapperMini' : ''} vertical-3X17r5 flex-3B1Tl4 directionColumn-2h-LPR" style="flex: 1 1 80%;">
+										<div class="${inputs[key].type == 'number' ? 'inputNumberWrapper inputNumberWrapperMini ' : ''}${BDFDB.disCNS.inputwrapper + BDFDB.disCNS.vertical + BDFDB.disCNS.flex + BDFDB.disCN.directioncolumn}" style="flex: 1 1 80%;">
 											${inputs[key].type == 'number' ? '<span class="numberinput-buttons-zone"><span class="numberinput-button-up"></span><span class="numberinput-button-down"></span></span>' : ''}
-											<input type="${inputs[key].type}"${!isNaN(inputs[key].min) && inputs[key].min != null ? ' min="' + inputs[key].min + '"' : ''}${!isNaN(inputs[key].max) && inputs[key].max != null ? ' max="' + inputs[key].max + '"' : ''}${!isNaN(inputs[key].length) && inputs[key].length != null ? ' maxlength="' + inputs[key].length + '"' : ''} name="${inputs[key].group}" placeholder="${inputs[key].default}" class="inputMini-3MyfLa input-2YozMi size16-3IvaX_ colorpicker-${inputs[key].name}">
+											<input type="${inputs[key].type}"${!isNaN(inputs[key].min) && inputs[key].min != null ? ' min="' + inputs[key].min + '"' : ''}${!isNaN(inputs[key].max) && inputs[key].max != null ? ' max="' + inputs[key].max + '"' : ''}${!isNaN(inputs[key].length) && inputs[key].length != null ? ' maxlength="' + inputs[key].length + '"' : ''} name="${inputs[key].group}" placeholder="${inputs[key].default}" class="${BDFDB.disCNS.inputmini + BDFDB.disCNS.input + BDFDB.disCN.size16} colorpicker-${inputs[key].name}">
 										</div>
 									</div>`).join("")}
 								</div>
 							</div>
 						</div>
-						<div class="flex-lFgbSz flex-3B1Tl4 horizontalReverse-2LanvO horizontalReverse-k5PqxT flex-3B1Tl4 directionRowReverse-2eZTxP justifyStart-2yIZo0 alignStretch-1hwxMa noWrap-v6g9vO footer-1PYmcw">
-							<button type="button" class="btn-ok buttonBrandFilledDefault-2Rs6u5 buttonFilledDefault-AELjWf buttonDefault-2OLW-v buttonFilled-29g7b5 buttonBrandFilled-3Mv0Ra mediumGrow-uovsMu button-2t3of8 lookFilled-luDKDo colorBrand-3PmwCE sizeMedium-2VGNaF grow-25YQ8u">
-								<div class="contentsDefault-nt2Ym5 contents-4L4hQM contentsFilled-3M8HCx"></div>
+						<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontalreverse + BDFDB.disCNS.horizontalreverse2 + BDFDB.disCNS.directionrowreverse + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignstretch + BDFDB.disCNS.nowrap + BDFDB.disCN.modalfooter}">
+							<button type="button" class="btn-ok ${BDFDB.disCNS.button + BDFDB.disCNS.buttonlookfilled + BDFDB.disCNS.buttoncolorbrand + BDFDB.disCNS.buttonsizemedium + BDFDB.disCN.buttongrow}">
+								<div class="${BDFDB.disCN.buttoncontents}"></div>
 							</button>
 						</div>
 					</div>
@@ -2156,28 +2195,28 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 			</div>
 		</span>`;
 		
-	var colorPickerModal = BDfunctionsDevilBro.$(colorPickerModalMarkup)[0];
-	BDfunctionsDevilBro.appendModal(colorPickerModal);
-	BDfunctionsDevilBro.$(colorPickerModal)
+	var colorPickerModal = BDFDB.$(colorPickerModalMarkup)[0];
+	BDFDB.appendModal(colorPickerModal);
+	BDFDB.$(colorPickerModal)
 		.on("click", ".btn-ok", () => {
 			var newRGB = colorPickerModal.querySelector("[class^='colorpicker-preview-'].selected").style.backgroundColor;
-			var newCOMP = BDfunctionsDevilBro.color2COMP(newRGB);
-			var newInvRGB = BDfunctionsDevilBro.colorINV(newRGB);
+			var newCOMP = BDFDB.color2COMP(newRGB);
+			var newInvRGB = BDFDB.colorINV(newRGB);
 			
-			BDfunctionsDevilBro.$(".ui-color-picker-" + swatch + ".selected.nocolor")
+			BDFDB.$(".ui-color-picker-" + swatch + ".selected.nocolor")
 				.removeClass("selected")
 				.css("border", "4px solid red");
 				
-			BDfunctionsDevilBro.$(".ui-color-picker-" + swatch + ".selected")
+			BDFDB.$(".ui-color-picker-" + swatch + ".selected")
 				.removeClass("selected")
 				.css("border", "4px solid transparent");
 			
-			BDfunctionsDevilBro.$(".ui-color-picker-" + swatch + ".custom")
+			BDFDB.$(".ui-color-picker-" + swatch + ".custom")
 				.addClass("selected")
 				.css("background-color", newRGB)
 				.css("border", "4px solid " + newInvRGB);
 				
-			BDfunctionsDevilBro.$(".color-picker-dropper-fg-" + swatch)
+			BDFDB.$(".color-picker-dropper-fg-" + swatch)
 				.attr("fill", newCOMP[0] > 150 && newCOMP[1] > 150 && newCOMP[2] > 150 ? "#000000" : "#ffffff");
 		});
 	
@@ -2190,9 +2229,9 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 	var pY = 0;
 	var pHalfW = pcursor.offsetWidth/2;
 	var pHalfH = pcursor.offsetHeight/2;
-	var pMinX = BDfunctionsDevilBro.$(ppane).offset().left;
+	var pMinX = BDFDB.$(ppane).offset().left;
 	var pMaxX = pMinX + ppane.offsetWidth;
-	var pMinY = BDfunctionsDevilBro.$(ppane).offset().top;
+	var pMinY = BDFDB.$(ppane).offset().top;
 	var pMaxY = pMinY + ppane.offsetHeight;
 	
 	var spane = colorPickerModal.querySelector(".colorpicker-sliderpane");
@@ -2200,95 +2239,95 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 	
 	var sY = 0;
 	var sHalfH = scursor.offsetHeight/2;
-	var sMinY = BDfunctionsDevilBro.$(spane).offset().top;
+	var sMinY = BDFDB.$(spane).offset().top;
 	var sMaxY = sMinY + spane.offsetHeight;
 	
-	[hue, saturation, lightness] = BDfunctionsDevilBro.color2HSL(currentColor).replace(new RegExp(" ", "g"), "").slice(4, -1).split(",");
+	[hue, saturation, lightness] = BDFDB.color2HSL(currentColor).replace(new RegExp(" ", "g"), "").slice(4, -1).split(",");
 	saturation *= 100;
 	lightness *= 100;
 	updateAllValues();
 	updateCursors();
 	
-	BDfunctionsDevilBro.$(ppane)
+	BDFDB.$(ppane)
 		.on("mousedown", (e) => {
-			BDfunctionsDevilBro.appendLocalStyle("crossHairColorPicker", `* {cursor: crosshair !important;}`);
+			BDFDB.appendLocalStyle("crossHairColorPicker", `* {cursor: crosshair !important;}`);
 			
 			switchPreviews(e.button);
 			
 			pHalfW = pcursor.offsetWidth/2;
 			pHalfH = pcursor.offsetHeight/2;
-			pMinX = BDfunctionsDevilBro.$(ppane).offset().left;
+			pMinX = BDFDB.$(ppane).offset().left;
 			pMaxX = pMinX + ppane.offsetWidth;
-			pMinY = BDfunctionsDevilBro.$(ppane).offset().top;
+			pMinY = BDFDB.$(ppane).offset().top;
 			pMaxY = pMinY + ppane.offsetHeight;
 			pX = e.clientX - pHalfW;
 			pY = e.clientY - pHalfH;
 			
-			BDfunctionsDevilBro.$(pcursor).offset({"left":pX,"top":pY});
+			BDFDB.$(pcursor).offset({"left":pX,"top":pY});
 			
-			saturation = BDfunctionsDevilBro.mapRange([pMinX - pHalfW, pMaxX - pHalfW], [0, 100], pX);
-			lightness = BDfunctionsDevilBro.mapRange([pMinY - pHalfH, pMaxY - pHalfH], [100, 0], pY);
+			saturation = BDFDB.mapRange([pMinX - pHalfW, pMaxX - pHalfW], [0, 100], pX);
+			lightness = BDFDB.mapRange([pMinY - pHalfH, pMaxY - pHalfH], [100, 0], pY);
 			updateAllValues();
 			
-			BDfunctionsDevilBro.$(document)
+			BDFDB.$(document)
 				.off("mouseup.ColorPicker").off("mousemove.ColorPicker")
 				.on("mouseup.ColorPicker", () => {
-					BDfunctionsDevilBro.removeLocalStyle("crossHairColorPicker");
-					BDfunctionsDevilBro.$(document).off("mouseup.ColorPicker").off("mousemove.ColorPicker");
+					BDFDB.removeLocalStyle("crossHairColorPicker");
+					BDFDB.$(document).off("mouseup.ColorPicker").off("mousemove.ColorPicker");
 				})
 				.on("mousemove.ColorPicker", (e2) => {
 					pX = e2.clientX > pMaxX ? pMaxX - pHalfW : (e2.clientX < pMinX ? pMinX - pHalfW : e2.clientX - pHalfW);
 					pY = e2.clientY > pMaxY ? pMaxY - pHalfH : (e2.clientY < pMinY ? pMinY - pHalfH : e2.clientY - pHalfH);
-					BDfunctionsDevilBro.$(pcursor).offset({"left":pX,"top":pY});
+					BDFDB.$(pcursor).offset({"left":pX,"top":pY});
 					
-					saturation = BDfunctionsDevilBro.mapRange([pMinX - pHalfW, pMaxX - pHalfW], [0, 100], pX);
-					lightness = BDfunctionsDevilBro.mapRange([pMinY - pHalfH, pMaxY - pHalfH], [100, 0], pY);
+					saturation = BDFDB.mapRange([pMinX - pHalfW, pMaxX - pHalfW], [0, 100], pX);
+					lightness = BDFDB.mapRange([pMinY - pHalfH, pMaxY - pHalfH], [100, 0], pY);
 					updateAllValues();
 				});
 		});
 	
-	BDfunctionsDevilBro.$(spane)
+	BDFDB.$(spane)
 		.on("mousedown", (e) => {
-			BDfunctionsDevilBro.appendLocalStyle("crossHairColorPicker", `* {cursor: crosshair !important;}`);
+			BDFDB.appendLocalStyle("crossHairColorPicker", `* {cursor: crosshair !important;}`);
 			
 			switchPreviews(e.button);
 			
 			sHalfH = scursor.offsetHeight/2;
-			sMinY = BDfunctionsDevilBro.$(spane).offset().top;
+			sMinY = BDFDB.$(spane).offset().top;
 			sMaxY = sMinY + spane.offsetHeight;
 			sY = e.clientY - sHalfH;
 			
-			BDfunctionsDevilBro.$(scursor).offset({"top":sY});
+			BDFDB.$(scursor).offset({"top":sY});
 			
-			hue = BDfunctionsDevilBro.mapRange([sMinY - sHalfH, sMaxY - sHalfH], [360, 0], sY);
+			hue = BDFDB.mapRange([sMinY - sHalfH, sMaxY - sHalfH], [360, 0], sY);
 			updateAllValues();
 			
-			BDfunctionsDevilBro.$(document)
+			BDFDB.$(document)
 				.off("mouseup.ColorPicker").off("mousemove.ColorPicker")
 				.on("mouseup.ColorPicker", () => {
-					BDfunctionsDevilBro.removeLocalStyle("crossHairColorPicker");
-					BDfunctionsDevilBro.$(document).off("mouseup.ColorPicker").off("mousemove.ColorPicker");
+					BDFDB.removeLocalStyle("crossHairColorPicker");
+					BDFDB.$(document).off("mouseup.ColorPicker").off("mousemove.ColorPicker");
 				})
 				.on("mousemove.ColorPicker", (e2) => {
 					sY = e2.clientY > sMaxY ? sMaxY - sHalfH : (e2.clientY < sMinY ? sMinY - sHalfH : e2.clientY - sHalfH);
-					BDfunctionsDevilBro.$(scursor).offset({"top":sY});
+					BDFDB.$(scursor).offset({"top":sY});
 					
-					hue = BDfunctionsDevilBro.mapRange([sMinY - sHalfH, sMaxY - sHalfH], [360, 0], sY);
+					hue = BDFDB.mapRange([sMinY - sHalfH, sMaxY - sHalfH], [360, 0], sY);
 					updateAllValues();
 				});
 		});
 		
-	BDfunctionsDevilBro.$(colorPickerModal)
-		.on("input", ".inputMini-3MyfLa", (e) => {
+	BDFDB.$(colorPickerModal)
+		.on("input", BDFDB.dotCN.inputmini, (e) => {
 			updateValues(e.currentTarget.name);
 		});
 		
-	BDfunctionsDevilBro.$(colorPickerModal)
+	BDFDB.$(colorPickerModal)
 		.on("click", "[class^='colorpicker-preview-']", (e) => {
 			colorPickerModal.querySelector("[class^='colorpicker-preview-'].selected").style.borderColor = "transparent";
 			colorPickerModal.querySelector("[class^='colorpicker-preview-'].selected").classList.remove("selected");
 			e.currentTarget.classList.add("selected");
-			[hue, saturation, lightness] = BDfunctionsDevilBro.color2HSL(e.currentTarget.style.backgroundColor).replace(new RegExp(" ", "g"), "").slice(4, -1).split(",");
+			[hue, saturation, lightness] = BDFDB.color2HSL(e.currentTarget.style.backgroundColor).replace(new RegExp(" ", "g"), "").slice(4, -1).split(",");
 			saturation *= 100;
 			lightness *= 100;
 			updateAllValues();
@@ -2305,9 +2344,9 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 		switch (type) {
 			case "hex":
 				hex = colorPickerModal.querySelector(".colorpicker-hex").value;
-				if (/^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})BDfunctionsDevilBro.$/i.test(hex)) {
-					[red, green, blue] = BDfunctionsDevilBro.color2COMP(hex);
-					[hue, saturation, lightness] = BDfunctionsDevilBro.color2HSL(hex).replace(new RegExp(" ", "g"), "").slice(4, -1).split(",");
+				if (/^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})BDFDB.$/i.test(hex)) {
+					[red, green, blue] = BDFDB.color2COMP(hex);
+					[hue, saturation, lightness] = BDFDB.color2HSL(hex).replace(new RegExp(" ", "g"), "").slice(4, -1).split(",");
 					saturation *= 100;
 					lightness *= 100;
 					colorPickerModal.querySelector(".colorpicker-hue").value = Math.round(hue);
@@ -2323,10 +2362,10 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 				green = colorPickerModal.querySelector(".colorpicker-green").value;
 				blue = colorPickerModal.querySelector(".colorpicker-blue").value;
 				if (red && red >= 0 && red <= 255 && green && green >= 0 && green <= 255 && blue && blue >= 0 && blue <= 255) {
-					[hue, saturation, lightness] = BDfunctionsDevilBro.color2HSL([red, green, blue]).replace(new RegExp(" ", "g"), "").slice(4, -1).split(",");
+					[hue, saturation, lightness] = BDFDB.color2HSL([red, green, blue]).replace(new RegExp(" ", "g"), "").slice(4, -1).split(",");
 					saturation *= 100;
 					lightness *= 100;
-					colorPickerModal.querySelector(".colorpicker-hex").value = BDfunctionsDevilBro.color2HEX([red, green, blue]);
+					colorPickerModal.querySelector(".colorpicker-hex").value = BDFDB.color2HEX([red, green, blue]);
 					colorPickerModal.querySelector(".colorpicker-hue").value = Math.round(hue);
 					colorPickerModal.querySelector(".colorpicker-saturation").value = Math.round(saturation);
 					colorPickerModal.querySelector(".colorpicker-lightness").value = Math.round(lightness);
@@ -2337,8 +2376,8 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 				saturation = colorPickerModal.querySelector(".colorpicker-saturation").value;
 				lightness = colorPickerModal.querySelector(".colorpicker-lightness").value;
 				if (hue && hue >= 0 && hue <= 360 && saturation && saturation >= 0 && saturation <= 100 && lightness && lightness >= 0 && lightness <= 100) {
-					[red, green, blue] = BDfunctionsDevilBro.color2COMP("hsl(" + hue + ", " + saturation/100 + ", " + lightness/100 + ")");
-					colorPickerModal.querySelector(".colorpicker-hex").value = BDfunctionsDevilBro.color2HEX([red, green, blue]);
+					[red, green, blue] = BDFDB.color2COMP("hsl(" + hue + ", " + saturation/100 + ", " + lightness/100 + ")");
+					colorPickerModal.querySelector(".colorpicker-hex").value = BDFDB.color2HEX([red, green, blue]);
 					colorPickerModal.querySelector(".colorpicker-red").value = red;
 					colorPickerModal.querySelector(".colorpicker-green").value = green;
 					colorPickerModal.querySelector(".colorpicker-blue").value = blue;
@@ -2351,27 +2390,27 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 	
 	function updateCursors () {
 		sHalfH = scursor.offsetHeight/2;
-		sMinY = BDfunctionsDevilBro.$(spane).offset().top;
-		sY = BDfunctionsDevilBro.mapRange([360, 0], [sMinY - sHalfH, sMaxY - sHalfH], hue);
+		sMinY = BDFDB.$(spane).offset().top;
+		sY = BDFDB.mapRange([360, 0], [sMinY - sHalfH, sMaxY - sHalfH], hue);
 		
 		pHalfW = pcursor.offsetWidth/2;
 		pHalfH = pcursor.offsetHeight/2;
-		pMinX = BDfunctionsDevilBro.$(ppane).offset().left;
+		pMinX = BDFDB.$(ppane).offset().left;
 		pMaxX = pMinX + ppane.offsetWidth;
-		pMinY = BDfunctionsDevilBro.$(ppane).offset().top;
+		pMinY = BDFDB.$(ppane).offset().top;
 		pMaxY = pMinY + ppane.offsetHeight;
-		pX = BDfunctionsDevilBro.mapRange([0, 100], [pMinX - pHalfW, pMaxX - pHalfW], saturation);
-		pY = BDfunctionsDevilBro.mapRange([100, 0], [pMinY - pHalfH, pMaxY - pHalfH], lightness);
+		pX = BDFDB.mapRange([0, 100], [pMinX - pHalfW, pMaxX - pHalfW], saturation);
+		pY = BDFDB.mapRange([100, 0], [pMinY - pHalfH, pMaxY - pHalfH], lightness);
 		
-		BDfunctionsDevilBro.$(scursor).offset({"top":sY});
-		BDfunctionsDevilBro.$(pcursor).offset({"left":pX,"top":pY});
-		BDfunctionsDevilBro.$(pcursor).find("circle").attr("stroke", BDfunctionsDevilBro.colorINV([red, green, blue], "rgb"));
-		BDfunctionsDevilBro.$(scursor).find("path").attr("stroke", BDfunctionsDevilBro.color2RGB("hsl(" + hue + ", 1, 1)"));
+		BDFDB.$(scursor).offset({"top":sY});
+		BDFDB.$(pcursor).offset({"left":pX,"top":pY});
+		BDFDB.$(pcursor).find("circle").attr("stroke", BDFDB.colorINV([red, green, blue], "rgb"));
+		BDFDB.$(scursor).find("path").attr("stroke", BDFDB.color2RGB("hsl(" + hue + ", 1, 1)"));
 	}
 	
 	function updateAllValues () {
-		[red, green, blue] = BDfunctionsDevilBro.color2COMP("hsl(" + hue + ", " + saturation/100 + ", " + lightness/100 + ")");
-		colorPickerModal.querySelector(".colorpicker-hex").value = BDfunctionsDevilBro.color2HEX([red, green, blue]);
+		[red, green, blue] = BDFDB.color2COMP("hsl(" + hue + ", " + saturation/100 + ", " + lightness/100 + ")");
+		colorPickerModal.querySelector(".colorpicker-hex").value = BDFDB.color2HEX([red, green, blue]);
 		colorPickerModal.querySelector(".colorpicker-hue").value = Math.round(hue);
 		colorPickerModal.querySelector(".colorpicker-saturation").value = Math.round(saturation);
 		colorPickerModal.querySelector(".colorpicker-lightness").value = Math.round(lightness);
@@ -2381,35 +2420,35 @@ BDfunctionsDevilBro.openColorPicker = function (currentColor, swatch) {
 		
 		updateColors();
 		
-		BDfunctionsDevilBro.$(pcursor).find("circle").attr("stroke", BDfunctionsDevilBro.colorINV([red, green, blue], "rgb"));
-		BDfunctionsDevilBro.$(scursor).find("path").attr("stroke", BDfunctionsDevilBro.color2RGB("hsl(" + hue + ", 1, 1)"));
+		BDFDB.$(pcursor).find("circle").attr("stroke", BDFDB.colorINV([red, green, blue], "rgb"));
+		BDFDB.$(scursor).find("path").attr("stroke", BDFDB.color2RGB("hsl(" + hue + ", 1, 1)"));
 	}
 	
 	function updateColors () {
-		colorPickerModal.querySelector(".colorpicker-color").style.background = BDfunctionsDevilBro.color2RGB("hsl(" + hue + ", 1, 1)");
-		colorPickerModal.querySelector("[class^='colorpicker-preview-'].selected").style.background = BDfunctionsDevilBro.color2RGB([red, green, blue]);
-		colorPickerModal.querySelector("[class^='colorpicker-preview-'].selected").style.borderColor = BDfunctionsDevilBro.colorINV([red, green, blue], "rgb");
+		colorPickerModal.querySelector(".colorpicker-color").style.background = BDFDB.color2RGB("hsl(" + hue + ", 1, 1)");
+		colorPickerModal.querySelector("[class^='colorpicker-preview-'].selected").style.background = BDFDB.color2RGB([red, green, blue]);
+		colorPickerModal.querySelector("[class^='colorpicker-preview-'].selected").style.borderColor = BDFDB.colorINV([red, green, blue], "rgb");
 	}
 };
 
-BDfunctionsDevilBro.mapRange = function (from, to, number) {
+BDFDB.mapRange = function (from, to, number) {
 	return to[0] + (number - from[0]) * (to[1] - to[0]) / (from[1] - from[0]);
 };
 
-BDfunctionsDevilBro.getSwatchColor = function (swatch) {
-	return !BDfunctionsDevilBro.$(".ui-color-picker-" + swatch + ".nocolor.selected")[0] ? BDfunctionsDevilBro.color2COMP(BDfunctionsDevilBro.$(".ui-color-picker-" + swatch + ".selected").css("background-color")) : null;
+BDFDB.getSwatchColor = function (swatch) {
+	return !BDFDB.$(".ui-color-picker-" + swatch + ".nocolor.selected")[0] ? BDFDB.color2COMP(BDFDB.$(".ui-color-picker-" + swatch + ".selected").css("background-color")) : null;
 };
 
-BDfunctionsDevilBro.zacksFork = function () {
+BDFDB.zacksFork = function () {
 	return (typeof bdpluginErrors === "object" && typeof bdthemeErrors === "object" && typeof bbdVersion === "string");
 };
 
-BDfunctionsDevilBro.isBDv2 = function () {
-	return (typeof BDfunctionsDevilBro.BDv2Api !== "undefined");
+BDFDB.isBDv2 = function () {
+	return (typeof BDFDB.BDv2Api !== "undefined");
 };
 
-BDfunctionsDevilBro.getLibraryStrings = function () {
-	switch (BDfunctionsDevilBro.getDiscordLanguage().id) {
+BDFDB.getLibraryStrings = function () {
+	switch (BDFDB.getDiscordLanguage().id) {
 		case "hr": 		//croatian
 			return {
 				toast_plugin_started:			"${pluginName} ${oldVersion} je započeo.",
@@ -2707,56 +2746,810 @@ BDfunctionsDevilBro.getLibraryStrings = function () {
 	}
 };
 
-BDfunctionsDevilBro.$(document)
-	.off("click.BDfunctionsDevilBroPluginClick")
-	.off("keydown.BDfunctionsDevilBroPressedKeys")
-	.off("keyup.BDfunctionsDevilBroPressedKeys")
-	.off("mousedown.BDfunctionsDevilBroMousePosition")
-	.on("click.BDfunctionsDevilBroPluginClick", ".bd-settingswrap .bd-refresh-button, .bd-settingswrap .bd-switch-checkbox", () => {
-		BDfunctionsDevilBro.setPluginCache();
-		BDfunctionsDevilBro.setThemeCache();
+BDFDB.$(document)
+	.off("click.BDFDBPluginClick")
+	.off("keydown.BDFDBPressedKeys")
+	.off("keyup.BDFDBPressedKeys")
+	.off("mousedown.BDFDBMousePosition")
+	.on("click.BDFDBPluginClick", ".bd-settingswrap .bd-refresh-button, .bd-settingswrap .bd-switch-checkbox", () => {
+		BDFDB.setPluginCache();
+		BDFDB.setThemeCache();
 	})
-	.on("keydown.BDfunctionsDevilBroPressedKeys", (e) => {
-		if (!BDfunctionsDevilBro.pressedKeys.includes(e.which)) BDfunctionsDevilBro.pressedKeys.push(e.which);
+	.on("keydown.BDFDBPressedKeys", (e) => {
+		if (!BDFDB.pressedKeys.includes(e.which)) BDFDB.pressedKeys.push(e.which);
 	})
-	.on("keyup.BDfunctionsDevilBroPressedKeys", (e) => {
-		BDfunctionsDevilBro.removeFromArray(BDfunctionsDevilBro.pressedKeys, e.which);
+	.on("keyup.BDFDBPressedKeys", (e) => {
+		BDFDB.removeFromArray(BDFDB.pressedKeys, e.which);
 	})
-	.on("mousedown.BDfunctionsDevilBroMousePosition", (e) => {
-		BDfunctionsDevilBro.mousePosition = {x:e.pageX,y:e.pageY};
+	.on("mousedown.BDFDBMousePosition", (e) => {
+		BDFDB.mousePosition = {x:e.pageX,y:e.pageY};
 	});
 
-BDfunctionsDevilBro.isPluginEnabled = function (name) {
-	if (!BDfunctionsDevilBro.isBDv2()) return window.bdplugins[name] && window.pluginCookie[name];
-	else return BDfunctionsDevilBro.Plugins[name.toLowerCase()] ? BDfunctionsDevilBro.Plugins[name.toLowerCase()].enabled : null;
+BDFDB.isPluginEnabled = function (name) {
+	if (!BDFDB.isBDv2()) return window.bdplugins[name] && window.pluginCookie[name];
+	else return BDFDB.Plugins[name.toLowerCase()] ? BDFDB.Plugins[name.toLowerCase()].enabled : null;
 };
 
-BDfunctionsDevilBro.isRestartNoMoreEnabled = function () {
-	return BDfunctionsDevilBro.isPluginEnabled("Restart-No-More") || BDfunctionsDevilBro.isPluginEnabled("Restart No More");
+BDFDB.isRestartNoMoreEnabled = function () {
+	return BDFDB.isPluginEnabled("Restart-No-More") || BDFDB.isPluginEnabled("Restart No More");
 };
 
-BDfunctionsDevilBro.isThemeEnabled = function (name) {
-	if (!BDfunctionsDevilBro.isBDv2()) return window.bdthemes[name] && window.themeCookie[name];
-	else return BDfunctionsDevilBro.Themes[name.toLowerCase()] ? BDfunctionsDevilBro.Themes[name.toLowerCase()].enabled : null;
+BDFDB.isThemeEnabled = function (name) {
+	if (!BDFDB.isBDv2()) return window.bdthemes[name] && window.themeCookie[name];
+	else return BDFDB.Themes[name.toLowerCase()] ? BDFDB.Themes[name.toLowerCase()].enabled : null;
 };
 
-(BDfunctionsDevilBro.setPluginCache = function () {
-	if (!BDfunctionsDevilBro.isBDv2()) return;
-	BDfunctionsDevilBro.Plugins = {};
-	for (let id of BDfunctionsDevilBro.BDv2Api.Plugins.listPlugins()) {
-		BDfunctionsDevilBro.BDv2Api.Plugins.getPlugin(id).then(plugin => {BDfunctionsDevilBro.Plugins[id] = plugin;});
+(BDFDB.setPluginCache = function () {
+	if (!BDFDB.isBDv2()) return;
+	BDFDB.Plugins = {};
+	for (let id of BDFDB.BDv2Api.Plugins.listPlugins()) {
+		BDFDB.BDv2Api.Plugins.getPlugin(id).then(plugin => {BDFDB.Plugins[id] = plugin;});
 	}
 })();
 
-(BDfunctionsDevilBro.setThemeCache = function () {
-	if (!BDfunctionsDevilBro.isBDv2()) return;
-	BDfunctionsDevilBro.Themes = {};
-	for (let id of BDfunctionsDevilBro.BDv2Api.Themes.listThemes()) {
-		BDfunctionsDevilBro.BDv2Api.Themes.getTheme(id).then(theme => {BDfunctionsDevilBro.Themes[id] = theme;});
+(BDFDB.setThemeCache = function () {
+	if (!BDFDB.isBDv2()) return;
+	BDFDB.Themes = {};
+	for (let id of BDFDB.BDv2Api.Themes.listThemes()) {
+		BDFDB.BDv2Api.Themes.getTheme(id).then(theme => {BDFDB.Themes[id] = theme;});
 	}
 })();
 
-BDfunctionsDevilBro.appendLocalStyle("BDfunctionsDevilBro", `
+BDFDB.DiscordClasses = {
+	accountinfo: "container-2Thooq",
+	accountinfodetails: "accountDetails-3k9g4n",
+	accountinfousername: "username",
+	alignbaseline: "alignBaseline-LAQbso",
+	aligncenter: "alignCenter-1dQNNs",
+	alignend: "alignEnd-1D6PQi",
+	alignstart: "alignStart-H-X2h-",
+	alignstretch: "alignStretch-DpGPf3",
+	anchor: "anchor-3Z-8Bb",
+	app: "app-19_DXt",
+	appmount: "appMount-3VJmYg",
+	appold: "app",
+	autocomplete: "autocomplete-1vrmpx",
+	autocomplete2: "autocomplete-i9yVHs",
+	autocompletecontent: "content-Qb0rXO",
+	autocompletecontenttitle: "contentTitle-2tG_sM",
+	autocompletedescription: "description-11DmNu",
+	autocompleteinner: "autocompleteInner-zh20B_",
+	autocompleterow: "autocompleteRow-2OthDa",
+	autocompleterowhorizontal: "autocompleteRowHorizontal-32jwnH",
+	autocompleterowvertical: "autocompleteRowVertical-q1K4ky",
+	autocompleteselectable: "selectable-3dP3y-",
+	autocompleteselected: "selectorSelected-1_M1WV",
+	autocompleteselector: "selector-2IcQBU",
+	avatarimage: "image-33JSyf",
+	avatarlargeold: "avatar-large",
+	avatarprofileold: "avatar-profile",
+	avatarsmallold: "avatar-small",
+	backdrop: "backdrop-1ocfXc",
+	badge: "badge",
+	bubble: "bubble-3we2di",
+	button: "button-38aScr",
+	buttoncolorblack: "colorBlack-1jwPVL",
+	buttoncolorbrand: "colorBrand-3pXr91",
+	buttoncolorgreen: "colorGreen-29iAKY",
+	buttoncolorgrey: "colorGrey-2DXtkV",
+	buttoncolorlink: "colorLink-35jkBc",
+	buttoncolorprimary: "colorPrimary-3b3xI6",
+	buttoncolorred: "colorRed-1TFJan",
+	buttoncolortransparent: "colorTransparent-1ewNp9",
+	buttoncolorwhite: "colorWhite-rEQuAQ",
+	buttoncoloryellow: "colorYellow-2JqYwt",
+	buttoncontents: "contents-18-Yxp",
+	buttondisabled: "disabled-9aF2ug",
+	buttondisabledwrapper: "disabledWrapper-33zVVX",
+	buttonfullwidth: "fullWidth-1orjjo",
+	buttongrow: "grow-q77ONN",
+	buttonhashover: "hasHover-3X1-zV",
+	buttonhoverblack: "hoverBlack-3jULb8",
+	buttonhoverbrand: "hoverBrand-1_Fxlk",
+	buttonhovergreen: "hoverGreen-1gjdJc",
+	buttonhovergrey: "hoverGrey-2CBXu0",
+	buttonhoverlink: "hoverLink-i1fEKS",
+	buttonhoverprimary: "hoverPrimary-2D1j2r",
+	buttonhoverred: "hoverRed-2NoOXI",
+	buttonhovertransparent: "hoverTransparent-2Lz5CN",
+	buttonhoverwhite: "hoverWhite-2uUmXw",
+	buttonhoveryellow: "hoverYellow-171chs",
+	buttonlookfilled: "lookFilled-1Gx00P",
+	buttonlookghost: "lookGhost-2Fn_0-",
+	buttonlookinverted: "lookInverted-2D7oAl",
+	buttonlooklink: "lookLink-9FtZy-",
+	buttonlookoutlined: "lookOutlined-3sRXeN",
+	buttonsizeicon: "sizeIcon-1-kvKI",
+	buttonsizelarge: "sizeLarge-1vSeWK",
+	buttonsizemax: "sizeMax-1Mj0eU",
+	buttonsizemedium: "sizeMedium-1AC_Sl",
+	buttonsizemin: "sizeMin-1mJd1x",
+	buttonsizesmall: "sizeSmall-2cSMqn",
+	buttonsizexlarge: "sizeXlarge-2yFAlZ",
+	buttonspinner: "spinner-3a9zLT",
+	buttonspinneritem: "spinnerItem-3GlVyU",
+	buttonsubmitting: "submitting-3qlO9O",
+	callavatar: "callAvatar-v-u4BM",
+	callavatarwrapper: "callAvatarWrapper-TICyxO",
+	callcontainer: "container-wrYOxa",
+	callcurrentcontainer: "private-channel-call",
+	card: "card-3Qj_Yx",
+	cardbrand: "cardBrand-39zmMQ",
+	cardbrandoutline: "cardBrandOutline-3jvFfo",
+	carddanger: "cardDanger-ZurOv3",
+	carddangeroutline: "cardDangerOutline-3t0Do9",
+	cardprimary: "cardPrimary-1Hv-to",
+	cardprimaryeditable: "cardPrimaryEditable-3KtE4g",
+	cardprimaryoutline: "cardPrimaryOutline-29Ujqw",
+	cardprimaryoutlineeditable: "cardPrimaryOutlineEditable-PEnpzz",
+	cardsuccess: "cardSuccess-3uEYjj",
+	cardsuccessoutline: "cardSuccessOutline-1Su_ab",
+	cardwarning: "cardWarning-2yPNAa",
+	cardwarningoutline: "cardWarningOutline-1cs56O",
+	categorycolortransition: "colorTransition-2-M2tg",
+	categorycontainerdefault: "containerDefault-3GGEv_",
+	categoryiconcollapsed: "iconCollapsed-3hFp_8",
+	categoryicondefault: "iconDefault-3Gr8d2",
+	categoryiconhovered: "iconHovered-2L3-fB",
+	categoryiconhoveredcollapsed: "iconHoveredCollapsed-3caIIZ",
+	categoryiconmuted: "iconMuted-1HVBGH",
+	categoryicontransition: "iconTransition-2pOJ7l",
+	categoryiconunread: "iconUnread-2eGkvX",
+	categorynamecollapsed: "nameCollapsed-34uFWo",
+	categorynamedefault: "nameDefault-2DI02H",
+	categorynamehovered: "nameHovered-1gxhWH",
+	categorynamehoveredcollapsed: "nameHoveredCollapsed-2orEWB",
+	categorynamemuted: "nameMuted-1MCOt4",
+	categorynameunread: "nameUnread-njOjIS",
+	categorywrappercollapsed: "wrapperCollapsed-3Fbxl6",
+	categorywrapperdefault: "wrapperDefault-10Jfvz",
+	categorywrapperhovered: "wrapperHovered-28fu1D",
+	categorywrapperhoveredcollapsed: "wrapperHoveredCollapsed-1PADEo",
+	categorywrappermuted: "wrapperMuted-3KeA2M",
+	categorywrapperunread: "wrapperUnread-1JPWj3",
+	channelbackground: "background-2OVjk_",
+	channelbadge: "wrapper-232cHJ",
+	channelcolordefaulttext: "colorDefaultText-oas-QM",
+	channelcolordefaultvoice: "colorDefaultVoice-3wYlhb",
+	channelcolorhoveredtext: "colorHoveredText-OZnAgu",
+	channelcolorhoveredvoice: "colorHoveredVoice-1kucsK",
+	channelcolorlockedtext: "colorLockedText-1VRkPt",
+	channelcolorlockedvoice: "colorLockedVoice-2UlBjl",
+	channelcolormutedtext: "colorMutedText-36M8WR",
+	channelcolormutedvoice: "colorMutedVoice-3ghIuw",
+	channelcolorselectedtext: "colorSelectedText-1y4Wvs",
+	channelcolorselectedvoice: "colorSelectedVoice-Xcb_9R",
+	channelcolorunreadtext: "colorUnreadText-2t7XRb",
+	channelcolorunreadvoice: "colorUnreadVoice-137o4S",
+	channelcontainerdefault: "containerDefault-1ZnADq",
+	channelcontent: "content-20Aix8",
+	channelcontentdefaulttext: "contentDefaultText-3vZplL",
+	channelcontentdefaultvoice: "contentDefaultVoice-2ko43i",
+	channelcontenthoveredtext: "contentHoveredText-2D9B-x",
+	channelcontenthoveredvoice: "contentHoveredVoice-3p_NEO",
+	channelcontentlockedtext: "contentLockedText-1aHuz8",
+	channelcontentlockedvoice: "contentLockedVoice-1gx-SP",
+	channelcontentmutedtext: "contentMutedText-2y6aPQ",
+	channelcontentmutedvoice: "contentMutedVoice-2lJ0UD",
+	channelcontentselectedtext: "contentSelectedText-3wUhMi",
+	channelcontentselectedvoice: "contentSelectedVoice-1WDIBM",
+	channelcontentunreadtext: "contentUnreadText-2vNnZc",
+	channelcontentunreadvoice: "contentUnreadVoice-1dijOt",
+	channelforeground: "foreground-2W-aJk",
+	channelheaderaka: "aka-1mqp34",
+	channelheaderchannelicon: "channelIcon-MsmKOO",
+	channelheaderchannelname: "channelName-3stJzi",
+	channelheaderdivider: "divider-2PMBlV",
+	channelheadericon: "icon-1R19_H",
+	channelheadericonactive: "iconActive-AKd_jq",
+	channelheadericonbadge: "iconBadge-2dji3k",
+	channelheadericonbadgewrapper: "iconBadgeWrapper-1vhG5S",
+	channelheadericondisabled: "iconDisabled-XgNR1p",
+	channelheadericonforeground: "iconForeground-3y9f0B",
+	channelheadericoninactive: "iconInactive-g2AXfB",
+	channelheadericonmargin: "iconMargin-2YXk4F",
+	channelheaderprivate: "private-26pLvW",
+	channelheadersearch: "search-l1Wz-Q",
+	channelheadertitle: "title-3qD0b-",
+	channelheadertitlecall: "titleCall-_b9o8P",
+	channelheadertitletext: "titleText-3X-zRE",
+	channelheadertitlewrapper: "titleWrapper-1l0xT9",
+	channelheadertopic: "topic-2QX7LI",
+	channelheaderdivider: "divider-2PMBlV",
+	channelheaderheaderbar: "headerBar-UHpsPw",
+	channelicon: "icon-sxakjD",
+	channeliconspacing: "iconSpacing-3JkGQO",
+	channelmarginreset: "marginReset-3RfdVe",
+	channelname: "name-3M0b8v",
+	channelnamedefaulttext: "nameDefaultText-24KCy5",
+	channelnamedefaultvoice: "nameDefaultVoice-3WUH7s",
+	channelnamehoveredtext: "nameHoveredText-1uO31y",
+	channelnamehoveredvoice: "nameHoveredVoice-YJ1Vfd",
+	channelnamelockedtext: "nameLockedText-3pqQcL",
+	channelnamelockedvoice: "nameLockedVoice-26MhB1",
+	channelnamemutedtext: "nameMutedText-3Vj4bM",
+	channelnamemutedvoice: "nameMutedVoice-3oxyQZ",
+	channelnameselectedtext: "nameSelectedText-sp_EUw",
+	channelnameselectedvoice: "nameSelectedVoice-1qSph5",
+	channelnameunreadtext: "nameUnreadText-DfkrI4",
+	channelnameunreadvoice: "nameUnreadVoice-EVo-wI",
+	channeloverflowellipsis: "overflowEllipsis-jeThUf",
+	channelunread: "unread-1Dp-OI",
+	channelwrapper: "wrapper-KpKNwI",
+	channelwrapperdefaulttext: "wrapperDefaultText-2IWcE8",
+	channelwrapperdefaultvoice: "wrapperDefaultVoice-1yvceo",
+	channelwrapperhoveredtext: "wrapperHoveredText-2geN_M",
+	channelwrapperhoveredvoice: "wrapperHoveredVoice-3ItgyI",
+	channelwrapperlockedtext: "wrapperLockedText-wfOnM5",
+	channelwrapperlockedvoice: "wrapperLockedVoice-3QrBs-",
+	channelwrappermutedtext: "wrapperMutedText-1YBpvv",
+	channelwrappermutedvoice: "wrapperMutedVoice-10gPcW",
+	channelwrapperselectedtext: "wrapperSelectedText-3dSUjC",
+	channelwrapperselectedvoice: "wrapperSelectedVoice-xzxa2u",
+	channelwrapperunreadtext: "wrapperUnreadText-2zuiuD",
+	channelwrapperunreadvoice: "wrapperUnreadVoice-23GIYe",
+	channels: "channels-Ie2l6A",
+	chat: "chat",
+	chatcontent: "content",
+	chatspacer: "spacer-29U_x8",
+	checkbox: "checkbox-1ix_J3",
+	checkboxchecked: "checked-3_4uQ9",
+	checkboxcontainer: "checkboxContainer-2vV9zd",
+	checkboxinput: "input-3ITkQf",
+	checkboxinputdefault: "inputDefault-3JxKJ2",
+	checkboxinputdisabled: "inputDisabled-110Jqx",
+	checkboxround: "round-2jCFai",
+	checkboxwrapper: "checkboxWrapper-SkhIWG",
+	clickable: "clickable",
+	closed: "closed-1D6IW8",
+	contentmenulabel: "label-JWQiNe",
+	contextmenu: "contextMenu-HLZMGh",
+	contextmenuhint: "hint-22uc-R",
+	contextmenuinvertchildx: "invertChildX-2fq7sY",
+	contextmenuitem: "item-1Yvehc",
+	contextmenuitembrand: "brand-3igrJY",
+	contextmenuitemdanger: "danger-2dXSTE",
+	contextmenuitemdisabled: "disabled-2xniQf",
+	contextmenuitemgroup: "itemGroup-1tL0uz",
+	contextmenuitemtoggle: "itemToggle-S7XGOQ",
+	contextmenuitemsubmenu: "itemSubMenu-1vN_Yn",
+	contextmenulabel: "label-JWQiNe",
+	cursordefault: "cursorDefault-3pPSRV",
+	cursorpointer: "cursorPointer-1ajlYk",
+	dark: "dark",
+	defaultcolor: "defaultColor-1_ajX0",
+	description: "description-3_Ncsb",
+	directioncolumn: "directionColumn-35P_nr",
+	directionrow: "directionRow-3v3tfG",
+	directionrowreverse: "directionRowReverse-m8IjIq",
+	dms: "dms",
+	dmchannel: "channel",
+	dmchannelactivity: "channel-activity",
+	dmchannelactivityicon: "channel-activity-icon",
+	dmchannelactivityiconforeground: "channel-activity-icon-foreground",
+	dmchannelactivitytext: "channel-activity-text",
+	dmchannelclose: "close",
+	dmchannelname: "channel-name",
+	dmchannelprivate: "private",
+	dmchannels: "private-channels",
+	downloadlink: "downloadLink-2oSgiF",
+	elevationhigh: "elevationHigh-3A9Xbf",
+	ellipsis: "ellipsis-1XUmPN",
+	embed: "embed-IeVjo6",
+	embedimage: "embedImage-2W1cML",
+	embedold: "embed",
+	emojipicker: "emojiPicker-3m1S-j",
+	emojipickeractivity: "activity-2oLAbd",
+	emojipickerbutton: "btn-reaction",
+	emojipickercategories: "categories-1feg4n",
+	emojipickercategory: "category-2U57w6",
+	emojipickercustom: "custom-2TY7UZ",
+	emojipickerdimmer: "dimmer-3iH-5D",
+	emojipickerdisabled: "disabled-1H1CfW",
+	emojipickerdiversityselector: "diversitySelector-tmmMv0",
+	emojipickeremojiitem: "emojiItem-109bjA",
+	emojipickerflags: "flags-3peqg9",
+	emojipickerfood: "food-3vb4RY",
+	emojipickerheader: "header-1nkwgG",
+	emojipickeritem: "item-16cXuq",
+	emojipickernature: "nature-WkggKK",
+	emojipickerobjects: "objects-ktZjG4",
+	emojipickerpeople: "people-2y6eof",
+	emojipickerpopout: "popout-2nUePc",
+	emojipickerpremiumpromo: "premiumPromo-yVfLiA",
+	emojipickerpremiumpromoclose: "premiumPromoClose-2sqoIR",
+	emojipickerpremiumpromodescription: "premiumPromoDescription-2Mn515",
+	emojipickerpremiumpromoimage: "premiumPromoImage-tGTlKV",
+	emojipickerpremiumpromotitle: "premiumPromoTitle-1SQQfF",
+	emojipickerrecent: "recent-rdY7_c",
+	emojipickerrow: "row-3j9Kuo",
+	emojipickerscroller: "scroller-3vODG7",
+	emojipickerscrollerwrap: "scrollerWrap-PyxcLY",
+	emojipickerselected: "selected-39BZ4S",
+	emojipickerspriteitem: "spriteItem-2AFL7r",
+	emojipickerstickyheader: "stickyHeader-1SS0JU",
+	emojipickersymbols: "symbols-3xtDtJ",
+	emojipickertravel: "travel-2FeozN",
+	emojipickervisible: "visible-3k45bQ",
+	flex: "flex-1O1GKY",
+	flex2: "flex-1xMQg5",
+	flexcenter: "flexCenter-3_1bcw",
+	flexchild: "flexChild-faoVW3",
+	formtext: "formText-3fs7AJ",
+	friends: "friends",
+	friendsbutton: "btn-friends",
+	friendscolumn: "friends-column",
+	friendscolumnnamewrap: "friends-column-name",
+	friendscolumnusername: "username",
+	friendsicon: "friends-icon",
+	friendsonline: "friends-online",
+	friendstabbar: "tab-bar",
+	friendstabbaritem: "tab-bar-item",
+	gamename: "game-name",
+	gamenameinput: "game-name-input",
+	gamesettings: "user-settings-games",
+	guild: "guild",
+	guildactive: "active",
+	guildaudio: "audio",
+	guildinner: "guild-inner",
+	guildplaceholder: "guild-placeholder",
+	guilds: "guilds",
+	guildsadd: "guilds-add",
+	guildsaddinner: "guilds-add-inner",
+	guildselected: "selected",
+	guildseparator: "guild-separator",
+	guildserror: "guilds-error",
+	guildswrapper: "guilds-wrapper",
+	guildunread: "unread",
+	guildvideo: "video",
+	h1: "h1-1qdNzo",
+	h1defaultmargin: "defaultMarginh1-peT3GC",
+	h2: "h2-2gWE-o",
+	h2defaultmargin: "defaultMarginh2-2LTaUL",
+	h2old: "h2-old",
+	h3: "h3-3PDeKG",
+	h3defaultmargin: "defaultMarginh3-2iptLs",
+	h4: "h4-AQvcAz",
+	h4defaultmargin: "defaultMarginh4-2vWMG5",
+	h5: "h5-18_1nd",
+	h5defaultmargin: "defaultMarginh5-2mL-bP",
+	headertitle: "title-3sZWYQ",
+	height16: "height16-2Lv3qA",
+	height20: "height20-mO2eIN",
+	height24: "height24-3XzeJx",
+	height28: "height28-3tox65",
+	height36: "height36-36OHCc",
+	highlight: "highlight",
+	horizontal: "horizontal-1ae9ci",
+	horizontal2: "horizontal-2EEEnY",
+	horizontalreverse: "horizontalReverse-2eTKWD",
+	horizontalreverse2: "horizontalReverse-3tRjY7",
+	hotkeybase: "base-96ewKC",
+	hotkeybutton: "button-34kXw5",
+	hotkeybutton2: "button-3tQuzi",
+	hotkeycontainer: "container-CpszHS",
+	hotkeycontainer2: "container-1nZlH6",
+	hotkeydisabled: "disabled-29eJ21",
+	hotkeydisabled2: "disabled-qocNLx",
+	hotkeyediticon: "editIcon-13gaox",
+	hotkeyhasvalue: "hasValue-3pdcdm",
+	hotkeyinput: "input-1G2o7i",
+	hotkeyinput2: "input-1UhAnY",
+	hotkeylayout: "layout-FSaTy9",
+	hotkeylayout2: "layout-eEMo5y",
+	hotkeyrecording: "recording-1H2dS7",
+	hotkeyshadowpulse: "shadowPulse-2kjgqQ",
+	hotkeytext: "text-2sI5Sd",
+	hotkeyinput: "input-1dRteR",
+	hotkeyinput2: "input-1UhAnY",
+	hotkeylayout: "layout-RmPevB",
+	hotkeylayout2: "layout-eEMo5y",
+	hovercard: "card-FDVird",
+	hovercardinner: "card-inner",
+	hovercardbutton: "button-mM-y8i",
+	imageaccessory: "imageAccessory-3uSIjZ",
+	imageerror: "imageError-2OefUi",
+	imageplaceholder: "imagePlaceholder-1AxUV5",
+	imageplaceholderoverlay: "imagePlaceholderOverlay-ETNjpn",
+	imagewrapper: "imageWrapper-2p5ogY",
+	imagewrapperbackground: "imageWrapperBackground-E_M6Nu",
+	imagewrapperinner: "imageWrapperInner-3_dNk0",
+	imagezoom: "imageZoom-1n-ADA",
+	input: "input-cIJ7To",
+	inputdefault: "inputDefault-_djjkz",
+	inputdisabled: "disabled-2BKQFm",
+	inputeditable: "editable-2UkCu4",
+	inputerror: "error-2O5WFJ",
+	inputfocused: "focused-1mmYsC",
+	inputmini: "inputMini-2xQV9",
+	inputsuccess: "success-2-F980",
+	inputwrapper: "inputWrapper-31_8H8",
+	justifycenter: "justifyCenter-3D2jY",
+	justifyend: "justifyEnd-2E6vba",
+	justifystart: "justifyStart-2NDFzi",
+	large: "large-3Q-_XB",
+	layer: "layer-3QrUeG",
+	layers: "layers-3iHuyZ",
+	marginbottom4: "marginBottom4-2qk4Hy",
+	marginbottom8: "marginBottom8-AtZOdT",
+	marginbottom20: "marginBottom20-32qID7",
+	marginbottom40: "marginBottom40-2vIwTv",
+	marginbottom60: "marginBottom60-Gs8NBA",
+	margincentergorz: "marginCenterHorz-1s41rg",
+	marginreset: "marginReset-236NPn",
+	margintop4: "marginTop4-2BNfKC",
+	margintop8: "marginTop8-1DLZ1n",
+	margintop20: "marginTop20-3TxNs6",
+	margintop40: "marginTop40-i-78cZ",
+	margintop60: "marginTop60-3PGbtK",
+	medium: "medium-zmzTW-",
+	member: "member-3W1lQa",
+	membercontent: "content-OzHfo4",
+	memberinner: "memberInner-2CPc3V",
+	members: "member-3W1lQa",
+	membersgroup: "membersGroup-v9BXpm",
+	memberswrap: "membersWrap-2h-GB4",
+	memberusername: "username-1cB_5E",
+	message: "message",
+	messageaccessory: "accessory",
+	messagebody: "body",
+	messagecomment: "comment",
+	messagecompact: "compact",
+	messageedited: "edited",
+	messagefirst: "first",
+	messagegroup: "message-group",
+	messagehideoverflow: "hide-overflow",
+	messagehighlightseparator: "highlight-separator",
+	messagemarkup: "markup",
+	messages: "messages",
+	messagespopout: "messagesPopout-24nkyi",
+	messagespopoutactionbuttons: "actionButtons-1sUUug",
+	messagespopoutavatarlarge: "avatar-large-2FVuyn",
+	messagespopoutbody: "body-bvcIjN",
+	messagespopoutbottom: "bottom-TGnsta",
+	messagespopoutchannelname: "channelName-3kBz6H",
+	messagespopoutchannelseparator: "channelSeparator-1MxuvT",
+	messagespopoutclosebutton: "closeButton-17RIVZ",
+	messagespopoutcomment: "comment-1bsQGU",
+	messagespopoutcompact: "compact-1AliFb",
+	messagespopoutemptyplaceholder: "emptyPlaceholder-1zh-Eu",
+	messagespopoutfooter: "footer-1kmXd4",
+	messagespopoutguildname: "guildName-1Bc3Ta",
+	messagespopouthasmore: "hasMore-sul95G",
+	messagespopoutheader: "header-ykumBX",
+	messagespopouthidden: "hidden-3LSmvB",
+	messagespopoutimage: "image-2JDb81",
+	messagespopoutjumpbutton: "jumpButton-3DTcS_",
+	messagespopoutloading: "loading-2bJK5L",
+	messagespopoutloadingmore: "loadingMore-1cSz09",
+	messagespopoutloadingplaceholder: "loadingPlaceholder-2SCYFe",
+	messagespopoutmessage: "message-fz2Gg_",
+	messagespopoutscrollingfooterwrap: "scrollingFooterWrap-3FDlMn",
+	messagespopoutspinner: "spinner-MoOpqm",
+	messagespopouttext: "text-3ewTZb",
+	messagespopouttip: "tip-31--sZ",
+	messagespopouttitle: "title-3pkaKd",
+	messagespopoutvisible: "visible-1PE5Ym",
+	messagespopoutwrap: "messagesPopoutWrap-1MQ1bW",
+	messagesystem: "system-message",
+	messagetext: "message-text",
+	messagetimestamp: "timestamp",
+	messageuploadcancel: "cancelButton-3hVEV6",
+	messageusername: "user-name",
+	messageusernamewrapper: "username-wrapper",
+	modal: "modal-1UGdnR",
+	modalclose: "close-18n9bP",
+	modalcontent: "content-2BXhLs",
+	modaldivider: "divider-3573oO",
+	modaldividerdefault: "dividerDefault-3rvLe-",
+	modaldividermini: "dividerMini-3ZRJ-S",
+	modalfooter: "footer-2yfCgX",
+	modalguildname: "guildName-3WI6ml",
+	modalheader: "header-1R_AjF",
+	modalinner: "inner-1JeGVc",
+	modalseparator: "separator-6YbWrc",
+	modalsizelarge: "sizeLarge-3clvAM",
+	modalsizemedium: "sizeMedium-1fwIF2",
+	modalsizesmall: "sizeSmall-Sf4iOi",
+	modalsub: "modal-3HD5ck",
+	modalsubcontent: "content-8biNdB",
+	modalsubinner: "inner-3wn6Q5",
+	modedefault: "modeDefault-3a2Ph1",
+	modedisabled: "modeDisabled-33Av8D",
+	modeselectable: "modeSelectable-k2b2pa",
+	nametag: "nameTag-m8r81H",
+	nochannel: "noChannel-Z1DQK7",
+	notice: "notice-2FJMB4",
+	noticebrand: "noticeBrand-3nQBC_",
+	noticebutton: "button-1MICoQ",
+	noticedanger: "noticeDanger-7u-yT9",
+	noticedefault: "noticeDefault-362Ko2",
+	noticedismiss: "dismiss-SCAH9H",
+	noticefacebook: "noticeFacebook-3equ5g",
+	noticeicon: "icon-KgjVwm",
+	noticeiconandroid: "iconApple-1hp9Sq",
+	noticeiconapple: "iconAndroid-3HTSwF",
+	noticeiconwindows: "iconWindows-1KG_XN",
+	noticeinfo: "noticeInfo-3_iTE1",
+	noticeplatformicon: "platformIcon-2NdO9F",
+	noticepremium: "noticePremium-12Zvj9",
+	noticepremiumaction: "premiumAction-3Tcani",
+	noticepremiumlogo: "premiumLogo-30dge3",
+	noticepremiumtext: "premiumText-C5NcRe",
+	noticespotify: "noticeSpotify-27dhr0",
+	noticestreamer: "noticeStreamerMode-2TSQpg",
+	noticesuccess: "noticeSuccess-3Y62ob",
+	note: "note-1V3kyJ",
+	nowrap: "noWrap-3jynv6",
+	optionpopout: "option-popout",
+	optionpopoutbutton: "btn-option",
+	optionpopoutitem: "btn-item",
+	optionpopoutopen: "popout-open",
+	optionpopoutsmallbox: "small-popout-box",
+	overflowellipsis: "overflowEllipsis-2JOaZ6",
+	popout: "popout-3sVMXz",
+	popoutbody: "body-1CHPZz",
+	popoutbottom: "popoutBottom-1YbShG",
+	popoutbottomleft: "popoutBottomLeft-JehOp2",
+	popoutbottomright: "popoutBottomRight-2JrySt",
+	popoutfooter: "footer-SRC48P",
+	popoutheader: "header-SsaQ8X",
+	popoutinvert: "popoutInvert-3UdKhn",
+	popoutleft: "popoutLeft-30WmrD",
+	popoutnoarrow: "noArrow-3BYQ0Z",
+	popoutnoshadow: "noShadow-321ZPm",
+	popouts: "popouts-3dRSmE",
+	popoutsubtitle: "subtitle-37ivwK",
+	popoutthemedpopout: "themedPopout-25DgLi",
+	popouttip: "tip-2WErbi",
+	popouttitle: "title-23FrqZ",
+	popouttop: "popoutTop-3uu9vG",
+	popouttopleft: "popoutTopLeft-b5Eb3O",
+	popouttopright: "popoutTopRight-3BzFIE",
+	primary: "primary-jw0I4K",
+	quickselect: "quickSelect-3BxO0K",
+	quickselectarrow: "quickSelectArrow-1QublR",
+	quickselectclick: "quickSelectClick-1HOWp1",
+	quickselectlabel: "quickSelectLabel-2r3iJ_",
+	quickselectpopout: "quickSelectPopout-X1hvgV",
+	quickselectpopoutoption: "quickSelectPopoutOption-opKBx9",
+	quickselectpopoutscroll: "quickSelectPopoutScroll-2dlvk5",
+	quickselectscroller: "quickSelectScroller-2SmdH_",
+	quickselectselected: "selected-3RZo5I",
+	quickselectvalue: "quickSelectValue-lImyM6",
+	recentmentionsheader: "header-SsaQ8X",
+	recentmentionsheader2: "header-3LXPrb",
+	recentmentionsloadingmore: "loadingMore-mVRVL3",
+	recentmentionsmentionfilter: "mentionFilter-1PQ6ey",
+	recentmentionspopout: "recentMentionsPopout-2fmau1",
+	recentmentionstitle: "title-23FrqZ",
+	scroller: "scroller-2FKFPG",
+	scrollerold: "scroller",
+	scrollerthemed: "scrollerThemed-2oenus",
+	scrollerwrap: "scrollerWrap-2lJEkd",
+	scrollerwrapold: "scroller-wrap",
+	searchbar: "searchBar-1MOL6S",
+	searchbarclear: "clear--Eywng",
+	searchbareyeglass: "eyeGlass-2cMHx7",
+	searchbaricon: "icon-1S6UIr",
+	searchbarinput: "input-3Xdcic",
+	searchbariconwrap: "searchBarIcon-18QaPq",
+	searchbarvisible: "visible-3bFCH-",
+	searchresults: "search-results",
+	searchresultspagination: "pagination",
+	searchresultspaginationdisabled: "disabled",
+	searchresultspaginationnext: "pagination-next",
+	searchresultspaginationprevious: "pagination-previous",
+	searchresultswrap: "search-results-wrap",
+	select: "Select",
+	selectable: "selectable-x8iAUj",
+	selectarrow: "Select-arrow",
+	selectarrowzone: "Select-arrow-zone",
+	selectcontrol: "Select-control",
+	selecthasvalue: "has-value",
+	selectisopen: "is-open",
+	selectmenu: "Select-menu",
+	selectmenuouter: "Select-menu-outer",
+	selectoption: "Select-option",
+	selectselected: "is-selected",
+	selectsingle: "Select--single",
+	selectvalue: "Select-value",
+	selectwrap: "select-2TCrqx",
+	sinkinteractions: "sink-interactions",
+	size10: "size10-39i14u",
+	size12: "size12-3R0845",
+	size14: "size14-3iUx6q",
+	size16: "size16-14cGz5",
+	size18: "size18-3EXdSj",
+	size20: "size20-2QkeeC",
+	size24: "size24-1ONE4K",
+	small: "small-29zrCQ",
+	slider: "slider-1PF9SW",
+	sliderbar: "bar-2Qqk5Z",
+	sliderbarfill: "barFill-23-gu-",
+	sliderdisabled: "disabled-bolDAc",
+	slidergrabber: "grabber-3mFHz2",
+	sliderinput: "input-2_ChIk",
+	slidermark: "mark-1xjQqt",
+	slidermarkdash: "markDash-3hAolZ",
+	slidermarkdashsimple: "markDashSimple-1vLOGW",
+	slidermarkvalue: "markValue-2DwdXI",
+	slidermini: "mini-dmm9yo",
+	slidertrack: "track-11EASc",
+	status: "status",
+	switch: "switch-3wwwcV",
+	switchdisabled: "switchDisabled-3HsXAJ",
+	switchenabled: "switchEnabled-V2WDBB",
+	switchinner: "checkbox-2tyjJg",
+	switchinnerdisabled: "checkboxDisabled-1MA81A",
+	switchinnerenabled: "checkboxEnabled-CtinEn",
+	switchsize: "size-3rFEHg",
+	switchsizedefault: "sizeDefault-2YlOZr",
+	switchsizemini: "sizeMini-1ii40f",
+	switchthemeclear: "themeClear-1EjkE4",
+	switchthemedefault: "themeDefault-24hCdX",
+	switchvalue: "value-2hFrkk",
+	switchvaluechecked: "valueChecked-m-4IJZ",
+	switchvalueunchecked: "valueUnchecked-2lU_20",
+	tableheader: "header-3Uqp87",
+	tableheadername: "headerName-2n9eUZ",
+	tableheaderoption: "headerOption-3qo9Ph",
+	tableheadersize: "headerSize-1-W6wd",
+	textarea: "textArea-2Spzkt",
+	textareainner: "inner-zqa7da",
+	textareainnerautocomplete: "innerAutocomplete-1PN280",
+	textareainnerdisabled: "innerDisabled-2mc-iF",
+	textareainnerenablednoattach: "innerEnabledNoAttach-NE9K7P",
+	textareainnernoautocomplete: "innerNoAutocomplete-1WpcVO",
+	textareawrapall: "channelTextArea-1LDbYG",
+	textareawrapchat: "channelTextArea-rNsIhG",
+	textlink: "textLink-27KAGV",
+	textrow: "textRow-19NEd_",
+	themedark: "theme-dark",
+	themeghosthairline: "themeGhostHairline-DBD-2d",
+	themelight: "theme-light",
+	title: "title-31JmR4",
+	titlebar: "titleBar-AC4pGV",
+	titledefault: "titleDefault-a8-ZSr",
+	titlemini: "titleMini-pBwj_L",
+	tooltip: "tooltip",
+	tooltipblack: "tooltip-black",
+	tooltipbottom: "tooltip-bottom",
+	tooltipleft: "tooltip-left",
+	tooltipright: "tooltip-right",
+	tooltips: "tooltips",
+	tooltiptop: "tooltip-top",
+	transition: "transition-2IHyE9",
+	typing: "typing-2GQL18",
+	userpopout: "userPopout-3XzG_A",
+	userpopoutheader: "header-2BwW8b",
+	userpopoutheadernickname: "headerName-fajvi9",
+	userpopoutheadernonickname: "headerTagUsernameNoNickname-2_H881",
+	userpopoutheadernormal: "headerNormal-T_seeN",
+	userpopoutheaderplaying: "headerPlaying-j0WQBV",
+	userpopoutheaderspotify: "headerSpotify-zpWxgT",
+	userpopoutheaderstreaming: "headerStreaming-2FjmGz",
+	userpopoutheadertext: "headerText-2sdzFM",
+	userpopoutrole: "role-2irmRk",
+	userpopoutrolecircle: "roleCircle-3xAZ1j",
+	userpopoutrolelist: "rolesList-22qj2L",
+	userpopoutrolename: "roleName-32vpEy",
+	userpopoutusername: "username",
+	userprofile: "root-SR8cQa",
+	userprofileheader: "header-QKLPzZ",
+	userprofileheaderbottag: "headerBotTag-3xB56F",
+	userprofileheaderfill: "headerFill-adLl4x",
+	userprofileheaderinfo: "headerInfo-30uryT",
+	userprofiletopsectionnormal: "topSectionNormal-2-vo2m",
+	userprofiletopsectionplaying: "topSectionPlaying-1J5E4n",
+	userprofiletopsectionspotify: "topSectionSpotify-1lI0-P",
+	userprofiletopsectionstreaming: "topSectionStreaming-1Tpf5X",
+	userprofiletopsectionxbox: "topSectionXbox-3fWLjS",
+	userprofileusername: "username-3gJmXY",
+	vertical: "vertical-V37hAW",
+	voiceavatarcontainer: "avatarContainer-72bSfM",
+	voiceavatardefault: "avatarDefault-35WC3R",
+	voiceavatarspeaking: "avatarSpeaking-1wJCNq",
+	voiceiconspacing: "iconSpacing-3jB4W5",
+	voicelistcollapse: "listCollapse-3hmWwX",
+	voicelistdefault: "listDefault-36Sktb",
+	voicenamedefault: "nameDefault-2s3kbY",
+	voicenamehovered: "nameHovered-21k1eo",
+	voicenamespeaking: "nameSpeaking-3UhoEZ",
+	voiceuserdefault: "userDefault-1qtQob",
+	voiceuserhovered: "userHovered-2_fT4Z",
+	weightbold: "weightBold-2yjlgw",
+	weightlight: "weightLight-3heiur",
+	weightmedium: "weightMedium-2iZe9B",
+	weightnormal: "weightNormal-WI4TcG",
+	weightsemibold: "weightSemiBold-NJexzi",
+	wrap: "wrap-ZIn9Iy",
+	wrapreverse: "wrapReverse-3ssEE3"
+};
+
+// stolen from square :-*
+BDFDB.disCN = new Proxy(Object.create(null), {
+	get: function() {
+		if (BDFDB.DiscordClasses[arguments[1]] === undefined) {
+			throw new Error(arguments[1] + " not found in BDFDB.DiscordClasses");
+		}
+		return BDFDB.DiscordClasses[arguments[1]];
+	}
+});
+
+BDFDB.disCNS = new Proxy(Object.create(null), {
+	get: function() {
+		if (BDFDB.DiscordClasses[arguments[1]] === undefined) {
+			throw new Error(arguments[1] + " not found in BDFDB.DiscordClasses");
+		}
+		return BDFDB.DiscordClasses[arguments[1]] + " ";
+	}
+});
+
+BDFDB.disCNC = new Proxy(Object.create(null), {
+	get: function() {
+		if (BDFDB.DiscordClasses[arguments[1]] === undefined) {
+			throw new Error(arguments[1] + " not found in BDFDB.DiscordClasses");
+		}
+		return BDFDB.DiscordClasses[arguments[1]] + ",";
+	}
+});
+
+BDFDB.dotCN = new Proxy(Object.create(null), {
+	get: function() {
+		if (BDFDB.DiscordClasses[arguments[1]] === undefined) {
+			throw new Error(arguments[1] + " not found in BDFDB.DiscordClasses");
+		}
+		return "." + BDFDB.DiscordClasses[arguments[1]];
+	}
+});
+
+BDFDB.dotCNS = new Proxy(Object.create(null), {
+	get: function() {
+		if (BDFDB.DiscordClasses[arguments[1]] === undefined) {
+			throw new Error(arguments[1] + " not found in BDFDB.DiscordClasses");
+		}
+		return "." + BDFDB.DiscordClasses[arguments[1]] + " ";
+	}
+});
+
+BDFDB.dotCNC = new Proxy(Object.create(null), {
+	get: function() {
+		if (BDFDB.DiscordClasses[arguments[1]] === undefined) {
+			throw new Error(arguments[1] + " not found in BDFDB.DiscordClasses");
+		}
+		return "." + BDFDB.DiscordClasses[arguments[1]] + ",";
+	}
+});
+
+BDFDB.idCN = new Proxy(Object.create(null), {
+	get: function() {
+		if (BDFDB.DiscordClasses[arguments[1]] === undefined) {
+			throw new Error(arguments[1] + " not found in BDFDB.DiscordClasses");
+		}
+		return "#" + BDFDB.DiscordClasses[arguments[1]];
+	}
+});
+
+BDFDB.idCNS = new Proxy(Object.create(null), {
+	get: function() {
+		if (BDFDB.DiscordClasses[arguments[1]] === undefined) {
+			throw new Error(arguments[1] + " not found in BDFDB.DiscordClasses");
+		}
+		return "#" + BDFDB.DiscordClasses[arguments[1]] + " ";
+	}
+});
+
+BDFDB.idCNC = new Proxy(Object.create(null), {
+	get: function() {
+		if (BDFDB.DiscordClasses[arguments[1]] === undefined) {
+			throw new Error(arguments[1] + " not found in BDFDB.DiscordClasses");
+		}
+		return "#" + BDFDB.DiscordClasses[arguments[1]] + ",";
+	}
+});
+
+BDFDB.appendLocalStyle("BDFDB", `
 	#bd-settingspane-container .ui-form-title {
 		display: inline-block;
 	}
@@ -2949,19 +3742,19 @@ BDfunctionsDevilBro.appendLocalStyle("BDfunctionsDevilBro", `
 	.DevilBro-settings div:not([class*="marginTop"]) {
 		margin-top: 0px !important;
 	}
-	.DevilBro-settings .marginTop4-2rEBfJ {
+	.DevilBro-settings ${BDFDB.dotCN.margintop4} {
 		margin-top: 4px !important;
 	}
-	.DevilBro-settings .marginTop8-2gOa2N {
+	.DevilBro-settings ${BDFDB.dotCN.margintop8} {
 		margin-top: 8px !important;
 	}
-	.DevilBro-settings .marginTop20-3UscxH {
+	.DevilBro-settings ${BDFDB.dotCN.margintop20}{
 		margin-top: 20px !important;
 	}
-	.DevilBro-settings .marginTop40-1bNyG9 {
+	.DevilBro-settings ${BDFDB.dotCN.margintop40} {
 		margin-top: 40px !important;
 	}
-	.DevilBro-settings .marginTop60-10QB5x {
+	.DevilBro-settings ${BDFDB.dotCN.margintop60} {
 		margin-top: 60px !important;
 	}
 	
@@ -2974,102 +3767,86 @@ BDfunctionsDevilBro.appendLocalStyle("BDfunctionsDevilBro", `
 		padding-left: 15px;
 	}
 	
-	.DevilBro-modal .inputNumberWrapper .numberinput-buttons-zone:hover + .input-2YozMi,
-	.DevilBro-settings .inputNumberWrapper .numberinput-buttons-zone:hover + .input-2YozMi {
+	.inputNumberWrapper .numberinput-buttons-zone:hover + ${BDFDB.dotCN.input} {
 		border-color: black;
 	}
-	.DevilBro-modal .inputNumberWrapper .numberinput-buttons-zone:hover + .input-2YozMi:focus,
-	.DevilBro-settings .inputNumberWrapper .numberinput-buttons-zone:hover + .input-2YozMi:focus,
-	.DevilBro-modal .inputNumberWrapper .numberinput-buttons-zone.pressed + .input-2YozMi,
-	.DevilBro-settings .inputNumberWrapper .numberinput-buttons-zone.pressed + .input-2YozMi {
+	.inputNumberWrapper .numberinput-buttons-zone:hover + ${BDFDB.dotCN.input}:focus,
+	.inputNumberWrapper .numberinput-buttons-zone.pressed + ${BDFDB.dotCN.input} {
 		border-color: #7289da;
 	}
-	.DevilBro-modal .inputNumberWrapper,
-	.DevilBro-settings .inputNumberWrapper {
+	.inputNumberWrapper {
 		position: relative !important;
 	}
-	.DevilBro-modal .inputNumberWrapper .input-2YozMi[type=number],
-	.DevilBro-settings .inputNumberWrapper .input-2YozMi[type=number] {
+	.inputNumberWrapper ${BDFDB.dotCN.input}[type=number] {
 		padding-right: 25px;
 	}
-	.DevilBro-modal .inputNumberWrapper .input-2YozMi[type=number]::-webkit-inner-spin-button, 
-	.DevilBro-modal .inputNumberWrapper .input-2YozMi[type=number]::-webkit-outer-spin-button,
-	.DevilBro-settings .inputNumberWrapper .input-2YozMi[type=number]::-webkit-inner-spin-button, 
-	.DevilBro-settings .inputNumberWrapper .input-2YozMi[type=number]::-webkit-outer-spin-button {
+	.inputNumberWrapper.inputNumberWrapperMini ${BDFDB.dotCN.input}[type=number] {
+		padding-left: 6px;
+		padding-right: 17px;
+	}
+	.inputNumberWrapper ${BDFDB.dotCN.input}[type=number]::-webkit-inner-spin-button, 
+	.inputNumberWrapper ${BDFDB.dotCN.input}[type=number]::-webkit-outer-spin-button{
 		-webkit-appearance: none;
 	}
-	.DevilBro-modal .inputNumberWrapper .numberinput-buttons-zone,
-	.DevilBro-settings .inputNumberWrapper .numberinput-buttons-zone {
+	.inputNumberWrapper .numberinput-buttons-zone {
 		cursor: pointer;
 		position: absolute;
-		top: 2px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-around;
+		height: 110%;
 		right: 8px;
-		text-align: center;
-		vertical-align: middle;
-		width: 15px;
+		top: -5%;
 	}
-	.DevilBro-modal .inputNumberWrapper.inputNumberWrapperMini .numberinput-buttons-zone,
-	.DevilBro-settings .inputNumberWrapper.inputNumberWrapperMini .numberinput-buttons-zone {
-		top: -4px;
+	.inputNumberWrapper.inputNumberWrapperMini .numberinput-buttons-zone {
 		right: 4px;
 	}
-	.DevilBro-modal .inputNumberWrapper .numberinput-button-up,
-	.DevilBro-settings .inputNumberWrapper .numberinput-button-up {
+	.inputNumberWrapper .numberinput-button-up {
 		border-color: transparent transparent #999 transparent;
 		border-style: solid;
 		border-width: 2.5px 5px 5px 5px;
 		display: inline-block;
 	}
-	.DevilBro-modal .inputNumberWrapper .numberinput-button-up:hover,
-	.DevilBro-settings .inputNumberWrapper .numberinput-button-up:hover {
+	.inputNumberWrapper .numberinput-button-up:hover {
 		border-bottom-color: #666;
 	}
-	.theme-light .DevilBro-modal .inputNumberWrapper .numberinput-button-up,
-	.theme-light .DevilBro-settings .inputNumberWrapper .numberinput-button-up {
+	.theme-light .inputNumberWrapper .numberinput-button-up {
 		border-bottom-color: #dcddde;
 	}
-	.theme-light .DevilBro-modal .inputNumberWrapper .numberinput-button-up:hover,
-	.theme-light .DevilBro-settings .inputNumberWrapper .numberinput-button-up:hover {
+	.theme-light .inputNumberWrapper .numberinput-button-up:hover {
 		border-bottom-color: #4f545c;
 	}
-	.theme-dark .DevilBro-modal .inputNumberWrapper .numberinput-button-up,
-	.theme-dark .DevilBro-settings .inputNumberWrapper .numberinput-button-up {
+	.theme-dark .inputNumberWrapper .numberinput-button-up {
 		border-bottom-color: #72767d;
 	}
-	.theme-dark .DevilBro-modal .inputNumberWrapper .numberinput-button-up:hover,
-	.theme-dark .DevilBro-settings .inputNumberWrapper .numberinput-button-up:hover {
+	.theme-dark .inputNumberWrapper .numberinput-button-up:hover {
 		border-bottom-color: #f6f6f7;
 	}
-	.DevilBro-modal .inputNumberWrapper .numberinput-button-down,
-	.DevilBro-settings .inputNumberWrapper .numberinput-button-down {
+	.inputNumberWrapper .numberinput-button-down {
 		border-color: #999 transparent transparent transparent;
 		border-style: solid;
 		border-width: 5px 5px 2.5px 5px;
 		display: inline-block;
 	}
-	.DevilBro-modal .inputNumberWrapper .numberinput-button-down:hover,
-	.DevilBro-settings .inputNumberWrapper .numberinput-button-down:hover {
+	.inputNumberWrapper .numberinput-button-down:hover {
 		border-top-color: #666;
 	}
-	.theme-light .DevilBro-modal .inputNumberWrapper .numberinput-button-down,
-	.theme-light .DevilBro-settings .inputNumberWrapper .numberinput-button-down {
+	.theme-light .inputNumberWrapper .numberinput-button-down {
 		border-top-color: #dcddde;
 	}
-	.theme-light .DevilBro-modal .inputNumberWrapper .numberinput-button-down:hover,
-	.theme-light .DevilBro-settings .inputNumberWrapper .numberinput-button-down:hover {
+	.theme-light .inputNumberWrapper .numberinput-button-down:hover {
 		border-top-color: #4f545c;
 	}
-	.theme-dark .DevilBro-modal .inputNumberWrapper .numberinput-button-down,
-	.theme-dark .DevilBro-settings .inputNumberWrapper .numberinput-button-down {
+	.theme-dark .inputNumberWrapper .numberinput-button-down {
 		border-top-color: #72767d;
 	}
-	.theme-dark .DevilBro-modal .inputNumberWrapper .numberinput-button-down:hover,
-	.theme-dark .DevilBro-settings .inputNumberWrapper .numberinput-button-down:hover {
+	.theme-dark .inputNumberWrapper .numberinput-button-down:hover {
 		border-top-color: #f6f6f7;
 	}
 	
-	.DevilBro-settings .card-11ynQk,
-	.DevilBro-settings .card-11ynQk .card-11ynQk-inner {
+	.DevilBro-settings ${BDFDB.dotCN.hovercard},
+	.DevilBro-settings ${BDFDB.dotCNS.hovercard + BDFDB.dotCN.hovercardinner} {
 		width: 550px;
 		min-height: 28px;
 	}
@@ -3078,17 +3855,17 @@ BDfunctionsDevilBro.appendLocalStyle("BDfunctionsDevilBro", `
 		margin-bottom: 20px;
 	}
 	
-	.DevilBro-settingsmodal .DevilBro-settings .card-11ynQk,
-	.DevilBro-settingsmodal .DevilBro-settings .card-11ynQk .card-11ynQk-inner {
+	.DevilBro-settingsmodal .DevilBro-settings ${BDFDB.dotCN.hovercard},
+	.DevilBro-settingsmodal .DevilBro-settings ${BDFDB.dotCNS.hovercard + BDFDB.dotCN.hovercardinner} {
 		width: 520px;
 	}
 	
-	.DevilBro-settings .card-11ynQk:before {
+	.DevilBro-settings ${BDFDB.dotCN.hovercard}:before {
 		z-index: 50;
 		left: -10px;
 	}
 	
-	.DevilBro-settings .card-11ynQk .card-11ynQk-inner {
+	.DevilBro-settings ${BDFDB.dotCNS.hovercard + BDFDB.dotCN.hovercardinner} {
 		overflow: hidden;
 		display: flex;
 		align-items: center;
@@ -3096,7 +3873,7 @@ BDfunctionsDevilBro.appendLocalStyle("BDfunctionsDevilBro", `
 		z-index: 100;
 	}
 	
-	.DevilBro-settings .card-11ynQk .button-1qrA-N {
+	.DevilBro-settings ${BDFDB.dotCNS.hovercard + BDFDB.dotCN.hovercardbutton} {
 		opacity: 0;
 		position: absolute;
 		right: -31px;
@@ -3104,17 +3881,17 @@ BDfunctionsDevilBro.appendLocalStyle("BDfunctionsDevilBro", `
 		z-index: 200;
 	}
 	
-	.DevilBro-settings .card-11ynQk:hover .button-1qrA-N {
+	.DevilBro-settings ${BDFDB.dotCN.hovercard}:hover ${BDFDB.dotCN.hovercardbutton} {
 		opacity: 1;
 	}
 	
-	.DevilBro-modal .checkboxContainer-1sZ9eo,
-	.DevilBro-settings .checkboxContainer-1sZ9eo {
+	.DevilBro-modal ${BDFDB.dotCN.checkboxcontainer},
+	.DevilBro-settings ${BDFDB.dotCN.checkboxcontainer} {
 		margin-left: 10px;
 	}
 	
-	.DevilBro-modal .checkboxContainer-1sZ9eo:before,
-	.DevilBro-settings .checkboxContainer-1sZ9eo:before {
+	.DevilBro-modal ${BDFDB.dotCN.checkboxcontainer}:before,
+	.DevilBro-settings ${BDFDB.dotCN.checkboxcontainer}:before {
 		display: none;
 	}
 	
@@ -3125,8 +3902,8 @@ BDfunctionsDevilBro.appendLocalStyle("BDfunctionsDevilBro", `
 
 	.DevilBro-modal [class^="ui-color-picker-swatch"] {
 		cursor: pointer;
-		width: 22px;
-		height: 22px;
+		width: 21px;
+		height: 21px;
 		margin-bottom: 5px;
 		margin-top: 5px;
 		border: 4px solid transparent;
@@ -3138,8 +3915,8 @@ BDfunctionsDevilBro.appendLocalStyle("BDfunctionsDevilBro", `
 	}
 
 	.DevilBro-modal [class^="ui-color-picker-swatch"].large {
-		min-width: 62px;
-		height: 62px;
+		min-width: 60px;
+		height: 60px;
 		border-radius: 25px;
 	}
 
@@ -3169,7 +3946,7 @@ BDfunctionsDevilBro.appendLocalStyle("BDfunctionsDevilBro", `
 		to { transform: scale(0.7); opacity: 0; }
 	}
 
-	.DevilBro-modal .backdrop-2ohBEd {
+	.DevilBro-modal ${BDFDB.dotCN.backdrop} {
 		animation: animation-backdrop 250ms ease;
 		animation-fill-mode: forwards;
 		opacity: 0;
@@ -3177,21 +3954,21 @@ BDfunctionsDevilBro.appendLocalStyle("BDfunctionsDevilBro", `
 		transform: translateZ(0px);
 	}
 
-	.DevilBro-modal.closing .backdrop-2ohBEd {
+	.DevilBro-modal.closing ${BDFDB.dotCN.backdrop} {
 		animation: animation-backdrop-closing 200ms linear;
 		animation-fill-mode: forwards;
 		animation-delay: 50ms;
 		opacity: 0.2;
 	}
 	
-	.DevilBro-modal .modal-2LIEKY {
+	.DevilBro-modal ${BDFDB.dotCN.modal} {
 		animation: animation-modal 250ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
 		animation-fill-mode: forwards;
 		transform: scale(0.7);
 		transform-origin: 50% 50%;
 	}
 
-	.DevilBro-modal.closing .modal-2LIEKY {
+	.DevilBro-modal.closing ${BDFDB.dotCN.modal} {
 		animation: animation-modal-closing 250ms cubic-bezier(0.19, 1, 0.22, 1);
 		animation-fill-mode: forwards;
 		opacity: 1;
@@ -3242,11 +4019,11 @@ BDfunctionsDevilBro.appendLocalStyle("BDfunctionsDevilBro", `
 		display: initial;
 	}
 	
-	.DevilBro-settingsmodal .modal-2LIEKY {
+	.DevilBro-settingsmodal ${BDFDB.dotCN.modal} {
 		z-index: 4010;
 	}
 	
-	.DevilBro-settingsmodal .backdrop-2ohBEd {
+	.DevilBro-settingsmodal ${BDFDB.dotCN.backdrop} {
 		z-index: 4005;
 	}
 	
@@ -3262,7 +4039,7 @@ BDfunctionsDevilBro.appendLocalStyle("BDfunctionsDevilBro", `
 		display: initial;
 		margin: auto;
 	}
-	.colorpicker-modal .modal-3HOjGZ {
+	.colorpicker-modal ${BDFDB.dotCN.modalsub} {
 		width: 600px;
 	}
 	.colorpicker-modal .colorpicker-color,

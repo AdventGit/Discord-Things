@@ -94,6 +94,12 @@
 .channels-Ie2l6A .scroller-2FKFPG::-webkit-scrollbar-corner,
 .channels-Ie2l6A .scroller-2FKFPG::-webkit-scrollbar-track,
 .channels-Ie2l6A .scroller-2FKFPG::-webkit-scrollbar-track-piece,
+.chat .scrollbar-3dvm_9::-webkit-resizer,
+.chat .scrollbar-3dvm_9::-webkit-scrollbar,
+.chat .scrollbar-3dvm_9::-webkit-scrollbar-button,
+.chat .scrollbar-3dvm_9::-webkit-scrollbar-corner,
+.chat .scrollbar-3dvm_9::-webkit-scrollbar-track,
+.chat .scrollbar-3dvm_9::-webkit-scrollbar-track-piece,
 .contextMenu-HLZMGh .scroller-2FKFPG::-webkit-resizer,
 .contextMenu-HLZMGh .scroller-2FKFPG::-webkit-scrollbar,
 .contextMenu-HLZMGh .scroller-2FKFPG::-webkit-scrollbar-button,
@@ -827,6 +833,16 @@ code.inline {
     background: var(--user-color) !important;
     border: none !important;
 }
+.chat .scrollbar-3dvm_9::-webkit-scrollbar {
+    width: 4px !important;
+}
+.chat .scrollbar-3dvm_9::-webkit-scrollbar-track-piece {
+    border: none !important;
+}
+.chat .scrollbar-3dvm_9::-webkit-scrollbar-thumb {
+    background: var(--user-color) !important;
+    border: none !important;
+}
 
 /* User Popouts */
 .userPopout-3XzG_A {
@@ -1326,6 +1342,24 @@ button[id*="bda-qem"] {
     background: var(--user-color) !important;
     border: none !important;
 }
+.item-1Yvehc .bar-2Qqk5Z {
+    background: var(--neutral) !important;
+}
+.item-1Yvehc .barFill-23-gu- {
+    background: var(--user-color) !important;
+}
+.item-1Yvehc .grabber-3mFHz2 {
+    background: var(--user-color) !important;
+    border: 1px solid var(--user-color) !important;
+    box-shadow: none !important;
+}
+.item-1Yvehc .checkbox span {
+    border-color: var(--neutral) !important;
+}
+.item-1Yvehc input[type=checkbox]:checked+span {
+    background: var(--user-color) !important;
+    border: 2px solid var(--user-color) !important;
+}
 
 /* Status-es */
 .status-online,
@@ -1467,6 +1501,7 @@ button[id*="bda-qem"] {
 .dimmer-3iH-5D,
 .ellipsis-19qdx6,
 .footer-1aZ98z,
+.footer-SRC48P,
 .guilds-wrapper .guilds .guilds-add-inner,
 .guilds-wrapper .scroller-wrap ::-webkit-scrollbar,
 .guilds-wrapper .unread-mentions-indicator-bottom,

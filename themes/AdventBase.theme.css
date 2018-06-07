@@ -148,7 +148,8 @@
 .chat h3::selection,
 .chat img::selection,
 .chat pre::selection,
-.chat code::selection {
+.chat code::selection,
+.edit-container-inner textarea::selection {
     background: var(--user-color-semi-trans) !important;
     opacity: 1 !important;
 }
@@ -1480,7 +1481,7 @@ button[id*="bda-qem"] {
     background-position: 98% !important;
     background-size: 10px !important;
     bottom: 0px !important;
-    right: -20px !important;
+    right: 8px !important;
     left: unset !important;
     top: 0px !important;
     opacity: 1 !important;

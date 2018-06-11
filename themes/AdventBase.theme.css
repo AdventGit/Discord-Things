@@ -884,7 +884,8 @@ code.inline {
     border: none !important;
     box-shadow: none !important;
 }
-.inner-1JeGVc [class*="top"] [class*="assets"] [class*="Large"] {
+.inner-1JeGVc [class*="top"] [class*="assets"] [class*="Large"],
+.activityUserPopout-2yItg2 [class*="bodyNormal"] [class*="assets"] [class*="Large"] {
     mask: none !important;
     -webkit-mask: none !important;
 }
@@ -1542,6 +1543,7 @@ button[id*="bda-qem"] {
 }
 
 /* Things to Nuke */
+.assetsSmallImageUserPopout-2yc71g,
 .body-vr4WiF div[style*="position: relative"]:nth-of-type(2),
 .carousel-28zrtT,
 .channel-members-loading .background,

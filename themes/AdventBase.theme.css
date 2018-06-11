@@ -243,6 +243,8 @@
 .guilds-wrapper .guilds .guilds-add:hover:after,
 .item-1Yvehc.danger-2dXSTE,
 .item-1Yvehc.danger-2dXSTE:hover,
+.item-1Yvehc.brand-3igrJY,
+.item-1Yvehc.brand-3igrJY:hover,
 .message-group .reactions .reaction-me .reaction-count,
 .message-group a,
 .messages .markup .mention,
@@ -1336,10 +1338,10 @@ button[id*="bda-qem"] {
     color: var(--neutral-text) !important;
     background: var(--user-color-semi-trans) !important;
 }
-.item-1Yvehc.danger-2dXSTE {
-    color: var(--user-color) !important;
-}
-.item-1Yvehc.danger-2dXSTE:hover {
+.item-1Yvehc.danger-2dXSTE,
+.item-1Yvehc.brand-3igrJY,
+.item-1Yvehc.danger-2dXSTE:hover,
+.item-1Yvehc.brand-3igrJY:hover {
     color: var(--user-color) !important;
 }
 .itemSubMenu-1vN_Yn {
@@ -1523,6 +1525,7 @@ button[id*="bda-qem"] {
 }
 
 /* Things to Nuke */
+.body-vr4WiF div[style*="position: relative"]:nth-of-type(2),
 .carousel-28zrtT,
 .channel-members-loading .background,
 .channel-members-loading,
@@ -1551,7 +1554,6 @@ button[id*="bda-qem"] {
 .placeholderUsername-5-KmQU,
 .positionedContainer-1vzMMH,
 .protip-q743VF,
-.quickLauncher-1cRAKX,
 .search-result-message.after,
 .search-result-message.before,
 .search-result-message.sibling,

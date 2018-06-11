@@ -82,6 +82,12 @@
 #bda-qem-twitch-container .scroller::-webkit-scrollbar-corner,
 #bda-qem-twitch-container .scroller::-webkit-scrollbar-track,
 #bda-qem-twitch-container .scroller::-webkit-scrollbar-track-piece,
+.activityFeed-28jde9 .scroller-2FKFPG::-webkit-resizer,
+.activityFeed-28jde9 .scroller-2FKFPG::-webkit-scrollbar,
+.activityFeed-28jde9 .scroller-2FKFPG::-webkit-scrollbar-button,
+.activityFeed-28jde9 .scroller-2FKFPG::-webkit-scrollbar-corner,
+.activityFeed-28jde9 .scroller-2FKFPG::-webkit-scrollbar-track,
+.activityFeed-28jde9 .scroller-2FKFPG::-webkit-scrollbar-track-piece,
 .body-3ND3kc .scroller-2FKFPG::-webkit-resizer,
 .body-3ND3kc .scroller-2FKFPG::-webkit-scrollbar,
 .body-3ND3kc .scroller-2FKFPG::-webkit-scrollbar-button,
@@ -947,6 +953,17 @@ code.inline {
     content: "Now Playing" !important;
     font-weight: 500 !important;
 }
+.activityFeed-28jde9 .scroller-2FKFPG::-webkit-scrollbar {
+    width: 10px !important;
+}
+.activityFeed-28jde9 .scroller-2FKFPG::-webkit-scrollbar-track-piece {
+    border: none !important;
+}
+.activityFeed-28jde9 .scroller-2FKFPG::-webkit-scrollbar-thumb {
+    background: var(--user-color) !important;
+    border: none !important;
+}
+
 
 /* Friends */
 #friends,

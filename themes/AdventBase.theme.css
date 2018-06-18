@@ -302,6 +302,11 @@
     width: var(--guild-size) !important;
     background-size: var(--friend-icon-size) !important;
 }
+.guilds-wrapper .guilds .icon-3o6xvg {
+    height: var(--guild-size) !important;
+    width: var(--guild-size) !important;
+    background-size: var(--guild-size) !important;
+}
 .guilds-wrapper .guilds .guild:nth-of-type(n+2) {
     margin-top: 7px !important;
 }
@@ -1597,6 +1602,7 @@ button[id*="bda-qem"] {
 [class*="channelNotices"],
 [class*="feedCarousel"],
 [class*="fools"],
+[class*="imagePlaceholder"],
 [class*="is-local-bot"],
 [class*="noticeDanger"],
 [class*="noticePremium"],

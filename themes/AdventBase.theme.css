@@ -1400,8 +1400,9 @@ button[id*="bda-qem"] {
 }
 
 /* Status-es */
-.status-online,
-[class*="statusOnline"],
+[class*="online"].status,
+[class*="membersWrap"] [class*="online"],
+[class*="popouts"] [class*="online"],
 .iconBadge-2dji3k {
     background-color: var(--user-color) !important;
 }

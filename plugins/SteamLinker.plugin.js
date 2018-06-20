@@ -1,20 +1,12 @@
-//META{"name":"SteamProfileLink"}*//
+//META{"name":"SteamLinker"}*//
 
-class SteamProfileLink {
-	initConstructor () {
-	}
-
-	getName () {return "SteamProfileLink";}
-
-	getDescription () {return "Opens a steam profile in steam instead of a browser when clicking the steamlink in a userprofile. With the help of square.";}
-
-	getVersion () {return "1.0.2";}
-
-	getAuthor () {return "DevilBro";}
-
-	//legacy
+class SteamLinker {
+	initConstructor () {}
+	getName () {return "SteamLinker";}
+	getDescription () {return "Opens Steam links inside of Steam instead of your Browser. With the help of square.";}
+	getVersion () {return "1.0";}
+	getAuthor () {return "DevilBro, AdventDiscord";}
 	load () {}
-
 	start () {
 		var libraryScript = null;
 		if (typeof BDFDB !== "object" || BDFDB.isLibraryOutdated()) {
@@ -30,12 +22,10 @@ class SteamProfileLink {
 		if (typeof BDFDB === "object") this.initialize();
 		else libraryScript.addEventListener("load", () => {this.initialize();});
 	}
-
 	initialize () {
 		if (typeof BDFDB === "object") {
 			BDFDB.loadMessage(this);
-			
-			$(document).on("click." + this.getName(), "a[href^='https://steamcommunity.com/profiles/']", (e) => {
+			$(document).on("click." + this.getName(), "a[href*='//steamcommunity.com/'], a[href*='//store.steampowered.com/']", (e) => {
 				if (require("electron").shell.openExternal("steam://openurl/" + e.currentTarget.href)) {
 					e.preventDefault();
 					e.stopImmediatePropagation();
@@ -46,16 +36,10 @@ class SteamProfileLink {
 			console.error(this.getName() + ": Fatal Error: Could not load BD functions!");
 		}
 	}
-
-
 	stop () {
 		if (typeof BDFDB === "object") {
-			$(document).off("click." + this.getName(), "a[href^='https://steamcommunity.com/profiles/']");
-			
+			$(document).off("click." + this.getName(), "a[href*='//steamcommunity.com/'], a[href*='//store.steampowered.com/']");
 			BDFDB.unloadMessage(this);
 		}
 	}
-
-	
-	// begin of own functions
 }

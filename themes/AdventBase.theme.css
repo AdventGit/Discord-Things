@@ -176,8 +176,8 @@
 .channelName-3ZF3rq,
 .content form textarea::-webkit-input-placeholder,
 .discord-tag,
-.displayedNick-3xxvzU,
 .displayUsername-Qekxml,
+.displayedNick-3xxvzU,
 .downloadButton-23tKQp,
 .embedProvider-3k5pfl,
 .filter-3Y_im-,
@@ -187,6 +187,7 @@
 .guilds-error:after,
 .guilds-wrapper .guilds .guilds-add:after,
 .header-2N-gMV,
+.helper-2c73HK,
 .iconCollapsed-3hFp_8,
 .iconDefault-3Gr8d2,
 .iconHovered-2L3-fB,
@@ -1301,13 +1302,19 @@ button[id*="bda-qem"] {
 }
 
 /* Server Drop-Down */
+.popout-3sVMXz {
+    left: 182px !important;
+}
 .menu-Sp6bN1 {
     background: var(--dark-o) !important;
     border: none !important;
     box-shadow: none !important;
     border-radius: 3px !important;
+    width: 238px !important;
+    margin-bottom: -1px !important;
 }
-.item-1GzJrl {
+.item-1GzJrl,
+.helper-2c73HK {
     color: var(--neutral-text) !important;
 }
 .item-1GzJrl:hover {

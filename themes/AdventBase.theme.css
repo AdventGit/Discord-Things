@@ -621,7 +621,7 @@
     border: none !important;
     box-shadow: none !important;
 }
-.embed .embedPill-1Zntps {
+[class*="embed"] .embedPill-1Zntps {
     background: var(--user-color) !important;
 }
 .chat .message-group .accessory .embed .embedProviderLink-2Pq1Uw,
@@ -1408,6 +1408,7 @@ button[id*="bda-qem"] {
 [class*="online"].status,
 [class*="membersWrap"] [class*="online"],
 [class*="popouts"] [class*="online"],
+[class*="modal"] [class*="online"],
 .iconBadge-2dji3k {
     background-color: var(--user-color) !important;
 }
@@ -1466,6 +1467,13 @@ button[id*="bda-qem"] {
 .translate-button {
     width: 22px !important;
     height: 22px !important;
+}
+.send-button {
+    width: 26px !important;
+    height: 26px !important;
+    position: absolute !important;
+    right: 16px !important;
+    top: 9px !important;
 }
 .toasts {
     display: block !important;

@@ -70,6 +70,7 @@
 .userHovered-2_fT4Z,
 .video-1FfuMD,
 .wrapper-2NJDcI,
+.wrapper-29NfPK,
 #bda-qem-favourite-container .scroller::-webkit-resizer,
 #bda-qem-favourite-container .scroller::-webkit-scrollbar,
 #bda-qem-favourite-container .scroller::-webkit-scrollbar-button,
@@ -857,6 +858,10 @@ code.inline {
 .chat .scrollbar-3dvm_9::-webkit-scrollbar-thumb {
     background: var(--user-color) !important;
     border: none !important;
+}
+.wrapper-29NfPK.minimum-2d6zH6 .actions-2vadYq .center-1Vp33r {
+    border-color: transparent !important;
+    background: transparent !important;
 }
 
 /* User Popouts */

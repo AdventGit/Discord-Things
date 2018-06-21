@@ -1,4 +1,4 @@
-//META{"name":"Advent","description":"Good Theme","author":"AdventDiscord","version":"2"}*//
+//META{"name":"Advent","description":"Good Theme","author":"AdventDiscord","version":"3"}*//
 
 @import url("https://rawgit.com/AdventGit/Discord-Things/master/themes/AdventBase.theme.css");
 
@@ -23,25 +23,15 @@
     --neutral-smooth: hsla(0, 0%, 100%, .1);
     /* Things you can touch, but maybe shouldn't unless you know what it actually applies to */
     /* Bad Touch under this line... You really shouldn't mess with this m8y */
-    --font-size-pre: calc(var(--guild-size) * 2.2);
-    --font-size: calc(var(--font-size-pre) / 10);
-    --read-all-font-size-pre: calc(var(--guild-size) * 2.5);
-    --read-all-font-size: calc(var(--read-all-font-size-pre) / 10);
+    --font-size: calc((var(--guild-size) * 2.2) / 10);
+    --read-all-font-size: calc((var(--guild-size) * 2.5) / 10);
+    --guild-base-size: calc(var(--guild-size) + 4px);
+    --guild-base-h: calc((var(--guild-error-size-h) / 10) + 1px);
     --friend-icon-size: calc(var(--guild-size) / 1.35);
-    --guild-add-size-h-pre1: calc(var(--guild-size) * -1);
-    --guild-add-size-h-pre2: calc(var(--guild-size) * 2);
-    --guild-add-size-h-pre3: calc(var(--guild-add-size-h-pre1) / 2);
-    --guild-add-size-h-pre4: calc(var(--guild-add-size-h-pre2) / 100);
-    --guild-add-size-h: calc(var(--guild-add-size-h-pre3) + var(--guild-add-size-h-pre4));
-    --guild-add-size-v-pre1: calc(var(--guild-add-size-h-pre1) * 2);
-    --guild-add-size-v-pre2: calc(var(--guild-add-size-v-pre1) / 100);
-    --guild-add-size-v-pre3: calc(var(--guild-size) / 150);
-    --guild-add-size-v: calc(var(--guild-add-size-v-pre2) + var(--guild-add-size-v-pre3));
+    --guild-add-size-h: calc(((var(--guild-size) * -1) / 2) + ((var(--guild-size) * 2) / 100));
+    --guild-add-size-v: calc(((var(--guild-size) * -1) / 100) + (var(--guild-size) / 150));
     --guild-error-size-h: calc(var(--guild-add-size-h) - 1px);
-    --guild-error-size-pre1: calc(var(--guild-add-size-h-pre2) / 2);
-    --guild-error-size-pre2: calc(var(--guild-error-size-pre1) / 4.6);
-    --guild-error-size-pre3: calc(var(--guild-error-size-pre2) + 0px);
-    --guild-error-size-v: calc(var(--guild-error-size-pre3) + var(--guild-error-size-pre3));
+    --guild-error-size-v: calc(((((var(--guild-size) * 2) / 2) / 4.6) + 0px) * 2);
     /* Bad Touch above this line... You really shouldn't mess with this m8y */
 }
 
@@ -63,50 +53,3 @@
     z-index: -1 !important;
 }
 */
-
-/* Tweaks */
-#bd-pub-li {
-    height: 14px !important;
-    margin: 0px !important;
-    padding: 0px !important;
-    margin-bottom: 0px !important;
-}
-#bd-pub-li .guild-inner {
-    height: inherit !important;
-    border-radius: 0px !important;
-}
-#bd-pub-button,
-#RANbutton {
-    font-size: var(--read-all-font-size) !important;
-    word-wrap: normal !important;
-    white-space: nowrap !important;
-    color: hsla(0,0%,100%,.3) !important;
-}
-#bd-pub-button {
-    visibility: hidden !important;
-    line-height: 18px !important;
-    position: absolute !important;
-    float: left !important;
-    left: 50% !important;
-    top: 45% !important;
-    transform: translate(-50%, -50%) !important;
-}
-#bd-pub-button:after {
-    content: "Server Menu" !important;
-    visibility: visible !important;
-    line-height: 18px !important;
-    position: absolute !important;
-    float: left !important;
-    left: 50% !important;
-    top: 50% !important;
-    transform: translate(-50%, -50%) !important;
-}
-#bd-pub-li a,
-#RANbutton-frame a {
-    height: 0px !important;
-    width: 0px !important;
-}
-.friends-online {
-    height: 18px !important;
-    line-height: 18px !important;
-}

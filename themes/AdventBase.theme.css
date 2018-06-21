@@ -156,6 +156,7 @@
 .chat img::selection,
 .chat pre::selection,
 .chat code::selection,
+.chat form textarea::selection,
 .edit-container-inner textarea::selection {
     background: var(--user-color-semi-trans) !important;
     opacity: 1 !important;
@@ -175,6 +176,7 @@
 .channel-name div,
 .channel-name,
 .channelName-3ZF3rq,
+.chat form textarea,
 .content form textarea::-webkit-input-placeholder,
 .discord-tag,
 .displayUsername-Qekxml,
@@ -600,6 +602,9 @@
     margin-right: 20px !important;
     margin-top: 0px !important;
     margin-bottom: 0px !important;
+}
+.chat form textarea {
+    color: var(--neutral-text) !important;
 }
 .text-1y-e8- {
     color: var(--neutral-text) !important;

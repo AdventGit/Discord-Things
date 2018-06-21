@@ -1416,6 +1416,7 @@ button[id*="bda-qem"] {
 [class*="membersWrap"] [class*="online"],
 [class*="popouts"] [class*="online"],
 [class*="modal"] [class*="online"],
+[class*="autocomplete"] [class*="online"],
 .iconBadge-2dji3k {
     background-color: var(--user-color) !important;
 }

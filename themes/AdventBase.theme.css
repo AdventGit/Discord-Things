@@ -302,6 +302,10 @@
     width: var(--guild-base-size) !important;
     margin-left: var(--guild-base-h) !important;
 }
+.guilds-wrapper [href*="/a"] use,
+.guilds-wrapper [href*="@"] use {
+    fill: var(--neutral) !important;
+}
 .guilds-wrapper .guilds > .guild:first-child .guild-inner,
 .guilds-wrapper .guilds .guild,
 .guilds-wrapper .guilds .guild:nth-of-type(n+4) .guild-inner a{

@@ -162,6 +162,7 @@
 }
 
 /* Font Smoothing List */
+#files_directDownload span,
 #placeholder-910mn,
 .action-buttons .jump-button,
 .activityText-sLG0UL strong,
@@ -293,6 +294,12 @@
     width: 100% !important;
     padding-right: 10px !important;
 }
+.guilds-wrapper [href*="/a"],
+.guilds-wrapper [href*="@"] {
+    height: var(--guild-base-size) !important;
+    width: var(--guild-base-size) !important;
+    margin-left: var(--guild-base-h) !important;
+}
 .guilds-wrapper .guilds > .guild:first-child .guild-inner,
 .guilds-wrapper .guilds .guild,
 .guilds-wrapper .guilds .guild:nth-of-type(n+4) .guild-inner a{
@@ -356,6 +363,8 @@
     white-space: nowrap !important;
     width: var(--guild-size) !important;
     word-wrap: normal !important;
+    height: 18px !important;
+    line-height: 18px !important;
 }
 .guilds-wrapper .guilds .guild.unread:before,
 .guilds-wrapper .guilds .guild.selected:before {
@@ -764,10 +773,6 @@ code.inline {
 }
 .speaking-oCqYMI {
     box-shadow: 0 0 0 3px var(--user-color) !important;
-}
-.friends-online {
-    height: 18px !important;
-    line-height: 18px !important;
 }
 .activityFeed-28jde9,
 .headerBar-UHpsPw {
@@ -1441,6 +1446,47 @@ button[id*="bda-qem"] {
 }
 
 /* BetterDiscord and Plugins Retheme */
+#bd-pub-li {
+    height: 14px !important;
+    margin: 0px !important;
+    padding: 0px !important;
+    margin-bottom: 0px !important;
+}
+#bd-pub-li .guild-inner {
+    height: inherit !important;
+    border-radius: 0px !important;
+}
+#bd-pub-button,
+#RANbutton {
+    font-size: var(--read-all-font-size) !important;
+    word-wrap: normal !important;
+    white-space: nowrap !important;
+    color: hsla(0,0%,100%,.3) !important;
+}
+#bd-pub-button {
+    visibility: hidden !important;
+    line-height: 18px !important;
+    position: absolute !important;
+    float: left !important;
+    left: 50% !important;
+    top: 45% !important;
+    transform: translate(-50%, -50%) !important;
+}
+#bd-pub-button:after {
+    content: "Server Menu" !important;
+    visibility: visible !important;
+    line-height: 18px !important;
+    position: absolute !important;
+    float: left !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+#bd-pub-li a,
+#RANbutton-frame a {
+    height: 0px !important;
+    width: 0px !important;
+}
 .bda-slist li {
     background: var(--dark-o);
     border: 1px solid var(--neutral) !important;
@@ -1458,7 +1504,7 @@ button[id*="bda-qem"] {
     line-height: 16px !important;
     text-transform: uppercase !important;
 }
-.thumbQuicksave {
+/*.thumbQuicksave {
     background: var(--dark-o) !important;
     color: var(--neutral-text) !important;
     display: block !important;
@@ -1468,7 +1514,7 @@ button[id*="bda-qem"] {
     margin: 0px !important;
     padding: 3px 5px 3px 5px !important;
     border-radius: 3px !important;
-}
+}*/
 .downloadLink-2oSgiF:hover {
     text-decoration: none !important;
 }
@@ -1482,6 +1528,29 @@ button[id*="bda-qem"] {
     position: absolute !important;
     right: 9px !important;
     top: 9px !important;
+}
+#files_directDownload {
+    cursor: move !important;
+}
+#files_directDownload span {
+    color: var(--neutral-text) !important;
+    background: var(--dark-o) !important;
+    border: 1px solid var(--neutral) !important;
+    border-radius: 3px !important;
+}
+#files_directDownload svg {
+    fill: var(--neutral) !important;
+}
+#files_directDownload .file .progress-bar {
+    background: var(--user-color) !important;
+}
+#qs_button {
+    display: block !important;
+    margin-top: -30px !important;
+    margin-left: 90px !important;
+}
+.downloadLink-1ywL9o {
+    width: fit-content !important;
 }
 .toasts {
     display: block !important;

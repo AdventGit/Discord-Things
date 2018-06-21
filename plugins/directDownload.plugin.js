@@ -179,6 +179,7 @@ directDownload = function () {
     if (downloadbar == null) {
       downloadbar = document.createElement("div");
       downloadbar.id = "files_directDownload";
+      downloadbar.draggable = "true";
       downloadbar.style = "--numFiles:0;";
     }
     if (!document.getElementById("files_directDownload")) {

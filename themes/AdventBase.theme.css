@@ -1426,19 +1426,12 @@ button[id*="bda-qem"] {
 }
 
 /* Status-es */
-[class*="online"].status,
-[class*="membersWrap"] [class*="online"],
-[class*="popouts"] [class*="online"],
-[class*="modal"] [class*="online"],
-[class*="autocomplete"] [class*="online"],
-[class*="titleText"] [class*="online"],
+[class*="online"][class*="status"],
 .iconBadge-2dji3k {
     background-color: var(--user-color) !important;
 }
-.status-offline,
-[class*="statusOffline"],
-.status-invisible,
-[class*="statusInvisible"] {
+[class*="offline"][class*="status"],
+[class*="invisible"][class*="status"] {
     background: rgb(90, 90, 90) !important;
 }
 .status.status-typing {

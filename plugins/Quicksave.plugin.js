@@ -223,7 +223,7 @@ class Quicksave {
     getAuthor     () { return "Nirewen"             }
     getName       () { return "Quicksave"           }
     getDescription() { return this.local.description}
-    getVersion    () { return "0.2.6"               }
+    getVersion    () { return "0.2.7"               }
     start         () {
         let self = this;
         $('#zeresLibraryScript').remove();
@@ -309,7 +309,7 @@ class Quicksave {
             elem = $(e.addedNodes[0]),
             self = this;
 
-        if (elem.hasClass('backdrop-1ocfXc')) {
+        if (elem.hasClass('backdrop-1wrmKB')) {
             let elem = $('.modal-1UGdnR .downloadLink-1ywL9o');
             if (!elem) return;
 
@@ -536,7 +536,7 @@ class Quicksave {
     get modals() {
         return {
             name: "<div id='quicksave-modal-wrapper'>" +
-                    "<div class='callout-backdrop backdrop-1ocfXc'></div>" +
+                    "<div class='callout-backdrop backdrop-1wrmKB'></div>" +
                     "<div class='modal-1UGdnR' style='opacity: 1; transform: scale(1) translateZ(0px);'>" +
                         "<div class='modal-body inner-1JeGVc'>" +
                             "<div class='comment'>" +
@@ -560,7 +560,7 @@ class Quicksave {
                     "</div>" +
                 "</div>",
             error: '<div id="quicksave-modal-wrapper">' +
-                    '<div class="callout-backdrop backdrop-1ocfXc"></div>' +
+                    '<div class="callout-backdrop backdrop-1wrmKB"></div>' +
                     '<div class="modal-1UGdnR" style="opacity: 1; transform: scale(1) translateZ(0px);">' +
                         '<div class="inner-1JeGVc">' +
                             '<form class="modal-3HD5ck container-SaXBYZ">' +

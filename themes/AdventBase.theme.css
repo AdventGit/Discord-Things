@@ -139,7 +139,8 @@
 .private-channels .scroller-2FKFPG::-webkit-scrollbar-track-piece {
     background: transparent !important;
 }
-.container-16j22k {
+.container-16j22k,
+.container-1rPqdX {
     background: var(--dark-o) !important;
 }
 .backdrop-1ocfXc {
@@ -177,6 +178,7 @@
 .channel-name,
 .channelName-3ZF3rq,
 .chat form textarea,
+.container-1rPqdX,
 .content form textarea::-webkit-input-placeholder,
 .discord-tag,
 .displayUsername-Qekxml,
@@ -543,6 +545,13 @@
 .messages.scroller::-webkit-scrollbar-thumb {
     background: var(--user-color) !important;
     border: none !important;
+}
+.container-1rPqdX [class*="button"] {
+    border-radius: 3px !important;
+    color: var(--neutral-text) !important;
+}
+.container-1rPqdX [class*="button"]:hover {
+    background: var(--user-color-semi-trans) !important;
 }
 .markup .mention {
     color: var(--user-color) !important;

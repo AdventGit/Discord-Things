@@ -32,6 +32,8 @@
     --guild-add-size-v: calc(((var(--guild-size) * -1) / 100) + (var(--guild-size) / 150));
     --guild-error-size-h: calc(var(--guild-add-size-h) - 1px);
     --guild-error-size-v: calc(((((var(--guild-size) * 2) / 2) / 4.6) + 0px) * 2);
+    --call-dialog-horz: calc(50% - (260px / 2));
+    --call-dialog-vert: calc((50% - (324px / 2)) / 2);
     /* Bad Touch above this line... You really shouldn't mess with this m8y */
 }
 

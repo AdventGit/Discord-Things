@@ -1457,6 +1457,37 @@ button[id*="bda-qem"] {
     opacity: 1 !important;
 }
 
+/* Calls */
+.container-wrYOxa [class*="incoming"] {
+    border: none !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    height: 101% !important;
+    background: var(--dark-o) !important;
+    transform: translate(0%, -3%) !important;
+}
+.container-wrYOxa [class*="incoming"] [class*="incoming"] {
+    position: absolute !important;
+    display: block !important;
+    background: var(--user-color-semi-trans) !important;
+    border-radius: 3px !important;
+    width: 240px !important;
+    height: 294px !important;
+    opacity: 1 !important;
+    top: 0px !important;
+    left: 0px !important;
+    margin-left: var(--call-dialog-horz) !important;
+    margin-top: var(--call-dialog-vert) !important;
+}
+.container-wrYOxa [class*="incoming"] [class*="flex"] button,
+.container-wrYOxa [class*="incoming"] [class*="flex"] [class*="vatar"] [class*="ripple"] {
+    background: var(--user-color) !important;
+}
+.container-wrYOxa [class*="incoming"] [class*="flex"] button:nth-of-type(2) {
+    background: var(--neutral-o) !important;
+}
+
 /* BetterDiscord and Plugins Retheme */
 #bd-pub-li {
     height: 14px !important;

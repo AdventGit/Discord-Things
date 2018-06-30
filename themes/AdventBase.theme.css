@@ -1683,7 +1683,8 @@ button[id*="bda-qem"] {
 
 /* Things to Nuke */
 .assetsSmallImageUserPopout-2yc71g,
-.body-vr4WiF div[style*="position: relative"]:nth-of-type(2),
+.activityFeed-28jde9 .body-vr4WiF > div:first-child,
+.activityFeed-28jde9 .body-vr4WiF > div:nth-of-type(2),
 .carousel-28zrtT,
 .channel-members-loading .background,
 .channel-members-loading,

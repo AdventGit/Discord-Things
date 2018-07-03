@@ -184,6 +184,7 @@
 .displayUsername-Qekxml,
 .displayedNick-3xxvzU,
 .downloadButton-23tKQp,
+.edit-container-inner textarea,
 .embedProvider-3k5pfl,
 .filter-3Y_im-,
 .friend-table-add-description,
@@ -616,9 +617,8 @@
     margin-top: 0px !important;
     margin-bottom: 0px !important;
 }
-.chat form textarea {
-    color: var(--neutral-text) !important;
-}
+.chat form textarea,
+.edit-container-inner textarea,
 .text-1y-e8- {
     color: var(--neutral-text) !important;
 }

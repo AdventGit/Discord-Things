@@ -139,6 +139,9 @@
 .private-channels .scroller-2FKFPG::-webkit-scrollbar-track-piece {
     background: transparent !important;
 }
+#user-settings a {
+    color: var(--user-color) !important;
+}
 .container-16j22k,
 .container-1rPqdX {
     background: var(--dark-o) !important;
@@ -172,6 +175,7 @@
 .addFriendHint-3YUuew,
 .answer-1n6g43,
 .app .notice span,
+.bda-settings-button,
 .cancelButton-3hVEV6,
 .category-2U57w6,
 .channel-name div,
@@ -181,8 +185,8 @@
 .container-1rPqdX,
 .content form textarea::-webkit-input-placeholder,
 .discord-tag,
-.displayUsername-Qekxml,
 .displayedNick-3xxvzU,
+.displayUsername-Qekxml,
 .downloadButton-23tKQp,
 .edit-container-inner textarea,
 .embedProvider-3k5pfl,
@@ -208,6 +212,12 @@
 .message-group .markup,
 .metadata-3WGS0M,
 .metadataSize-2UOOLK,
+.modal-3HD5ck div,
+.modal-3HD5ck h1,
+.modal-3HD5ck h2,
+.modal-3HD5ck h3,
+.modal-3HD5ck h4,
+.modal-3HD5ck h5,
 .nameCollapsed-34uFWo,
 .nameDefault-2DI02H,
 .nameDefault-2s3kbY,
@@ -235,6 +245,8 @@
 .search-header,
 .search-results-wrap,
 .sectionTitle-1snBOS,
+.sidebar [class*="item"][class*="not"],
+.sidebar [class*="ui-tab-bar-item"],
 .size-1Arx_I,
 .state-Tt0LO3 span,
 .status-text,
@@ -247,7 +259,18 @@
 .wordmark-2iDDfm:after,
 .wrapper-2NJDcI,
 .wrapper-35wsBm h5,
-[class*="playTime"] {
+[class*="playTime"],
+[layer-id="user-settings"] button[class*="colorBrand"],
+[layer-id="user-settings"] button[class*="colorRed"],
+[layer-id="user-settings"] div,
+[layer-id="user-settings"] h1,
+[layer-id="user-settings"] h2,
+[layer-id="user-settings"] h3,
+[layer-id="user-settings"] h4,
+[layer-id="user-settings"] h5,
+[layer-id="user-settings"] label,
+[layer-id="user-settings"] span,
+[layer-id="user-settings"] [class*="preview"] button[class*="colorBrand"] {
     -webkit-text-stroke: .45px var(--neutral-smooth) !important;
 }
 .app .notice #outdatedPlugins span,
@@ -571,7 +594,7 @@
     border-left: 4px solid var(--user-color) !important;
     border-radius: 3px !important;
     margin-left: 0px !important;
-    background: none !important;
+    background: transparent !important;
 }
 .message-group .reactions .reaction {
     background: var(--user-color-semi-trans) !important;
@@ -924,11 +947,11 @@ code.inline {
     -webkit-mask: none !important;
 }
 .inner-1JeGVc .tab-bar-item.selected {
-    background: none !important;
+    background: transparent !important;
     border-bottom: 1px solid var(--neutral) !important;
 }
 .inner-1JeGVc .tab-bar-item:hover:not(.selected) {
-    background: none !important;
+    background: transparent !important;
     border-bottom: 1px solid var(--neutral) !important;
 }
 .inner-1JeGVc [class*="userI"] [class*="con"] [class*="dir"] {
@@ -1237,7 +1260,7 @@ button[id*="bda-qem"] {
 .channel-separator:before,
 .search-result:before,
 .search-result:after {
-    background: none !important;
+    background: transparent !important;
     border: none !important;
     border-radius: 0px !important;
 }
@@ -1435,6 +1458,9 @@ button[id*="bda-qem"] {
 }
 
 /* Status-es */
+[class*="status"] {
+    border: 2px solid var(--dark-o) !important;
+}
 [class*="online"][class*="status"],
 .iconBadge-2dji3k {
     background-color: var(--user-color) !important;
@@ -1485,6 +1511,264 @@ button[id*="bda-qem"] {
     background: var(--neutral-o) !important;
 }
 
+/* Settings Menu */
+.sidebar > div > div:nth-of-type(8) {
+    margin-top: 4px !important;
+}
+.sidebar > div > div:nth-of-type(21) {
+    margin-top: -1px !important;
+}
+#bd-settings-sidebar > span > div:nth-of-type(1) {
+    margin-top: -4px !important;
+}
+.sidebar > div > div:nth-of-type(24) {
+    margin-top: 4px !important;
+}
+.sidebar [class*="item"],
+.sidebar [class*="ui-tab-bar-item"][class*="selected"] {
+    background: var(--user-color-semi-trans) !important;
+    color: var(--user-color) !important;
+    border-radius: 3px !important;
+}
+.sidebar [class*="item"][class*="not"],
+.sidebar [class*="ui-tab-bar-item"] {
+    background: transparent !important;
+    color: var(--neutral-text) !important;
+    border-radius: 3px !important;
+}
+.sidebar [class*="item"]:hover,
+.sidebar [class*="ui-tab-bar-item"][class*="selected"]:hover {
+    background: var(--user-color-semi-trans) !important;
+}
+.sidebar [class*="item"][class*="not"]:hover,
+.sidebar [class*="ui-tab-bar-item"]:hover {
+    background: var(--neutral) !important;
+}
+.sidebar [class*="item"] {
+    margin: 0px 0px 2px 0px !important;
+    padding: 6px 10px 6px 10px !important;
+}
+.sidebar [class*="header"] {
+    color: var(--neutral-o) !important;
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    line-height: 16px !important;
+    text-transform: uppercase !important;
+    flex-shrink: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+    outline: 0 !important;
+}
+.sidebar [class*="header"]:first-of-type {
+    padding: 6px 0px 10px 6px !important;
+}
+.sidebar [class*="separator"] {
+    background: var(--neutral-o) !important;
+}
+.sidebar [class*="item"][class*="item"][class*="not"][style*="c"] {
+    color: #FF0000 !important;
+    margin-top: -3px !important;
+}
+[layer-id="user-settings"] [class*="userInfo"],
+[layer-id="user-settings"] [class*="item"][class*="card"],
+[layer-id="user-settings"] [class*="form"][class*="card"],
+[layer-id="user-settings"] [class*="auth"][class*="card"],
+[layer-id="user-settings"] [class*="account"][class*="card"] {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+[layer-id="user-settings"] [class*="connection"][class*="elevation"] {
+    background: var(--dark-o) !important;
+    box-shadow: 0px 0px 4px 1px var(--neutral) inset !important;
+}
+[layer-id="user-settings"] [class*="connectionDelete"] {
+    border: none !important;
+}
+[layer-id="user-settings"] button[class*="colorBrand"],
+.bda-settings-button {
+    background: transparent !important;
+    border: 2px solid var(--user-color) !important;
+    border-radius: 3px !important;
+    color: var(--neutral-text) !important;
+}
+[layer-id="user-settings"] button[class*="colorRed"] {
+    background: transparent !important;
+    border: 2px solid #FF0000 !important;
+    border-radius: 3px !important;
+    color: var(--neutral-text) !important;
+}
+[layer-id="user-settings"] [class*="radio"] div[class*="checkbox"] {
+    border: 2px solid var(--neutral) !important;
+    border-radius: 3px !important;
+    background: transparent !important;
+}
+[layer-id="user-settings"] [class*="radio"] div[class*="checked"] {
+    border: 2px solid var(--user-color) !important;
+}
+[layer-id="user-settings"] [class*="radio"] div[class*="checked"] polyline {
+    stroke: var(--user-color) !important;
+}
+[layer-id="user-settings"] [class*="account"] [class*="connect"] [class*="account"] {
+    background-color: transparent !important;
+    border: none !important;
+}
+[layer-id="user-settings"] [class*="account"] [class*="connect"] [class*="account"] button:hover {
+    background-color: var(--neutral) !important;
+}
+[layer-id="user-settings"] .bar-2Qqk5Z {
+    background: var(--neutral) !important;
+}
+[layer-id="user-settings"] .barFill-23-gu- {
+    background: var(--user-color) !important;
+}
+[layer-id="user-settings"] .grabber-3mFHz2 {
+    background: var(--user-color) !important;
+    border: 1px solid var(--user-color) !important;
+    box-shadow: none !important;
+    top: 10px !important;
+    margin-top: 0px !important;
+    height: 20px !important;
+}
+[layer-id="user-settings"] [class*="preview"] button[class*="colorBrand"] {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 3px !important;
+    color: var(--neutral-text) !important;
+}
+[class*="ghostPill"] {
+    background: transparent !important;
+}
+.not-detected {
+    background: var(--dark-o) !important;
+}
+.game[class*="card"] {
+    border: none !important;
+    box-shadow: none !important;
+}
+.game[class*="card"]:before {
+    background: var(--neutral) !important;
+}
+.overlay-status-text {
+    border: none !important;
+}
+[layer-id="user-settings"] [class*="track"] [class*="markD"] {
+    background: var(--neutral) !important;
+    height: 20px !important;
+    margin-top: 2px !important;
+}
+[layer-id="user-settings"] .checkbox-1ix_J3,
+[layer-id="user-settings"] .item-3eFBNF:hover  .checkbox-1ix_J3 {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+[layer-id="user-settings"] .selected-2DeaDa .checkbox-1ix_J3,
+[layer-id="user-settings"] .selected-2DeaDa:hover  .checkbox-1ix_J3 {
+    background-color: var(--user-color) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+[layer-id="user-settings"] .label-1ZuVT- {
+    transform: none !important;
+    transition: none !important;
+}
+.modal-3HD5ck {
+    background: var(--dark-o) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+.footer-2yfCgX {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+.modal-3HD5ck a {
+    color: var(--user-color) !important;
+}
+.modal-3HD5ck [class*="mention"] {
+    background: var(--user-color-semi-trans) !important;
+    color: var(--user-color) !important;
+}
+[layer-id="user-settings"] div,
+[layer-id="user-settings"] span,
+[layer-id="user-settings"] label,
+[layer-id="user-settings"] h1,
+[layer-id="user-settings"] h2,
+[layer-id="user-settings"] h3,
+[layer-id="user-settings"] h4,
+[layer-id="user-settings"] h5,
+.modal-3HD5ck div,
+.modal-3HD5ck h1,
+.modal-3HD5ck h2,
+.modal-3HD5ck h3,
+.modal-3HD5ck h4,
+.modal-3HD5ck h5 {
+    color: var(--neutral-text) !important;
+}
+.themeClear-1EjkE4.valueUnchecked-2lU_20 {
+    background-color: #72767d !important;
+    box-shadow: none !important;
+}
+.themeClear-1EjkE4.valueChecked-m-4IJZ {
+    background-color: #7289da !important;
+}
+.sidebar > div > div[class*="item"][class*="item"][class*="not"]:nth-of-type(7) {
+    position: absolute !important;
+    bottom: 0px !important;
+    left: 0px !important;
+    color: var(--neutral-text) !important;
+    font-size: 8px !important;
+    font-weight: normal !important;
+    letter-spacing: 0px !important;
+    width: fit-content !important;
+    height: fit-content !important;
+    padding: 0px 2px 0px 2px !important;
+    margin: 0px !important;
+}
+.premium-settings-background {
+    background: transparent !important;
+}
+.premium-settings [class*="header"] {
+    visibility: hidden !important;
+    font-size: 0px !important;
+}
+.premium-settings [class*="header"]:after {
+    visibility: visible !important;
+    content: "Become triple gay... TODAY!!!" !important;
+    font-size: 36px !important;
+}
+.premium-settings [class*="blurb"] {
+    visibility: hidden !important;
+    font-size: 0px !important;
+}
+.premium-settings [class*="blurb"]:after {
+    visibility: visible !important;
+    content: "Because it's 2018 and if you're not triple gay, you know what'll happen!" !important;
+    font-size: 20px !important;
+}
+.premium-settings button {
+    background: transparent !important;
+    border: 2px solid var(--user-color) !important;
+}
+.premium-settings [class*="promo"]:after {
+    position: absolute !important;
+    content: "(but really give us your money)" !important;
+    font-size: 9px !important;
+    text-transform: lowercase !important;
+    left: 185px !important;
+    bottom: -12px !important;
+}
+.premium-settings [class*="description"]:after {
+    content: " Also become triple gay." !important;
+}
+.premium-settings [class*="flex"]:nth-of-type(7) > div > [class*="description"]:after {
+    content: " Also show that you are, in fact, triple gay." !important;
+}
+
 /* BetterDiscord and Plugins Retheme */
 #bd-pub-li {
     height: 14px !important;
@@ -1529,20 +1813,17 @@ button[id*="bda-qem"] {
 }
 .bda-slist li {
     background: var(--dark-o);
-    border: 1px solid var(--neutral) !important;
+    border: none !important;
     border-radius: 3px !important;
+    box-shadow: 0px 0px 4px 1px var(--neutral) inset !important;
 }
 .bda-header,
 .bda-description-wrap,
 .bda-footer {
     border: none !important;
 }
-#bd-settings-sidebar .ui-tab-bar-header {
-    color: #72767D !important;
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    line-height: 16px !important;
-    text-transform: uppercase !important;
+.bda-links a {
+    color: var(--user-color) !important;
 }
 /*.thumbQuicksave {
     background: var(--dark-o) !important;
@@ -1687,6 +1968,7 @@ button[id*="bda-qem"] {
 .channel-members-loading,
 .chat .divider,
 .chat [class*="placeholder"],
+.container-1RjyoP [class*="flex"] > [class*="margin"]:nth-of-type(2) > [class*="radio"] > div:nth-of-type(1),
 .content-1Cut5s .downloadLink-wANcd8,
 .dimmer-3iH-5D,
 .ellipsis-19qdx6,
@@ -1704,6 +1986,7 @@ button[id*="bda-qem"] {
 .memberGroupsPlaceholder-3mwPub,
 .menu-Sp6bN1 .separator-2zcjq8,
 .message-group-blocked,
+.modal-3HD5ck h1:after,
 .noticeFacebook-1eAoSW,
 .placeholder-1r59uP,
 .placeholderAvatar-2trNnW,
@@ -1718,10 +2001,13 @@ button[id*="bda-qem"] {
 .sectionLine-3PSnnJ,
 .sectionLine-JjseS9,
 .separator-1hpa3S,
-.sidebar .separator-3z7STW:nth-of-type(20),
-.sidebar .separator-3z7STW:nth-of-type(26),
-.sidebar .separator-3z7STW:nth-of-type(6),
-.sidebar .socialLinks-1oZoF3,
+.sidebar > div > div:nth-of-type(6),
+.sidebar > div > div[class*="item"][class*="item"][class*="selected"]:nth-of-type(7),
+.sidebar > div > div:nth-of-type(20),
+.sidebar > div > div:nth-of-type(26),
+.sidebar > div > div:nth-of-type(27),
+#bd-settings-sidebar > span > div:nth-of-type(2),
+#bd-settings-sidebar > span > div:nth-of-type(3),
 .unread-nWfX3W,
 .unreadBottom-2LxhSR,
 .welcomeMessage-3_Mcht,
@@ -1732,6 +2018,7 @@ button[id*="bda-qem"] {
 [class*="applicationDock"],
 [class*="channelNotice"],
 [class*="channelNotices"],
+[class*="connectionDelete"] span,
 [class*="feedCarousel"],
 [class*="fools"],
 [class*="imagePlaceholder"],
@@ -1740,12 +2027,15 @@ button[id*="bda-qem"] {
 [class*="noticePremium"],
 [class*="Protip"],
 [id*="fools"],
-[id*="Protip"] {
+[id*="Protip"],
+[layer-id="user-settings"] .container-1-STTv [class*="form"],
+[layer-id="user-settings"] [class*="content"] div[class*="flex"] > div[class*="flex"] > div[class*="divider"],
+[layer-id="user-settings"] [class*="flex"] > div:nth-of-type(6) [class*="divider"] {
     -webkit-box-direction: unset !important;
     -webkit-box-orient: unset !important;
     -webkit-box-pack: unset !important;
     animation: none !important;
-    background: none !important;
+    background: transparent !important;
     border-radius: 0px !important;
     border: none !important;
     bottom: unset !important;

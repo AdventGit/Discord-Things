@@ -1443,18 +1443,15 @@ button[id*="bda-qem"] {
 [class*="invisible"][class*="status"] {
     background: rgb(90, 90, 90) !important;
 }
-.status.status-typing {
-    width: 77% !important;
+[class*="status"][class*="typing"] {
+    width: 85% !important;
     right: 0px !important;
     left: 11px !important;
-}
-.status-typing {
     background: #000000 !important;
     border: 2px solid var(--user-color) !important;
 }
-.status-typing .spinner .spinner-item {
-    background: var(--user-color) !important;
-    opacity: 1 !important;
+[class*="status"][class*="typing"] [class*="Spinner"] {
+    background-color: var(--user-color) !important;
 }
 
 /* Calls */

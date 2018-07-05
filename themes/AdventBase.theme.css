@@ -885,7 +885,8 @@ code.inline {
 }
 .mediaBarProgress-1xaPtl,
 .mediaBarProgress-1xaPtl:before,
-.mediaBarProgress-1xaPtl:after {
+.mediaBarProgress-1xaPtl:after,
+.mediaBarGrabber-1FqnbN {
     background: var(--user-color) !important;
 }
 .channels-Ie2l6A .scroller-2FKFPG::-webkit-scrollbar {
@@ -1500,8 +1501,11 @@ button[id*="bda-qem"] {
 
 /* Status-es */
 [class*="status"][class*="lar"],
-[class*="status"][class*="sma"] {
+[class*="status"][class*="sma"],
+[class*="status"][class*="pop"],
+[class*="status"][class*="pro"] {
     border: 2px solid var(--dark-o) !important;
+    box-shadow: none !important;
 }
 [class*="online"][class*="status"],
 .iconBadge-2dji3k {

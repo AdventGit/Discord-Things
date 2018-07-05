@@ -245,8 +245,10 @@
 .search-header,
 .search-results-wrap,
 .sectionTitle-1snBOS,
+.sidebar [class*="item"],
 .sidebar [class*="item"][class*="not"],
 .sidebar [class*="ui-tab-bar-item"],
+.sidebar [class*="ui-tab-bar-item"][class*="selected"],
 .size-1Arx_I,
 .state-Tt0LO3 span,
 .status-text,
@@ -278,10 +280,10 @@
 .chat .message-group .accessory .embed .embedTitleLink-1Zla9e,
 .filenameLinkWrapper-1-14c5,
 .guilds-wrapper .guilds .guilds-add:hover:after,
-.item-1Yvehc.danger-2dXSTE,
-.item-1Yvehc.danger-2dXSTE:hover,
 .item-1Yvehc.brand-3igrJY,
 .item-1Yvehc.brand-3igrJY:hover,
+.item-1Yvehc.danger-2dXSTE,
+.item-1Yvehc.danger-2dXSTE:hover,
 .message-group .reactions .reaction-me .reaction-count,
 .message-group a,
 .messages .markup .mention,
@@ -1567,7 +1569,7 @@ button[id*="bda-qem"] {
 .sidebar [class*="item"],
 .sidebar [class*="ui-tab-bar-item"][class*="selected"] {
     background: var(--user-color-semi-trans) !important;
-    color: var(--user-color) !important;
+    color: var(--neutral-text) !important;
     border-radius: 3px !important;
 }
 .sidebar [class*="item"][class*="not"],
@@ -2000,9 +2002,11 @@ button[id*="bda-qem"] {
 }
 
 /* Things to Nuke */
-.assetsSmallImageUserPopout-2yc71g,
+#bd-settings-sidebar > span > div:nth-of-type(2),
+#bd-settings-sidebar > span > div:nth-of-type(3),
 .activityFeed-28jde9 .body-vr4WiF > div:first-child,
 .activityFeed-28jde9 .body-vr4WiF > div:nth-of-type(2),
+.assetsSmallImageUserPopout-2yc71g,
 .carousel-28zrtT,
 .channel-members-loading .background,
 .channel-members-loading,
@@ -2041,13 +2045,11 @@ button[id*="bda-qem"] {
 .sectionLine-3PSnnJ,
 .sectionLine-JjseS9,
 .separator-1hpa3S,
-.sidebar > div > div:nth-of-type(6),
-.sidebar > div > div[class*="item"][class*="item"][class*="selected"]:nth-of-type(7),
 .sidebar > div > div:nth-of-type(20),
 .sidebar > div > div:nth-of-type(26),
 .sidebar > div > div:nth-of-type(27),
-#bd-settings-sidebar > span > div:nth-of-type(2),
-#bd-settings-sidebar > span > div:nth-of-type(3),
+.sidebar > div > div:nth-of-type(6),
+.sidebar > div > div[class*="item"][class*="item"][class*="selected"]:nth-of-type(7),
 .unread-nWfX3W,
 .unreadBottom-2LxhSR,
 .welcomeMessage-3_Mcht,

@@ -1207,11 +1207,25 @@ button[id*="bda-qem"] {
 }
 
 /* Search */
+.noShadow-321ZPm.popout-3sVMXz.popoutBottom-1YbShG.popoutbottom {
+    height: fit-content !important;
+    width: fit-content !important;
+    top: 55px !important;
+    left: unset !important;
+    right: 0px !important;
+    bottom: unset !important;
+    transform: none !important;
+}
 .searchPopout-1vUlP3 {
+    height: fit-content !important;
+    width: fit-content !important;
     background: var(--dark-o) !important;
     border-radius: 3px !important;
     border: none !important;
     box-shadow: none !important;
+}
+.searchPopout-1vUlP3 .resultsGroup-r_nuzN .option-96V44q {
+    width: 289px !important;
 }
 .search-results-wrap,
 .search-header,
@@ -1348,16 +1362,22 @@ button[id*="bda-qem"] {
 }
 
 /* Server Drop-Down */
-.popout-3sVMXz.popoutTop-3uu9vG.popouttop {
-    left: 182px !important;
+.popout-3sVMXz.popoutBottom-1YbShG.popoutbottom {
+    height: fit-content !important;
+    width: 240px !important;
+    top: 55px !important;
+    left: var(--user-status-left) !important;
+    right: unset !important;
+    bottom: unset !important;
+    transform: none !important;
 }
-.menu-Sp6bN1 {
+.popout-3sVMXz.popoutBottom-1YbShG.popoutbottom .menu-Sp6bN1 {
     background: var(--dark-o) !important;
     border: none !important;
     box-shadow: none !important;
     border-radius: 3px !important;
-    width: 238px !important;
-    margin-bottom: -1px !important;
+    width: inherit !important;
+    height: fit-content !important;
 }
 .item-1GzJrl,
 .helper-2c73HK {
@@ -1366,6 +1386,25 @@ button[id*="bda-qem"] {
 .item-1GzJrl:hover {
     color: var(--neutral-text) !important;
     background: var(--user-color-semi-trans) !important;
+}
+
+/* User Card */
+.popout-3sVMXz.popoutTopLeft-b5Eb3O.popouttop-left {
+    height: fit-content !important;
+    width: 240px !important;
+    top: 788px !important;
+    left: var(--user-status-left) !important;
+    right: unset !important;
+    bottom: unset !important;
+    transform: none !important;
+}
+.popout-3sVMXz.popoutTopLeft-b5Eb3O.popouttop-left .menu-Sp6bN1.alt-3btY0e {
+    background: var(--dark-o) !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 3px !important;
+    width: fit-content !important;
+    height: fit-content !important;
 }
 
 /* Badges */
@@ -1458,7 +1497,8 @@ button[id*="bda-qem"] {
 }
 
 /* Status-es */
-[class*="status"] {
+[class*="status"][class*="lar"],
+[class*="status"][class*="sma"] {
     border: 2px solid var(--dark-o) !important;
 }
 [class*="online"][class*="status"],

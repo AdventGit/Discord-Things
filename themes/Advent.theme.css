@@ -1,11 +1,11 @@
-//META{"name":"Advent","description":"Good Theme","author":"AdventDiscord","version":"3"}*//
+//META{"name":"Advent","description":"Good Theme","author":"AdventDiscord","version":"4"}*//
 
 @import url("https://rawgit.com/AdventGit/Discord-Things/master/themes/AdventBase.theme.css");
 
 /* User Assigned */
 :root {
     /* Things you can touch */
-    background: rgba(0, 0, 0, 1) !important;
+    background: rgba(0, 0, 0, .78) !important;
     --guild-size: 42px;
     --badge-size: 18px;
     --user-color: rgba(51, 181, 229, 1);
@@ -34,6 +34,7 @@
     --guild-error-size-v: calc(((((var(--guild-size) * 2) / 2) / 4.6) + 0px) * 2);
     --call-dialog-horz: calc(50% - (260px / 2));
     --call-dialog-vert: calc((50% - (324px / 2)) / 2);
+    --user-status-left: calc(var(--guild-size) + 20px);
     /* Bad Touch above this line... You really shouldn't mess with this m8y */
 }
 

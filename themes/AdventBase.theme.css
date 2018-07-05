@@ -150,18 +150,19 @@
     background: var(--dark-o) !important;
     opacity: 1 !important;
 }
-.chat div::selection,
-.chat span::selection,
-.chat strong::selection,
 .chat a::selection,
+.chat code::selection,
+.chat div::selection,
+.chat form textarea::selection,
 .chat h1::selection,
 .chat h2::selection,
 .chat h3::selection,
 .chat img::selection,
 .chat pre::selection,
-.chat code::selection,
-.chat form textarea::selection,
-.edit-container-inner textarea::selection {
+.chat span::selection,
+.chat strong::selection,
+.edit-container-inner textarea::selection,
+.userPopout-3XzG_A [class*="body"] textarea::selection {
     background: var(--user-color-semi-trans) !important;
     opacity: 1 !important;
 }
@@ -184,6 +185,7 @@
 .chat form textarea,
 .container-1rPqdX,
 .content form textarea::-webkit-input-placeholder,
+.creationDate,
 .discord-tag,
 .displayedNick-3xxvzU,
 .displayUsername-Qekxml,
@@ -258,6 +260,10 @@
 .timestamp,
 .title-3pkaKd,
 .total-results,
+.userPopout-3XzG_A [class*="body"] textarea,
+.userPopout-3XzG_A [class*="body"] textarea::-webkit-input-placeholder,
+.userPopout-3XzG_A [class*="body"] [class*="bodyTitle"],
+.userPopout-3XzG_A [class*="body"] [class*="root"],
 .wordmark-2iDDfm:after,
 .wrapper-2NJDcI,
 .wrapper-35wsBm h5,
@@ -913,6 +919,26 @@ code.inline {
     border-color: transparent !important;
     background: transparent !important;
 }
+.message-group .accessory>* {
+    margin: 0px !important;
+}
+/*.message-group .accessory * {
+    border-radius: 0px !important;
+}*/
+.role-2irmRk {
+    border: 2px solid;
+    padding: 0px 2px 0px 2px !important;
+    margin: 3px 3px 0px 0px !important;
+    font-size: 12px !important;
+    font-weight: normal !important;
+}
+.creationDate,
+.userPopout-3XzG_A [class*="body"] [class*="bodyTitle"],
+.userPopout-3XzG_A [class*="body"] [class*="root"],
+.userPopout-3XzG_A [class*="body"] textarea,
+.userPopout-3XzG_A [class*="body"] textarea::-webkit-input-placeholder {
+    color: var(--neutral-text) !important;
+}
 
 /* User Popouts */
 .userPopout-3XzG_A {
@@ -1024,7 +1050,6 @@ code.inline {
     background: var(--user-color) !important;
     border: none !important;
 }
-
 
 /* Friends */
 #friends,

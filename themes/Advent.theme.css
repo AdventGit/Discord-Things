@@ -5,7 +5,7 @@
 /* User Assigned */
 :root {
     /* Things you can touch */
-    background: rgba(0, 0, 0, .78) !important;
+    background: rgba(0, 0, 0, 1) !important;
     --guild-size: 42px;
     --badge-size: 18px;
     --user-color: rgba(51, 181, 229, 1);

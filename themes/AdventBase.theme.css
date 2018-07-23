@@ -162,7 +162,8 @@
 .chat span::selection,
 .chat strong::selection,
 .edit-container-inner textarea::selection,
-.userPopout-3XzG_A [class*="body"] textarea::selection {
+.userPopout-3XzG_A [class*="body"] textarea::selection,
+[class*="uploadModal"] textarea::selection {
     background: var(--user-color-semi-trans) !important;
     opacity: 1 !important;
 }
@@ -268,6 +269,11 @@
 .wrapper-2NJDcI,
 .wrapper-35wsBm h5,
 [class*="playTime"],
+[class*="uploadModal"] textarea,
+[class*="uploadModal"] textarea::-webkit-input-placeholder,
+[class*="uploadModal"] [class*="inner"] [class*="comment"] [class*="label"] [class*="optional"],
+[class*="uploadModal"] [class*="inner"] [class*="comment"] [class*="label"],
+[class*="uploadModal"] [class*="inner"] [class*="file"] [class*="description"] [class*="filesize"],
 [layer-id="user-settings"] button[class*="colorBrand"],
 [layer-id="user-settings"] button[class*="colorRed"],
 [layer-id="user-settings"] div,
@@ -887,8 +893,11 @@ code.inline {
 .mediaBarWrapper-3D7r67,
 .mediaBarWrapper-3D7r67:before,
 .mediaBarWrapper-3D7r67:after {
-    background: var(--neutral) !important;
+    background-color: transparent !important;
 }
+.mediaBarPreview-1jfyFs,
+.mediaBarPreview-1jfyFs:before,
+.mediaBarPreview-1jfyFs:after,
 .mediaBarProgress-1xaPtl,
 .mediaBarProgress-1xaPtl:before,
 .mediaBarProgress-1xaPtl:after,
@@ -1586,6 +1595,50 @@ button[id*="bda-qem"] {
 }
 .container-wrYOxa [class*="incoming"] [class*="flex"] button:nth-of-type(2) {
     background: var(--neutral-o) !important;
+}
+
+/* Upload Dialog */
+[class*="uploadModal"],
+[class*="uploadModal"] [class*="footer"] {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+    filter: blur(0) !important;
+}
+[class*="uploadModal"] [class*="inner"],
+[class*="uploadModal"] [class*="inner"] [class*="file"] {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+[class*="uploadModal"] [class*="inner"] [class*="file"] [class*="icon"] {
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+    background-size: contain !important;
+}
+[class*="uploadModal"] [class*="inner"] [class*="file"] [class*="description"] [class*="filename"] {
+    color: #FFFFFF !important;
+}
+[class*="uploadModal"] [class*="inner"] [class*="file"] [class*="description"] [class*="filesize"],
+[class*="uploadModal"] [class*="inner"] [class*="comment"] [class*="label"],
+[class*="uploadModal"] [class*="inner"] [class*="comment"] [class*="label"] [class*="optional"],
+[class*="uploadModal"] textarea,
+[class*="uploadModal"] textarea::-webkit-input-placeholder {
+    opacity: 1 !important;
+    color: var(--neutral-text) !important;
+}
+[class*="uploadModal"] [class*="footer"] button {
+    background: var(--dark-o) !important;
+    border: 2px solid var(--user-color) !important;
+    border-radius: 3px !important;
+    color: var(--neutral-text) !important;
+    text-decoration: none !important;
+}
+[class*="uploadModal"] [class*="footer"] button:hover {
+    opacity: 1 !important;
 }
 
 /* Settings Menu */

@@ -1817,8 +1817,13 @@ button[id*="bda-qem"] {
 .modal-3HD5ck a {
     color: var(--user-color) !important;
 }
-.modal-3HD5ck [class*="mention"] {
+[class*="isMention"] {
     background: var(--user-color-semi-trans) !important;
+}
+[class*="isMention"]:after {
+    background: transparent !important;
+    margin-left: 2px !important;
+    border-left: 4px solid var(--user-color-semi-trans) !important;
     color: var(--user-color) !important;
 }
 [layer-id="user-settings"] div,

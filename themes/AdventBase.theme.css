@@ -49,9 +49,9 @@
 .inner-zqa7da,
 .layer-3QrUeG,
 .layers-3iHuyZ,
-.markup pre code,
-.markup pre,
-.markup,
+.markup-2BOw-j pre code,
+.markup-2BOw-j pre,
+.markup-2BOw-j,
 .members-1998pB,
 .membersWrap-2h-GB4 .scrollerWrap-2lJEkd .scroller-2FKFPG,
 .membersWrap-2h-GB4 .scrollerWrap-2lJEkd,
@@ -210,9 +210,9 @@
 .item-1GzJrl:hover,
 .item-1Yvehc,
 .item-1Yvehc:hover,
-.markup pre code,
+.markup-2BOw-j pre code,
 .membersGroup-v9BXpm,
-.message-group .markup,
+.messages .markup-2BOw-j,
 .metadata-3WGS0M,
 .metadataSize-2UOOLK,
 .modal-3HD5ck div,
@@ -288,17 +288,17 @@
     -webkit-text-stroke: .45px var(--neutral-smooth) !important;
 }
 .app .notice #outdatedPlugins span,
-.chat .message-group .accessory .embed .embedProviderLink-2Pq1Uw,
-.chat .message-group .accessory .embed .embedTitleLink-1Zla9e,
+.chat .messages .accessory .embed .embedProviderLink-2Pq1Uw,
+.chat .messages .accessory .embed .embedTitleLink-1Zla9e,
 .filenameLinkWrapper-1-14c5,
 .guilds-wrapper .guilds .guilds-add:hover:after,
 .item-1Yvehc.brand-3igrJY,
 .item-1Yvehc.brand-3igrJY:hover,
 .item-1Yvehc.danger-2dXSTE,
 .item-1Yvehc.danger-2dXSTE:hover,
-.message-group .reactions .reaction-me .reaction-count,
-.message-group a,
-.messages .markup .mention,
+.messages .reactions .reaction-me .reaction-count,
+.messages a,
+.messages .markup-2BOw-j .mention,
 .nameSpeaking-3UhoEZ,
 .new-messages-bar button,
 .new-messages-bar,
@@ -591,37 +591,37 @@
 .container-1rPqdX [class*="button"]:hover {
     background: var(--user-color-semi-trans) !important;
 }
-.markup .mention {
+.markup-2BOw-j .mention {
     color: var(--user-color) !important;
     background-color: var(--user-color-semi-trans) !important;
 }
 .message.mentioned .mention {
     background-color: transparent !important;
 }
-.message-group .message.mentioned .message-text {
+.messages .message.mentioned .message-text {
     background-color: var(--user-color-semi-trans) !important;
     margin-left: -4px !important;
     border-left: 4px solid transparent !important;
     border-radius: 3px !important;
 }
-.message-group .message.mentioned .message-text:after {
+.messages .message.mentioned .message-text:after {
     border-left: 4px solid var(--user-color) !important;
     border-radius: 3px !important;
     margin-left: 0px !important;
     background: transparent !important;
 }
-.message-group .reactions .reaction {
+.messages .reactions .reaction {
     background: var(--user-color-semi-trans) !important;
     border-radius: 3px !important;
 }
-.message-group .reactions .reaction .reaction-count {
+.messages .reactions .reaction .reaction-count {
     color: var(--neutral-text) !important;
 }
-.message-group .reactions .reaction-me .reaction-count {
+.messages .reactions .reaction-me .reaction-count {
     color: var(--user-color) !important;
 }
 /*
-.message-group .message.mentioned .message-text .btn-reaction {
+.messages .message.mentioned .message-text .btn-reaction {
     display: block !important;
     visibility: visible !important;
     position: absolute !important;
@@ -629,7 +629,7 @@
     left: calc(97% + 2px) !important;
     top: 0px !important;
 }
-.message-group .message.mentioned .message-text .btn-option {
+.messages .message.mentioned .message-text .btn-option {
     display: block !important;
     visibility: visible !important;
     position: absolute !important;
@@ -637,21 +637,19 @@
     top: 0px !important;
 }
 */
-.message-group:nth-of-type(2) {
-    border: none !important;
-}
-.message-group {
+.messages {
     box-sizing: unset !important;
-    margin: -1px 10px 0px 20px !important;
-    padding: 20px 0px 20px 0px !important;
-    border: none !important;
-    border-top: 1px solid var(--neutral) !important;
+    margin-left: 0px !important;
+}
+.messages [class*="divider"] {
+    border-color: var(--neutral) !important;
+    margin: 20px 10px -20px 20px !important;
 }
 .content form {
     margin: 0px !important;
     margin-left: 20px !important;
+    margin-top: -10px !important;
     margin-right: 20px !important;
-    margin-top: 0px !important;
     margin-bottom: 0px !important;
 }
 .chat form textarea,
@@ -680,23 +678,23 @@
 .embed,
 .embedInner-1-fpTo,
 .content form,
-.markup,
-.markup pre,
-.markup pre code {
+.markup-2BOw-j,
+.markup-2BOw-j pre,
+.markup-2BOw-j pre code {
     border: none !important;
     box-shadow: none !important;
 }
 [class*="embed"] .embedPill-1Zntps {
     background: var(--user-color) !important;
 }
-.chat .message-group .accessory .embed .embedProviderLink-2Pq1Uw,
-.chat .message-group .accessory .embed .embedTitleLink-1Zla9e {
+.chat .messages .accessory .embed .embedProviderLink-2Pq1Uw,
+.chat .messages .accessory .embed .embedTitleLink-1Zla9e {
     color: var(--user-color) !important;
 }
 .embedProvider-3k5pfl {
     color: var(--neutral-text) !important;
 }
-.markup pre code {
+.markup-2BOw-j pre code {
     color: var(--neutral-text) !important;
     border-left: 4px solid var(--user-color) !important;
     border-radius: 3px 0px 0px 3px !important;
@@ -707,9 +705,9 @@
     border-radius: 3px !important;
 }
 .option-popout .btn-item,
-.timestamp,
+[class*="timestamp"],
 .system-message-timestamp,
-.message-group .markup {
+.messages .markup-2BOw-j {
     color: var(--neutral-text) !important;
 }
 .attachButtonPlus-rUdX-B {
@@ -780,10 +778,10 @@
     color: var(--neutral-text) !important;
 }
 .filenameLinkWrapper-1-14c5,
-.message-group a {
+.messages a {
     color: var(--user-color) !important;
 }
-.message-group a {
+.messages a {
     font-weight: 600 !important;
 }
 code.inline {
@@ -793,14 +791,14 @@ code.inline {
     border: none !important;
     border-radius: 3px !important;
 }
-.message-group .message-text .markup .emoji.jumboable {
+.messages .message-text .markup-2BOw-j .emoji.jumboable {
     object-fit: scale-down !important;
     width: 32px !important;
     height: 32px !important;
     margin: 0px 0px 0px 0px !important;
     padding: none !important;
 }
-.message-group .message-text .markup .emoji {
+.messages .message-text .markup-2BOw-j .emoji {
     object-fit: scale-down !important;
     width: 22px !important;
     height: 22px !important;
@@ -928,10 +926,10 @@ code.inline {
     border-color: transparent !important;
     background: transparent !important;
 }
-.message-group .accessory>* {
+.messages .accessory>* {
     margin: 0px !important;
 }
-/*.message-group .accessory * {
+/*.messages .accessory * {
     border-radius: 0px !important;
 }*/
 .role-2irmRk {
@@ -1359,12 +1357,12 @@ button[id*="bda-qem"] {
 .title-3pkaKd {
     color: var(--neutral-text) !important;
 }
-.message-group {
+.messages {
     background: transparent !important;
     box-shadow: none !important;
     border-radius: 0px !important;
 }
-.messagesPopoutWrap-1MQ1bW .message-group {
+.messagesPopoutWrap-1MQ1bW .messages {
     border: none !important;
 }
 .actionButtons-1sUUug {
@@ -2117,7 +2115,7 @@ button[id*="bda-qem"] {
 .memberGroupsPlaceholder-1M417G,
 .memberGroupsPlaceholder-3mwPub,
 .menu-Sp6bN1 .separator-2zcjq8,
-.message-group-blocked,
+.messages-blocked,
 .modal-3HD5ck h1:after,
 .noticeFacebook-1eAoSW,
 .placeholder-1r59uP,

@@ -6,11 +6,11 @@ dblClickEdit.prototype.onSwitch = function () {};
 dblClickEdit.prototype.start = function () {
     $(document).on("dblclick.dce", function(e) {
         var target = $(e.target);
-        if(target.parents(".message").length > 0) {
-            var msg = target.parents(".message").first();
-            var opt = msg.find(".btn-option");
+        if(target.parents(".message-1PNnaP").length > 0) {
+            var msg = target.parents(".message-1PNnaP").first();
+            var opt = msg.find(".button-3Jq0g9");
             opt.click();
-            $.each($('.container-1rPqdX [class*="button"]'), (index, value) => {
+            $.each($('.container-3cGP6G [class*="button"]'), (index, value) => {
                 var menuitem = $(value);
                 if(menuitem.text() === "Edit") {
                     menuitem.click();

@@ -5,7 +5,8 @@ class RemoveNicknames {
 		this.defaults = {
 			settings: {
 				replaceOwn:		{value:false, 	description:"Replace your own name:"},
-				addNickname:    {value:false, 	description:"Add nickname as parentheses:"}
+				addNickname:    {value:false, 	description:"Add nickname as parentheses:"},
+				swapPositions:	{value:false, 	description:"Swap the position of username and nickname:"}
 			}
 		};
 	}
@@ -14,7 +15,7 @@ class RemoveNicknames {
 
 	getDescription () {return "Replace all nicknames with the actual accountnames.";}
 
-	getVersion () {return "1.0.8";}
+	getVersion () {return "1.1.0";}
 
 	getAuthor () {return "DevilBro";}
 	
@@ -98,27 +99,8 @@ class RemoveNicknames {
 					(change, i) => {
 						if (change.addedNodes) {
 							change.addedNodes.forEach((node) => {
-								var compact = document.querySelector(BDFDB.dotCN.messagegroup + BDFDB.dotCN.messagecompact);
-								if (!compact) {
-									if (node && node.tagName && node.querySelector(BDFDB.dotCN.messageusernamewrapper)) {
-										this.loadUser(node, "chat", compact);
-									}
-									else if (node && node.classList && node.classList.contains(BDFDB.disCN.messagetext)) {
-										this.loadUser($(BDFDB.dotCN.messagegroup).has(node)[0], "chat", compact);
-									}
-								}
-								else {
-									if (node && node.tagName && node.querySelector(BDFDB.dotCN.messageusernamewrapper)) {
-										if (node.classList.contains(BDFDB.disCN.messagemarkup)) {
-											this.loadUser(node, "chat", compact);
-										}
-										else {
-											var markups = node.querySelectorAll(BDFDB.dotCN.messagemarkup);
-											for (var i = 0; i < markups.length; i++) {
-												this.loadUser(markups[i], "chat", compact);
-											}
-										}
-									}
+								if (node && node.tagName && node.querySelector(BDFDB.dotCN.messageusernamewrapper)) {
+									this.loadUser(node, "chat", BDFDB.getDiscordTheme() == "compact");
 								}
 							});
 						}
@@ -161,9 +143,9 @@ class RemoveNicknames {
 	
 	onSwitch () {
 		if (typeof BDFDB === "object") {
-			this.loadAllUsers();
 			BDFDB.addObserver(this, BDFDB.dotCN.members, {name:"userListObserver"}, {childList:true});
 			BDFDB.addObserver(this, BDFDB.dotCN.messages, {name:"chatWindowObserver"}, {childList:true, subtree:true});
+			setImmediate(() => {this.loadAllUsers();});
 		}
 	}
 
@@ -181,16 +163,13 @@ class RemoveNicknames {
 	loadAllUsers () {
 		for (let user of document.querySelectorAll(BDFDB.dotCN.member)) {
 			this.loadUser(user, "list", false);
-		} 
-		for (let user of document.querySelectorAll(BDFDB.dotCN.messagegroup)) {
-			let compact = user.classList.contains(BDFDB.disCN.messagecompact);
-			if (!compact) {
-				this.loadUser(user, "chat", compact);
-			}
-			else {
-				for (let markup of user.querySelectorAll(BDFDB.dotCN.messagemarkup)) {
-					this.loadUser(markup, "chat", compact);
-				}
+		}
+		for (let messagegroup of document.querySelectorAll(BDFDB.dotCN.messagegroupcozy)) {
+			this.loadUser(messagegroup, "chat", false);
+		}
+		for (let messagegroup of document.querySelectorAll(BDFDB.dotCN.messagegroupcompact)) {
+			for (let message of messagegroup.querySelectorAll(BDFDB.dotCN.messagemarkup)) {
+				this.loadUser(message, "chat", true);
 			}
 		}
 		for (let user of document.querySelectorAll(BDFDB.dotCN.voiceuserdefault)) {
@@ -218,9 +197,10 @@ class RemoveNicknames {
 		var member = this.MemberPerms.getMember(serverObj.id, info.id);
 		if (!member || !member.nick) return;
 		
-		BDFDB.setInnerText(usernameWrapper, settings.addNickname ? info.username + " (" + member.nick + ")" : info.username);
+		var newname = settings.addNickname ? (settings.swapPositions ? (member.nick + " (" + info.username + ")") : (info.username + " (" + member.nick + ")")) : info.username;
+		BDFDB.setInnerText(usernameWrapper, newname);
 			
-		$(div).attr("removed-nickname", true);
+		div.setAttribute("removed-nickname", true);
 	}
 	
 	resetAllUsers () {
@@ -228,7 +208,7 @@ class RemoveNicknames {
 			let usernameWrapper = this.getNameWrapper(div);
 			if (!usernameWrapper) return;
 			
-			var info = this.getUserInfo($(div).data(BDFDB.disCN.messagecompact) ? $(BDFDB.dotCN.messagegroup).has(div)[0] : div);
+			var info = this.getUserInfo($(div).data("compact") ? $(BDFDB.dotCN.messagegroup).has(div)[0] : div);
 			if (!info) return;
 			
 			var serverObj = BDFDB.getSelectedServer();
@@ -239,7 +219,7 @@ class RemoveNicknames {
 			
 			BDFDB.setInnerText(usernameWrapper, member.nick);
 				
-			$(div).removeAttr("removed-nickname");
+			div.removeAttribute("removed-nickname");
 		});
 	}
 	

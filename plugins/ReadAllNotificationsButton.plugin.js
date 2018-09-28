@@ -3,7 +3,7 @@
 class ReadAllNotificationsButton {
 	initConstructor () {
 		this.RANbuttonMarkup = 
-			`<div class="${BDFDB.disCN.guild}" id="RANbutton-frame" style="height: 14px !important; margin: 0px !important; padding: 0px !important; margin-top: -1px !important;">
+			`<div class="${BDFDB.disCN.guild}" id="RANbutton-frame">
 				<div class="${BDFDB.disCN.guildinner}" style="border-radius: 0px;">
 					<a>
 						<div id="RANbutton" style="line-height: 18px; position: absolute !important; float: left !important; left: 50%; top: 50%; transform: translate(-50%, -50%) !important;">Read All</div>

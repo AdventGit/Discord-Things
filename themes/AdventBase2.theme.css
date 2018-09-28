@@ -511,6 +511,22 @@
             border-radius: 4px !important;
             box-shadow: none !important;
         }
+        [class^="embed"] > [class*="ideo"][class*="nner"] {
+            background: transparent !important;
+            border: none !important;
+            border-radius: 0px !important;
+            box-shadow: none !important;
+        }
+        [class^="embed"] > [class*="ideo"][class*="nner"] > [class^="wrapper"] {
+            background: var(--dark) !important;
+            border: none !important;
+            border-radius: 24px !important;
+            box-shadow: none !important;
+            color: var(--light) !important;
+        }
+        [class^="embed"] > [class*="ideo"][class*="nner"] > [class^="wrapper"] a {
+            color: var(--light) !important;
+        }
         [class^="embed"] > [class*="nner"] > [class*="ontent"] > [class*="nner"] {
             background: transparent !important;
             border: none !important;
@@ -651,6 +667,7 @@
         color: red !important;
     }
 /* Search */
+/*
 [style*="z-index: 1001"][style*="visibility: visible"][style*="transform: translateX(-50%) translateY(0%) translateZ(0px)"] {
     height: fit-content !important;
     width: fit-content !important;
@@ -661,6 +678,7 @@
     transform: none !important;
     border-radius: 4px !important;
 }
+*/
 [style*="z-index: 1001"][style*="visibility: visible"][style*="transform: translateX(-50%) translateY(0%) translateZ(0px)"] > [class^="search"] {
     height: fit-content !important;
     width: fit-content !important;
@@ -777,7 +795,8 @@ body > div:first-of-type > [class*="popout"] > [class^="no"] > [class^="user"] >
 [class^="missingAccess"],
 [class^="separator"],
 [class^="type"][class*="title"] > [class^="word"],
-[style*="z-index: 1001"][style*="visibility: visible"][style*="transform: translateX(-50%) translateY(0%) translateZ(0px)"] > [class^="search"] > [class^="option"] > [class^="key"] {
+[style*="z-index: 1001"][style*="visibility: visible"][style*="transform: translateX(-50%) translateY(0%) translateZ(0px)"] > [class^="search"] > [class^="option"] > [class^="key"],
+[class^="message"][class*="locked"] {
     -webkit-box-direction: unset !important;
     -webkit-box-orient: unset !important;
     -webkit-box-pack: unset !important;

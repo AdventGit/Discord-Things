@@ -176,7 +176,7 @@ class EditUsers {
 
 	getDescription () {return "Allows you to change the icon, name, tag and color of users. Does not work in compact mode.";}
 
-	getVersion () {return "2.4.1";}
+	getVersion () {return "2.4.3";}
 
 	getAuthor () {return "DevilBro";}
 	
@@ -313,10 +313,8 @@ class EditUsers {
 					(change, i) => {
 						if (change.addedNodes) {
 							change.addedNodes.forEach((node) => {
-								if (BDFDB.getData("changeInChatWindow", this, "settings")) {
-									if (node && node.tagName && node.querySelector(BDFDB.dotCN.messageusernamewrapper)) {
-										this.loadUser(node, "chat", BDFDB.getDiscordMode() == "compact");
-									}
+								if (node && node.tagName && node.querySelector(BDFDB.dotCN.messageusername) && BDFDB.getData("changeInChatWindow", this, "settings")) {
+									this.loadUser(node, "chat", BDFDB.getDiscordMode() == "compact");
 								}
 							});
 						}
@@ -742,6 +740,7 @@ class EditUsers {
 		
 		let {avatar, username, wrapper} = this.getAvatarNameWrapper(div);
 		if (!avatar && !username && !wrapper) return;
+		if (username && !wrapper && username.classList.contains(BDFDB.disCN.messageusername)) wrapper = username.parentElement;
 		
 		var info = this.getUserInfo(compact && !div.classList.contains(BDFDB.disCN.messagegroup) ? $(BDFDB.dotCN.messagegroup).has(div)[0] : div);
 		if (!info) return;

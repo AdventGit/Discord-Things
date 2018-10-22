@@ -108,7 +108,7 @@ class ReadAllNotificationsButton {
 			});
 			BDFDB.addObserver(this, BDFDB.dotCN.popouts, {name:"mentionsPopoutObserver",instance:observer}, {childList: true});
 			
-			$(this.RANbuttonMarkup).insertBefore(document.querySelector(BDFDB.dotCN.dms))
+			$(this.RANbuttonMarkup).insertBefore(document.querySelector(BDFDB.dotCN.guildseparator))
 				.on("click", "#RANbutton", () => {
 					let servers = BDFDB.getData("includeMuted", this, "settings") ? BDFDB.readServerList() : BDFDB.readUnreadServerList();
 					BDFDB.clearReadNotifications(servers);

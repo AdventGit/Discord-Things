@@ -30,7 +30,7 @@ class CompleteTimestamps {
 
 	getDescription () {return "Replace all timestamps with complete timestamps.";}
 
-	getVersion () {return "1.2.5";}
+	getVersion () {return "1.2.6";}
 
 	getAuthor () {return "DevilBro";}
 	
@@ -286,7 +286,7 @@ class CompleteTimestamps {
 	}
 	
 	getTimestamp (languageid, time) {
-		let timeobj = new Date();
+		let timeobj = time ? time : new Date();
 		if (typeof time == "string") timeobj = new Date(time);
 		if (timeobj.toString() == "Invalid Date") timeobj = new Date(parseInt(time));
 		if (timeobj.toString() == "Invalid Date") return;

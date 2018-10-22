@@ -1,0 +1,1 @@
+delete from ItemTable where key like '%token%';

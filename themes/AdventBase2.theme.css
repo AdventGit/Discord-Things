@@ -796,7 +796,9 @@ body > div:first-of-type > [class*="popout"] > [class^="no"] > [class^="user"] >
 [class^="separator"],
 [class^="type"][class*="title"] > [class^="word"],
 [style*="z-index: 1001"][style*="visibility: visible"][style*="transform: translateX(-50%) translateY(0%) translateZ(0px)"] > [class^="search"] > [class^="option"] > [class^="key"],
-[class^="message"][class*="locked"] {
+[class^="message"][class*="locked"],
+body > div:first-of-type  > div:nth-of-type(2) > div:first-of-type > div:nth-of-type(2) > div:first-of-type > div:first-of-type > div:nth-of-type(2) > div:first-of-type,
+body > div:first-of-type  > div:nth-of-type(2) > div:first-of-type > div:first-of-type > div:first-of-type > div:first-of-type > div:nth-of-type(2) > div:first-of-type {
     -webkit-box-direction: unset !important;
     -webkit-box-orient: unset !important;
     -webkit-box-pack: unset !important;
@@ -875,9 +877,9 @@ body > div:first-of-type > [class*="popout"] > [class^="no"] > [class^="user"] >
     transform: translate(-50%, -50%) !important;
 }
 #RANbutton-frame {
-    height: 14px !important;
-    margin-top: -1px !important;
-    margin-bottom: 7px !important;
+    height: 0px !important;
+    margin-top: -5px !important;
+    margin-bottom: 18px !important;
 }
 #bd-pub-li a,
 #RANbutton-frame a {

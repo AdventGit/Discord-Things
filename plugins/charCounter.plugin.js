@@ -5,15 +5,18 @@ class CharCounter {
 		this.selecting = false;
 		
 		this.counterMarkup = `<div id="charcounter"></div>`;
-		
+		   
 		this.css = `
-			.theme-light #charcounter {
-				color: #747f8d;
+			${BDFDB.dotCN.themelight} #charcounter {
+				color: #747f8d; 
 				opacity: .7;
 			}
-			.theme-dark #charcounter {
+			${BDFDB.dotCN.themedark} #charcounter {
 				color: #ccc;
 				opacity: .5;
+			}
+			${BDFDB.dotCNS.typing + BDFDB.dotCN.cooldownwrapper} {
+				margin-right: 64px;
 			}
 			#charcounter {
 				display: block;
@@ -39,7 +42,7 @@ class CharCounter {
 
 	getDescription () {return "Adds a charcounter in the chat.";}
 
-	getVersion () {return "1.2.5";}
+	getVersion () {return "1.2.6";}
 
 	getAuthor () {return "DevilBro";}
 

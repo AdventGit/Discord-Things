@@ -15,7 +15,7 @@ class RemoveNicknames {
 
 	getDescription () {return "Replace all nicknames with the actual accountnames.";}
 
-	getVersion () {return "1.1.0";}
+	getVersion () {return "1.1.1";}
 
 	getAuthor () {return "DevilBro";}
 	
@@ -99,7 +99,7 @@ class RemoveNicknames {
 					(change, i) => {
 						if (change.addedNodes) {
 							change.addedNodes.forEach((node) => {
-								if (node && node.tagName && node.querySelector(BDFDB.dotCN.messageusernamewrapper)) {
+								if (node && node.tagName && node.querySelector(BDFDB.dotCN.messageusername)) {
 									this.loadUser(node, "chat", BDFDB.getDiscordTheme() == "compact");
 								}
 							});

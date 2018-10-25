@@ -6,9 +6,9 @@ set "DiscordBase=%localappdata%\DiscordPTB"
 set "DiscordLaunch=%DiscordBase%\Update.exe --processStart DiscordPTB.exe"
 set "DiscordFolder=%DiscordBase%\app-0.0.43\resources\app"
 set "DiscordConfig=%DiscordFolder%\config.json"
-del %DiscordConfig% > NUL
+del /F /Q %DiscordConfig% > NUL
 copy /Y %BaseConfig% %DiscordFolder% > NUL
 start /wait %DiscordLaunch%
-del %DiscordConfig% > NUL
+del /F /Q %DiscordConfig% > NUL
 copy /Y %BaseConfig% %DiscordFolder% > NUL
 exit

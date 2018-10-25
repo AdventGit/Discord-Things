@@ -1,5 +1,5 @@
 {
-    "backgroundColor": "#2f3136",
-    "transparent": false,
+    "backgroundColor": "#00000000",
+    "transparent": true,
     "frame": false
 }

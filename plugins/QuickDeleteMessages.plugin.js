@@ -1,8 +1,6 @@
-//META{"name":"QuickDeleteMessages"}*//
-var QuickDeleteMessages;
-
-QuickDeleteMessages = function () {
-  var ConfirmActions, MessageActions, deletePressed, getInternalInstance, getOwnerInstance, onClick, onKeyDown, onKeyUp, qualifies, settings;
+//META { "name": "QuickDeleteMessages", "website": "https://inve1951.github.io/BetterDiscordStuff/" } *//
+global.QuickDeleteMessages = function () {
+  var AsyncKeystate, MessageDeleteItem, getOwnerInstance, onClick, qualifies, settings;
 
   class QuickDeleteMessages {
     getName() {
@@ -18,30 +16,45 @@ QuickDeleteMessages = function () {
     }
 
     getVersion() {
-      return "1.0.1";
+      return "1.3.0";
     }
 
-    start() {
+    load() {
+      return window.SuperSecretSquareStuff != null ? window.SuperSecretSquareStuff : window.SuperSecretSquareStuff = new Promise(function (c, r) {
+        return require("request").get("https://raw.githubusercontent.com/Inve1951/BetterDiscordStuff/master/plugins/0circle.plugin.js", function (err, res, body) {
+          if (err || 200 !== (res != null ? res.statusCode : void 0)) {
+            return r(err != null ? err : res);
+          }
+          Object.defineProperties(window.SuperSecretSquareStuff, {
+            libLoaded: {
+              value: c
+            },
+            code: {
+              value: body
+            }
+          });
+          return (0, eval)(body);
+        });
+      });
+    }
+
+    async start() {
       var ref;
-      getInternalInstance = BDV2.reactDom.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactDOMComponentTree.getInstanceFromNode;
+      ({ AsyncKeystate, getOwnerInstance } = await SuperSecretSquareStuff);
       settings.confirm = (ref = bdPluginStorage.get("QuickDeleteMessages", "confirm")) != null ? ref : false;
-      document.addEventListener("click", onClick, true);
-      document.addEventListener("keydown", onKeyDown);
-      document.addEventListener("keyup", onKeyUp);
-      MessageActions = BDV2.WebpackModules.findByUniqueProperties(["deleteMessage"]);
-      return ConfirmActions = BDV2.WebpackModules.findByUniqueProperties(["confirmDelete"]);
+      MessageDeleteItem = BDV2.WebpackModules.find(function (m) {
+        var ref1;
+        return (ref1 = m.prototype) != null ? ref1.handleDeleteMessage : void 0;
+      });
+      return document.addEventListener("click", onClick, true);
     }
 
     stop() {
-      document.removeEventListener("click", onClick, true);
-      document.removeEventListener("keydown", onKeyDown);
-      return document.removeEventListener("keyup", onKeyUp);
+      return document.removeEventListener("click", onClick, true);
     }
 
-    load() {}
-
     getSettingsPanel() {
-      return `<label><input type="checkbox" name="confirm" onChange="QuickDeleteMessages.updateSettings(this)"\n${settings.confirm && "checked" || ""} />confirm delete?</label>`;
+      return `<label style="color: #87909C"><input type="checkbox" name="confirm" onChange="QuickDeleteMessages.updateSettings(this)"\n${settings.confirm && "checked" || ""} />confirm delete?</label>`;
     }
 
     static updateSettings({ name, checked }) {
@@ -53,57 +66,39 @@ QuickDeleteMessages = function () {
 
   settings = Object.create(null);
 
-  MessageActions = ConfirmActions = getInternalInstance = null;
+  MessageDeleteItem = null;
 
-  deletePressed = false;
+  AsyncKeystate = getOwnerInstance = null;
 
-  onKeyDown = function ({ code }) {
-    if (code === "Delete") {
-      deletePressed = true;
-    }
-  };
-
-  onKeyUp = function ({ code }) {
-    if (code === "Delete") {
-      deletePressed = false;
-    }
-  };
-
-  qualifies = ".markup, .accessory";
+  qualifies = ".content-3dzVd8";
 
   onClick = function (event) {
-    var canDelete, channel, element, message;
-    if (!deletePressed) {
+    var element, handler;
+    if (!(AsyncKeystate.key("Delete") || "darwin" === process.platform && AsyncKeystate.key("Backspace"))) {
       return;
     }
     ({
       path: [element]
     } = event);
     if (element.matches(qualifies) || (element = element.closest(qualifies))) {
-      element = element.closest(".message");
+      element = element.closest(".message-1PNnaP");
     } else {
       return;
     }
-    ({
-      props: { canDelete, channel, message }
-    } = getOwnerInstance(element));
-    if (!canDelete) {
+    try {
+      handler = new MessageDeleteItem(getOwnerInstance(element).props);
+      if (!handler.render()) {
+        return;
+      }
+    } catch (error) {
       return;
     }
-    if (settings.confirm) {
-      ConfirmActions.confirmDelete(channel, message);
-    } else {
-      MessageActions.deleteMessage(channel.id, message.id);
-    }
+    handler.handleDeleteMessage({
+      shiftKey: !settings.confirm || event.shiftKey
+    });
     event.preventDefault();
     event.stopImmediatePropagation();
   };
 
-  getOwnerInstance = function (node) {
-    var internalInstance, ref;
-    internalInstance = (ref = getInternalInstance(node)) != null ? ref : node;
-    return internalInstance.return.stateNode;
-  };
-
   return QuickDeleteMessages;
-}();
+}.call(this);

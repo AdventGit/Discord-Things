@@ -177,7 +177,7 @@ class EditUsers {
 
 	getDescription () {return "Allows you to change the icon, name, tag and color of users. Does not work in compact mode.";}
 
-	getVersion () {return "2.4.4";}
+	getVersion () {return "2.4.6";}
 
 	getAuthor () {return "DevilBro";}
 	
@@ -314,7 +314,8 @@ class EditUsers {
 					(change, i) => {
 						if (change.addedNodes) {
 							change.addedNodes.forEach((node) => {
-								if (node.tagName && node.querySelector(BDFDB.dotCN.messageusername) && BDFDB.getData("changeInChatWindow", this, "settings")) {
+								if (node.tagName && node.classList.contains(BDFDB.disCN.chat)) return;
+								else if (node.tagName && node.querySelector(BDFDB.dotCN.messageusername) && BDFDB.getData("changeInChatWindow", this, "settings")) {
 									if (node.classList.contains(BDFDB.disCN.modal) || node.classList.contains(BDFDB.disCN.popout)) {
 										for (let messagegroup of node.querySelectorAll(BDFDB.dotCN.messagegroupcozy)) {
 											this.loadUser(messagegroup, "chat", false);
@@ -759,6 +760,7 @@ class EditUsers {
 		var info = this.getUserInfo(compact && !div.classList.contains(BDFDB.disCN.messagegroup) ? $(BDFDB.dotCN.messagegroup).has(div)[0] : div);
 		if (!info) return;
 		
+		
 		var data = BDFDB.loadData(info.id, this, "users");
 		
 		if (data) {
@@ -777,9 +779,22 @@ class EditUsers {
 				}
 			}
 			if (avatar && (data.removeIcon || data.url)) {
-				avatar.style.background = data.removeIcon ? "" : "url(" + data.url + ")";
-				avatar.style.backgroundSize = "cover";
-				avatar.style.backgroundPosition = "center";
+				if (avatar.style.background.indexOf(info.id + "/a_")) {
+					let changeblock = false;
+					avatar.EditUsersAvatarObserver = new MutationObserver((changes, _) => {
+						changes.forEach(
+							(change, i) => {
+								if (!changeblock && avatar.style.background.indexOf(info.id + "/a_")) {
+									changeblock = true;
+									avatar.style.background = data.removeIcon ? "" : "url(" + data.url + ") center/cover";
+									setImmediate(() => {changeblock = false;});
+								}
+							}
+						);
+					});
+					avatar.EditUsersAvatarObserver.observe(avatar, {attributes:true});
+				}
+				avatar.style.background = data.removeIcon ? "" : "url(" + data.url + ") center/cover";
 				if (type == "call") {
 					$(avatar)
 						.off("mouseenter." + this.getName())
@@ -845,6 +860,7 @@ class EditUsers {
 			}
 			
 			if (avatar) {
+				if (avatar.EditUsersAvatarObserver && typeof avatar.EditUsersAvatarObserver.disconnect == "function") avatar.EditUsersAvatarObserver.disconnect();
 				avatar.style.background = "url(" + BDFDB.getUserAvatar(info.id) + ")";
 				avatar.style.backgroundSize = "cover";
 				$(avatar).off("mouseenter." + this.getName());

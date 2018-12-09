@@ -143,6 +143,9 @@ body > [id^="app"] > [class^="context"] div > div[class*="danger"] {
 [class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class*="scroll"] > [class*="scroll"]::-webkit-scrollbar {
     width: 8px !important;
 }
+[class^="chat"] > [class^="content"] > [class^="members"] > [class*="scroll"] > [class*="scroll"]::-webkit-scrollbar {
+    width: 8px !important;
+}
 [class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"]:nth-of-type(2) > [class^="ui"] > [class^="sidebar"] {
     z-index: 2 !important;
 }
@@ -710,7 +713,12 @@ body > div:first-of-type > [class*="popout"] > [class^="no"] > [class^="user"] >
 [class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="search"]::before,
 [class^="divider"],
 [class^="gameLibrary"],
-[class^="guildsWrapper"] > [class^="scroll"] ::-webkit-scrollbar,
+[class^="guildsWrapper"]::-webkit-scrollbar,
+[class^="guildsWrapper"]:hover::-webkit-scrollbar,
+[class^="guildsWrapper"] > [class^="scroll"]::-webkit-scrollbar,
+[class^="guildsWrapper"] > [class^="scroll"]:hover::-webkit-scrollbar,
+[class^="guildsWrapper"] > [class^="scroll"] > [class^="guilds"]::-webkit-scrollbar,
+[class^="guildsWrapper"] > [class^="scroll"] > [class^="guilds"]:hover::-webkit-scrollbar,
 [class^="guildsWrapper"] > [class^="unread"] > [class^="bar"],
 [class^="isLocalBot"],
 [class^="loadingMore"],
@@ -728,13 +736,13 @@ body > div:first-of-type  > div:nth-of-type(2) > div:first-of-type > div:first-o
     animation: unset !important;
     background: transparent !important;
     border-radius: 0px !important;
-    border: unset !important;
+    border: none !important;
     bottom: unset !important;
-    box-shadow: unset !important;
+    box-shadow: none !important;
     box-sizing: unset !important;
-    color: unset !important;
+    color: none !important;
     cursor: unset !important;
-    display: unset !important;
+    display: none !important;
     flex-direction: unset !important;
     flex-wrap: unset !important;
     font-size: 0px !important;

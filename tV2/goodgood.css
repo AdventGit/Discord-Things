@@ -1,202 +1,167 @@
-/* Base Transparency */
-	/* -Top */
-	head,
-	body,
-	body > div:first-of-type,
-	/* -Titlebar */
-	[class^="type"][class*="title"],
-	/* Popouts */
-	/* -Base */
-	[class^="app"][class*="platform"],
-	[class^="app"][class*="platform"] > [class^="app"],
-	[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"],
-	[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"]:nth-of-type(2) > [class^="ui"],
-	[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"]:nth-of-type(2) > [class^="ui"]  > [class^="sidebar"],
-	[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"]:nth-of-type(2) > [class^="ui"]  > [class^="content"],
-	[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"],
-	[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"] > [class^="flex"],
-	/* -Guilds */
-	[class^="guildsWrapper"],
-		/* --Guilds Add/Error Button */
-		[class^="guildsWrapper"] [class^="guilds-"] > button,
-	/* -Channel/Chat Base */
-	[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"] > [class^="flex"] > [class^="flex"],
-	[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"] > [class^="flex"] > [class^="flex"] > [class^="flex"]:nth-of-type(2),
-	/* -Channels */
-	[class^="channels"],
-	[class^="channels"] > [class^="contain"],
-	[class^="channels"] > [class^="flex"],
-	/* -Chat */
-	[class^="chat"],
-		/* --TitleBar */
-		[class^="chat"] > [class^="title"],
-		[class^="chat"] > [class^="title"] > [class^="flex"],
-		/* --Chat */
-		[class^="chat"] > [class^="content"],
-		[class^="chat"] > [class^="content"] > [class^="flex"],
-		[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"],
-	/* -Chat Message Panel */
-	[class^="chat"] > [class^="content"] > [class^="flex"] > form,
-	[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"],
-	[class^="chat"] > [class^="content"] > [class^="flex"] > form > [class^="typing"],
-	/* -Members List */
-	[class^="chat"] > [class^="content"] > [class^="member"],
-	[class^="chat"] > [class^="content"] > [class^="member"] > [class^="scroll"],
-	[class^="chat"] > [class^="content"] > [class^="member"] > [class^="scroll"] > [class^="scroll"],
-	/* -Friends Panel */
-	[id^="friend"],
-	[id^="friend"] > [class^="flex"] {
+head,
+body,
+body > div:first-of-type,
+[class^="type"][class*="title"],
+[class^="app"][class*="platform"],
+[class^="app"][class*="platform"] > [class^="app"],
+[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"],
+[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"]:nth-of-type(2) > [class^="ui"],
+[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"]:nth-of-type(2) > [class^="ui"]  > [class^="sidebar"],
+[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"]:nth-of-type(2) > [class^="ui"]  > [class^="content"],
+[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"],
+[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"] > [class^="flex"],
+[class^="guildsWrapper"],
+[class^="guildsWrapper"] [class^="guilds-"] > button,
+[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"] > [class^="flex"] > [class^="flex"],
+[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"] > [class^="flex"] > [class^="flex"] > [class^="flex"]:nth-of-type(2),
+[class^="channels"],
+[class^="channels"] > [class^="contain"],
+[class^="channels"] > [class^="flex"],
+[class^="chat"],
+[class^="chat"] > [class^="title"],
+[class^="chat"] > [class^="title"] > [class^="flex"],
+[class^="chat"] > [class^="content"],
+[class^="chat"] > [class^="content"] > [class^="flex"],
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"],
+[class^="chat"] > [class^="content"] > [class^="flex"] > form,
+[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"],
+[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="channel"],
+[class^="chat"] > [class^="content"] > [class^="flex"] > form > [class^="typing"],
+[class^="chat"] > [class^="content"] > [class^="member"],
+[class^="chat"] > [class^="content"] > [class^="member"] > [class^="scroll"],
+[class^="chat"] > [class^="content"] > [class^="member"] > [class^="scroll"] > [class^="scroll"],
+[id^="friend"],
+[id^="friend"] > [class^="flex"] {
 	background: transparent !important;
 	border: none !important;
 	box-shadow: none !important;
 }
-
-/* Base Theme Items */
-	/* -Font Smoothing */
-		/* --Normal */
-            /* ---Neutral */
-            #files_directDownload span,
-            .thumbQuicksave,
-            body > [id^="app"] > [class^="context"] > div > span,
-            code,
-            [class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="inner"] > textarea,
-            [class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="inner"] > textarea::-webkit-input-placeholder,
-            [class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="container"] > [class^="markup"],
-            [class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="isM"] > [class^="markup"],
-            [class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="header"] > [class^="header"] > [class^="time"],
-            [class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="pagination"],
-            [class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="search"] > [class*="hit"] > [class^="message"] > [class^="message"] > [class^="content"] > [class*="container"] > [class^="markup"],
-            [class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="search"] > [class*="hit"] > [class^="message"] > [class^="message"] > [class^="content"] > [class^="isM"] > [class^="markup"],
-            [class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="search"] > [class*="hit"] > [class^="message"] > [class^="message"] > [class^="content"] > [class^="isM"],
-            [class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="search"] > [class*="hit"] > [class^="message"] > [class^="message"] > [class^="header"] > [class^="header"] > [class^="time"],
-            [class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="separator"] span,
-            [class^="chat"] > [class^="content"] > [class^="search"] > [class^="search"] div,
-            [class^="embed"] > [class*="nner"] > [class*="ontent"] > [class*="nner"] > [class*="ield"] > [class*="ield"] > [class*="alue"],
-            [class^="embed"] > [class*="nner"] > [class*="ooter"] > span,
-            [style*="z-index: 1001"][style*="visibility: visible"][style*="transform: translateX(-50%) translateY(0%) translateZ(0px)"] > [class^="search"] > [class^="option"] > [class^="search"] > strong,
-            [style*="z-index: 1001"][style*="visibility: visible"][style*="transform: translateX(-50%) translateY(0%) translateZ(0px)"] > [class^="search"] > [class^="option"] > [class^="search"],
-            [style*="z-index: 1001"][style*="visibility: visible"][style*="transform: translateX(-50%) translateY(0%) translateZ(0px)"] > [class^="search"] > [class^="result"] > [class^="header"],
-            [style*="z-index: 1001"][style*="visibility: visible"][style*="transform: translateX(-50%) translateY(0%) translateZ(0px)"] > [class^="search"] > [class^="result"] > [class^="option"] span,
-            [style*="z-index: 1001"][style*="visibility: visible"][style*="transform: translateX(-50%) translateY(0%) translateZ(0px)"] > [class^="search"] > [class^="result"] > [class^="option"] strong {
-                -webkit-text-stroke: .45px var(--neutral-smooth) !important;
-                text-shadow: 0px 0px 0px var(--neutral-smooth), -.45px -.45px 0px var(--neutral-smooth), .45px -.45px 0px var(--neutral-smooth), -.45px .45px 0px var(--neutral-smooth), .45px .45px 0px var(--neutral-smooth);
-                text-decoration: none !important;
-            }
-            /* --User Color */
-            .bd-toast,
-            .bda-links a,
-            .toast,
-            [class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class*="container"] > [class^="markup"] > [class^="mention"],
-            [class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="container"] > [class^="markup"] > a,
-            [class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="search"] > [class*="hit"] > [class^="message"] > [class^="message"] > [class^="content"] > [class*="container"] > [class^="markup"] > [class^="mention"],
-            [class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="search"] > [class*="hit"] > [class^="message"] > [class^="message"] > [class^="content"] > [class*="container"] > [class^="markup"] > [class^="mention"]:hover,
-            [class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="search"] > [class*="hit"] > [class^="message"] > [class^="message"] > [class^="content"] > [class^="container"] > [class^="markup"] > a,
-            [class^="embed"] > [class*="nner"] > [class*="ontent"] a {
-                -webkit-text-stroke: .45px var(--user-color-smooth) !important;
-                text-shadow: 0px 0px 0px var(--user-color-smooth), -.45px -.45px 0px var(--user-color-smooth), .45px -.45px 0px var(--user-color-smooth), -.45px .45px 0px var(--user-color-smooth), .45px .45px 0px var(--user-color-smooth);
-                text-decoration: none !important;
-            }
-        /* --Abnormal */
-            /* ---Neutral */
-            #bd-pub-button,
-            #RANbutton,
-            body > [id^="app"] > [class*="popout"] > [class^="popout"] > [class^="menu"] > div,
-            body > [id^="app"] > [class^="context"] > div > span,
-            body > [id^="app"] > [class^="context"] div > div,
-            body > [id^="app"] > [class^="context"] span,
-            [class^="guildsWrapper"] [class^="guilds-"] > [class^="friend"] {
-                -webkit-text-stroke: .45px var(--neutral-smooth) !important;
-                text-decoration: none !important;
-            }
-            /* ---Red */
-            body > [id^="app"] > [class*="popout"] > [class^="popout"] > [class^="menu"] > div[class*="leave"],
-            body > [id^="app"] > [class^="context"] div > div[class*="danger"] span,
-            body > [id^="app"] > [class^="context"] div > div[class*="danger"] {
-                -webkit-text-stroke: .45px red !important;
-                text-decoration: none !important;
-            }
-	/* -Scrollbar */
-		/* --Base */
-			/* ---Hidden */
-			[class*="scroll"] > [class*="scroll"]::-webkit-resizer,
-			[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar,
-			[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-button,
-			[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-corner,
-			[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-track,
-			[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-track-piece {
-				visibility: hidden !important;
-				background: transparent !important;
-			}
-			/* ---Shown When Hovered */
-			[class*="scroll"] > [class*="scroll"]:hover::-webkit-resizer,
-			[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar,
-			[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-button,
-			[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-corner,
-			[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-track,
-			[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-track-piece {
-				visibility: visible !important;
-				background: transparent !important;
-			}
-		/* --General */
-		    /* ---Hidden */
-			[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar,
-			[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-track-piece,
-			[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-thumb {
-				visibility: hidden !important;
-			}
-			[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar {
-				width: 4px !important;
-			}
-			[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-track-piece {
-				border: none !important;
-			}
-			[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-thumb {
-				background: transparent !important;
-				border: none !important;
-			}
-			/* ---Shown When Hovered */
-			[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar,
-			[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-track-piece,
-			[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-thumb {
-				visibility: visible !important;
-			}
-			[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar {
-				width: 4px !important;
-			}
-			[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-track-piece {
-				border: none !important;
-			}
-			[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-thumb {
-				background: var(--user-color) !important;
-				border: none !important;
-			}
-		/* --Chat */
-		[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class*="scroll"] > [class*="scroll"]::-webkit-scrollbar {
-			width: 8px !important;
-		}
-		/* --Settings */
-		[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"]:nth-of-type(2) > [class^="ui"] > [class^="sidebar"] {
-			z-index: 2 !important;
-		}
-	/* -Badge Icon */
-	[class^="wrapper"][class*="badge"],
-	.betterfriendcount-badge {
-		background: rgba(0, 0, 0, 1) !important;
-		border: 2px solid var(--user-color) !important;
-		border-radius: 50% !important;
-		padding: 0px !important;
-		height: var(--badge-size) !important;
-		width: var(--badge-size) !important;
-		text-align: center !important;
-		vertical-align: middle !important;
-		line-height: var(--badge-size) !important;
-		font-weight: 500 !important;
-	}
-    *::selection {
-        background-color: var(--user-color-smooth) !important;
-    }
-
-/* Guilds */
+#files_directDownload span,
+.thumbQuicksave,
+body > [id^="app"] > [class^="context"] > div > span,
+code,
+[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="channel"] > [class^="inner"] > textarea,
+[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="channel"] > [class^="inner"] > textarea::-webkit-input-placeholder,
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="container"] > [class^="markup"],
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="isM"] > [class^="markup"],
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="header"] > [class^="header"] > [class^="time"],
+[class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="pagination"],
+[class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="search"] > [class*="hit"] > [class^="message"] > [class^="message"] > [class^="content"] > [class*="container"] > [class^="markup"],
+[class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="search"] > [class*="hit"] > [class^="message"] > [class^="message"] > [class^="content"] > [class^="isM"] > [class^="markup"],
+[class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="search"] > [class*="hit"] > [class^="message"] > [class^="message"] > [class^="content"] > [class^="isM"],
+[class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="search"] > [class*="hit"] > [class^="message"] > [class^="message"] > [class^="header"] > [class^="header"] > [class^="time"],
+[class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="separator"] span,
+[class^="chat"] > [class^="content"] > [class^="search"] > [class^="search"] div,
+[class^="embed"] > [class*="nner"] > [class*="ontent"] > [class*="nner"] > [class*="ield"] > [class*="ield"] > [class*="alue"],
+[class^="embed"] > [class*="nner"] > [class*="ooter"] > span,
+[style*="z-index: 1001"][style*="visibility: visible"][style*="transform: translateX(-50%) translateY(0%) translateZ(0px)"] > [class^="search"] > [class^="option"] > [class^="search"] > strong,
+[style*="z-index: 1001"][style*="visibility: visible"][style*="transform: translateX(-50%) translateY(0%) translateZ(0px)"] > [class^="search"] > [class^="option"] > [class^="search"],
+[style*="z-index: 1001"][style*="visibility: visible"][style*="transform: translateX(-50%) translateY(0%) translateZ(0px)"] > [class^="search"] > [class^="result"] > [class^="header"],
+[style*="z-index: 1001"][style*="visibility: visible"][style*="transform: translateX(-50%) translateY(0%) translateZ(0px)"] > [class^="search"] > [class^="result"] > [class^="option"] span,
+[style*="z-index: 1001"][style*="visibility: visible"][style*="transform: translateX(-50%) translateY(0%) translateZ(0px)"] > [class^="search"] > [class^="result"] > [class^="option"] strong {
+    -webkit-text-stroke: .45px var(--neutral-smooth) !important;
+    text-shadow: 0px 0px 0px var(--neutral-smooth), -.45px -.45px 0px var(--neutral-smooth), .45px -.45px 0px var(--neutral-smooth), -.45px .45px 0px var(--neutral-smooth), .45px .45px 0px var(--neutral-smooth);
+    text-decoration: none !important;
+}
+.bd-toast,
+.bda-links a,
+.toast,
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class*="container"] > [class^="markup"] > [class^="mention"],
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="container"] > [class^="markup"] > a,
+[class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="search"] > [class*="hit"] > [class^="message"] > [class^="message"] > [class^="content"] > [class*="container"] > [class^="markup"] > [class^="mention"],
+[class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="search"] > [class*="hit"] > [class^="message"] > [class^="message"] > [class^="content"] > [class*="container"] > [class^="markup"] > [class^="mention"]:hover,
+[class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="search"] > [class*="hit"] > [class^="message"] > [class^="message"] > [class^="content"] > [class^="container"] > [class^="markup"] > a,
+[class^="embed"] > [class*="nner"] > [class*="ontent"] a {
+    -webkit-text-stroke: .45px var(--user-color-smooth) !important;
+    text-shadow: 0px 0px 0px var(--user-color-smooth), -.45px -.45px 0px var(--user-color-smooth), .45px -.45px 0px var(--user-color-smooth), -.45px .45px 0px var(--user-color-smooth), .45px .45px 0px var(--user-color-smooth);
+    text-decoration: none !important;
+}
+#bd-pub-button,
+#RANbutton,
+body > [id^="app"] > [class*="popout"] > [class^="popout"] > [class^="menu"] > div,
+body > [id^="app"] > [class^="context"] > div > span,
+body > [id^="app"] > [class^="context"] div > div,
+body > [id^="app"] > [class^="context"] span,
+[class^="guildsWrapper"] [class^="guilds-"] > [class^="friend"] {
+    -webkit-text-stroke: .45px var(--neutral-smooth) !important;
+    text-decoration: none !important;
+}
+body > [id^="app"] > [class*="popout"] > [class^="popout"] > [class^="menu"] > div[class*="leave"],
+body > [id^="app"] > [class^="context"] div > div[class*="danger"] span,
+body > [id^="app"] > [class^="context"] div > div[class*="danger"] {
+    -webkit-text-stroke: .45px red !important;
+    text-decoration: none !important;
+}
+[class*="scroll"] > [class*="scroll"]::-webkit-resizer,
+[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar,
+[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-button,
+[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-corner,
+[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-track,
+[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-track-piece {
+    visibility: hidden !important;
+    background: transparent !important;
+}
+[class*="scroll"] > [class*="scroll"]:hover::-webkit-resizer,
+[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar,
+[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-button,
+[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-corner,
+[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-track,
+[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-track-piece {
+    visibility: visible !important;
+    background: transparent !important;
+}
+[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar,
+[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-track-piece,
+[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-thumb {
+    visibility: hidden !important;
+}
+[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar {
+    width: 4px !important;
+}
+[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-track-piece {
+    border: none !important;
+}
+[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-thumb {
+    background: transparent !important;
+    border: none !important;
+}
+[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar,
+[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-track-piece,
+[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-thumb {
+    visibility: visible !important;
+}
+[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar {
+    width: 4px !important;
+}
+[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-track-piece {
+    border: none !important;
+}
+[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-thumb {
+    background: var(--user-color) !important;
+    border: none !important;
+}
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class*="scroll"] > [class*="scroll"]::-webkit-scrollbar {
+    width: 8px !important;
+}
+[class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"]:nth-of-type(2) > [class^="ui"] > [class^="sidebar"] {
+    z-index: 2 !important;
+}
+[class^="wrapper"][class*="badge"],
+.betterfriendcount-badge {
+    background: rgba(0, 0, 0, 1) !important;
+    border: 2px solid var(--user-color) !important;
+    border-radius: 50% !important;
+    padding: 0px !important;
+    height: var(--badge-size) !important;
+    width: var(--badge-size) !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    line-height: var(--badge-size) !important;
+    font-weight: 500 !important;
+}
+*::selection {
+    background-color: var(--user-color-smooth) !important;
+}
 [class^="guildsWrapper"] {
     width: inherit !important;
 }
@@ -350,311 +315,284 @@
 [class^="guildsWrapper"] [class^="guilds-"] > [class*="guildsError"]:hover:after {
     color: red !important;
 }
-
-/* Channels */
-    /* -DM and Normal */
-    [class^="channels"] > [class^="flex"] > [class^="flex"] > [class^="container"] > [class^="header"],
-    [class^="channel"] > [class^="private"] > [class^="search"] {
-        box-shadow: none !important;
+[class^="channels"] > [class^="flex"] > [class^="flex"] > [class^="container"] > [class^="header"],
+[class^="channel"] > [class^="private"] > [class^="search"] {
+    box-shadow: none !important;
+}
+[class^="channel"] > [class^="private"] > [class^="scroll"] > [class^="scroll"] > [class^="channel"]:nth-of-type(3),
+[class^="channel"] > [class^="private"] > [class^="scroll"] > [class^="scroll"] > [class^="channel"]:nth-of-type(4)    {
+    display: none !important;
+}
+[class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] > [class^="container"] > [class^="container"] > [class*="Selected"][class*="Text"] > [class*="content"],
+[class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] > [class^="container"] > [class^="container"] > [class*="Hovered"][class*="Text"] > [class*="content"] {
+    background: var(--neutral) !important;
+}
+[class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] > [class^="container-1"] > div > [class^="container"] > [class^="flex"] > [class^="name"],
+[class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] > [class^="container"] > [class^="container"] > [class^="flex"] > [class^="name"],
+[class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] > [class^="container"] > [class^="container"] > [class*="wrapper"] > [class*="content"] > [class^="name"],
+[class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] > [class*="hidden"] > [class^="container"] > [class*="flex"] > [class^="color"] {
+    color: var(--neutral-text) !important;
+}
+[class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] > [class^="container"] > [class^="container"] > [class*="wrapper"] > [class*="unread"] {
+    background: var(--user-color) !important;
+}
+[class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] svg {
+    color: var(--neutral-text) !important;
+}
+[class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] > [class^="container"] > [class^="container"] > [class^="flex"] > div > [class^="voice"] > [class^="name"] {
+    color: var(--neutral-text) !important;
+}
+@keyframes decay {
+    from {
+        top: 0px;
+        opacity: 1;
     }
-	/* -DM Channels */
-	[class^="channel"] > [class^="private"] > [class^="scroll"] > [class^="scroll"] > [class^="channel"]:nth-of-type(3),
-    [class^="channel"] > [class^="private"] > [class^="scroll"] > [class^="scroll"] > [class^="channel"]:nth-of-type(4)    {
-		display: none !important;
-	}
-	/* -Channel */
-	[class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] > [class^="container"] > [class^="container"] > [class*="Selected"][class*="Text"] > [class*="content"],
-	[class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] > [class^="container"] > [class^="container"] > [class*="Hovered"][class*="Text"] > [class*="content"] {
-		background: var(--neutral) !important;
-	}
-	[class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] > [class^="container-1"] > div > [class^="container"] > [class^="flex"] > [class^="name"],
-	[class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] > [class^="container"] > [class^="container"] > [class^="flex"] > [class^="name"],
-	[class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] > [class^="container"] > [class^="container"] > [class*="wrapper"] > [class*="content"] > [class^="name"],
-    [class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] > [class*="hidden"] > [class^="container"] > [class*="flex"] > [class^="color"] {
-		color: var(--neutral-text) !important;
-	}
-	[class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] > [class^="container"] > [class^="container"] > [class*="wrapper"] > [class*="unread"] {
-		background: var(--user-color) !important;
-	}
-	[class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] svg {
-		color: var(--neutral-text) !important;
-	}
-		/* --VC */
-		[class^="channels"] > [class^="flex"] > [class^="scroll"] > [class^="scroll"] > [class^="container"] > [class^="container"] > [class^="flex"] > div > [class^="voice"] > [class^="name"] {
-			color: var(--neutral-text) !important;
-		}
-
-/* Chat */
-	/* -Chat */
-		/* --New Messages Bar */
-		@keyframes decay {
-			from {
-				top: 0px;
-				opacity: 1;
-			}
-			
-			to {
-				top: -22px;
-				opacity: 0;
-			}
-		}
-		@keyframes revive {
-			from {
-				top: -22px;
-				opacity: 0;
-			}
-			
-			to {
-				top: 0px;
-				opacity: 1;
-			}
-		}
-		[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="new"] {
-			display: flex !important;
-			background: var(--dark) !important;
-			animation: decay .4s linear 2s 1 normal forwards;
-			color: var(--user-color) !important;
-			position: absolute !important;
-			top: 0px !important;
-			bottom: unset !important;
-			left: 50% !important;
-			right: unset !important;
-			width: fit-content !important;
-			text-transform: unset !important;
-			transition: unset !important;
-			border-radius: 0px 0px 3px 3px !important;
-			transform: translate(-50%, 0%) !important;
-		}
-		[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="new"]:hover {
-			animation: revive .4s linear 0s 1 normal forwards;
-		}
-		[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="new"] button {
-			color: var(--user-color) !important;
-		}
-        /* --Emoji */
-        .emoji {
-            margin: 0px !important;
-        }
-		/* --Chat Colors */
-		[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="header"] > [class^="header"] > [class^="time"],
-		[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class*="container"] > [class^="markup"],
-		[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="isM"] {
-			color: var(--neutral-text) !important;
-		}
-			/* ---@Yous */
-			[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="isM"],
-            [class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="isM"]::after {
-				background: var(--user-color-smooth) !important;
-			}
-			[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="isM"]::after {
-				border-left: 4px solid var(--user-color) !important;
-			}
-            [class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class*="container"] > [class^="markup"] > [class^="mention"],
-            [class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class*="container"] > [class^="markup"] > [class^="mention"]:hover {
-                background: var(--user-color-smooth) !important;
-                border: none !important;
-                border-radius: 4px !important;
-                color: var(--user-color) !important;
-            }
-            [class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="isM"] > [class^="markup"] > [class^="mention"],
-            [class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="isM"] > [class^="markup"] > [class^="mention"]:hover {
-                background: transparent !important;
-            }
-            [class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="isM"] > [class^="markup"] {
-                color: var(--neutral-text) !important;
-            }
-            /* ---Links */
-            [class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="container"] > [class^="markup"] > a {
-                color: var(--user-color) !important;
-            }
-            /* ---Code Blocks */
-            code[class^="inline"] {
-                background: var(--neutral-semi-trans) !important;
-                color: var(--neutral-text) !important;
-            }
-            [class^="markup"] pre {
-                background: transparent !important;
-                border: none !important;
-            }
-            [class^="markup"] pre code {
-                background: var(--neutral-hsla-trans) !important;
-                border-radius: 4px !important;
-            }
-            code {
-                color: var(--neutral-text) !important;
-            }
-        /* --Embeds */
-        [class^="embed"] {
-            border: none !important;
-            border-radius: 4px !important;
-            box-shadow: none !important;
-        }
-        [class^="embed"] > [class*="ill"] {
-            background-color: var(--user-color) !important;
-        }
-        [class^="embed"] > [class*="nner"] {
-            background: var(--neutral-hsla-trans) !important;
-            border: none !important;
-            border-radius: 4px !important;
-            box-shadow: none !important;
-        }
-        [class^="embed"] > [class*="ideo"][class*="nner"] {
-            background: transparent !important;
-            border: none !important;
-            border-radius: 0px !important;
-            box-shadow: none !important;
-        }
-        [class^="embed"] > [class*="ideo"][class*="nner"] > [class^="wrapper"] {
-            background: var(--dark) !important;
-            border: none !important;
-            border-radius: 24px !important;
-            box-shadow: none !important;
-            color: var(--light) !important;
-        }
-        [class^="embed"] > [class*="ideo"][class*="nner"] > [class^="wrapper"] a {
-            color: var(--light) !important;
-        }
-        [class^="embed"] > [class*="nner"] > [class*="ontent"] > [class*="nner"] {
-            background: transparent !important;
-            border: none !important;
-            border-radius: none !important;
-            box-shadow: none !important;
-        }
-        [class^="embed"] > [class*="nner"] > [class*="ontent"] a {
-            color: var(--user-color) !important;
-        }
-        [class^="embed"] > [class*="nner"] > [class*="ontent"] > [class*="nner"] > [class*="ield"] > [class*="ield"] > [class*="ame"] {
-            color: #FFFFFF !important;
-            -webkit-text-stroke: .45px var(#FFFFFF) !important;
-            text-shadow: 0px 0px 0px var(#FFFFFF), -.45px -.45px 0px var(#FFFFFF), .45px -.45px 0px var(#FFFFFF), -.45px .45px 0px var(#FFFFFF), .45px .45px 0px var(#FFFFFF);
-        }
-        [class^="embed"] > [class*="nner"] > [class*="ontent"] > [class*="nner"] > [class*="ield"] > [class*="ield"] > [class*="alue"],
-        [class^="embed"] > [class*="nner"] > [class*="ooter"] > span {
-            color: var(--neutral-text) !important;
-        }
-        [class^="embed"] > [class*="nner"] > [class*="image"] > img {
-            border-radius: 4px !important;
-        }
-	/* -Form */
-	[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="inner"] {
-		background: transparent !important;
-		box-shadow: 0px 0px 1px 1px var(--neutral), 0px 0px .5px .5px var(--neutral-smooth) !important;;
-	}
-	[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="inner"] > textarea,
-	[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="inner"] > textarea::-webkit-input-placeholder {
-		color: var(--neutral-text) !important;
-	}
-		/* --Members */
-		[class^="chat"] > [class^="content"] > [class^="member"] > [class^="scroll"] > [class^="scroll"] > [class^="member"] {
-			color: var(--neutral-text) !important;
-		}
-		[class^="chat"] > [class^="content"] > [class^="member"] > [class^="scroll"] > [class^="scroll"] > [class^="member"]:hover > [class^="content"],
-		[class^="chat"] > [class^="content"] > [class^="member"] > [class^="scroll"] > [class^="scroll"] > [class*="pop"] > [class^="content"] {
-			background: var(--neutral) !important;
-		}
-    /* -Search */
-    [class^="search"] > [class^="search"] > [class^="search"] {
-        background: transparent !important;
+    
+    to {
+        top: -22px;
+        opacity: 0;
     }
-
-/* Mentions */
-	/* -Channel Mentions */
-	[class^="channels"] > [class^="flex"] > [class^="pos"] > [class^="unread"] > [class^="bar"],
-	[class^="channels"] > [class^="flex"] > [class^="unread"] > [class^="bar"] {
-		visibility: hidden !important;
-	}
-	[class^="channels"] > [class^="flex"] > [class^="pos"] > [class^="unread"] > [class^="bar"][class*="mention"],
-	[class^="channels"] > [class^="flex"] > [class^="unread"] > [class^="bar"][class*="mention"] {
-		background: var(--user-color-smooth) !important;
-		border-radius: 4px !important;
-		color: transparent !important;
-		font-size: 0px !important;
-		height: 20px !important;
-		width: 100% !important;
-		visibility: visible !important;
-	}
-	[class^="channels"] > [class^="flex"] > [class^="pos"] > [class^="unread"] > [class^="bar"][class*="mention"]:before,
-	[class^="channels"] > [class^="flex"] > [class^="unread"] > [class^="bar"][class*="mention"]:before {
-		top: 0px !important;
-		left: 0px !important;
-		right: 0px !important;
-		bottom: 0px !important;
-	}
-	[class^="channels"] > [class^="flex"] > [class^="pos"] > [class^="unread"][class*="Top"] > [class^="bar"][class*="mention"] {
-		transform: translateY(-24px) !important;
-	}
-	[class^="channels"] > [class^="flex"] > [class^="unread"][class*="Bottom"] > [class^="bar"][class*="mention"] {
-		transform: translateY(24px) !important;
-	}
-
-/* Context Menus */
-    /* --Right Click */
-    body > [id^="app"] > [class^="context"], 
-    body > [id^="app"] > [class^="context"] [class^="context"] {
-        border: none !important;
-        border-radius: 4px !important;
-        box-shadow: none !important;
-        background: var(--neutral-opaque) !important;
+}
+@keyframes revive {
+    from {
+        top: -22px;
+        opacity: 0;
     }
-    body > [id^="app"] > [class^="context"] > div,
-    body > [id^="app"] > [class^="context"] [class^="context"] > div {
-        border: none !important;
-        box-shadow: none !important;
+    
+    to {
+        top: 0px;
+        opacity: 1;
     }
-    body > [id^="app"] > [class^="context"] > div > div:hover,
-    body > [id^="app"] > [class^="context"] [class^="context"] > div > div > div:hover,
-    body > [id^="app"] > [class^="context"] [class*="edit"] > div div:hover,
-    body > [id^="app"] > [class^="context"] [class*="edit"] > div > div[class^="item"][class*="disabled"]:hover {
-        background: var(--neutral-hsla-trans) !important;
-        border-radius: 4px !important;
-    }
-    .HideUtils {
-        border: none !important;
-    }
-    .HideUtils > div {
-        background: unset !important;
-    }
-    .HideUtils > div:hover {
-        background: var(--neutral-hsla-trans-plugin) !important;
-        border-radius: 4px !important;
-    }
-    body > [id^="app"] > [class^="context"] > div > div[class*="Sub"] {
-        background: url(https://ptb.discordapp.com/assets/e4afe52f6863408a35654a6e5fd69ba9.svg) no-repeat 155px 50% !important;
-    }
-    body > [id^="app"] > [class^="context"] > div > div[class*="Sub"]:hover {
-        background: var(--neutral-hsla-trans) url(https://ptb.discordapp.com/assets/e4afe52f6863408a35654a6e5fd69ba9.svg) no-repeat 155px 50% !important;
-    }
-    body > [id^="app"] > [class^="context"] span,
-    body > [id^="app"] > [class^="context"] div > div {
-        color: var(--neutral-text) !important;
-    }
-    body > [id^="app"] > [class^="context"] div > div[class*="danger"],
-    body > [id^="app"] > [class^="context"] div > div[class*="danger"] span {
-        color: red !important;
-    }
-    /* --Server Menu */
-    body > [id^="app"] > [class*="popout"] > [class^="popout"] {
-        border: none !important;
-        border-radius: 4px !important;
-        box-shadow: none !important;
-    }
-    body > [id^="app"] > [class*="popout"] > [class^="popout"] > [class^="menu"] {
-        border: none !important;
-        border-radius: 4px !important;
-        box-shadow: none !important;
-        background: var(--neutral-opaque) !important;
-    }
-    body > [id^="app"] > [class*="popout"] > [class^="popout"] > [class^="menu"] > div:hover {
-        background: var(--neutral-hsla-trans) !important;
-    }
-    body > [id^="app"] > [class*="popout"] > [class^="popout"] > [class^="menu"] > div {
-        color: var(--neutral-text) !important;
-    }
-    body > [id^="app"] > [class*="popout"] > [class^="popout"] > [class^="menu"] > div[class*="leave"] {
-        color: red !important;
-    }
-/* Search */
-/*
+}
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="new"] {
+    display: flex !important;
+    background: var(--dark) !important;
+    animation: decay .4s linear 2s 1 normal forwards;
+    color: var(--user-color) !important;
+    position: absolute !important;
+    top: 0px !important;
+    bottom: unset !important;
+    left: 50% !important;
+    right: unset !important;
+    width: fit-content !important;
+    text-transform: unset !important;
+    transition: unset !important;
+    border-radius: 0px 0px 3px 3px !important;
+    transform: translate(-50%, 0%) !important;
+}
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="new"]:hover {
+    animation: revive .4s linear 0s 1 normal forwards;
+}
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="new"] button {
+    color: var(--user-color) !important;
+}
+.emoji {
+    margin: 0px !important;
+}
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="header"] > [class^="header"] > [class^="time"],
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class*="container"] > [class^="markup"],
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="isM"] {
+    color: var(--neutral-text) !important;
+}
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="isM"],
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="isM"]::after {
+    background: var(--user-color-smooth) !important;
+}
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="isM"]::after {
+    border-left: 4px solid var(--user-color) !important;
+}
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class*="container"] > [class^="markup"] > [class^="mention"],
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class*="container"] > [class^="markup"] > [class^="mention"]:hover {
+    background: var(--user-color-smooth) !important;
+    border: none !important;
+    border-radius: 4px !important;
+    color: var(--user-color) !important;
+}
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="isM"] > [class^="markup"] > [class^="mention"],
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="isM"] > [class^="markup"] > [class^="mention"]:hover {
+    background: transparent !important;
+}
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="isM"] > [class^="markup"] {
+    color: var(--neutral-text) !important;
+}
+[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="container"] > [class^="markup"] > a {
+    color: var(--user-color) !important;
+}
+code[class^="inline"] {
+    background: var(--neutral-semi-trans) !important;
+    color: var(--neutral-text) !important;
+}
+[class^="markup"] pre {
+    background: transparent !important;
+    border: none !important;
+}
+[class^="markup"] pre code {
+    background: var(--neutral-hsla-trans) !important;
+    border-radius: 4px !important;
+}
+code {
+    color: var(--neutral-text) !important;
+}
+[class^="embed"] {
+    border: none !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+}
+[class^="embed"] > [class*="ill"] {
+    background-color: var(--user-color) !important;
+}
+[class^="embed"] > [class*="nner"] {
+    background: var(--neutral-hsla-trans) !important;
+    border: none !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+}
+[class^="embed"] > [class*="ideo"][class*="nner"] {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+}
+[class^="embed"] > [class*="ideo"][class*="nner"] > [class^="wrapper"] {
+    background: var(--dark) !important;
+    border: none !important;
+    border-radius: 24px !important;
+    box-shadow: none !important;
+    color: var(--light) !important;
+}
+[class^="embed"] > [class*="ideo"][class*="nner"] > [class^="wrapper"] a {
+    color: var(--light) !important;
+}
+[class^="embed"] > [class*="nner"] > [class*="ontent"] > [class*="nner"] {
+    background: transparent !important;
+    border: none !important;
+    border-radius: none !important;
+    box-shadow: none !important;
+}
+[class^="embed"] > [class*="nner"] > [class*="ontent"] a {
+    color: var(--user-color) !important;
+}
+[class^="embed"] > [class*="nner"] > [class*="ontent"] > [class*="nner"] > [class*="ield"] > [class*="ield"] > [class*="ame"] {
+    color: #FFFFFF !important;
+    -webkit-text-stroke: .45px var(#FFFFFF) !important;
+    text-shadow: 0px 0px 0px var(#FFFFFF), -.45px -.45px 0px var(#FFFFFF), .45px -.45px 0px var(#FFFFFF), -.45px .45px 0px var(#FFFFFF), .45px .45px 0px var(#FFFFFF);
+}
+[class^="embed"] > [class*="nner"] > [class*="ontent"] > [class*="nner"] > [class*="ield"] > [class*="ield"] > [class*="alue"],
+[class^="embed"] > [class*="nner"] > [class*="ooter"] > span {
+    color: var(--neutral-text) !important;
+}
+[class^="embed"] > [class*="nner"] > [class*="image"] > img {
+    border-radius: 4px !important;
+}
+[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="channel"] > [class^="inner"] {
+    background: transparent !important;
+    box-shadow: 0px 0px 1px 1px var(--neutral), 0px 0px .5px .5px var(--neutral-smooth) !important;;
+}
+[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="channel"] > [class^="inner"] > textarea,
+[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="channel"] > [class^="inner"] > textarea::-webkit-input-placeholder {
+    color: var(--neutral-text) !important;
+}
+[class^="chat"] > [class^="content"] > [class^="member"] > [class^="scroll"] > [class^="scroll"] > [class^="member"] {
+    color: var(--neutral-text) !important;
+}
+[class^="chat"] > [class^="content"] > [class^="member"] > [class^="scroll"] > [class^="scroll"] > [class^="member"]:hover > [class^="content"],
+[class^="chat"] > [class^="content"] > [class^="member"] > [class^="scroll"] > [class^="scroll"] > [class*="pop"] > [class^="content"] {
+    background: var(--neutral) !important;
+}
+[class^="search"] > [class^="search"] > [class^="search"] {
+    background: transparent !important;
+}
+[class^="channels"] > [class^="flex"] > [class^="pos"] > [class^="unread"] > [class^="bar"],
+[class^="channels"] > [class^="flex"] > [class^="unread"] > [class^="bar"] {
+    visibility: hidden !important;
+}
+[class^="channels"] > [class^="flex"] > [class^="pos"] > [class^="unread"] > [class^="bar"][class*="mention"],
+[class^="channels"] > [class^="flex"] > [class^="unread"] > [class^="bar"][class*="mention"] {
+    background: var(--user-color-smooth) !important;
+    border-radius: 4px !important;
+    color: transparent !important;
+    font-size: 0px !important;
+    height: 20px !important;
+    width: 100% !important;
+    visibility: visible !important;
+}
+[class^="channels"] > [class^="flex"] > [class^="pos"] > [class^="unread"] > [class^="bar"][class*="mention"]:before,
+[class^="channels"] > [class^="flex"] > [class^="unread"] > [class^="bar"][class*="mention"]:before {
+    top: 0px !important;
+    left: 0px !important;
+    right: 0px !important;
+    bottom: 0px !important;
+}
+[class^="channels"] > [class^="flex"] > [class^="pos"] > [class^="unread"][class*="Top"] > [class^="bar"][class*="mention"] {
+    transform: translateY(-24px) !important;
+}
+[class^="channels"] > [class^="flex"] > [class^="unread"][class*="Bottom"] > [class^="bar"][class*="mention"] {
+    transform: translateY(24px) !important;
+}
+body > [id^="app"] > [class^="context"], 
+body > [id^="app"] > [class^="context"] [class^="context"] {
+    border: none !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+    background: var(--neutral-opaque) !important;
+}
+body > [id^="app"] > [class^="context"] > div,
+body > [id^="app"] > [class^="context"] [class^="context"] > div {
+    border: none !important;
+    box-shadow: none !important;
+}
+body > [id^="app"] > [class^="context"] > div > div:hover,
+body > [id^="app"] > [class^="context"] [class^="context"] > div > div > div:hover,
+body > [id^="app"] > [class^="context"] [class*="edit"] > div div:hover,
+body > [id^="app"] > [class^="context"] [class*="edit"] > div > div[class^="item"][class*="disabled"]:hover {
+    background: var(--neutral-hsla-trans) !important;
+    border-radius: 4px !important;
+}
+.HideUtils {
+    border: none !important;
+}
+.HideUtils > div {
+    background: unset !important;
+}
+.HideUtils > div:hover {
+    background: var(--neutral-hsla-trans-plugin) !important;
+    border-radius: 4px !important;
+}
+body > [id^="app"] > [class^="context"] > div > div[class*="Sub"] {
+    background: url(https://ptb.discordapp.com/assets/e4afe52f6863408a35654a6e5fd69ba9.svg) no-repeat 155px 50% !important;
+}
+body > [id^="app"] > [class^="context"] > div > div[class*="Sub"]:hover {
+    background: var(--neutral-hsla-trans) url(https://ptb.discordapp.com/assets/e4afe52f6863408a35654a6e5fd69ba9.svg) no-repeat 155px 50% !important;
+}
+body > [id^="app"] > [class^="context"] span,
+body > [id^="app"] > [class^="context"] div > div {
+    color: var(--neutral-text) !important;
+}
+body > [id^="app"] > [class^="context"] div > div[class*="danger"],
+body > [id^="app"] > [class^="context"] div > div[class*="danger"] span {
+    color: red !important;
+}
+body > [id^="app"] > [class*="popout"] > [class^="popout"] {
+    border: none !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+}
+body > [id^="app"] > [class*="popout"] > [class^="popout"] > [class^="menu"] {
+    border: none !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+    background: var(--neutral-opaque) !important;
+}
+body > [id^="app"] > [class*="popout"] > [class^="popout"] > [class^="menu"] > div:hover {
+    background: var(--neutral-hsla-trans) !important;
+}
+body > [id^="app"] > [class*="popout"] > [class^="popout"] > [class^="menu"] > div {
+    color: var(--neutral-text) !important;
+}
+body > [id^="app"] > [class*="popout"] > [class^="popout"] > [class^="menu"] > div[class*="leave"] {
+    color: red !important;
+}
+/*Search
 [style*="z-index: 1001"][style*="visibility: visible"][style*="transform: translateX(-50%) translateY(0%) translateZ(0px)"] {
     height: fit-content !important;
     width: fit-content !important;
@@ -664,8 +602,7 @@
     bottom: unset !important;
     transform: none !important;
     border-radius: 4px !important;
-}
-*/
+}*/
 [style*="z-index: 1001"][style*="visibility: visible"][style*="transform: translateX(-50%) translateY(0%) translateZ(0px)"] > [class^="search"] {
     height: fit-content !important;
     width: fit-content !important;
@@ -755,8 +692,6 @@
 [class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="search"] > [class*="hit"] > [class^="message"] > [class^="message"] > [class^="content"] > [class^="container"] > [class^="markup"] > a {
     color: var(--user-color) !important;
 }
-
-/* Things to Nuke */
 body > div:first-of-type > [class*="popout"] > [class^="no"] > [class^="user"] > [class^="foot"],
 [class*="Education"],
 [class*="jumpToPresent"],
@@ -823,8 +758,6 @@ body > div:first-of-type  > div:nth-of-type(2) > div:first-of-type > div:first-o
     width: 0px !important;
     z-index: -99999 !important;
 }
-
-/* BetterDiscord and Plugins Retheme */
 #bd-pub-li {
     height: 14px !important;
     margin: 0px !important;

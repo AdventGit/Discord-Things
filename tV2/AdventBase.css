@@ -772,7 +772,7 @@ body > div:first-of-type  > div:nth-of-type(2) > div:first-of-type > div:first-o
     margin-left: -8px !important;
 }
 #bd-pub-button,
-#RANbutton {
+#bd-pub-li.RANbutton {
     font-size: var(--read-all-font-size) !important;
     word-wrap: normal !important;
     white-space: nowrap !important;
@@ -797,13 +797,13 @@ body > div:first-of-type  > div:nth-of-type(2) > div:first-of-type > div:first-o
     top: 50% !important;
     transform: translate(-50%, -50%) !important;
 }
-#RANbutton-frame {
+#bd-pub-li.RANbutton-frame {
     height: 0px !important;
     margin-top: -5px !important;
     margin-bottom: 18px !important;
 }
 #bd-pub-li a,
-#RANbutton-frame a {
+#bd-pub-li.RANbutton-frame a {
     height: 13px !important;
     width: fit-content !important;
 }

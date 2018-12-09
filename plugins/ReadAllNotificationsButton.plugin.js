@@ -3,10 +3,10 @@
 class ReadAllNotificationsButton {
 	initConstructor () {
 		this.RANbuttonMarkup = 
-			`<div class="${BDFDB.disCN.guild}" id="RANbutton-frame">
+			`<div class="${BDFDB.disCN.guild} RANbutton-frame" id="bd-pub-li">
 				<div class="${BDFDB.disCN.guildinner}" style="border-radius: 0px;">
 					<a>
-						<div id="RANbutton" style="line-height: 18px; position: absolute !important; float: left !important; left: 50%; top: 50%; transform: translate(-50%, -50%) !important;">Read All</div>
+						<div class="RANbutton" id="bd-pub-button" style="line-height: 18px; position: absolute !important; float: left !important; left: 50%; top: 50%; transform: translate(-50%, -50%) !important;">Read All</div>
 					</a>
 				</div>
 			</div>`;
@@ -27,7 +27,7 @@ class ReadAllNotificationsButton {
 
 	getDescription () {return "Adds a button to clear all notifications.";}
 
-	getVersion () {return "1.3.5";}
+	getVersion () {return "1.3.6";}
 
 	getAuthor () {return "DevilBro";}
 	
@@ -79,27 +79,24 @@ class ReadAllNotificationsButton {
 						if (change.addedNodes) {
 							change.addedNodes.forEach((node) => {
 								var mentionspopout = null;
-								if (node && node.tagName && (mentionspopout = node.querySelector(BDFDB.dotCN.recentmentionspopout)) != null) {
-									let filter = node.querySelector(BDFDB.dotCN.recentmentionsmentionfilter);
-									if (filter) {
-										$(this.RAMbuttonMarkup).insertBefore(filter, mentionspopout)
-											.on("click", () => {
-												var loadinterval = setInterval(() => {
-													if (!mentionspopout || !mentionspopout.parentElement) clearInterval(loadinterval);
-													var loadbutton = mentionspopout.querySelector(BDFDB.dotCNS.messagespopouthasmore + "button");
-													var closebuttons = mentionspopout.querySelectorAll(BDFDB.dotCN.messagespopoutclosebutton);
-													if (!loadbutton) {
-														closebuttons.forEach((btn) => {btn.click();});
-														clearInterval(loadinterval);
-													}
-													else {
-														closebuttons.forEach((btn,i) => {if (closebuttons.length-1 > i) btn.click();});
-														loadbutton.click();
-													}
-												},2000);
-											});
-										mentionspopout.classList.add("RAM-added");
-									}
+								if (node.tagName && (mentionspopout = node.querySelector(BDFDB.dotCN.recentmentionspopout)) != null && node.querySelector(BDFDB.dotCN.recentmentionsmentionfilter)) {
+									$(this.RAMbuttonMarkup).appendTo(BDFDB.dotCN.recentmentionstitle, mentionspopout)
+										.on("click", () => {
+											var loadinterval = setInterval(() => {
+												if (!mentionspopout || !mentionspopout.parentElement) clearInterval(loadinterval);
+												var loadbutton = mentionspopout.querySelector(BDFDB.dotCNS.messagespopouthasmore + "button");
+												var closebuttons = mentionspopout.querySelectorAll(BDFDB.dotCN.messagespopoutclosebutton);
+												if (!loadbutton) {
+													closebuttons.forEach((btn) => {btn.click();});
+													clearInterval(loadinterval);
+												}
+												else {
+													closebuttons.forEach((btn,i) => {if (closebuttons.length-1 > i) btn.click();});
+													loadbutton.click();
+												}
+											},2000);
+										});
+									mentionspopout.classList.add("RAM-added");
 								}
 							});
 						}
@@ -109,7 +106,7 @@ class ReadAllNotificationsButton {
 			BDFDB.addObserver(this, BDFDB.dotCN.popouts, {name:"mentionsPopoutObserver",instance:observer}, {childList: true});
 			
 			$(this.RANbuttonMarkup).insertBefore(document.querySelector(BDFDB.dotCN.guildseparator))
-				.on("click", "#RANbutton", () => {
+				.on("click", ".RANbutton", () => {
 					let servers = BDFDB.getData("includeMuted", this, "settings") ? BDFDB.readServerList() : BDFDB.readUnreadServerList();
 					BDFDB.clearReadNotifications(servers);
 				});
@@ -123,9 +120,10 @@ class ReadAllNotificationsButton {
 
 	stop () {
 		if (typeof BDFDB === "object") {
-			$("#RANbutton-frame, #RAMbutton").remove();
+			$(".RANbutton-frame, .RAMbutton").remove();
 			
 			$(".RAN-added").removeClass("RAN-added");
+			$(".RAM-added").removeClass("RAM-added");
 			
 			BDFDB.unloadMessage(this);
 		}

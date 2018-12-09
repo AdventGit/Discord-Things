@@ -37,7 +37,7 @@
 		[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"],
 	/* -Chat Message Panel */
 	[class^="chat"] > [class^="content"] > [class^="flex"] > form,
-	[class^="chat"] > [class^="content"] > [class^="flex"] > form > [class^="channel"],
+	[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"],
 	[class^="chat"] > [class^="content"] > [class^="flex"] > form > [class^="typing"],
 	/* -Members List */
 	[class^="chat"] > [class^="content"] > [class^="member"],
@@ -59,8 +59,8 @@
             .thumbQuicksave,
             body > [id^="app"] > [class^="context"] > div > span,
             code,
-            [class^="chat"] > [class^="content"] > [class^="flex"] > form > [class^="channel"] > [class^="inner"] > textarea,
-            [class^="chat"] > [class^="content"] > [class^="flex"] > form > [class^="channel"] > [class^="inner"] > textarea::-webkit-input-placeholder,
+            [class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="inner"] > textarea,
+            [class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="inner"] > textarea::-webkit-input-placeholder,
             [class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="container"] > [class^="markup"],
             [class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="content"] > [class^="isM"] > [class^="markup"],
             [class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class^="scroll"] > [class^="message"] > [class^="container"] > [class^="message"] > [class^="header"] > [class^="header"] > [class^="time"],
@@ -536,12 +536,12 @@
             border-radius: 4px !important;
         }
 	/* -Form */
-	[class^="chat"] > [class^="content"] > [class^="flex"] > form > [class^="channel"] > [class^="inner"] {
+	[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="inner"] {
 		background: transparent !important;
 		box-shadow: 0px 0px 1px 1px var(--neutral), 0px 0px .5px .5px var(--neutral-smooth) !important;;
 	}
-	[class^="chat"] > [class^="content"] > [class^="flex"] > form > [class^="channel"] > [class^="inner"] > textarea,
-	[class^="chat"] > [class^="content"] > [class^="flex"] > form > [class^="channel"] > [class^="inner"] > textarea::-webkit-input-placeholder {
+	[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="inner"] > textarea,
+	[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="inner"] > textarea::-webkit-input-placeholder {
 		color: var(--neutral-text) !important;
 	}
 		/* --Members */

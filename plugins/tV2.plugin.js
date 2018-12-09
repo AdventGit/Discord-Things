@@ -420,7 +420,7 @@ tV2.prototype.startupSetup = function() {
 tV2.prototype.updateTheme = function() {
     const tV2_web = '\
 <style class="tV2-web">\
-@import url("https://raw.githack.com/AdventGit/Discord-Things/master/tV2/Advent_Base.css")\
+@import url("https://raw.githack.com/AdventGit/Discord-Things/master/tV2/Advent-tV2-Base.css")\
 </style>';
     const numGuildSize = parseInt(BDA.loadData('tV2', 'guilds'), 10);
     const numBadgeSize = parseInt(BDA.loadData('tV2', 'badge'), 10);
@@ -575,23 +575,23 @@ width: 0px !important;\
 z-index: -99999 !important;}</style>';
     const tV2_base_bd = '\
 <style class="tV2-base-bd">\
-#bd-pub-li{\
+[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2){\
 height: 14px !important;\
 margin: 0px !important;\
 padding: 0px !important;\
 margin-bottom: 0px !important;}\
-#bd-pub-li [class^="guildInner"]{\
+[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2) > [class^="guildInner"]{\
 height: inherit !important;\
 border-radius: 0px !important;\
 width: 60px !important;\
 margin-left: -8px !important;}\
-#bd-pub-button,\
-#RANbutton{\
+[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2) > [class^="guildInner"] > a > #bd-pub-button,\
+#bd-pub-button.RANbutton{\
 font-size: var(--read-all-font-size) !important;\
 word-wrap: normal !important;\
 white-space: nowrap !important;\
 color: var(--neutral-text) !important;}\
-#bd-pub-button{\
+[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2) > [class^="guildInner"] > a > #bd-pub-button{\
 visibility: hidden !important;\
 line-height: 18px !important;\
 position: absolute !important;\
@@ -599,7 +599,7 @@ float: left !important;\
 left: 50% !important;\
 top: 45% !important;\
 transform: translate(-50%, -50%) !important;}\
-#bd-pub-button:after{\
+[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2) > [class^="guildInner"] > a > #bd-pub-button:after{\
 content: "Server Menu" !important;\
 visibility: visible !important;\
 line-height: 18px !important;\
@@ -608,12 +608,12 @@ float: left !important;\
 left: 50% !important;\
 top: 50% !important;\
 transform: translate(-50%, -50%) !important;}\
-#RANbutton-frame{\
+#bd-pub-li.RANbutton-frame{\
 height: 0px !important;\
 margin-top: -5px !important;\
 margin-bottom: 18px !important;}\
-#bd-pub-li a,\
-#RANbutton-frame a{\
+[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2) > [class^="guildInner"] > a,\
+#bd-pub-li.RANbutton-frame a{\
 height: 13px !important;\
 width: fit-content !important;}\
 .bda-slist li{\
@@ -710,7 +710,6 @@ border-bottom: 1px solid var(--user-color) !important;}\
 .bd-toasts{\
 display: block !important;\
 position: absolute !important;\
-width: inherit !important;\
 float: left !important;\
 bottom: 8% !important;\
 left: 50% !important;\
@@ -737,7 +736,8 @@ pointer-events: none !important;\
 width: fit-content !important;\
 margin: 10px auto 0px auto !important;\
 padding: 10px !important;\
-transform: none !important;}</style>';
+transform: none !important;\
+}</style>';
     if ($('head .tV2-web').length === 0) {
         $('head').prepend(tV2_web);
     };
@@ -961,6 +961,7 @@ tV2.prototype.start = function() {
 tV2.prototype.stop = function() {
     try {
         $('.layers-3iHuyZ').prop('onclick',null)
+        $('head .tV2-base-bd').remove();
         $('head .tV2-base-css').remove();
         $('head .tV2-base').remove();
         $('head .tV2-web').remove();

@@ -759,26 +759,26 @@ body > div:first-of-type  > div:nth-of-type(2) > div:first-of-type > div:first-o
     width: 0px !important;
     z-index: -99999 !important;
 }
-#bd-pub-li {
+[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2) {
     height: 14px !important;
     margin: 0px !important;
     padding: 0px !important;
     margin-bottom: 0px !important;
 }
-#bd-pub-li [class^="guildInner"] {
+[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2) > [class^="guildInner"] {
     height: inherit !important;
     border-radius: 0px !important;
     width: 60px !important;
     margin-left: -8px !important;
 }
-#bd-pub-button,
+[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2) > [class^="guildInner"] > a > #bd-pub-button,
 #bd-pub-li.RANbutton {
     font-size: var(--read-all-font-size) !important;
     word-wrap: normal !important;
     white-space: nowrap !important;
     color: var(--neutral-text) !important;
 }
-#bd-pub-button {
+[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2) > [class^="guildInner"] > a > #bd-pub-button {
     visibility: hidden !important;
     line-height: 18px !important;
     position: absolute !important;
@@ -787,7 +787,7 @@ body > div:first-of-type  > div:nth-of-type(2) > div:first-of-type > div:first-o
     top: 45% !important;
     transform: translate(-50%, -50%) !important;
 }
-#bd-pub-button:after {
+[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2) > [class^="guildInner"] > a > #bd-pub-button:after {
     content: "Server Menu" !important;
     visibility: visible !important;
     line-height: 18px !important;
@@ -802,7 +802,7 @@ body > div:first-of-type  > div:nth-of-type(2) > div:first-of-type > div:first-o
     margin-top: -5px !important;
     margin-bottom: 18px !important;
 }
-#bd-pub-li a,
+[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2) > [class^="guildInner"] > a,
 #bd-pub-li.RANbutton-frame a {
     height: 13px !important;
     width: fit-content !important;

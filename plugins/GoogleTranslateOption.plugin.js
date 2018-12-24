@@ -307,18 +307,39 @@ class GoogleTranslateOption {
 		}.call(this);
 			
 		this.css = `
-			${BDFDB.dotCN.textareabutton}.translate-button.active {
-				color: #F04747;
+			${BDFDB.dotCN.textareainner} {
+				border: none !important;
+			}
+			
+			${BDFDB.dotCN.textareainner} ${BDFDB.dotCN.textareapickerbuttons} {
+				height: auto;
+			}
+			
+			${BDFDB.dotCN.textareainner} .send-button {
+				top: calc(50% - 15px);
+				right: 9px;
+			}
+			
+			${BDFDB.dotCN.textareainner} .send-button,
+			${BDFDB.dotCN.textareainner} ${BDFDB.dotCN.button} {
+				max-height: unset;
+			}
+			
+			${BDFDB.dotCN.textareabuttonwrapper}.popout-open ${BDFDB.dotCN.textareabutton}.translate-button {
 				opacity: 1;
 			}
 			
-			${BDFDB.dotCN.textareabutton}.translate-button ${BDFDB.dotCN.textareaicon} {
+			${BDFDB.dotCN.textareabuttonwrapper + BDFDB.dotCNS.textareabuttonactive + BDFDB.dotCN.textareabutton}.translate-button {
+				color: #F04747 !important;
+			}
+			
+			${BDFDB.dotCNS.textareabuttonwrapper + BDFDB.dotCN.textareabutton}.translate-button ${BDFDB.dotCN.textareaicon} {
 				height: 24px;
 				width: 24px;
 			}
 			
-			${BDFDB.dotCN.textareabutton}.translate-button.active ${BDFDB.dotCN.textareaicon} {
-				transform: scale(1);
+			${BDFDB.dotCN.textareabuttonwrapper}.popout-open ${BDFDB.dotCN.textareabutton}.translate-button ${BDFDB.dotCN.textareaicon} {
+				transform: none;
 			}
 			
 			.reverse-button {
@@ -356,7 +377,7 @@ class GoogleTranslateOption {
 
 	getDescription () {return "Adds a Google Translate option to your context menu, which shows a preview of the translated text and on click will open the selected text in Google Translate. Also adds a translation button to your textareas, which will automatically translate the text for you before it is being send. DeepLApi written by square. Thanks ;)";}
 
-	getVersion () {return "1.5.3";}
+	getVersion () {return "1.5.6";}
 	
 	getAuthor () {return "DevilBro, square";}
 	
@@ -682,12 +703,12 @@ class GoogleTranslateOption {
 					})
 					.on("contextmenu." + this.getName(), () => {
 						this.translating = !this.translating;
-						document.querySelectorAll(BDFDB.dotCNS.textareawrapchat + ".translate-button").forEach(btn => {btn.classList.toggle("active", this.translating);});
+						document.querySelectorAll(BDFDB.dotCNS.textareawrapchat + ".translate-button-wrapper").forEach(btn => {btn.classList.toggle(BDFDB.disCN.textareabuttonactive, this.translating);});
 					});
 				if (buttoncontainer) buttoncontainer.insertBefore(button, buttoncontainer.firstElementChild);
 				else textareaWrap.appendChild(button);
 				button.classList.add(textareaInstance.props.type);
-				button.classList.toggle("active", this.translating);
+				button.classList.toggle(BDFDB.disCN.textareabuttonactive, this.translating);
 				$(textarea)
 					.off("input." + this.getName())
 					.on("input." + this.getName(), () => {
@@ -859,7 +880,7 @@ class GoogleTranslateOption {
 		var checkbox = popout[0].querySelector("#translating-checkbox");
 		checkbox.checked = this.translating;
 		$(checkbox).on("click." + this.getName(), () => {
-			button.classList.toggle("active", checkbox.checked);
+			button.classList.toggle(BDFDB.disCN.textareabuttonactive, checkbox.checked);
 			this.translating = checkbox.checked;
 		});
 			

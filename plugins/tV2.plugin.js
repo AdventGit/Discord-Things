@@ -420,7 +420,7 @@ tV2.prototype.startupSetup = function() {
 tV2.prototype.updateTheme = function() {
     const tV2_web = '\
 <style class="tV2-web">\
-@import url("https://raw.githack.com/AdventGit/Discord-Things/master/tV2/Advent-tV2-Base.css")\
+/*@import url("https://raw.githack.com/AdventGit/Discord-Things/master/tV2/Advent-tV2-Base.css")*/\
 </style>';
     const numGuildSize = parseInt(BDA.loadData('tV2', 'guilds'), 10);
     const numBadgeSize = parseInt(BDA.loadData('tV2', 'badge'), 10);
@@ -433,6 +433,15 @@ tV2.prototype.updateTheme = function() {
     const guild_error_size_h = (guild_add_size_h - 1);
     const guild_error_size_v = (((((numGuildSize * 2) / 2) / 4.6) + 0) * 2);
     const guild_base_h = (guild_error_size_h / 11);
+    if (BDA.loadData('tV2', 'guilds') < 50) {
+        var server_menu_width = (65 - (50 - BDA.loadData('tV2', 'guilds')));
+    } else if (BDA.loadData('tV2', 'guilds') > 50)  {
+        var server_menu_width = (65 + (BDA.loadData('tV2', 'guilds') - 50));
+    } else {
+        var server_menu_width = 65;
+    };
+    const dms_transform = ((numGuildSize + 6) * -1);
+    const dms_margin = ((-1 * dms_transform) + 4);
     const tV2_base = '\
 <style class="tV2-base">\
 :root{\
@@ -451,15 +460,19 @@ background: rgba(0,0,0,' + BDA.loadData('tV2', 'trans') + ') !important;\
 --neutral-hsla-trans-plugin: hsla(0, 0%, 21%, .3);\
 --neutral-text: hsla(0, 0%, 100%, .26);\
 --neutral-smooth: hsla(0, 0%, 100%, .1);\
+--neutral-guild: hsla(0, 0%, 100%, .48);\
 --dark: rgba(26, 26, 26, .78);\
 --light: rgba(229, 229, 229, .78);\
 --guild-size: ' + numGuildSize + 'px;\
+--server-menu-width: ' + server_menu_width + 'px;\
 --badge-size: ' + numBadgeSize + 'px;\
 --font-size: ' + font_size + 'px;\
 --read-all-font-size: ' + read_all_font_size + 'px;\
 --guild-base-size: ' + guild_base_size + 'px;\
 --guild-base-h: ' + guild_base_h + 'px;\
 --friend-icon-size: ' + friend_icon_size + 'px;\
+--dms-transform: ' + dms_transform + 'px;\
+--dms-margin: ' + dms_margin + 'px;\
 --guild-add-size-h: ' + guild_add_size_h + 'px;\
 --guild-add-size-v: ' + guild_add_size_v + 'px;\
 --guild-error-size-h: -' + guild_error_size_h + 'px;\
@@ -575,47 +588,6 @@ width: 0px !important;\
 z-index: -99999 !important;}</style>';
     const tV2_base_bd = '\
 <style class="tV2-base-bd">\
-[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2){\
-height: 14px !important;\
-margin: 0px !important;\
-padding: 0px !important;\
-margin-bottom: 0px !important;}\
-[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2) > [class^="guildInner"]{\
-height: inherit !important;\
-border-radius: 0px !important;\
-width: 60px !important;\
-margin-left: -8px !important;}\
-[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2) > [class^="guildInner"] > a > #bd-pub-button,\
-#bd-pub-button.RANbutton{\
-font-size: var(--read-all-font-size) !important;\
-word-wrap: normal !important;\
-white-space: nowrap !important;\
-color: var(--neutral-text) !important;}\
-[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2) > [class^="guildInner"] > a > #bd-pub-button{\
-visibility: hidden !important;\
-line-height: 18px !important;\
-position: absolute !important;\
-float: left !important;\
-left: 50% !important;\
-top: 45% !important;\
-transform: translate(-50%, -50%) !important;}\
-[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2) > [class^="guildInner"] > a > #bd-pub-button:after{\
-content: "Server Menu" !important;\
-visibility: visible !important;\
-line-height: 18px !important;\
-position: absolute !important;\
-float: left !important;\
-left: 50% !important;\
-top: 50% !important;\
-transform: translate(-50%, -50%) !important;}\
-#bd-pub-li.RANbutton-frame{\
-height: 0px !important;\
-margin-top: -5px !important;\
-margin-bottom: 18px !important;}\
-[class^="guilds"] > [class^="guild"]#bd-pub-li:nth-of-type(2) > [class^="guildInner"] > a,\
-#bd-pub-li.RANbutton-frame a{\
-height: 13px !important;\
-width: fit-content !important;}\
 .bda-slist li{\
 background: var(--neutral-hsla-trans);\
 border: none !important;\

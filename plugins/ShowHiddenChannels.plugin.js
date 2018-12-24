@@ -86,7 +86,7 @@ class ShowHiddenChannels {
 
 	getDescription () {return "Displays channels that are hidden from you by role restrictions.";}
 
-	getVersion () {return "2.3.5";}
+	getVersion () {return "2.3.8";}
 
 	getAuthor () {return "DevilBro";}
 	
@@ -139,13 +139,13 @@ class ShowHiddenChannels {
 		if (typeof BDFDB === "object") {
 			BDFDB.loadMessage(this);
 			
-			this.React = BDFDB.WebModules.findByProperties(["createElement", "cloneElement"]);
-			this.ChannelTypes = BDFDB.WebModules.findByProperties(["ChannelTypes"]).ChannelTypes;
-			this.UserStore = BDFDB.WebModules.findByProperties(["getUsers", "getUser"]);
-			this.MemberStore = BDFDB.WebModules.findByProperties(["getMember", "getMembers"]);
-			this.ChannelStore = BDFDB.WebModules.findByProperties(["getChannels", "getDMFromUserId"]);
-			this.GuildChannels = BDFDB.WebModules.findByProperties(["getChannels", "getDefaultChannel"]);
-			this.Permissions = BDFDB.WebModules.findByProperties(["Permissions", "ActivityTypes"]).Permissions;
+			this.React = BDFDB.WebModules.findByProperties("createElement", "cloneElement");
+			this.ChannelTypes = BDFDB.WebModules.findByProperties("ChannelTypes").ChannelTypes;
+			this.UserStore = BDFDB.WebModules.findByProperties("getUsers", "getUser");
+			this.MemberStore = BDFDB.WebModules.findByProperties("getMember", "getMembers");
+			this.ChannelStore = BDFDB.WebModules.findByProperties("getChannels", "getDMFromUserId");
+			this.GuildChannels = BDFDB.WebModules.findByProperties("getChannels", "getDefaultChannel");
+			this.Permissions = BDFDB.WebModules.findByProperties("Permissions", "ActivityTypes").Permissions;
 			
 			var observer = null;
 
@@ -310,6 +310,7 @@ class ShowHiddenChannels {
 						let channelicon = channel.querySelector(BDFDB.dotCN.channelcontent);
 						let channelsvg = channel.querySelector(BDFDB.dotCN.channelicon);
 						let channelname = channel.querySelector(BDFDB.dotCN.channelname);
+						this.setReactInstanceOfChannel(hiddenChannel, channel);
 						channelname.innerText = hiddenChannel.name;
 						$(channel)
 							.on("mouseenter mouseleave", BDFDB.dotCN.channelwrapper, (e) => {
@@ -338,6 +339,7 @@ class ShowHiddenChannels {
 						let channelicon = channel.querySelector(BDFDB.dotCN.channelcontent);
 						let channelsvg = channel.querySelector(BDFDB.dotCN.channelicon);
 						let channelname = channel.querySelector(BDFDB.dotCN.channelname);
+						this.setReactInstanceOfChannel(hiddenChannel, channel);
 						channelname.innerText = hiddenChannel.name;
 						$(channel)
 							.on("mouseenter mouseleave", BDFDB.dotCN.channelwrapper, (e) => {
@@ -365,6 +367,7 @@ class ShowHiddenChannels {
 						let channelwrapper = channel.querySelector(BDFDB.dotCN.categorywrappercollapsed);
 						let channelsvg = channel.querySelector(BDFDB.dotCN.categoryiconcollapsed);
 						let channelname = channel.querySelector(BDFDB.dotCN.categorynamecollapsed);
+						this.setReactInstanceOfChannel(hiddenChannel, channel);
 						channelname.innerText = hiddenChannel.name;
 						$(channel)
 							.on("mouseenter mouseleave", BDFDB.dotCN.flex, (e) => {
@@ -415,11 +418,18 @@ class ShowHiddenChannels {
 		}
 	}
 	
+	setReactInstanceOfChannel (info, div) {
+		var reactInstance = this.React.createElement(div);
+		reactInstance.memoizedProps = {channel:info};
+		div.__reactInternalInstance = reactInstance;
+	}
+	
 	createHiddenObjContextMenu (serverObj, hiddenObj, type, e) {
 		e.preventDefault();
 		e.stopPropagation();
 		var contextMenu = $(`<div class="${BDFDB.disCN.contextmenu} ShowHiddenChannelsContextMenu">${BDFDB.isPluginEnabled("PermissionsViewer") ? '<div class="' + BDFDB.disCN.contextmenuitemgroup + '"><div class="' + BDFDB.disCN.contextmenuitem + '" style="display: none !important;"></div></div>' : ''}<div class="${BDFDB.disCN.contextmenuitemgroup}"><div class="${BDFDB.disCN.contextmenuitem} copyid-item"><span>${BDFDB.LanguageStrings.COPY_ID}</span><div class="${BDFDB.disCN.contextmenuhint}"></div></div></div></div>`);
 		var reactInstance = this.React.createElement(contextMenu[0]);
+		reactInstance.memoizedProps = {displayName:"ChannelDeleteGroup",guild:serverObj.data,channel:hiddenObj};
 		reactInstance.return = {memoizedProps:{type:("CHANNEL_LIST_" + type),guild:serverObj.data,channel:hiddenObj}};
 		contextMenu[0].__reactInternalInstance = reactInstance;
 		contextMenu
@@ -475,16 +485,16 @@ class ShowHiddenChannels {
 		}
 		var htmlString = ``;
 		if (settings.showTopic && !allowed && channel.topic && channel.topic.replace(/[\t\n\r\s]/g, "")) {
-			htmlString += `<div class="${BDFDB.disCN.marginbottom4}">Topic:</div><div class="${BDFDB.disCNS.flex + BDFDB.disCN.wrap}"><div class="${BDFDB.disCNS.userpopoutrole + BDFDB.disCNS.flex + BDFDB.disCNS.aligncenter + BDFDB.disCN.wrap + BDFDB.disCNS.size12 + BDFDB.disCN.weightmedium} SHC-topic" style="border-color: rgba(255, 255, 255, 0.6); height: unset !important; padding-top: 5px; padding-bottom: 5px; max-width: ${window.outerWidth/3}px">${channel.topic}</div></div>`;
+			htmlString += `<div class="${BDFDB.disCN.marginbottom4}">Topic:</div><div class="${BDFDB.disCNS.flex + BDFDB.disCN.wrap}"><div class="${BDFDB.disCNS.userpopoutrole + BDFDB.disCNS.flex + BDFDB.disCNS.aligncenter + BDFDB.disCN.wrap + BDFDB.disCNS.size12 + BDFDB.disCN.weightmedium} SHC-topic" style="border-color: rgba(255, 255, 255, 0.6); height: unset !important; padding-top: 5px; padding-bottom: 5px; max-width: ${window.outerWidth/3}px">${BDFDB.encodeToHTML(channel.topic)}</div></div>`;
 		}
 		if (allowedRoles.length > 0 || overwrittenRoles.length > 0) {
 			htmlString += `<div class="${BDFDB.disCN.marginbottom4}">Allowed Roles:</div><div class="${BDFDB.disCNS.flex + BDFDB.disCN.wrap}">`;
 			for (let role of allowedRoles) {
-				let color = role.colorString ? BDFDB.color2COMP(role.colorString) : [255,255,255];
+				let color = role.colorString ? BDFDB.colorCONVERT(role.colorString, "RGBCOMP") : [255,255,255];
 				htmlString += `<div class="${BDFDB.disCNS.userpopoutrole + BDFDB.disCNS.flex + BDFDB.disCNS.aligncenter + BDFDB.disCN.wrap + BDFDB.disCNS.size12 + BDFDB.disCN.weightmedium} SHC-allowedrole" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="${BDFDB.disCNS.userpopoutrolecircle}" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="${BDFDB.disCNS.userpopoutrolename}">${BDFDB.encodeToHTML(role.name)}</div></div>`;
 			}
 			for (let role of overwrittenRoles) {
-				let color = role.colorString ? BDFDB.color2COMP(role.colorString) : [255,255,255];
+				let color = role.colorString ? BDFDB.colorCONVERT(role.colorString, "RGBCOMP") : [255,255,255];
 				htmlString += `<div class="${BDFDB.disCNS.userpopoutrole + BDFDB.disCNS.flex + BDFDB.disCNS.aligncenter + BDFDB.disCN.wrap + BDFDB.disCNS.size12 + BDFDB.disCN.weightmedium} SHC-overwrittenrole" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="${BDFDB.disCNS.userpopoutrolecircle}" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="${BDFDB.disCNS.userpopoutrolename}" style="text-decoration: line-through !important;">${BDFDB.encodeToHTML(role.name)}</div></div>`;
 			}
 			htmlString += `</div>`;
@@ -492,7 +502,7 @@ class ShowHiddenChannels {
 		if (allowedUsers.length > 0) {
 			htmlString += `<div class="${BDFDB.disCN.marginbottom4}">Allowed Users:</div><div class="${BDFDB.disCNS.flex + BDFDB.disCN.wrap}">`;
 			for (let user of allowedUsers) {
-				let color = user.colorString ? BDFDB.color2COMP(user.colorString) : [255,255,255];
+				let color = user.colorString ? BDFDB.colorCONVERT(user.colorString, "RGBCOMP") : [255,255,255];
 				htmlString += `<div class="${BDFDB.disCNS.userpopoutrole + BDFDB.disCNS.flex + BDFDB.disCNS.aligncenter + BDFDB.disCN.wrap + BDFDB.disCNS.size12 + BDFDB.disCN.weightmedium} SHC-denieduser" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="${BDFDB.disCNS.userpopoutrolecircle}" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="${BDFDB.disCNS.userpopoutrolename}">${BDFDB.encodeToHTML(user.nick ? user.nick : user.name)}</div></div>`;
 			}
 			htmlString += `</div>`;
@@ -500,7 +510,7 @@ class ShowHiddenChannels {
 		if (deniedRoles.length > 0) {
 			htmlString += `<div class="${BDFDB.disCN.marginbottom4}">Denied Roles:</div><div class="${BDFDB.disCNS.flex + BDFDB.disCN.wrap}">`;
 			for (let role of deniedRoles) {
-				let color = role.colorString ? BDFDB.color2COMP(role.colorString) : [255,255,255];
+				let color = role.colorString ? BDFDB.colorCONVERT(role.colorString, "RGBCOMP") : [255,255,255];
 				htmlString += `<div class="${BDFDB.disCNS.userpopoutrole + BDFDB.disCNS.flex + BDFDB.disCNS.aligncenter + BDFDB.disCN.wrap + BDFDB.disCNS.size12 + BDFDB.disCN.weightmedium} SHC-deniedrole" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="${BDFDB.disCNS.userpopoutrolecircle}" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="${BDFDB.disCNS.userpopoutrolename}">${BDFDB.encodeToHTML(role.name)}</div></div>`;
 			}
 			htmlString += `</div>`;
@@ -508,7 +518,7 @@ class ShowHiddenChannels {
 		if (deniedUsers.length > 0) {
 			htmlString += `<div class="${BDFDB.disCN.marginbottom4}">Denied Users:</div><div class="${BDFDB.disCNS.flex + BDFDB.disCN.wrap}">`;
 			for (let user of deniedUsers) {
-				let color = user.colorString ? BDFDB.color2COMP(user.colorString) : [255,255,255];
+				let color = user.colorString ? BDFDB.colorCONVERT(user.colorString, "RGBCOMP") : [255,255,255];
 				htmlString += `<div class="${BDFDB.disCNS.userpopoutrole + BDFDB.disCNS.flex + BDFDB.disCNS.aligncenter + BDFDB.disCN.wrap + BDFDB.disCNS.size12 + BDFDB.disCN.weightmedium} SHC-denieduser" style="border-color: rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6);"><div class="${BDFDB.disCNS.userpopoutrolecircle}" style="background-color: rgb(${color[0]}, ${color[1]}, ${color[2]});"></div><div class="${BDFDB.disCNS.userpopoutrolename}">${BDFDB.encodeToHTML(user.nick ? user.nick : user.name)}</div></div>`;
 			}
 			htmlString += `</div>`;

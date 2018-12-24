@@ -92,201 +92,66 @@ body > [id^="app"] > [class^="context"] div > div[class*="danger"] {
     -webkit-text-stroke: .45px red !important;
     text-decoration: none !important;
 }
-[class*="scroll"] > [class*="scroll"]::-webkit-resizer,
-[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar,
-[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-button,
-[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-corner,
-[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-track,
-[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-track-piece {
-    visibility: hidden !important;
-    background: transparent !important;
-}
-[class*="scroll"] > [class*="scroll"]:hover::-webkit-resizer,
-[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar,
-[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-button,
-[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-corner,
-[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-track,
-[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-track-piece {
-    visibility: visible !important;
-    background: transparent !important;
-}
-[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar,
-[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-track-piece,
-[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-thumb {
-    visibility: hidden !important;
-}
-[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar {
-    width: 4px !important;
-}
-[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-track-piece {
-    border: none !important;
-}
-[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-thumb {
-    background: transparent !important;
-    border: none !important;
-}
-[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar,
-[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-track-piece,
-[class*="scroll"] > [class*="scroll"]::-webkit-scrollbar-thumb {
-    visibility: visible !important;
-}
-[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar {
-    width: 4px !important;
-}
-[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-track-piece {
-    border: none !important;
-}
-[class*="scroll"] > [class*="scroll"]:hover::-webkit-scrollbar-thumb {
-    background: var(--user-color) !important;
-    border: none !important;
-}
-[class^="chat"] > [class^="content"] > [class^="flex"] > [class^="message"] > [class*="scroll"] > [class*="scroll"]::-webkit-scrollbar {
-    width: 8px !important;
-}
-[class^="chat"] > [class^="content"] > [class^="members"] > [class*="scroll"] > [class*="scroll"]::-webkit-scrollbar {
-    width: 8px !important;
-}
 [class^="app"][class*="platform"] > [class^="app"] > [class^="layer"] > [class^="layer"]:nth-of-type(2) > [class^="ui"] > [class^="sidebar"] {
     z-index: 2 !important;
 }
-[class^="wrapper"][class*="badge"],
-.betterfriendcount-badge {
-    background: rgba(0, 0, 0, 1) !important;
-    border: 2px solid var(--user-color) !important;
-    border-radius: 50% !important;
-    padding: 0px !important;
-    height: var(--badge-size) !important;
-    width: var(--badge-size) !important;
-    text-align: center !important;
-    vertical-align: middle !important;
-    line-height: var(--badge-size) !important;
-    font-weight: 500 !important;
-}
-*::selection {
-    background-color: var(--user-color-smooth) !important;
-}
-[class^="guildsWrapper"] {
-    width: inherit !important;
-}
-[class^="guildsWrapper"] div {
-    margin: 0px !important;
-}
-[class^="guildsWrapper"] > [class^="scroll"] {
-    width: 100% !important;
-    padding-right: 10px !important;
-}
-[class^="guildsWrapper"] [href="/activity"],
-[class^="guildsWrapper"] [href*="@"],
-[class^="guildsWrapper"] [href="/library"],
-[class^="guildsWrapper"] [href="/store"] {
-    height: var(--guild-base-size) !important;
-    width: var(--guild-base-size) !important;
-    margin-left: var(--guild-base-h) !important;
-}
-[class^="guildsWrapper"] [href="/activity"] use,
-[class^="guildsWrapper"] [href*="@"] use,
-[class^="guildsWrapper"] [href="/library"] use,
-[class^="guildsWrapper"] [href="/store"] use {
-    fill: var(--neutral-semi-trans) !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] > [class^="guild-"]:first-child [class^="guildInner"],
-[class^="guildsWrapper"] [class^="guilds-"] > [class^="guild-"],
-[class^="guildsWrapper"] [class^="guilds-"] > [class^="guild-"]:nth-of-type(n+4) [class^="guildInner"] a{
-    height: var(--guild-size) !important;
-    width: var(--guild-size) !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] > [class^="friend"]:not([class^="friendsO"]) {
-    height: var(--guild-size) !important;
-    width: var(--guild-size) !important;
-    background-size: var(--friend-icon-size) !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] [class^="icon"] {
-    height: var(--guild-size) !important;
-    width: var(--guild-size) !important;
-    background-size: var(--guild-size) !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] [class^="guild-"]:nth-of-type(n+2) {
-    margin-top: 7px !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] [class^="guild-"]:nth-of-type(n+4) .avatar-small {
-    background-size: var(--guild-size) !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] [class^="guild-"] [class^="guildInner"] {
-    background-color: transparent !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] > [class^="dms-"] {
-    position: relative !important;
-    margin: -4px 0px 5px 0px !important;
-    z-index: 0 !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] > [class^="dms-"] [class^="guild-"],
-[class^="guildsWrapper"] [class^="guilds-"] > [class^="dms-"] [class^="guildInner"] {
-    height: var(--guild-size) !important;
-    width: var(--guild-size) !important;
-    margin-top: 7px !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] > [class^="dms-"] [class^="guildInner"] .avatar-small {
-    height: var(--guild-size) !important;
-    width: var(--guild-size) !important;
-    background-size: var(--guild-size) !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] > [class^="guildSeparator"] {
-    height: 1px !important;
-    width: var(--guild-size) !important;
-    margin-bottom: 7px !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] > [class^="guildSeparator"]:after {
-    height: 1px !important;
-    margin-top: 2px !important;
-    left: 0% !important;
-    right: 0% !important;
-    width: 100% !important;
-    background: var(--user-color) !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] > [class^="friend"] {
-    font-size: var(--font-size) !important;
-    text-align: left !important;
-    white-space: nowrap !important;
-    width: var(--guild-size) !important;
-    word-wrap: normal !important;
-    height: 18px !important;
-    line-height: 18px !important;
-	color: var(--neutral-text) !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] [class^="guild-"][class*="unread"]:before,
-[class^="guildsWrapper"] [class^="guilds-"] [class^="guild-"][class*="selected"]:before {
-    background: var(--user-color) !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] [class^="guild-"]:first-of-type[class*="selected"]:before {
-	background: transparent !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] > [class*="guildsAdd"] {
-    margin-top: 7px !important;
-    height: var(--guild-size) !important;
-    width: var(--guild-size) !important;
-    border: 2px dashed var(--neutral) !important;
-    font-size: 0px !important;
-    line-height: 0px !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] > [class*="guildsAdd"]:after {
-    content: "+" !important;
-    color: var(--neutral) !important;
-    position: absolute !important;
-    height: var(--guild-size) !important;
-    width: var(--guild-size) !important;
-    font-size: var(--guild-size) !important;
-    line-height: 0px !important;
-    text-align: center !important;
-    vertical-align: middle !important;
-    margin-left: var(--guild-add-size-h) !important;
-    margin-top: var(--guild-add-size-v) !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] > [class*="guildsAdd"]:hover {
-    border: 2px dashed var(--user-color) !important;
-}
-[class^="guildsWrapper"] [class^="guilds-"] > [class*="guildsAdd"]:hover:after {
-    color: var(--user-color) !important;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 [class^="guildsWrapper"] [class^="guilds-"] > [class*="guildsError"] {
     margin-top: 7px !important;
     height: var(--guild-size) !important;
@@ -315,6 +180,63 @@ body > [id^="app"] > [class^="context"] div > div[class*="danger"] {
 [class^="guildsWrapper"] [class^="guilds-"] > [class*="guildsError"]:hover:after {
     color: red !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 [class^="channels"] > [class^="flex"] > [class^="flex"] > [class^="container"] > [class^="header"],
 [class^="channel"] > [class^="private"] > [class^="search"] {
     box-shadow: none !important;
@@ -433,20 +355,16 @@ code[class^="inline"] {
 code {
     color: var(--neutral-text) !important;
 }
-[class^="embed"] {
-    border: none !important;
-    border-radius: 4px !important;
-    box-shadow: none !important;
-}
-[class^="embed"] > [class*="ill"] {
-    background-color: var(--user-color) !important;
-}
-[class^="embed"] > [class*="nner"] {
-    background: var(--neutral-hsla-trans) !important;
-    border: none !important;
-    border-radius: 4px !important;
-    box-shadow: none !important;
-}
+
+
+
+
+
+
+
+
+
+
 [class^="embed"] > [class*="ideo"][class*="nner"] {
     background: transparent !important;
     border: none !important;
@@ -463,35 +381,22 @@ code {
 [class^="embed"] > [class*="ideo"][class*="nner"] > [class^="wrapper"] a {
     color: var(--light) !important;
 }
-[class^="embed"] > [class*="nner"] > [class*="ontent"] > [class*="nner"] {
-    background: transparent !important;
-    border: none !important;
-    border-radius: none !important;
-    box-shadow: none !important;
-}
-[class^="embed"] > [class*="nner"] > [class*="ontent"] a {
-    color: var(--user-color) !important;
-}
-[class^="embed"] > [class*="nner"] > [class*="ontent"] > [class*="nner"] > [class*="ield"] > [class*="ield"] > [class*="ame"] {
-    color: #FFFFFF !important;
-    -webkit-text-stroke: .45px var(#FFFFFF) !important;
-    text-shadow: 0px 0px 0px var(#FFFFFF), -.45px -.45px 0px var(#FFFFFF), .45px -.45px 0px var(#FFFFFF), -.45px .45px 0px var(#FFFFFF), .45px .45px 0px var(#FFFFFF);
-}
-[class^="embed"] > [class*="nner"] > [class*="ontent"] > [class*="nner"] > [class*="ield"] > [class*="ield"] > [class*="alue"],
-[class^="embed"] > [class*="nner"] > [class*="ooter"] > span {
-    color: var(--neutral-text) !important;
-}
-[class^="embed"] > [class*="nner"] > [class*="image"] > img {
-    border-radius: 4px !important;
-}
-[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="channel"] > [class^="inner"] {
-    background: transparent !important;
-    box-shadow: 0px 0px 1px 1px var(--neutral), 0px 0px .5px .5px var(--neutral-smooth) !important;
-}
-[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="channel"] > [class^="inner"] > textarea,
-[class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="channel"] > [class^="inner"] > textarea::-webkit-input-placeholder {
-    color: var(--neutral-text) !important;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 [class^="chat"] > [class^="content"] > [class^="flex"] > form > [id^="channel"] > [class^="channel"] > [class^="inner"] > [class^="picker"] > [tabindex="2"] {
     height: unset !important;
 }
@@ -713,13 +618,6 @@ body > div:first-of-type > [class*="popout"] > [class^="no"] > [class^="user"] >
 [class^="chat"] > [class^="content"] > [class^="search"] > [class^="scroll"] > [class^="scroll"] > [class^="results"] > [class^="search"] > [class*="search"]::before,
 [class^="divider"],
 [class^="gameLibrary"],
-[class^="guildsWrapper"]::-webkit-scrollbar,
-[class^="guildsWrapper"]:hover::-webkit-scrollbar,
-[class^="guildsWrapper"] > [class^="scroll"]::-webkit-scrollbar,
-[class^="guildsWrapper"] > [class^="scroll"]:hover::-webkit-scrollbar,
-[class^="guildsWrapper"] > [class^="scroll"] > [class^="guilds"]::-webkit-scrollbar,
-[class^="guildsWrapper"] > [class^="scroll"] > [class^="guilds"]:hover::-webkit-scrollbar,
-[class^="guildsWrapper"] > [class^="unread"] > [class^="bar"],
 [class^="isLocalBot"],
 [class^="loadingMore"],
 [class^="member"] > [class^="scroll"] [class*="older"],

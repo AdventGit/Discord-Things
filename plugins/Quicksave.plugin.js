@@ -367,6 +367,7 @@ class Quicksave {
         if (elem.hasClass('backdrop-1wrmKB')) {
             let elem = $('.modal-1UGdnR .downloadLink-1ywL9o');
             if (!elem) return;
+            elem = elem.first();
 
             fs.access(this.settings.directory, fs.W_OK, err => {
                 let button = $('<a id="qs_button" class="anchor-3Z-8Bb downloadLink-1ywL9o size14-3iUx6q weightMedium-2iZe9B"></a>');
@@ -395,6 +396,10 @@ class Quicksave {
                     });
                 }
                 elem.after(button);
+
+                // Add a divider before the new link for consistency with other lightbox link plugins
+                let divider = $('<span class="downloadLink-1ywL9o size14-3iUx6q weightMedium-2iZe9B" style="margin: 0px 5px;"> | </span>');
+                elem.after(divider);
             });
         }
 
@@ -923,16 +928,13 @@ class Quicksave {
                     opacity: 0;
                 }
 
+                .messageGroupCozy-1BZuO8:hover .thumbQuicksave,
                 .imageWrapper-2p5ogY:hover .thumbQuicksave {
                     opacity: 0.8;
                 }
 
                 .thumbQuicksave:hover {
                     opacity: 1 !important;
-                }
-
-                #qs_button {
-                    padding-left: 10px;
                 }`
         };
     }

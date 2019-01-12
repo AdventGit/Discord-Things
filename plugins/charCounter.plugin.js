@@ -2,6 +2,12 @@
 
 class CharCounter {
 	initConstructor () {
+		this.patchModules = {
+			"ChannelTextArea":"componentDidMount",
+			"Note":"componentDidMount",
+			"Modal":"componentDidMount"
+		};
+		
 		this.selecting = false;
 		
 		this.counterMarkup = `<div id="charcounter" class="charcounter"></div>`;
@@ -71,7 +77,7 @@ class CharCounter {
 
 	getDescription () {return "Adds a charcounter in the chat.";}
 
-	getVersion () {return "1.2.9";}
+	getVersion () {return "1.3.0";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -97,62 +103,8 @@ class CharCounter {
 	initialize () {
 		if (typeof BDFDB === "object") {
 			BDFDB.loadMessage(this);
-						
-			var observer = null;
-
-			observer = new MutationObserver((changes, _) => {
-				changes.forEach(
-					(change, i) => {
-						if (change.addedNodes) {
-							change.addedNodes.forEach((node) => {
-								if (node.tagName && node.querySelector(BDFDB.dotCN.textareainner + ":not(" + BDFDB.dotCN.textareainnerdisabled + ")")) {
-									this.checkTextarea(node.querySelector("textarea"));
-								}
-							});
-						}
-					}
-				);
-			});
-			BDFDB.addObserver(this, BDFDB.dotCN.appmount, {name:"textareaObserver",instance:observer}, {childList: true, subtree: true});
-
-			observer = new MutationObserver((changes, _) => {
-				changes.forEach(
-					(change, i) => {
-						if (change.addedNodes) {
-							change.addedNodes.forEach((node) => {
-								let ele;
-								if (node.tagName && node.querySelector(BDFDB.dotCN.userpopout) && (ele = node.querySelector(BDFDB.dotCN.usernote)) != null) {
-									this.appendCounter(ele.firstElementChild, "popout");
-								}
-							});
-						}
-					}
-				);
-			});
-			BDFDB.addObserver(this, BDFDB.dotCN.popouts, {name:"userPopoutObserver",instance:observer}, {childList: true});
-
-			observer = new MutationObserver((changes, _) => {
-				changes.forEach(
-					(change, i) => {
-						if (change.addedNodes) {
-							change.addedNodes.forEach((node) => {
-								let ele;
-								if (node.tagName && (ele = node.querySelector(BDFDB.dotCN.reset)) != null) {
-									if (BDFDB.getInnerText(ele.firstElementChild) == BDFDB.LanguageStrings.RESET_NICKNAME) {
-										this.appendCounter(node.querySelector(BDFDB.dotCN.inputdefault), "nickname");
-									}
-								}
-								if (node.tagName && node.querySelector(BDFDB.dotCN.userprofile) && (ele = node.querySelector(BDFDB.dotCN.usernote)) != null) {
-									this.appendCounter(ele.firstElementChild, "profile");
-								}
-							});
-						}
-					}
-				);
-			});
-			BDFDB.addObserver(this, BDFDB.dotCN.app + " ~ [class^='theme']:not([class*='popouts'])", {name:"modalObserver",instance:observer}, {childList: true, subtree: true});
 			
-			document.querySelectorAll("textarea").forEach(textarea => {this.checkTextarea(textarea);});
+			BDFDB.WebModules.forceAllUpdates(this);
 		}
 		else {
 			console.error(this.getName() + ": Fatal Error: Could not load BD functions!");
@@ -162,28 +114,32 @@ class CharCounter {
 
 	stop () {
 		if (typeof BDFDB === "object") {
-			$(".charcounter").remove();
-			$(".charcounter-added").removeClass("charcounter-added");
-						
+			BDFDB.removeEles(".charcounter");
+			BDFDB.removeClasses("charcounter-added");
 			BDFDB.unloadMessage(this);
 		}
 	}
 	
+	
 	// begin of own functions
 	
-	checkTextarea (textarea) {
-		if (!textarea) return;
-		var textareaWrap = textarea.parentElement;
-		if (textareaWrap && !textareaWrap.querySelector("#charcounter")) {
-			var textareaInstance = BDFDB.getOwnerInstance({"node":textarea, "props":["handlePaste","saveCurrentText"], "up":true});
-			if (textareaInstance && textareaInstance.props && textareaInstance.props.type) {
-				this.appendCounter(textarea, textareaInstance.props.type);
-			}
+	processChannelTextArea (instance, wrapper) {
+		if (instance.props && instance.props.type && this.maxLenghts[instance.props.type]) this.appendCounter(wrapper.querySelector("textarea"), instance.props.type);
+	}
+	
+	processNote (instance, wrapper) {
+		if (wrapper.classList) this.appendCounter(wrapper.firstElementChild, wrapper.classList.contains(BDFDB.disCN.usernotepopout) ? "popout" : (wrapper.classList.contains(BDFDB.disCN.usernoteprofile) ? "profile" : null));
+	}
+	
+	processModal (instance, wrapper) {
+		if (instance.props && instance.props.tag == "form") {
+			let reset = wrapper.querySelector(BDFDB.dotCN.reset);
+			if (reset && BDFDB.getInnerText(reset.firstElementChild) == BDFDB.LanguageStrings.RESET_NICKNAME) this.appendCounter(wrapper.querySelector(BDFDB.dotCN.inputdefault), "nickname");
 		}
 	}
 	
 	appendCounter (input, type) {
-		if (!input) return;
+		if (!input || !type) return;
 		var counter = $(this.counterMarkup);
 		counter.addClass(type).appendTo(input.parentElement);
 		

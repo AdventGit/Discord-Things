@@ -54,7 +54,12 @@ class ReadAllNotificationsButton {
                 this.initialize();
             });
             document.head.appendChild(libraryScript);
-		} else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
+		} else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
+            this.initialize();
+        } else {
+            this.startTimeout = setTimeout(() => {this.initialize();}, 30000);
+        }
+        
 	}
 	initialize () {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {

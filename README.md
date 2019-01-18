@@ -7,6 +7,4 @@ Some of these plugins I've modified to better integrate into my theme.
 
 ## Themes
 
-In order to use my theme to the fullest you'll need to patch Discord to allow full transparency and patch the BetterDiscord `main.css` and `main.min.css` to remove some "!important" tags around elements like the emote panel. You can either do so from my provided `appdata` folder or manually do so yourself if you know how. For transparency you can use the plugin `TransparencyPatcher.plugin.js`.
-
-### The only theme file you need is `Advent.theme.css`.
+Instead of using a normal theme I'm using a Plugin so I can utilize a settings page (tV2.plugin.js). This allows me to add a "GUI" on the BD Plugins Settings page which will affect the theme. You can change color, transparency, guild sizes, badge sizes, and adding a background image (With or without still using transparency on Discord overall. What I mean is you can have an image and have Discord fully transparent. Cool right).

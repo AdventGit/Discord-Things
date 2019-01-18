@@ -57,7 +57,7 @@ class ReadAllNotificationsButton {
 		} else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
             this.initialize();
         } else {
-            this.startTimeout = setTimeout(() => {this.initialize();}, 30000);
+            this.startTimeout = setTimeout(() => {this.initialize();}, 4500);
         }
         
 	}

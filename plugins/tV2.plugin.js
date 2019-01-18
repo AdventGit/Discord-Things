@@ -461,7 +461,7 @@ background: rgba(0,0,0,' + BDA.loadData('tV2', 'trans') + ') !important;\
 --neutral-text: hsla(0, 0%, 100%, .26);\
 --neutral-smooth: hsla(0, 0%, 100%, .1);\
 --neutral-guild: hsla(0, 0%, 100%, .48);\
---dark: rgba(26, 26, 26, .78);\
+--dark: rgba(26, 26, 26, .92);\
 --light: rgba(229, 229, 229, .78);\
 --guild-size: ' + numGuildSize + 'px;\
 --server-menu-width: ' + server_menu_width + 'px;\

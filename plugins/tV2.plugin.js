@@ -784,141 +784,33 @@ width: 240px !important;}</style>';
                     $('head .tV2-server-menu-css').remove()
                 };
             };
-            // if (($('div.chat-3bRxxu div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw \
-            // div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY div span').attr('class')) === undefined) {
-                // var svgNames = [];
-                // $('div.chat-3bRxxu div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw \
-                // div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY span.iconMargin-2YXk4F svg.icon-1R19_H').each(function() {
-                    // svgNames.push($(this).attr('name'));
-                // });
-                // if (!svgNames.includes('Update')) {
-                    // if (($('div.chat-3bRxxu div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw \
-                    // div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY span.iconMargin-2YXk4F:eq(3) svg.icon-1R19_H\
-                    // ')).attr('name') === 'Mention') {
-                        // ($('div.chat-3bRxxu div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw \
-                        // div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY span.iconMargin-2YXk4F:eq(3)\
-                        // ')).detach().insertAfter('\
-                        // div.chat-3bRxxu div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw \
-                        // div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY span.iconMargin-2YXk4F:eq(1)');
-                    // };
-                    // const tV2_dyn_base_css = '<style class="tV2-dyn-base-css">\
-// div.chat-3bRxxu div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw \
-// div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY > span.iconMargin-2YXk4F:nth-of-type(1),\
-// div.chat-3bRxxu div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw \
-// div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY > span.iconMargin-2YXk4F:nth-of-type(5) {\
-// -webkit-box-direction: unset !important;\
-// -webkit-box-orient: unset !important;\
-// -webkit-box-pack: unset !important;\
-// animation: none !important;\
-// background: transparent !important;\
-// border-radius: 0px !important;\
-// border: none !important;\
-// bottom: unset !important;\
-// box-shadow: none !important;\
-// box-sizing: unset !important;\
-// color: unset !important;\
-// cursor: unset !important;\
-// display: none !important;\
-// flex-direction: unset !important;\
-// flex-wrap: unset !important;\
-// font-size: 0px !important;\
-// height: 0px !important;\
-// justify-content: unset !important;\
-// left: unset !important;\
-// letter-spacing: 0px !important;\
-// line-height: 0px !important;\
-// margin: 0px !important;\
-// opacity: 0 !important;\
-// outline: none !important;\
-// overflow: unset !important;\
-// padding: 0px !important;\
-// pointer-events: unset !important;\
-// position: absolute !important;\
-// right: unset !important;\
-// top: unset !important;\
-// transform: none !important;\
-// transition: none !important;\
-// vertical-align: unset !important;\
-// visibility: hidden !important;\
-// width: 0px !important;\
-// z-index: -99999 !important;\
-                    // }</style>';
-                    // $('head .tV2-dyn-base-css').remove();
-                    // $(tV2_dyn_base_css).insertAfter('head .tV2-web');
-                // } else {
-                    // $('head .tV2-dyn-base-css').remove();
-                // };
-            // } else if (($('div.chat-3bRxxu div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw \
-            // div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY div span').attr('class')) === 'iconMargin-2YXk4F') {
-                // var svgNames = [];
-                // $('div.chat-3bRxxu div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw \
-                // div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY span.iconMargin-2YXk4F svg.icon-1R19_H').each(function() {
-                    // svgNames.push($(this).attr('name'));
-                // });
-                // if (!svgNames.includes('Update')) {
-                    // if (($('div.chat-3bRxxu div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw \
-                    // div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY span.iconMargin-2YXk4F:eq(3) svg.icon-1R19_H\
-                    // ')).attr('name') === 'PersonPlus') {
-                        // ($('div.chat-3bRxxu div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw \
-                        // div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY span.iconMargin-2YXk4F:eq(3)\
-                        // ')).detach().insertAfter('\
-                        // div.chat-3bRxxu div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw \
-                        // div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY div:eq(0)');
-                        // ($('div.chat-3bRxxu div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw \
-                        // div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY span.iconMargin-2YXk4F:eq(4)\
-                        // ')).detach().insertAfter('\
-                        // div.chat-3bRxxu div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw \
-                        // div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY span.iconMargin-2YXk4F:eq(3)');
-                    // };
-                    // const tV2_dyn_base_css = '<style class="tV2-dyn-base-css">\
-// div.chat-3bRxxu div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw \
-// div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY > span.iconMargin-2YXk4F:nth-of-type(4) {\
-// -webkit-box-direction: unset !important;\
-// -webkit-box-orient: unset !important;\
-// -webkit-box-pack: unset !important;\
-// animation: none !important;\
-// background: transparent !important;\
-// border-radius: 0px !important;\
-// border: none !important;\
-// bottom: unset !important;\
-// box-shadow: none !important;\
-// box-sizing: unset !important;\
-// color: unset !important;\
-// cursor: unset !important;\
-// display: none !important;\
-// flex-direction: unset !important;\
-// flex-wrap: unset !important;\
-// font-size: 0px !important;\
-// height: 0px !important;\
-// justify-content: unset !important;\
-// left: unset !important;\
-// letter-spacing: 0px !important;\
-// line-height: 0px !important;\
-// margin: 0px !important;\
-// opacity: 0 !important;\
-// outline: none !important;\
-// overflow: unset !important;\
-// padding: 0px !important;\
-// pointer-events: unset !important;\
-// position: absolute !important;\
-// right: unset !important;\
-// top: unset !important;\
-// transform: none !important;\
-// transition: none !important;\
-// vertical-align: unset !important;\
-// visibility: hidden !important;\
-// width: 0px !important;\
-// z-index: -99999 !important;\
-                    // }</style>';
-                    // $('head .tV2-dyn-base-css').remove();
-                    // $(tV2_dyn_base_css).insertAfter('head .tV2-web');
-                // } else {
-                    // $('head .tV2-dyn-base-css').remove();
-                // };
-            // };
             $('head .tV2-text').remove();
         }, 0);
     };
+};
+
+tV2.prototype.mutationObserver = new MutationObserver(function(mutations) {
+    if (document.body.contains($('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9').get(0))) {
+        if ($('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9').get(0)) {
+            $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(1)').addClass('carousel-bs');
+            $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(2)').addClass('quicklaunch-bs');
+            $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(3)').addClass('nowplaying-bs');
+            $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(3) > div:nth-of-type(1)').addClass('nowplaying-bs-child');
+            $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(4)').addClass('whatsnew-bs');
+            $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(4) > div:nth-of-type(1)').addClass('whatsnew-bs-child');
+        };
+    };
+});
+
+tV2.prototype.activityfeedclasses = function() {
+    tV2.prototype.mutationObserver.observe($('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5').get(0), {
+        attributeOldValue: false,
+        attributes: false,
+        characterData: false,
+        characterDataoldValue: false,
+        childList: true,
+        subtree: false
+    });
 };
 
 //On plugin start
@@ -926,6 +818,7 @@ tV2.prototype.start = function() {
     tV2.prototype.startupSetup();
     tV2.prototype.updateTheme();
     tV2.prototype.runOnce();
+    tV2.prototype.activityfeedclasses();
     BDA.showToast('tV2: Loaded!');
 };
 
@@ -940,6 +833,7 @@ tV2.prototype.stop = function() {
         $('head .tV2-image-css').remove();
         $('head .tV2-text').remove();
         $('head .tV2-jQ3').remove();
+        tV2.prototype.mutationObserver.disconnect();
     }
     finally {
         BDA.saveData('tV2', 'loaded', 'False');

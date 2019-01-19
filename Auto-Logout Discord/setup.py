@@ -13,4 +13,4 @@ base = None
 if platform == 'win32':
     base = 'Win32GUI'
 
-setup(name='Auto-Logout Discord',version='1.0',description='Build 0.0.46 Compliant',options={'build_exe':build_exe_options},executables=[Executable(str(str(target_folder) + str('\\') + str('Auto-Logout Discord.py')),base=base)])
+setup(name='Auto-Logout Discord',version='1.1',description='Build 0.0.47 Compliant',options={'build_exe':build_exe_options},executables=[Executable(str(str(target_folder) + str('\\') + str('Auto-Logout Discord.py')),base=base)])

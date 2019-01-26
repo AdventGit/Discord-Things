@@ -3,7 +3,7 @@
 class EditUsers {
 	getName () {return "EditUsers";}
 
-	getVersion () {return "3.2.4";}
+	getVersion () {return "3.2.5";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -66,7 +66,7 @@ class EditUsers {
 			</div>`;
 			
 		this.userSettingsModalMarkup =
-			`<span class="${this.getName()}-modal DevilBro-modal">
+			`<span class="${this.name}-modal DevilBro-modal">
 				<div class="${BDFDB.disCN.backdrop}"></div>
 				<div class="${BDFDB.disCN.modal}">
 					<div class="${BDFDB.disCN.modalinner}">
@@ -76,12 +76,16 @@ class EditUsers {
 									<h4 class="${BDFDB.disCNS.h4 + BDFDB.disCNS.headertitle + BDFDB.disCNS.size16 + BDFDB.disCNS.height20 + BDFDB.disCNS.weightsemibold + BDFDB.disCNS.defaultcolor + BDFDB.disCNS.h4defaultmargin + BDFDB.disCN.marginreset}">REPLACE_modal_header_text</h4>
 									<div class="${BDFDB.disCNS.modalguildname + BDFDB.disCNS.small + BDFDB.disCNS.size12 + BDFDB.disCNS.height16 + BDFDB.disCN.primary}"></div>
 								</div>
-								<svg class="${BDFDB.disCNS.modalclose + BDFDB.disCN.flexchild}" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 12 12">
-									<g fill="none" fill-rule="evenodd">
-										<path d="M0 0h12v12H0"></path>
-										<path class="fill" fill="currentColor" d="M9.5 3.205L8.795 2.5 6 5.295 3.205 2.5l-.705.705L5.295 6 2.5 8.795l.705.705L6 6.705 8.795 9.5l.705-.705L6.705 6"></path>
-									</g>
-								</svg>
+								<button type="button" class="${BDFDB.disCNS.modalclose + BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookblank + BDFDB.disCNS.buttoncolorbrand + BDFDB.disCN.buttongrow}">
+									<div class="${BDFDB.disCN.buttoncontents}">
+										<svg name="Close" width="18" height="18" viewBox="0 0 12 12" style="flex: 0 1 auto;">
+											<g fill="none" fill-rule="evenodd">
+												<path d="M0 0h12v12H0"></path>
+												<path class="fill" fill="currentColor" d="M9.5 3.205L8.795 2.5 6 5.295 3.205 2.5l-.705.705L5.295 6 2.5 8.795l.705.705L6 6.705 8.795 9.5l.705-.705L6.705 6"></path>
+											</g>
+										</svg>
+									</div>
+								</button>
 							</div>
 							<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCNS.marginbottom8 + BDFDB.disCN.tabbarcontainer}" style="flex: 0 0 auto; padding-right: 12px;">
 								<div class="${BDFDB.disCNS.tabbar + BDFDB.disCN.tabbartop}">
@@ -181,9 +185,9 @@ class EditUsers {
 	}
 	
 	getSettingsPanel () {
-		if (!this.started || typeof BDFDB !== "object") return;
+		if (!global.BDFDB || typeof BDFDB != "object" || !BDFDB.loaded || !this.started) return;
 		var settings = BDFDB.getAllData(this, "settings"); 
-		var settingshtml = `<div class="${this.getName()}-settings DevilBro-settings"><div class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.size18 + BDFDB.disCNS.height24 + BDFDB.disCNS.weightnormal + BDFDB.disCN.marginbottom8}">${this.getName()}</div><div class="DevilBro-settings-inner">`;
+		var settingshtml = `<div class="${this.name}-settings DevilBro-settings"><div class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.size18 + BDFDB.disCNS.height24 + BDFDB.disCNS.weightnormal + BDFDB.disCN.marginbottom8}">${this.name}</div><div class="DevilBro-settings-inner">`;
 		settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom8}" style="flex: 1 1 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 0 0 auto;">Change User in:</h3></div><div class="DevilBro-settings-inner-list">`;
 		for (let key in settings) {
 			settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom8}" style="flex: 1 1 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">${this.defaults.settings[key].description}</h3><div class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.switchenabled + BDFDB.disCNS.switch + BDFDB.disCNS.switchvalue + BDFDB.disCNS.switchsizedefault + BDFDB.disCNS.switchsize + BDFDB.disCN.switchthemedefault}" style="flex: 0 0 auto;"><input type="checkbox" value="settings ${key}" class="${BDFDB.disCNS.switchinnerenabled + BDFDB.disCN.switchinner} settings-switch"${settings[key] ? " checked" : ""}></div></div>`;
@@ -228,6 +232,7 @@ class EditUsers {
 
 	initialize () {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
+			if (this.started) return;
 			BDFDB.loadMessage(this);
 			
 			this.RelationshipUtils = BDFDB.WebModules.findByProperties("isBlocked", "isFriend");
@@ -240,7 +245,7 @@ class EditUsers {
 			BDFDB.WebModules.forceAllUpdates(this);
 		}
 		else {
-			console.error(this.getName() + ": Fatal Error: Could not load BD functions!");
+			console.error(`%c[${this.name}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
 		}
 	}
 
@@ -251,6 +256,8 @@ class EditUsers {
 			BDFDB.removeAllData(this, "users");
 			BDFDB.WebModules.forceAllUpdates(this);
 			BDFDB.saveAllData(data, this, "users");
+			
+			BDFDB.removeEles(".autocompleteEditUsers", ".autocompleteEditUsersRow");
 			
 			BDFDB.unloadMessage(this);
 		}
@@ -421,11 +428,53 @@ class EditUsers {
 	}
 	
 	processChannelTextArea (instance, wrapper) {
-		if (instance.props && instance.props.type == "normal" && instance.props.channel && instance.props.channel.type == 1) {
-			let user = this.UserUtils.getUser(instance.props.channel.recipients[0]);
-			if (user) {
-				let data = this.getUserData(user.id, wrapper);
-				wrapper.querySelector("textarea").setAttribute("placeholder", BDFDB.LanguageStrings.TEXTAREA_PLACEHOLDER.replace("{{channel}}", "@" + (data.name || user.username)));
+		let channel = BDFDB.getReactValue(instance, "props.channel");
+		if (channel) {
+			var textarea = wrapper.querySelector("textarea");
+			if (!textarea) return;
+			if (instance.props.type == "normal" && channel.type == 1) {
+				let user = this.UserUtils.getUser(channel.recipients[0]);
+				if (user) {
+					let data = this.getUserData(user.id, wrapper);
+					textarea.setAttribute("placeholder", BDFDB.LanguageStrings.TEXTAREA_PLACEHOLDER.replace("{{channel}}", "@" + (data.name || user.username)));
+				}
+			}
+			if (BDFDB.getData("changeInAutoComplete", this, "settings")) {
+				BDFDB.addEventListener(this, textarea, "keydown", e => {
+					let autocompletemenu = textarea.parentElement.querySelector(BDFDB.dotCN.autocomplete);
+					if (autocompletemenu && (e.which == 9 || e.which == 13)) {
+						if (BDFDB.containsClass(autocompletemenu.querySelector(BDFDB.dotCN.autocompleteselected).parentElement, "autocompleteEditUsersRow")) {
+							e.originalEvent.preventDefault();
+							e.originalEvent.stopPropagation();
+							this.swapWordWithMention(textarea); 
+						}
+					}
+					else if (autocompletemenu && (e.which == 38 || e.which == 40)) {
+						let autocompleteitems = autocompletemenu.querySelectorAll(BDFDB.dotCN.autocompleteselectable + ":not(.autocompleteEditUsersSelector)");
+						let selected = autocompletemenu.querySelector(BDFDB.dotCN.autocompleteselected);
+						if (BDFDB.containsClass(selected, "autocompleteEditUsersSelector") || autocompleteitems[e.which == 38 ? 0 : (autocompleteitems.length-1)] == selected) {
+							e.originalEvent.preventDefault();
+							e.originalEvent.stopPropagation();
+							let next = this.getNextSelection(autocompletemenu, null, e.which == 38 ? false : true);
+							BDFDB.removeClass(selected, BDFDB.disCN.autocompleteselected);
+							BDFDB.addClass(selected, BDFDB.disCN.autocompleteselector);
+							BDFDB.addClass(next, BDFDB.disCN.autocompleteselected);
+						}
+					}
+					else if (textarea.value && !e.shiftKey && e.which == 13 && !autocompletemenu && textarea.value.indexOf("s/") != 0) {
+						this.format = true;
+						textarea.dispatchEvent(new Event("input"));
+					}
+					else if (!e.ctrlKey && e.which != 16 && textarea.selectionStart == textarea.selectionEnd && textarea.selectionEnd == textarea.value.length) {
+						clearTimeout(textarea.EditUsersAutocompleteTimeout);
+						textarea.EditUsersAutocompleteTimeout = setTimeout(() => {this.addAutoCompleteMenu(textarea, channel);},100);
+					}
+					
+					if (!e.ctrlKey && e.which != 38 && e.which != 40 && !(e.which == 39 && textarea.selectionStart == textarea.selectionEnd && textarea.selectionEnd == textarea.value.length)) BDFDB.removeEles(".autocompleteEditUsers", ".autocompleteEditUsersRow");
+				});
+				BDFDB.addEventListener(this, textarea, "click", e => {
+					if (textarea.selectionStart == textarea.selectionEnd && textarea.selectionEnd == textarea.value.length) setImmediate(() => {this.addAutoCompleteMenu(textarea, channel);});
+				});
 			}
 		}
 	}
@@ -877,6 +926,82 @@ class EditUsers {
 		else if (BDFDB.getParentEle(BDFDB.dotCN.accountinfo, wrapper)) key = "changeInUserAccount";
 		
 		return !key || BDFDB.getData(key, this, "settings") ? data : {};
+	}
+	
+	addAutoCompleteMenu (textarea, channel) {
+		if (textarea.parentElement.querySelector(".autocompleteEditUsersRow")) return;
+		let words = textarea.value.split(/\s/);
+		let lastword = words[words.length-1].trim();
+		if (lastword && lastword.length > 1 && lastword[0] == "@") {
+			let users = BDFDB.loadAllData(this, "users");
+			if (!users) return;
+			let userarray = [];
+			for (let id in users) if (users[id].name) {
+				let user = this.UserUtils.getUser(id);
+				let member = user ? this.MemberUtils.getMember(channel.guild_id, id) : null;
+				if (user && member) userarray.push(Object.assign({lowercasename:users[id].name.toLowerCase(),user,member},users[id]));
+			}
+			userarray = BDFDB.sortArrayByKey(userarray.filter(n => n.lowercasename.indexOf(lastword.toLowerCase().slice(1)) != -1), "lowercasename");
+			if (userarray.length) {
+				let autocompletemenu = textarea.parentElement.querySelector(BDFDB.dotCNS.autocomplete + BDFDB.dotCN.autocompleteinner), amount = 15;
+				if (!autocompletemenu) {
+					autocompletemenu = BDFDB.htmlToElement(`<div class="${BDFDB.disCNS.autocomplete + BDFDB.disCN.autocomplete2} autocompleteEditUsers"><div class="${BDFDB.disCN.autocompleteinner}"><div class="${BDFDB.disCNS.autocompleterowvertical + BDFDB.disCN.autocompleterow} autocompleteEditUsersRow"><div class="${BDFDB.disCN.autocompleteselector} autocompleteEditUsersSelector"><div class="${BDFDB.disCNS.autocompletecontenttitle + BDFDB.disCNS.small + BDFDB.disCNS.size12 + BDFDB.disCNS.height16 + BDFDB.disCN.weightsemibold}">${BDFDB.LanguageStrings.MEMBERS_MATCHING.replace("{{prefix}}", BDFDB.encodeToHTML(lastword))}</strong></div></div></div></div></div>`);
+					textarea.parentElement.appendChild(autocompletemenu);
+					autocompletemenu = autocompletemenu.firstElementChild;
+				}
+				else {
+					amount -= autocompletemenu.querySelectorAll(BDFDB.dotCN.autocompleteselectable).length;
+				}
+				
+				BDFDB.addEventListener(this, autocompletemenu, "mouseenter", BDFDB.dotCN.autocompleteselectable, e => {
+					var selected = autocompletemenu.querySelectorAll(BDFDB.dotCN.autocompleteselected);
+					BDFDB.removeClass(selected, BDFDB.disCN.autocompleteselected);
+					BDFDB.addClass(selected, BDFDB.disCN.autocompleteselector);
+					BDFDB.addClass(e.currentTarget, BDFDB.disCN.autocompleteselected);
+				});
+					
+				for (let data of userarray) {
+					if (amount-- < 1) break;
+					let autocompleterow = BDFDB.htmlToElement(`<div class="${BDFDB.disCNS.autocompleterowvertical + BDFDB.disCN.autocompleterow} autocompleteEditUsersRow"><div userid="${data.user.id}" class="${BDFDB.disCNS.autocompleteselector + BDFDB.disCN.autocompleteselectable} autocompleteEditUsersSelector"><div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.autocompletecontent}" style="flex: 1 1 auto;"><div class="${BDFDB.disCNS.avatarwrapper + BDFDB.disCN.avatarxsmall}"><div class="${BDFDB.disCN.avatarimage + BDFDB.disCNS.avatarxsmall + BDFDB.disCN.avatarmask}"${data.removeIcon ? '' : 'style="background-image: url(' + (data.url || BDFDB.getUserAvatar(data.user.id)) + ');"'}></div><div class="${BDFDB.disCNS['status' + BDFDB.getUserStatus(data.user.id)] + BDFDB.disCNS.status + BDFDB.disCNS.avatarxsmall + BDFDB.disCN.autocompleteavatarstatus}"></div></div><div class="${BDFDB.disCN.marginleft8}" changed-by-editusers="true" style="flex: 1 1 auto;${data.color1 ? (' color: ' + BDFDB.colorCONVERT(data.color1, 'RGB') + ' !important;') : ''}">${BDFDB.encodeToHTML(data.name || data.member.nick || data.user.username)}</div><div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignbaseline + BDFDB.disCNS.nowrap + BDFDB.disCN.autocompletedescription}" style="flex: 0 1 auto;"><div class="${BDFDB.disCN.autocompletedescriptionusername}">${BDFDB.encodeToHTML(data.user.username)}</div><div class="${BDFDB.disCN.autocompletedescriptiondiscriminator}">#${data.user.discriminator}</div></div></div></div></div>`);
+					autocompleterow.querySelector(BDFDB.dotCN.autocompleteselectable).addEventListener("click", () => {this.swapWordWithMention(textarea);});
+					autocompletemenu.appendChild(autocompleterow);
+				}
+				if (!autocompletemenu.querySelector(BDFDB.dotCN.autocompleteselected)) {
+					BDFDB.addClass(autocompletemenu.querySelector(".autocompleteEditUsersRow " + BDFDB.dotCN.autocompleteselectable), BDFDB.disCN.autocompleteselected);
+				}
+			}
+		}
+	}
+	
+	getNextSelection (menu, selected, forward) {
+		selected = selected ? selected : menu.querySelector(BDFDB.dotCN.autocompleteselected).parentElement;
+		let next, sibling = forward ? selected.nextElementSibling : selected.previousElementSibling;
+		if (sibling) {
+			next = sibling.querySelector(BDFDB.dotCN.autocompleteselectable);
+		}
+		else {
+			let items = menu.querySelectorAll(BDFDB.dotCN.autocompleteselectable);
+			next = forward ? items[0] : items[items.length-1]; 
+		}
+		return next ? next : this.getNextSelection(menu, sibling, forward);
+	}
+	
+	swapWordWithMention (textarea) {
+		let selected = textarea.parentElement.querySelector(".autocompleteEditUsersRow " + BDFDB.dotCN.autocompleteselected);
+		let words = textarea.value.split(/\s/);
+		let lastword = words[words.length-1].trim();
+		if (selected && lastword) {
+			let username = selected.querySelector(BDFDB.dotCN.autocompletedescriptionusername).textContent;
+			let discriminator = selected.querySelector(BDFDB.dotCN.autocompletedescriptiondiscriminator).textContent;
+			let userid = selected.getAttribute("userid");
+			BDFDB.removeEles(".autocompleteEditUsers", ".autocompleteEditUsersRow");
+			textarea.focus(); 
+			textarea.selectionStart = textarea.value.length - lastword.length;
+			textarea.selectionEnd = textarea.value.length;
+			document.execCommand("insertText", false, (username && discriminator ? ("@" + username + discriminator) : `<@!${userid}>`) + " ");
+			textarea.selectionStart = textarea.value.length;
+			textarea.selectionEnd = textarea.value.length;
+		}
 	}
 	
 	setLabelsByLanguage () {

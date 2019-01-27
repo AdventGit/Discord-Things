@@ -5,6 +5,8 @@ const basePath = path.join(__dirname, "..", "app.asar");
 const pkg = require(path.join(basePath, "package.json"));
 const BetterDiscord = require("./betterdiscord");
 const config = require("./config");
+const app = electron.app
+const acmdsw = app.commandLine.appendSwitch
 
 class BrowserWindow extends electron.BrowserWindow {
     constructor(options) {
@@ -22,8 +24,11 @@ class BrowserWindow extends electron.BrowserWindow {
 
 Object.assign(BrowserWindow, electron.BrowserWindow);
 
+//app.disableHardwareAcceleration();
+acmdsw('enable-transparent-visuals');
+
 const electron_path = require.resolve("electron");
-electron.app.once("ready", () => {
+app.once("ready", () => {
 	Object.assign(BrowserWindow, electron.BrowserWindow);
 	require.cache[electron_path].exports = Object.assign({}, electron, {BrowserWindow});
 });
@@ -31,6 +36,6 @@ electron.app.once("ready", () => {
 const browser_window_path = require.resolve(path.resolve(electron_path, "..", "..", "browser-window.js"));
 require.cache[browser_window_path].exports = BrowserWindow;
 Module._cache[browser_window_path].exports = BrowserWindow;
-electron.app.setAppPath(basePath);
-electron.app.setName(pkg.name);
+app.setAppPath(basePath);
+app.setName(pkg.name);
 Module._load(path.join(basePath, pkg.main), null, true);

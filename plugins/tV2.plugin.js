@@ -189,6 +189,7 @@ color: white !important;\
 border: 1px solid #777777 !important;\
 min-width: 48px !important;\
 width: 48px !important;\
+max-width: 465px !important;\
 height: 20px !important;\
 ">\
         </div>\
@@ -263,14 +264,26 @@ tV2.prototype.settingsPanelJS = function() {
             return width;
         };
         $.fn.autoresize = function(options) {
-            options = $.extend({padding:10,minWidth:0,maxWidth:10000}, options||{});
             $(this).on('input mousemove', function() {
                 $(this).css('width', Math.min(options.maxWidth,Math.max(options.minWidth,$(this).textWidth() + options.padding)));
             }).trigger('input mousemove');
             return this;
         };
+        $.fn.autoresizeOnDemand = function(options) {
+            $(this).css('width', Math.min(options.maxWidth,Math.max(options.minWidth,$(this).textWidth() + options.padding)));
+            return this;
+        };
+        const bgimageBounds = {padding:4,minWidth:48,maxWidth:465};
+        $('.tV2-image').autoresizeOnDemand(bgimageBounds);
+        if ($('.tV2-image').val().toLowerCase() !== 'None'.toLowerCase()) {
+            $('#tV2-image-trans').removeClass('tV2-hide');
+        } else {
+            $('#tV2-image-trans').addClass('tV2-hide');
+        };
+        if ($('.tV2-image').val().length === 0) {
+            $('#tV2-image-trans').addClass('tV2-hide');
+        }
         $('.tV2-image').on('input', function () {
-            console.log($('.tV2-image').val().length)
             if ($('.tV2-image').val().toLowerCase() !== 'None'.toLowerCase()) {
                 $('#tV2-image-trans').removeClass('tV2-hide');
             } else {
@@ -326,6 +339,7 @@ tV2.prototype.settingsPanelJS = function() {
         });
         $('.tV2-image-reset').on('click', function() {
             $('.tV2-image').val('None');
+            $('.tV2-image').autoresizeOnDemand(bgimageBounds);
             $('#tV2-image-trans').addClass('tV2-hide');
         });
         $('.tV2-image-trans-reset').on('click', function() {
@@ -356,7 +370,7 @@ tV2.prototype.settingsPanelJS = function() {
         $('.tV2-image-trans-num').on('input', function() {
             $('.tV2-image-trans').val(this.value);
         });
-        $('.tV2-image').autoresize({padding:4,minWidth:48,maxWidth:492});
+        $('.tV2-image').autoresize(bgimageBounds);
         $('.tV2-usercolor').on('input', function() {
             const userhex = parseInt($('.tV2-usercolor').val().substr(1), 16);
             const usercolor = ((userhex >> 16) & 255) + ',' + ((userhex >> 8) & 255) + ',' + (userhex & 255)

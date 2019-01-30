@@ -812,25 +812,23 @@ width: 240px !important;}</style>';
     };
 };
 
-tV2.prototype.mutationObserver = new MutationObserver(function(mutations) {
+tV2.prototype.activityFeed = new MutationObserver(function(mutations) {
     if (document.body.contains($('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9').get(0))) {
         $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(1)').addClass('carousel-bs');
         $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(2)').addClass('quicklaunch-bs');
         $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(3)').addClass('nowplaying-bs');
-        $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(3) > div:nth-of-type(1)').addClass('nowplaying-bs-child');
         $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(4)').addClass('whatsnew-bs');
-        $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(4) > div:nth-of-type(1)').addClass('whatsnew-bs-child');
     };
 });
 
 tV2.prototype.activityfeedclasses = function() {
-    tV2.prototype.mutationObserver.observe($('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5').get(0), {
+    tV2.prototype.activityFeed.observe($('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5').get(0), {
         attributeOldValue: false,
         attributes: false,
         characterData: false,
         characterDataoldValue: false,
         childList: true,
-        subtree: false
+        subtree: true
     });
 };
 
@@ -854,7 +852,7 @@ tV2.prototype.stop = function() {
         $('head .tV2-image-css').remove();
         $('head .tV2-text').remove();
         $('head .tV2-jQ3').remove();
-        tV2.prototype.mutationObserver.disconnect();
+        tV2.prototype.activityFeed.disconnect();
     }
     finally {
         BDA.saveData('tV2', 'loaded', 'False');

@@ -447,6 +447,8 @@ tV2.prototype.updateTheme = function() {
     const guild_error_size_h = (guild_add_size_h - 1);
     const guild_error_size_v = (((((numGuildSize * 2) / 2) / 4.6) + 0) * 2);
     const guild_base_h = (guild_error_size_h / 11);
+    const guild_size_search = (numGuildSize - 4);
+    const guild_search_top_left = (numGuildSize - 29) - ((numGuildSize - 30) / 2);
     if (BDA.loadData('tV2', 'guilds') < 50) {
         var server_menu_width = (65 - (50 - BDA.loadData('tV2', 'guilds')));
     } else if (BDA.loadData('tV2', 'guilds') > 50)  {
@@ -491,7 +493,9 @@ background: rgba(0,0,0,' + BDA.loadData('tV2', 'trans') + ') !important;\
 --guild-add-size-h: ' + guild_add_size_h + 'px;\
 --guild-add-size-v: ' + guild_add_size_v + 'px;\
 --guild-error-size-h: -' + guild_error_size_h + 'px;\
---guild-error-size-v: ' + guild_error_size_v + 'px;}\
+--guild-error-size-v: ' + guild_error_size_v + 'px;\
+--guild-size-search: ' + guild_size_search + 'px;\
+--guild-search-top-left: ' + guild_search_top_left + 'px;}\
 </style>';
     const tV2_base_css = '\
 <style class="tV2-base-css">\

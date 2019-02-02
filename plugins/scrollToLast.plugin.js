@@ -1,21 +1,34 @@
 //META { "name": "scrollToLast" } *//
 
-var scrollToLast = function() {
+(function($) {
+  $.fn.scrollToBottom = function() {
+    return this.each(function (i, element) {
+      $(element).scrollTop(Number.MAX_SAFE_INTEGER);
+    });
+  };
+}(jQuery));
 
-  var Keybinds, onSwitch, cancels = [];
+const scrollToLast = function() {
 
-  Keybinds = BdApi.findModuleByProps("MARK_CHANNEL_READ");
-
+  var onSwitch, cancels = [];
+  
   onSwitch = ({methodArguments: [ev]}) => {
     if(("CHANNEL_SELECT" === ev.type || "GUILD_SELECT" === ev.type) && /^\/channels\/(?:@me|\d+)\/\d+$/.test(window.location.pathname))
-      process.nextTick(Keybinds.MARK_CHANNEL_READ.action);
+      var isDone = "False";
+      var intr = setInterval(function() {
+        if ($('.messagesWrapper-3lZDfY .scrollerWrap-2lJEkd .scroller-2FKFPG')[0].scrollHeight - $('.messagesWrapper-3lZDfY .scrollerWrap-2lJEkd .scroller-2FKFPG').scrollTop() == $('.messagesWrapper-3lZDfY .scrollerWrap-2lJEkd .scroller-2FKFPG').outerHeight()) {
+          isDone = "True";
+        }
+        $('.messagesWrapper-3lZDfY .scrollerWrap-2lJEkd .scroller-2FKFPG').scrollToBottom();
+        if (isDone == "True") clearInterval(intr);
+      },1000);
   };
 
   return {
     getName: () => "Scroll-To-Last",
     getDescription: () => "When entering any text channel, scrolls to the bottom and marks it as read.",
     getAuthor: () => "square",
-    getVersion: () => "1.0.1",
+    getVersion: () => "1.0.2",
 
     start: () => {
       cancels.push(BdApi.monkeyPatch(

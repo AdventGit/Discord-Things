@@ -1,23 +1,25 @@
-//META{"name":"CharCounter"}*//
+//META{"name":"CharCounter","website":"https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/CharCounter","source":"https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/CharCounter/CharCounter.plugin.js"}*//
 
 class CharCounter {
 	getName () {return "CharCounter";}
 
-	getVersion () {return "1.3.2";}
+	getVersion () {return "1.3.3";}
 
 	getAuthor () {return "DevilBro";}
 
 	getDescription () {return "Adds a charcounter in the chat.";}
-	
+
 	initConstructor () {
+		this.changelog = {
+			"fixed":[["Parsed Length","The character counter show the parsed length (which determines if a message is over 2000 chars) again like it used to, instead of the literal length"]]
+		};
+		
 		this.patchModules = {
 			"ChannelTextArea":"componentDidMount",
 			"Note":"componentDidMount",
 			"Modal":"componentDidMount"
 		};
-		
-		this.selecting = false;
-		
+
 		this.maxLenghts = {
 			normal: 2000,
 			edit: 2000,
@@ -90,10 +92,7 @@ class CharCounter {
 			libraryScript.setAttribute("type", "text/javascript");
 			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js");
 			libraryScript.setAttribute("date", performance.now());
-			libraryScript.addEventListener("load", () => {
-				BDFDB.loaded = true;
-				this.initialize();
-			});
+			libraryScript.addEventListener("load", () => {if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();});
 			document.head.appendChild(libraryScript);
 		}
 		else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
@@ -104,7 +103,7 @@ class CharCounter {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
 			if (this.started) return;
 			BDFDB.loadMessage(this);
-			
+
 			BDFDB.WebModules.forceAllUpdates(this);
 		}
 		else {
@@ -120,33 +119,38 @@ class CharCounter {
 			BDFDB.unloadMessage(this);
 		}
 	}
-	
-	
+
+
 	// begin of own functions
-	
+
 	processChannelTextArea (instance, wrapper) {
-		if (instance.props && instance.props.type && this.maxLenghts[instance.props.type]) this.appendCounter(wrapper.querySelector("textarea"), instance.props.type);
+		if (instance.props && instance.props.type && this.maxLenghts[instance.props.type]) this.appendCounter(wrapper.querySelector("textarea"), instance.props.type, true);
 	}
-	
+
 	processNote (instance, wrapper) {
-		this.appendCounter(wrapper.firstElementChild, BDFDB.containsClass(wrapper, BDFDB.disCN.usernotepopout) ? "popout" : (BDFDB.containsClass(wrapper, BDFDB.disCN.usernoteprofile) ? "profile" : null));
+		this.appendCounter(wrapper.firstElementChild, BDFDB.containsClass(wrapper, BDFDB.disCN.usernotepopout) ? "popout" : (BDFDB.containsClass(wrapper, BDFDB.disCN.usernoteprofile) ? "profile" : null), false);
 	}
-	
+
 	processModal (instance, wrapper) {
 		if (instance.props && instance.props.tag == "form") {
 			let reset = wrapper.querySelector(BDFDB.dotCN.reset);
-			if (reset && BDFDB.getInnerText(reset.firstElementChild) == BDFDB.LanguageStrings.RESET_NICKNAME) this.appendCounter(wrapper.querySelector(BDFDB.dotCN.inputdefault), "nickname");
+			if (reset && BDFDB.getInnerText(reset.firstElementChild) == BDFDB.LanguageStrings.RESET_NICKNAME) this.appendCounter(wrapper.querySelector(BDFDB.dotCN.inputdefault), "nickname", false);
 		}
 	}
-	
-	appendCounter (input, type) {
+
+	appendCounter (input, type, parsing) {
 		if (!input || !type) return;
 		BDFDB.removeEles(input.parentElement.querySelectorAll("#charcounter"));
 		var counter = BDFDB.htmlToElement(`<div id="charcounter" class="charcounter ${type}"></div>`);
 		input.parentElement.appendChild(counter);
-		
-		var updateCounter = () => {counter.innerText = input.value.length + "/" + (this.maxLenghts[type] || 2000) + (input.selectionEnd - input.selectionStart == 0 ? "" : " (" + (input.selectionEnd - input.selectionStart) + ")");};
-		
+
+		var updateCounter = () => {
+			var inputlength = parsing ? BDFDB.getParsedLength(input.value) : input.value.length;
+			var seleclength = input.selectionEnd - input.selectionStart == 0 ? 0 : (parsing ? BDFDB.getParsedLength(input.value.slice(input.selectionStart, input.selectionEnd)) : (input.selectionEnd - input.selectionStart));
+			seleclength = !seleclength ? 0 : (seleclength > inputlength ? inputlength - (inputlength - input.selectionEnd - input.selectionStart) : seleclength);
+			counter.innerText = inputlength + "/" + (this.maxLenghts[type] || 2000) + (!seleclength ? "" : " (" + seleclength + ")");
+		};
+
 		BDFDB.addClass(input.parentElement.parentElement, "charcounter-added");
 		if (type == "nickname") input.setAttribute("maxlength", 32);
 		BDFDB.addEventListener(this, input, "keydown click", e => {
@@ -165,7 +169,7 @@ class CharCounter {
 			});
 			BDFDB.addEventListener(this, document, "mousemove", () => {setTimeout(() => {updateCounter();},10);});
 		});
-		
+
 		updateCounter();
 	}
 }

@@ -776,14 +776,7 @@ z-index: -1 !important;\
 
 //Functions that should only run once after setup
 tV2.prototype.runOnce = function() {
-    $('.layers-3iHuyZ').prop('onclick',null);
-    document.getElementsByClassName('layers-3iHuyZ')[0].onclick = function() {
-        setTimeout(function() {
-            try {
-                $('.header-2o-2hj').prop('onclick',null);
-                document.getElementsByClassName('header-2o-2hj')[0].onclick = function() {
-                    setTimeout(function() {
-                        const tV2_server_menu_css = '\
+    const tV2_server_menu_css = '\
 <style class="tV2-server-menu-css">\
 body div#app-mount div.popouts-3dRSmE div[class="noArrow-3BYQ0Z popout-3sVMXz \
 popoutBottom-1YbShG arrowAlignmentTop-iGQczz popoutbottom theme-undefined"]{\
@@ -792,6 +785,18 @@ width: 240px !important;}\
 body div#app-mount div.popouts-3dRSmE div[class="noArrow-3BYQ0Z popout-3sVMXz \
 popoutBottom-1YbShG arrowAlignmentTop-iGQczz popoutbottom theme-undefined"] div.menu-Sp6bN1{\
 width: 240px !important;}</style>';
+    const tV2_search_blur = '\
+<style class="tV2-search-blur">\
+div.popouts-3dRSmE {\
+backdrop-filter: blur(5px) !important;\
+}</style>';
+    $('.layers-3iHuyZ').prop('onclick',null);
+    document.getElementsByClassName('layers-3iHuyZ')[0].onclick = function() {
+        setTimeout(function() {
+            try {
+                $('.header-2o-2hj').prop('onclick',null);
+                document.getElementsByClassName('header-2o-2hj')[0].onclick = function() {
+                    setTimeout(function() {
                         if ($('head .tV2-server-menu-css').length === 0) {
                             $(tV2_server_menu_css).insertAfter('head .tV2-base-css');
                         };
@@ -804,6 +809,11 @@ width: 240px !important;}</style>';
                 };
             };
             $('head .tV2-text').remove();
+            if ($('div.container-3ayLPN').length !== 0) {
+                $(tV2_search_blur).insertAfter('head .tV2-base-css');
+            } else {
+                $('head .tV2-search-blur').remove()
+            }
         }, 0);
     };
     if (document.body.contains($('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9').get(0))) {

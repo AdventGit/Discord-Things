@@ -41,7 +41,7 @@ global.QuickDeleteMessages = function () {
     async start() {
       var ref;
       ({ AsyncKeystate, getOwnerInstance } = await SuperSecretSquareStuff);
-      settings.confirm = (ref = bdPluginStorage.get("QuickDeleteMessages", "confirm")) != null ? ref : false;
+      settings.confirm = (ref = BdApi.loadData("QuickDeleteMessages", "confirm")) != null ? ref : false;
       MessageDeleteItem = BDV2.WebpackModules.find(function (m) {
         var ref1;
         return (ref1 = m.prototype) != null ? ref1.handleDeleteMessage : void 0;
@@ -59,7 +59,7 @@ global.QuickDeleteMessages = function () {
 
     static updateSettings({ name, checked }) {
       settings[name] = checked;
-      bdPluginStorage.set("QuickDeleteMessages", name, checked);
+      BdApi.saveData("QuickDeleteMessages", name, checked);
     }
 
   };

@@ -1,17 +1,21 @@
-//META{"name":"EditServers"}*//
+//META{"name":"EditServers","website":"https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/EditServers","source":"https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/EditServers/EditServers.plugin.js"}*//
 
 class EditServers {
 	getName () {return "EditServers";}
 
-	getVersion () {return "1.9.1";} 
+	getVersion () {return "1.9.3";} 
 
 	getAuthor () {return "DevilBro";}
 
 	getDescription () {return "Allows you to change the icon, name and color of servers.";}
-	
+
 	initConstructor () {
-		this.labels = {};
+		this.changelog = {
+			"fixed":[["Servericon Text Size","If you choose to remove a servericon or choose a shortname for a server the fontsize will now properly be scaled relative to the shortnamelength"]]
+		};
 		
+		this.labels = {};
+
 		this.patchModules = {
 			"GuildIcon":"componentDidMount",
 			"GuildHeader":["componentDidMount","componentDidUpdate"],
@@ -25,7 +29,7 @@ class EditServers {
 					<div class="${BDFDB.disCN.contextmenuhint}"></div>
 				</div>
 			</div>`;
-			
+
 		this.serverContextSubMenuMarkup = 
 			`<div class="${BDFDB.disCN.contextmenu} editservers-submenu">
 				<div class="${BDFDB.disCN.contextmenuitemgroup}">
@@ -41,7 +45,7 @@ class EditServers {
 			</div>`;
 
 		this.serverSettingsModalMarkup =
-			`<span class="${this.getName()}-modal DevilBro-modal">
+			`<span class="${this.name}-modal DevilBro-modal">
 				<div class="${BDFDB.disCN.backdrop}"></div>
 				<div class="${BDFDB.disCN.modal}">
 					<div class="${BDFDB.disCN.modalinner}">
@@ -51,12 +55,16 @@ class EditServers {
 									<h4 class="${BDFDB.disCNS.h4 + BDFDB.disCNS.headertitle + BDFDB.disCNS.size16 + BDFDB.disCNS.height20 + BDFDB.disCNS.weightsemibold + BDFDB.disCNS.defaultcolor + BDFDB.disCNS.h4defaultmargin + BDFDB.disCN.marginreset}">REPLACE_modal_header_text</h4>
 									<div class="${BDFDB.disCNS.modalguildname + BDFDB.disCNS.small + BDFDB.disCNS.size12 + BDFDB.disCNS.height16 + BDFDB.disCN.primary}"></div>
 								</div>
-								<svg class="${BDFDB.disCNS.modalclose + BDFDB.disCN.flexchild}" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 12 12">
-									<g fill="none" fill-rule="evenodd">
-										<path d="M0 0h12v12H0"></path>
-										<path class="fill" fill="currentColor" d="M9.5 3.205L8.795 2.5 6 5.295 3.205 2.5l-.705.705L5.295 6 2.5 8.795l.705.705L6 6.705 8.795 9.5l.705-.705L6.705 6"></path>
-									</g>
-								</svg>
+								<button type="button" class="${BDFDB.disCNS.modalclose + BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookblank + BDFDB.disCNS.buttoncolorbrand + BDFDB.disCN.buttongrow}">
+									<div class="${BDFDB.disCN.buttoncontents}">
+										<svg name="Close" width="18" height="18" viewBox="0 0 12 12" style="flex: 0 1 auto;">
+											<g fill="none" fill-rule="evenodd">
+												<path d="M0 0h12v12H0"></path>
+												<path class="fill" fill="currentColor" d="M9.5 3.205L8.795 2.5 6 5.295 3.205 2.5l-.705.705L5.295 6 2.5 8.795l.705.705L6 6.705 8.795 9.5l.705-.705L6.705 6"></path>
+											</g>
+										</svg>
+									</div>
+								</button>
 							</div>
 							<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCNS.marginbottom8 + BDFDB.disCN.tabbarcontainer}" style="flex: 0 0 auto; padding-right: 12px;">
 								<div class="${BDFDB.disCNS.tabbar + BDFDB.disCN.tabbartop}">
@@ -125,13 +133,13 @@ class EditServers {
 				</div>
 			</span>`;
 	}
-	
+
 	getSettingsPanel () {
-		if (!this.started || typeof BDFDB !== "object") return;
-		var settingshtml = `<div class="${this.getName()}-settings DevilBro-settings"><div class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.size18 + BDFDB.disCNS.height24 + BDFDB.disCNS.weightnormal + BDFDB.disCN.marginbottom8}">${this.getName()}</div><div class="DevilBro-settings-inner">`;
+		if (!global.BDFDB || typeof BDFDB != "object" || !BDFDB.loaded || !this.started) return;
+		var settingshtml = `<div class="${this.name}-settings DevilBro-settings"><div class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.size18 + BDFDB.disCNS.height24 + BDFDB.disCNS.weightnormal + BDFDB.disCN.marginbottom8}">${this.name}</div><div class="DevilBro-settings-inner">`;
 		settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom8}" style="flex: 0 0 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Reset all Servers.</h3><button type="button" class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookfilled + BDFDB.disCNS.buttoncolorred + BDFDB.disCNS.buttonsizemedium + BDFDB.disCN.buttongrow} reset-button" style="flex: 0 0 auto;"><div class="${BDFDB.disCN.buttoncontents}">Reset</div></button></div>`;
 		settingshtml += `</div></div>`;
-		
+
 		let settingspanel = BDFDB.htmlToElement(settingshtml);
 
 		BDFDB.initElements(settingspanel, this);
@@ -149,6 +157,8 @@ class EditServers {
 	load () {}
 
 	start () {
+		if (!global.BDFDB) global.BDFDB = {myPlugins:{}};
+		if (global.BDFDB && global.BDFDB.myPlugins && typeof global.BDFDB.myPlugins == "object") global.BDFDB.myPlugins[this.getName()] = this;
 		var libraryScript = document.querySelector('head script[src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js"]');
 		if (!libraryScript || performance.now() - libraryScript.getAttribute("date") > 600000) {
 			if (libraryScript) libraryScript.remove();
@@ -156,10 +166,7 @@ class EditServers {
 			libraryScript.setAttribute("type", "text/javascript");
 			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js");
 			libraryScript.setAttribute("date", performance.now());
-			libraryScript.addEventListener("load", () => {
-				BDFDB.loaded = true;
-				this.initialize();
-			});
+			libraryScript.addEventListener("load", () => {if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();});
 			document.head.appendChild(libraryScript);
 		}
 		else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
@@ -168,14 +175,15 @@ class EditServers {
 
 	initialize () {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
+			if (this.started) return;
 			BDFDB.loadMessage(this);
-			
+
 			this.GuildUtils = BDFDB.WebModules.findByProperties("getGuilds","getGuild");
-				
+
 			BDFDB.WebModules.forceAllUpdates(this);
 		}
 		else {
-			console.error(this.getName() + ": Fatal Error: Could not load BD functions!");
+			console.error(`%c[${this.name}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
 		}
 	}
 
@@ -185,20 +193,20 @@ class EditServers {
 			BDFDB.removeAllData(this, "servers");
 			BDFDB.WebModules.forceAllUpdates(this);
 			BDFDB.saveAllData(data, this, "servers");
-			
+
 			BDFDB.unloadMessage(this);
 		}
 	}
 
-	
+
 	// begin of own functions
 
 	changeLanguageStrings () {
 		this.serverContextEntryMarkup = 	this.serverContextEntryMarkup.replace("REPLACE_context_localserversettings_text", this.labels.context_localserversettings_text);
-		
+
 		this.serverContextSubMenuMarkup = 	this.serverContextSubMenuMarkup.replace("REPLACE_submenu_serversettings_text", this.labels.submenu_serversettings_text);
 		this.serverContextSubMenuMarkup = 	this.serverContextSubMenuMarkup.replace("REPLACE_submenu_resetsettings_text", this.labels.submenu_resetsettings_text);
-		
+
 		this.serverSettingsModalMarkup = 	this.serverSettingsModalMarkup.replace("REPLACE_modal_header_text", this.labels.modal_header_text);
 		this.serverSettingsModalMarkup = 	this.serverSettingsModalMarkup.replace("REPLACE_modal_servername_text", this.labels.modal_servername_text);
 		this.serverSettingsModalMarkup = 	this.serverSettingsModalMarkup.replace("REPLACE_modal_servershortname_text", this.labels.modal_servershortname_text);
@@ -213,7 +221,7 @@ class EditServers {
 		this.serverSettingsModalMarkup = 	this.serverSettingsModalMarkup.replace("REPLACE_modal_colorpicker4_text", this.labels.modal_colorpicker4_text);
 		this.serverSettingsModalMarkup = 	this.serverSettingsModalMarkup.replace("REPLACE_btn_save_text", this.labels.btn_save_text);
 	}
-	
+
 	onGuildContextMenu (instance, menu) {
 		if (instance.props && instance.props.target && instance.props.guild && !menu.querySelector(".localserversettings-item")) {
 			let serverContextEntry = BDFDB.htmlToElement(this.serverContextEntryMarkup);
@@ -239,16 +247,16 @@ class EditServers {
 			});
 		}
 	}
-	
+
 	showServerSettings (info) {
 		var {name,shortName,url,removeIcon,color1,color2,color3,color4} = BDFDB.loadData(info.id, this, "servers") || {};
-		
+
 		let serverSettingsModal = BDFDB.htmlToElement(this.serverSettingsModalMarkup);
 		let servernameinput = serverSettingsModal.querySelector("#input-servername");
 		let servershortnameinput = serverSettingsModal.querySelector("#input-servershortname");
 		let serverurlinput = serverSettingsModal.querySelector("#input-serverurl");
 		let removeiconinput = serverSettingsModal.querySelector("#input-removeicon");
-		
+
 		serverSettingsModal.querySelector(BDFDB.dotCN.modalguildname).innerText = info.name;
 		servernameinput.value = name || "";
 		servernameinput.setAttribute("placeholder", info.name);
@@ -263,42 +271,40 @@ class EditServers {
 		BDFDB.setColorSwatches(serverSettingsModal, color2);
 		BDFDB.setColorSwatches(serverSettingsModal, color3);
 		BDFDB.setColorSwatches(serverSettingsModal, color4);
-		
+
 		BDFDB.appendModal(serverSettingsModal);
-		
-		removeiconinput.addEventListener("click", e => {
-			serverurlinput.disabled = e.currentTarget.checked;
+
+		removeiconinput.addEventListener("click", () => {
+			serverurlinput.disabled = removeiconinput.checked;
 		});
-		serverurlinput.addEventListener("change keyup paste", e => {
-			this.checkUrl(e.currentTarget);
+		serverurlinput.addEventListener("input", () => {
+			this.checkUrl(serverurlinput);
 		});
-		serverurlinput.addEventListener("mouseenter", e => {
-			BDFDB.addClass(e.currentTarget, "hovering");
-			this.createNoticeTooltip(e.currentTarget);
+		serverurlinput.addEventListener("mouseenter", () => {
+			BDFDB.addClass(serverurlinput, "hovering");
+			this.createNoticeTooltip(serverurlinput);
 		});
-		serverurlinput.addEventListener("mouseleave", e => {
-			BDFDB.removeClass(e.currentTarget, "hovering");
+		serverurlinput.addEventListener("mouseleave", () => {
+			BDFDB.removeClass(serverurlinput, "hovering");
 			BDFDB.removeEles(BDFDB.dotCNS.tooltips + ".notice-tooltip");
 		});
 		BDFDB.addChildEventListener(serverSettingsModal, "click", ".btn-save", e => {
-			e.preventDefault();
-			
 			name = servernameinput.value.trim();
 			name = name ? name : null;
-			
+
 			shortName = servershortnameinput.value.trim();
 			shortName = shortName && shortName != info.acronym ? shortName : null;
-			
+
 			removeIcon = removeiconinput.checked;
-			
+
 			url = !removeIcon && BDFDB.containsClass(serverurlinput, "valid") ? serverurlinput.value.trim() : null;
 			url = url ? url : null;
-			
+
 			color1 = BDFDB.getSwatchColor(serverSettingsModal, 1);
 			color2 = BDFDB.getSwatchColor(serverSettingsModal, 2);
 			color3 = BDFDB.getSwatchColor(serverSettingsModal, 3);
 			color4 = BDFDB.getSwatchColor(serverSettingsModal, 4);
-			
+
 			if (name == null && shortName == null && url == null && !removeIcon && color1 == null && color2 == null && color3 == null && color4 == null) {
 				BDFDB.removeData(info.id, this, "servers");
 			}
@@ -309,7 +315,7 @@ class EditServers {
 		});
 		servernameinput.focus();
 	}
-	
+
 	checkUrl (input) {
 		BDFDB.removeEles(BDFDB.dotCNS.tooltips + ".notice-tooltip");
 		if (!input.value) {
@@ -330,7 +336,7 @@ class EditServers {
 			});
 		}
 	}
-	
+
 	createNoticeTooltip (input) {
 		var disabled = input.disabled;
 		var valid = BDFDB.containsClass(input, "valid");
@@ -339,7 +345,7 @@ class EditServers {
 			BDFDB.createTooltip(disabled ? this.labels.modal_ignoreurl_text : valid ? this.labels.modal_validurl_text : this.labels.modal_invalidurl_text, input, {type:"right",selector:"notice-tooltip",color: disabled ? "black" : invalid ? "red" : "green"});
 		}
 	}
-	
+
 	processGuildIcon (instance, wrapper) {
 		if (instance.props && instance.props.guild) {
 			let icon = wrapper.classList && BDFDB.containsClass(wrapper, BDFDB.disCN.avataricon) ? wrapper : wrapper.querySelector(BDFDB.dotCN.avataricon);
@@ -349,13 +355,13 @@ class EditServers {
 			else if (BDFDB.getParentEle(BDFDB.dotCN.friendscolumn, icon)) this.changeTooltip(instance.props.guild, icon.parentElement, "top");
 		}
 	}
-	
+
 	processGuildHeader (instance, wrapper) {
 		if (instance.props && instance.props.guild) {
 			this.changeGuildName(instance.props.guild, wrapper.querySelector(BDFDB.dotCN.guildheadername));
 		}
 	}
-	
+
 	processClickable (instance, wrapper) {
 		if (!wrapper || !instance.props || !instance.props.className) return;
 		else if (instance.props.tag == "div" && instance.props.className.indexOf(BDFDB.disCN.userprofilelistrow) > -1) {
@@ -374,7 +380,7 @@ class EditServers {
 			}
 		}
 	}
-	
+
 	changeGuildName (info, guildname) {
 		if (!info || !guildname || !guildname.parentElement) return;
 		if (guildname.EditServersChangeObserver && typeof guildname.EditServersChangeObserver.disconnect == "function") guildname.EditServersChangeObserver.disconnect();
@@ -393,16 +399,18 @@ class EditServers {
 			else guildname.removeAttribute("changed-by-editservers");
 		}
 	}
-	
+
 	changeGuildIcon (info, icon) {
 		if (!info || !icon || !icon.parentElement) return;
 		if (icon.EditServersChangeObserver && typeof icon.EditServersChangeObserver.disconnect == "function") icon.EditServersChangeObserver.disconnect();
 		let data = BDFDB.loadData(info.id, this, "servers") || {};
-		if (data.url || data.removeIcon || icon.getAttribute("changed-by-editservers")) {
-			if (icon.tagName == "IMG") icon.setAttribute("src", data.removeIcon ? null : (data.url || BDFDB.getGuildIcon(info.id)));
+		if (data.url || data.shortName || data.removeIcon || icon.getAttribute("changed-by-editservers")) {
+			let url = data.url || BDFDB.getGuildIcon(info.id);
+			if (icon.tagName == "IMG") icon.setAttribute("src", data.removeIcon ? null : url);
 			else {
 				BDFDB.setInnerText(icon, data.url ? "" : (data.shortName || (info.icon && !data.removeIcon ? "" : info.acronym)));
-				icon.style.setProperty("background-image", data.removeIcon || data.shortName ? null : `url(${data.url || BDFDB.getGuildIcon(info.id)})`);
+				if (!data.removeIcon && !data.shortName && url) icon.style.setProperty("background-image", `url(${url})`);
+				else icon.style.removeProperty("background-image");
 				icon.style.setProperty("background-color", BDFDB.colorCONVERT(data.color1, "RGB"), "important");
 				icon.style.setProperty("color", BDFDB.colorCONVERT(data.color2, "RGB", "important"));
 				icon.style.setProperty("font-size", this.getFontSize(icon));
@@ -414,7 +422,7 @@ class EditServers {
 					icon.style.setProperty("background-size", "cover");
 				}
 			}
-			if (data.url || data.removeIcon) {
+			if (data.url || data.shortName || data.removeIcon) {
 				icon.setAttribute("changed-by-editservers", true);
 				icon.EditServersChangeObserver = new MutationObserver((changes, _) => {
 					changes.forEach(
@@ -429,7 +437,7 @@ class EditServers {
 			else icon.removeAttribute("changed-by-editservers");
 		}
 	}
-	
+
 	changeTooltip (info, wrapper, type) {
 		if (!info || !wrapper || !wrapper.parentElement) return;
 		let data = BDFDB.loadData(info.id, this, "servers") || {};
@@ -443,23 +451,33 @@ class EditServers {
 			wrapper.addEventListener("mouseenter", wrapper.tooltipListenerEditServers);
 		}
 	}
-	
+
 	getFontSize (icon) {
 		if (icon.style.getPropertyValue("background-image")) return null;
+		else if (BDFDB.containsClass(icon, BDFDB.disCN.guildicon)) {
+			var shortname = icon.innerText;
+			if (shortname) {
+				if (shortname.length > 5) return "10px";
+				else if (shortname.length > 4) return "12px";
+				else if (shortname.length > 3) return "14px";
+				else if (shortname.length > 1) return "16px";
+				else if (shortname.length == 1) return "18px";
+			}
+		}
 		else if (BDFDB.containsClass(icon, BDFDB.disCN.avatariconsizexlarge)) return "12px";
 		else if (BDFDB.containsClass(icon, BDFDB.disCN.avatariconsizelarge)) return "10px";
 		else if (BDFDB.containsClass(icon, BDFDB.disCN.avatariconsizemedium)) return "8px";
 		else if (BDFDB.containsClass(icon, BDFDB.disCN.avatariconsizesmall)) return "4.8px";
 		else if (BDFDB.containsClass(icon, BDFDB.disCN.avatariconsizemini)) return "4px";
-		else return "10px";
+		return "10px";
 	}
-	
+
 	getNoIconClasses (icon) {
 		let noiconclasses = [BDFDB.disCN.avatarnoicon];
 		if (BDFDB.containsClass(icon, BDFDB.disCN.userprofilelistavatar)) noiconclasses.push(BDFDB.disCN.userprofilelistguildavatarwithouticon);
 		return noiconclasses;
 	}
-	
+
 	setLabelsByLanguage () {
 		switch (BDFDB.getDiscordLanguage().id) {
 			case "hr":		//croatian

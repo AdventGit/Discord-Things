@@ -183,6 +183,10 @@ body div#app-mount div.app-19_DXt div.app-2rEoOp div.layers-3iHuyZ div.layer-3Qr
   box-shadow: 0px 0px 1px 1px var(--neutral), 0px 0px 0.5px 0.5px var(--neutral-smooth) !important;
 }
 
+body div#app-mount div.app-19_DXt div.app-2rEoOp div.layers-3iHuyZ div.layer-3QrUeG div.flex-1xMQg5 div.flex-1xMQg5 div.flex-1xMQg5 div.chat-3bRxxu div.content-yTz4x3 div.spacer-1fA9zc div.messagesWrapper-3lZDfY div.scrollerWrap-2lJEkd div.messages-3amgkR div.container-1YxwTf div.message-1PNnaP div.content-3dzVd8 div.container-206Blv.isMentioned-N-h9aa, body div#app-mount div.app-19_DXt div.app-2rEoOp div.layers-3iHuyZ div.layer-3QrUeG div.flex-1xMQg5 div.flex-1xMQg5 div.flex-1xMQg5 div.chat-3bRxxu div.content-yTz4x3 div.searchResultsWrap-2DKFzt div.scrollerWrap-2lJEkd div.scroller-2FKFPG div.resultsWrapper-hoiXCY div.searchResults-2J8dju div.searchResult-3pzFAB div.searchResultMessage-2VxO12.hit-NLlWXA div.container-1YxwTf div.message-1PNnaP div.content-3dzVd8 div.container-206Blv.isMentioned-N-h9aa, body div#app-mount div.app-19_DXt div.app-2rEoOp div.layers-3iHuyZ div.layer-3QrUeG div.flex-1xMQg5 div.flex-1xMQg5 div.flex-1xMQg5 div.chat-3bRxxu div.content-yTz4x3 div.searchResultsWrap-2DKFzt div.scrollerWrap-2lJEkd div.scroller-2FKFPG div.resultsWrapper-hoiXCY div.searchResults-2J8dju div.searchResult-3pzFAB div.searchResultMessage-2VxO12.after-2g0jjc div.container-1YxwTf div.message-1PNnaP div.content-3dzVd8 div.container-206Blv.isMentioned-N-h9aa {
+  background: var(--user-color-smooth) !important;
+}
+
 body div#app-mount div.app-19_DXt div.app-2rEoOp div.layers-3iHuyZ div.layer-3QrUeG div.flex-1xMQg5 div.flex-1xMQg5 div.flex-1xMQg5 div.chat-3bRxxu div.content-yTz4x3 div.spacer-1fA9zc div.messagesWrapper-3lZDfY div.scrollerWrap-2lJEkd div.messages-3amgkR div.container-1YxwTf div.message-1PNnaP div.content-3dzVd8 div.container-206Blv div.markup-2BOw-j pre, body div#app-mount div.app-19_DXt div.app-2rEoOp div.layers-3iHuyZ div.layer-3QrUeG div.flex-1xMQg5 div.flex-1xMQg5 div.flex-1xMQg5 div.chat-3bRxxu div.content-yTz4x3 div.searchResultsWrap-2DKFzt div.scrollerWrap-2lJEkd div.scroller-2FKFPG div.resultsWrapper-hoiXCY div.searchResults-2J8dju div.searchResult-3pzFAB div.searchResultMessage-2VxO12.hit-NLlWXA div.container-1YxwTf div.message-1PNnaP div.content-3dzVd8 div.container-206Blv div.markup-2BOw-j pre, body div#app-mount div.app-19_DXt div.app-2rEoOp div.layers-3iHuyZ div.layer-3QrUeG div.flex-1xMQg5 div.flex-1xMQg5 div.flex-1xMQg5 div.chat-3bRxxu div.content-yTz4x3 div.searchResultsWrap-2DKFzt div.scrollerWrap-2lJEkd div.scroller-2FKFPG div.resultsWrapper-hoiXCY div.searchResults-2J8dju div.searchResult-3pzFAB div.searchResultMessage-2VxO12.after-2g0jjc div.container-1YxwTf div.message-1PNnaP div.content-3dzVd8 div.container-206Blv div.markup-2BOw-j pre {
   width: fit-content !important;
 }
@@ -225,6 +229,17 @@ body div#app-mount div.app-19_DXt div.app-2rEoOp div.layers-3iHuyZ div.layer-3Qr
   font-size: 18px !important;
   font-weight: 500 !important;
   line-height: 20px !important;
+}
+
+body div#app-mount div.app-19_DXt div.app-2rEoOp div.layers-3iHuyZ div.layer-3QrUeG div.flex-1xMQg5 div.flex-1xMQg5 div.flex-1xMQg5 div.chat-3bRxxu div.content-yTz4x3 div.spacer-1fA9zc div.messagesWrapper-3lZDfY div.scrollerWrap-2lJEkd div.messages-3amgkR div.container-1YxwTf div.message-1PNnaP div.content-3dzVd8 div.container-206Blv.isMentioned-N-h9aa:after, body div#app-mount div.app-19_DXt div.app-2rEoOp div.layers-3iHuyZ div.layer-3QrUeG div.flex-1xMQg5 div.flex-1xMQg5 div.flex-1xMQg5 div.chat-3bRxxu div.content-yTz4x3 div.searchResultsWrap-2DKFzt div.scrollerWrap-2lJEkd div.scroller-2FKFPG div.resultsWrapper-hoiXCY div.searchResults-2J8dju div.searchResult-3pzFAB div.searchResultMessage-2VxO12.hit-NLlWXA div.container-1YxwTf div.message-1PNnaP div.content-3dzVd8 div.container-206Blv.isMentioned-N-h9aa:after, body div#app-mount div.app-19_DXt div.app-2rEoOp div.layers-3iHuyZ div.layer-3QrUeG div.flex-1xMQg5 div.flex-1xMQg5 div.flex-1xMQg5 div.chat-3bRxxu div.content-yTz4x3 div.searchResultsWrap-2DKFzt div.scrollerWrap-2lJEkd div.scroller-2FKFPG div.resultsWrapper-hoiXCY div.searchResults-2J8dju div.searchResult-3pzFAB div.searchResultMessage-2VxO12.after-2g0jjc div.container-1YxwTf div.message-1PNnaP div.content-3dzVd8 div.container-206Blv.isMentioned-N-h9aa:after {
+  background: none !important;
+  border-left: 4px solid var(--user-color) !important;
+  border-radius: 3px 0px 0px 3px !important;
+  content: " " !important;
+  width: 2px !important;
+  top: 0px !important;
+  left: -4px !important;
+  bottom: 0px !important;
 }
 
 *::selection {

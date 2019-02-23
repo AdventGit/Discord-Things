@@ -3,7 +3,7 @@
 class EditUsers {
 	getName () {return "EditUsers";}
 
-	getVersion () {return "3.2.6";}
+	getVersion () {return "3.2.8";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -11,7 +11,7 @@ class EditUsers {
 
 	initConstructor () {
 		this.changelog = {
-			"improved":[["Affected Elements","Names/Avatars will also now be changed in the member/invite/ban overview in the guildsettings"]]
+			"fixed":[["ScreenShare","Avatar in the ScreenShare popout is now properly changed"]]
 		};
 		
 		this.labels = {};
@@ -27,6 +27,8 @@ class EditUsers {
 			"MessageUsername":"componentDidMount",
 			"DirectMessage":"componentDidMount",
 			"CallAvatar":"componentDidMount",
+			"VideoTile":"componentDidMount",
+			"PictureInPictureVideo":"componentDidMount",
 			"PrivateChannel":["componentDidMount","componentDidUpdate"],
 			"HeaderBar":["componentDidMount","componentDidUpdate"],
 			"Clickable":"componentDidMount",
@@ -179,7 +181,7 @@ class EditUsers {
 				changeInRecentDms:		{value:true, 	description:"Direct Message Notifications"},
 				changeInDmsList:		{value:true, 	description:"Direct Message List"},
 				changeInDmHeader:		{value:true, 	description:"Direct Message Header"},
-				changeInDmCalls:		{value:true, 	description:"Direct Message Calls"},
+				changeInDmCalls:		{value:true, 	description:"Calls/ScreenShares"},
 				changeInTyping:			{value:true, 	description:"Typing List"},
 				changeInFriendList:		{value:true, 	description:"Friend List"},
 				changeInActivity:		{value:true, 	description:"Activity Page"},
@@ -254,7 +256,7 @@ class EditUsers {
 			BDFDB.WebModules.forceAllUpdates(this);
 		}
 		else {
-			console.error(`%c[${this.name}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
+			console.error(`%c[${this.getName()}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
 		}
 	}
 
@@ -446,6 +448,7 @@ class EditUsers {
 					textarea.setAttribute("placeholder", BDFDB.LanguageStrings.TEXTAREA_PLACEHOLDER.replace("{{channel}}", "@" + (data.name || user.username)));
 				}
 			}
+			BDFDB.removeEventListener(this, textarea);
 			if (BDFDB.getData("changeInAutoComplete", this, "settings")) {
 				BDFDB.addEventListener(this, textarea, "keydown", e => {
 					let autocompletemenu = textarea.parentElement.querySelector(BDFDB.dotCN.autocomplete);
@@ -583,6 +586,17 @@ class EditUsers {
 		}
 	}
 
+	processVideoTile (instance, wrapper) {
+		if (instance.props && instance.props.user) this.changeAvatar(instance.props.user, this.getAvatarDiv(wrapper));
+	}
+
+	processPictureInPictureVideo (instance, wrapper) {
+		if (instance.props && instance.props.backgroundKey) {
+			let user = this.UserUtils.getUser(instance.props.backgroundKey);
+			if (user) this.changeAvatar(user, this.getAvatarDiv(wrapper));
+		}
+	}
+
 	processPrivateChannel (instance, wrapper) {
 		if (instance.props && instance.props.user) {
 			let username = wrapper.querySelector(BDFDB.dotCN.dmchannelname);
@@ -615,7 +629,10 @@ class EditUsers {
 		if (instance.props.tag == "a" && instance.props.className.indexOf(BDFDB.disCN.anchorunderlineonhover) > -1) {
 			if (BDFDB.containsClass(wrapper.parentElement, BDFDB.disCN.messagesystemcontent) && wrapper.parentElement.querySelector("a") == wrapper) {
 				let message = BDFDB.getKeyInformation({node:wrapper.parentElement, key:"message", up:true});
-				if (message) this.changeName(message.author, wrapper);
+				if (message) {
+					this.changeName(message.author, wrapper);
+					if (message.mentions.length == 1) this.changeName(this.UserUtils.getUser(message.mentions[0]), wrapper.parentElement.querySelectorAll("a")[1]);
+				}
 			}
 		}
 		else if (instance.props.tag == "span" && instance.props.className.indexOf(BDFDB.disCN.mention) > -1) {
@@ -946,7 +963,7 @@ class EditUsers {
 			break;
 		}
 		if (allenabled) return data;
-		let key = null, ele = null;
+		let key = null;
 		if (!BDFDB.containsClass(wrapper, BDFDB.disCN.mention) && BDFDB.getParentEle(BDFDB.dotCN.messagegroup, wrapper)) key = "changeInChatWindow";
 		else if (BDFDB.containsClass(wrapper, BDFDB.disCN.mention)) key = "changeInMentions";
 		else if (BDFDB.getParentEle(BDFDB.dotCN.textareawrapchat, wrapper)) key = "changeInChatTextarea";
@@ -955,8 +972,7 @@ class EditUsers {
 		else if (BDFDB.getParentEle(BDFDB.dotCN.dms, wrapper)) key = "changeInRecentDms";
 		else if (BDFDB.getParentEle(BDFDB.dotCN.dmchannels, wrapper)) key = "changeInDmsList";
 		else if (BDFDB.getParentEle(BDFDB.dotCN.channelheaderheaderbar, wrapper)) key = "changeInDmHeader";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.callavatarwrapper, wrapper)) key = "changeInDmCalls";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.callincoming, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.callcurentcontainer, wrapper)) key = "changeInDmCalls";
+		else if (BDFDB.getParentEle(BDFDB.dotCN.callavatarwrapper, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.callincoming, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.callcurrentcontainer, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.pictureinpicture, wrapper)) key = "changeInDmCalls";
 		else if (BDFDB.getParentEle(BDFDB.dotCN.typing, wrapper)) key = "changeInTyping";
 		else if (BDFDB.getParentEle(BDFDB.dotCN.friends, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.userprofilebody, wrapper)) key = "changeInFriendList";
 		else if (BDFDB.getParentEle(BDFDB.dotCN.activityfeed, wrapper)) key = "changeInActivity";
@@ -964,13 +980,11 @@ class EditUsers {
 		else if (BDFDB.getParentEle(BDFDB.dotCN.userprofileheader, wrapper)) key = "changeInUserProfil";
 		else if (BDFDB.getParentEle(BDFDB.dotCN.autocomplete, wrapper)) key = "changeInAutoComplete";
 		else if (BDFDB.getParentEle(BDFDB.dotCN.auditlog, wrapper)) key = "changeInAuditLog";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.guildsettingsbannedcard, wrapper)) key = "changeInMemberLog";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.guildsettingsinvitecard, wrapper)) key = "changeInMemberLog";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.guildsettingsmembercard, wrapper)) key = "changeInMemberLog";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.searchpopout, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.searchpopoutdmaddpopout, wrapper)) key = "changeInSearchPopout";
+		else if (BDFDB.getParentEle(BDFDB.dotCN.guildsettingsbannedcard, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.guildsettingsinvitecard, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.guildsettingsmembercard, wrapper)) key = "changeInMemberLog";
+		else if (BDFDB.getParentEle(BDFDB.dotCN.searchpopout, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.searchpopoutdmaddpopout, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.quickswitcher, wrapper)) key = "changeInSearchPopout";
 		else if (BDFDB.getParentEle(BDFDB.dotCN.accountinfo, wrapper)) key = "changeInUserAccount";
 
-		return !key || BDFDB.getData(key, this, "settings") ? data : {};
+		return !key || settings[key] ? data : {};
 	}
 
 	addAutoCompleteMenu (textarea, channel) {

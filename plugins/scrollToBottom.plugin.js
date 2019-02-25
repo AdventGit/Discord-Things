@@ -1,6 +1,7 @@
 //META { "name": "scrollToBottom" } *//
 const scrollToBottom = function(){};
 
+//BD Information
 scrollToBottom.prototype.getName = function() {
   return 'scrollToBottom';
 };
@@ -14,6 +15,7 @@ scrollToBottom.prototype.getAuthor = function() {
   return 'AdventDiscord (square inspired)';
 };
 
+//Elements I target
 scrollToBottom.prototype.guildTarget = function() {
   return $('div.guild-1EfMGQ');
 };
@@ -27,54 +29,71 @@ scrollToBottom.prototype.dmTarget = function() {
   return $('div.channel-2QD9_O a');
 };
 scrollToBottom.prototype.scrollTarget = function() {
-  return $('.messagesWrapper-3lZDfY .scrollerWrap-2lJEkd .scroller-2FKFPG');
+  return $('div.messagesWrapper-3lZDfY div.scrollerWrap-2lJEkd div.scroller-2FKFPG');
+};
+scrollToBottom.prototype.windowMutationTarget = function() {
+  return $('div.content-yTz4x3');
+};
+scrollToBottom.prototype.channelMutationTarget = function() {
+  return $('div.channels-Ie2l6A div.scroller-2FKFPG');
+};
+scrollToBottom.prototype.channelsMutationTarget = function() {
+  return $('div.channels-Ie2l6A');
 };
 
+//Hooks
 scrollToBottom.prototype.hookGuild = function() {
-  if (scrollToBottom.prototype.guildTarget().length !== 0) {
+  if (scrollToBottom.prototype.guildTarget() !== 0) {
     scrollToBottom.prototype.guildTarget().on('click.scroll', function() {
       scrollToBottom.prototype.scrollInstant();
     });
   } else {
     setTimeout(function() {
-      scrollToBottom.prototype.hookGuild();
-    },200);
+      scrollToBottom.prototype.guildTarget().on('click.scroll', function() {
+        scrollToBottom.prototype.scrollInstant();
+      });
+    },1);
   };
 };
 scrollToBottom.prototype.hookDMGuild = function() {
-  if (scrollToBottom.prototype.guildDMTarget().length !== 0) {
+  if (scrollToBottom.prototype.guildTarget() !== 0) {
     scrollToBottom.prototype.guildDMTarget().on('click.scroll', function() {
       scrollToBottom.prototype.scrollInstant();
     });
   } else {
     setTimeout(function() {
-      scrollToBottom.prototype.hookDMGuild();
-    },200);
+      scrollToBottom.prototype.guildTarget().on('click.scroll', function() {
+        scrollToBottom.prototype.scrollInstant();
+      });
+    },1);
   };
 };
 scrollToBottom.prototype.hookChannel = function() {
-  if (scrollToBottom.prototype.channelTarget().length !== 0) {
+  if (scrollToBottom.prototype.guildTarget() !== 0) {
     scrollToBottom.prototype.channelTarget().on('click.scroll', function() {
       scrollToBottom.prototype.scrollInstant();
     });
   } else {
     setTimeout(function() {
-      scrollToBottom.prototype.hookChannel();
-    },200);
+      scrollToBottom.prototype.guildTarget().on('click.scroll', function() {
+        scrollToBottom.prototype.scrollInstant();
+      });
+    },1);
   };
 };
 scrollToBottom.prototype.hookDM = function() {
-  if (scrollToBottom.prototype.dmTarget().length !== 0) {
+  if (scrollToBottom.prototype.guildTarget() !== 0) {
     scrollToBottom.prototype.dmTarget().on('click.scroll', function() {
       scrollToBottom.prototype.scrollInstant();
     });
   } else {
     setTimeout(function() {
-      scrollToBottom.prototype.hookDM();
-    },200);
+      scrollToBottom.prototype.guildTarget().on('click.scroll', function() {
+        scrollToBottom.prototype.scrollInstant();
+      });
+    },1);
   };
 };
-
 scrollToBottom.prototype.hook = function() {
   scrollToBottom.prototype.hookGuild();
   scrollToBottom.prototype.hookDMGuild();
@@ -88,6 +107,7 @@ scrollToBottom.prototype.unhook = function() {
   scrollToBottom.prototype.dmTarget().off('click.scroll');
 };
 
+//Scrollers
 scrollToBottom.prototype.scrollInstant = function() {
   if (scrollToBottom.prototype.scrollTarget().scrollTop() != ((scrollToBottom.prototype.scrollTarget()[0].scrollHeight) - (scrollToBottom.prototype.scrollTarget().height()))) {
     scrollToBottom.prototype.scrollTarget().scrollTop(((scrollToBottom.prototype.scrollTarget()[0].scrollHeight) - (scrollToBottom.prototype.scrollTarget().height())));
@@ -104,10 +124,46 @@ scrollToBottom.prototype.scrollTimed = function() {
   },1);
 };
 
-scrollToBottom.prototype.start = function() {
+//Mutation Observers for elements loads
+scrollToBottom.prototype.rehookObserver = new MutationObserver(function(mutations) {
+  scrollToBottom.prototype.unhook();
   scrollToBottom.prototype.hook();
+});
+scrollToBottom.prototype.mutationTargetWatches = function() {
+  scrollToBottom.prototype.rehookObserver.observe(scrollToBottom.prototype.channelsMutationTarget().get(0), {
+    attributeOldValue: false,
+    attributes: false,
+    characterData: false,
+    characterDataoldValue: false,
+    childList: true,
+    subtree: true
+  });
+  scrollToBottom.prototype.rehookObserver.observe(scrollToBottom.prototype.channelMutationTarget().get(0), {
+    attributeOldValue: false,
+    attributes: false,
+    characterData: false,
+    characterDataoldValue: false,
+    childList: true,
+    subtree: false
+  });
+  scrollToBottom.prototype.rehookObserver.observe(scrollToBottom.prototype.windowMutationTarget().get(0), {
+    attributeOldValue: false,
+    attributes: false,
+    characterData: false,
+    characterDataoldValue: false,
+    childList: true,
+    subtree: false
+  });
 };
 
+//Init
+scrollToBottom.prototype.start = function() {
+  scrollToBottom.prototype.hook();
+  scrollToBottom.prototype.mutationTargetWatches();
+};
+
+//Stop
 scrollToBottom.prototype.stop = function() {
   scrollToBottom.prototype.unhook();
+  scrollToBottom.prototype.rehookObserver.disconnect();
 };

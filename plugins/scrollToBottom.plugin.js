@@ -32,7 +32,7 @@ scrollToBottom.prototype.scrollTarget = function() {
   return $('div.messagesWrapper-3lZDfY div.scrollerWrap-2lJEkd div.scroller-2FKFPG');
 };
 scrollToBottom.prototype.windowMutationTarget = function() {
-  return $('div.content-yTz4x3');
+  return $('div.chat-3bRxxu div.content-yTz4x3 div.spacer-1fA9zc');
 };
 scrollToBottom.prototype.channelMutationTarget = function() {
   return $('div.channels-Ie2l6A div.scroller-2FKFPG');
@@ -99,6 +99,7 @@ scrollToBottom.prototype.hook = function() {
   scrollToBottom.prototype.hookDMGuild();
   scrollToBottom.prototype.hookChannel();
   scrollToBottom.prototype.hookDM();
+  scrollToBottom.prototype.scrollInstant();
 };
 scrollToBottom.prototype.unhook = function() {
   scrollToBottom.prototype.guildTarget().off('click.scroll');
@@ -130,6 +131,14 @@ scrollToBottom.prototype.rehookObserver = new MutationObserver(function(mutation
   scrollToBottom.prototype.hook();
 });
 scrollToBottom.prototype.mutationTargetWatches = function() {
+  scrollToBottom.prototype.rehookObserver.observe(scrollToBottom.prototype.windowMutationTarget().get(0), {
+    attributeOldValue: false,
+    attributes: false,
+    characterData: false,
+    characterDataoldValue: false,
+    childList: true,
+    subtree: false
+  });
   scrollToBottom.prototype.rehookObserver.observe(scrollToBottom.prototype.channelsMutationTarget().get(0), {
     attributeOldValue: false,
     attributes: false,
@@ -139,14 +148,6 @@ scrollToBottom.prototype.mutationTargetWatches = function() {
     subtree: true
   });
   scrollToBottom.prototype.rehookObserver.observe(scrollToBottom.prototype.channelMutationTarget().get(0), {
-    attributeOldValue: false,
-    attributes: false,
-    characterData: false,
-    characterDataoldValue: false,
-    childList: true,
-    subtree: false
-  });
-  scrollToBottom.prototype.rehookObserver.observe(scrollToBottom.prototype.windowMutationTarget().get(0), {
     attributeOldValue: false,
     attributes: false,
     characterData: false,

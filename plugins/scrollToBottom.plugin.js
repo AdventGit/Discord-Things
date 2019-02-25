@@ -99,7 +99,6 @@ scrollToBottom.prototype.hook = function() {
   scrollToBottom.prototype.hookDMGuild();
   scrollToBottom.prototype.hookChannel();
   scrollToBottom.prototype.hookDM();
-  scrollToBottom.prototype.scrollInstant();
 };
 scrollToBottom.prototype.unhook = function() {
   scrollToBottom.prototype.guildTarget().off('click.scroll');
@@ -130,8 +129,13 @@ scrollToBottom.prototype.rehookObserver = new MutationObserver(function(mutation
   scrollToBottom.prototype.unhook();
   scrollToBottom.prototype.hook();
 });
+scrollToBottom.prototype.rehookScrollObserver = new MutationObserver(function(mutations) {
+  scrollToBottom.prototype.unhook();
+  scrollToBottom.prototype.hook();
+  scrollToBottom.prototype.scrollInstant();
+});
 scrollToBottom.prototype.mutationTargetWatches = function() {
-  scrollToBottom.prototype.rehookObserver.observe(scrollToBottom.prototype.windowMutationTarget().get(0), {
+  scrollToBottom.prototype.rehookScrollObserver.observe(scrollToBottom.prototype.windowMutationTarget().get(0), {
     attributeOldValue: false,
     attributes: false,
     characterData: false,
@@ -161,10 +165,12 @@ scrollToBottom.prototype.mutationTargetWatches = function() {
 scrollToBottom.prototype.start = function() {
   scrollToBottom.prototype.hook();
   scrollToBottom.prototype.mutationTargetWatches();
+  scrollToBottom.prototype.scrollInstant();
 };
 
 //Stop
 scrollToBottom.prototype.stop = function() {
   scrollToBottom.prototype.unhook();
   scrollToBottom.prototype.rehookObserver.disconnect();
+  scrollToBottom.prototype.rehookScrollObserver.disconnect();
 };

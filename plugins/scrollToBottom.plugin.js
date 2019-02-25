@@ -14,9 +14,25 @@ scrollToBottom.prototype.getAuthor = function() {
   return 'AdventDiscord (square inspired)';
 };
 
+scrollToBottom.prototype.guildTarget = function() {
+  return $('div.guild-1EfMGQ');
+};
+scrollToBottom.prototype.guildDMTarget = function() {
+  return $('span.dms-rcsEnV');
+};
+scrollToBottom.prototype.channelTarget = function() {
+  return $('div.wrapper-KpKNwI');
+};
+scrollToBottom.prototype.dmTarget = function() {
+  return $('div.channel-2QD9_O a');
+};
+scrollToBottom.prototype.scrollTarget = function() {
+  return $('.messagesWrapper-3lZDfY .scrollerWrap-2lJEkd .scroller-2FKFPG');
+};
+
 scrollToBottom.prototype.hookGuild = function() {
-  if ($('div.guild-1EfMGQ').length !== 0) {
-    $('div.guild-1EfMGQ').on('click.scroll', function() {
+  if (scrollToBottom.prototype.guildTarget().length !== 0) {
+    scrollToBottom.prototype.guildTarget().on('click.scroll', function() {
       scrollToBottom.prototype.scrollInstant();
     });
   } else {
@@ -26,8 +42,8 @@ scrollToBottom.prototype.hookGuild = function() {
   };
 };
 scrollToBottom.prototype.hookDMGuild = function() {
-  if ($('span.dms-rcsEnV').length !== 0) {
-    $('span.dms-rcsEnV').on('click.scroll', function() {
+  if (scrollToBottom.prototype.guildDMTarget().length !== 0) {
+    scrollToBottom.prototype.guildDMTarget().on('click.scroll', function() {
       scrollToBottom.prototype.scrollInstant();
     });
   } else {
@@ -37,8 +53,8 @@ scrollToBottom.prototype.hookDMGuild = function() {
   };
 };
 scrollToBottom.prototype.hookChannel = function() {
-  if ($('div.wrapper-KpKNwI').length !== 0) {
-    $('div.wrapper-KpKNwI').on('click.scroll', function() {
+  if (scrollToBottom.prototype.channelTarget().length !== 0) {
+    scrollToBottom.prototype.channelTarget().on('click.scroll', function() {
       scrollToBottom.prototype.scrollInstant();
     });
   } else {
@@ -48,8 +64,8 @@ scrollToBottom.prototype.hookChannel = function() {
   };
 };
 scrollToBottom.prototype.hookDM = function() {
-  if ($('div.channel-2QD9_O a').length !== 0) {
-    $('div.channel-2QD9_O a').on('click.scroll', function() {
+  if (scrollToBottom.prototype.dmTarget().length !== 0) {
+    scrollToBottom.prototype.dmTarget().on('click.scroll', function() {
       scrollToBottom.prototype.scrollInstant();
     });
   } else {
@@ -58,6 +74,7 @@ scrollToBottom.prototype.hookDM = function() {
     },200);
   };
 };
+
 scrollToBottom.prototype.hook = function() {
   scrollToBottom.prototype.hookGuild();
   scrollToBottom.prototype.hookDMGuild();
@@ -65,42 +82,32 @@ scrollToBottom.prototype.hook = function() {
   scrollToBottom.prototype.hookDM();
 };
 scrollToBottom.prototype.unhook = function() {
-  $('div.guild-1EfMGQ').off('click.scroll');
-  $('span.dms-rcsEnV').off('click.scroll');
-  $('div.wrapper-KpKNwI').off('click.scroll');
-  $('div.channel-2QD9_O a').off('click.scroll');
+  scrollToBottom.prototype.guildTarget().off('click.scroll');
+  scrollToBottom.prototype.guildDMTarget().off('click.scroll');
+  scrollToBottom.prototype.channelTarget().off('click.scroll');
+  scrollToBottom.prototype.dmTarget().off('click.scroll');
 };
+
 scrollToBottom.prototype.scrollInstant = function() {
-  if (($('.messagesWrapper-3lZDfY .scrollerWrap-2lJEkd .scroller-2FKFPG')[0].scrollHeight - $('.messagesWrapper-3lZDfY .scrollerWrap-2lJEkd .scroller-2FKFPG').scrollTop()) > ($('.messagesWrapper-3lZDfY .scrollerWrap-2lJEkd .scroller-2FKFPG').outerHeight() + 1)) {
-    $('.messagesWrapper-3lZDfY .scrollerWrap-2lJEkd .scroller-2FKFPG').scrollTop(Number.MAX_SAFE_INTEGER);
+  if (scrollToBottom.prototype.scrollTarget().scrollTop() != ((scrollToBottom.prototype.scrollTarget()[0].scrollHeight) - (scrollToBottom.prototype.scrollTarget().height()))) {
+    scrollToBottom.prototype.scrollTarget().scrollTop(((scrollToBottom.prototype.scrollTarget()[0].scrollHeight) - (scrollToBottom.prototype.scrollTarget().height())));
   } else {
     scrollToBottom.prototype.scrollTimed();
   };
 };
 scrollToBottom.prototype.scrollTimed = function() {
   setTimeout(function() {
-    if (($('.messagesWrapper-3lZDfY .scrollerWrap-2lJEkd .scroller-2FKFPG')[0].scrollHeight - $('.messagesWrapper-3lZDfY .scrollerWrap-2lJEkd .scroller-2FKFPG').scrollTop()) > ($('.messagesWrapper-3lZDfY .scrollerWrap-2lJEkd .scroller-2FKFPG').outerHeight() + 1)) {
-      $('.messagesWrapper-3lZDfY .scrollerWrap-2lJEkd .scroller-2FKFPG').scrollTop(Number.MAX_SAFE_INTEGER);
-      scrollToBottom.prototype.scrollTimed();
+    if (scrollToBottom.prototype.scrollTarget().scrollTop() != ((scrollToBottom.prototype.scrollTarget()[0].scrollHeight) - (scrollToBottom.prototype.scrollTarget().height()))) {
+      scrollToBottom.prototype.scrollTarget().scrollTop(((scrollToBottom.prototype.scrollTarget()[0].scrollHeight) - (scrollToBottom.prototype.scrollTarget().height())));
+      scrollToBottom.prototype.scrollInstant();
     }
   },1);
 };
-scrollToBottom.prototype.waitScroller = function() {
-  if ($('.messagesWrapper-3lZDfY .scrollerWrap-2lJEkd .scroller-2FKFPG').length !== 0) {
-    scrollToBottom.prototype.scrollInstant();
-  } else {
-    setTimeout(function() {
-      scrollToBottom.prototype.waitScroller();
-    },200);
-  };
-}
-scrollToBottom.prototype.scrollInit = function() {
-  scrollToBottom.prototype.hook();
-  scrollToBottom.prototype.waitScroller();
-}
+
 scrollToBottom.prototype.start = function() {
-  scrollToBottom.prototype.scrollInit();
+  scrollToBottom.prototype.hook();
 };
+
 scrollToBottom.prototype.stop = function() {
   scrollToBottom.prototype.unhook();
 };

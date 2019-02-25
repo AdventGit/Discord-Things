@@ -120,11 +120,11 @@ scrollToBottom.prototype.scrollTimed = function() {
     if (scrollToBottom.prototype.scrollTarget().scrollTop() != ((scrollToBottom.prototype.scrollTarget()[0].scrollHeight) - (scrollToBottom.prototype.scrollTarget().height()))) {
       scrollToBottom.prototype.scrollTarget().scrollTop(((scrollToBottom.prototype.scrollTarget()[0].scrollHeight) - (scrollToBottom.prototype.scrollTarget().height())));
       scrollToBottom.prototype.scrollInstant();
-    }
+    };
   },1);
 };
 
-//Mutation Observers for elements loads
+//Mutation Observers for element reloads
 scrollToBottom.prototype.rehookObserver = new MutationObserver(function(mutations) {
   scrollToBottom.prototype.unhook();
   scrollToBottom.prototype.hook();
@@ -162,10 +162,23 @@ scrollToBottom.prototype.mutationTargetWatches = function() {
 };
 
 //Init
+scrollToBottom.prototype.init = function() {
+  $(function() {
+    try {
+      scrollToBottom.prototype.hook();
+      scrollToBottom.prototype.mutationTargetWatches();
+      scrollToBottom.prototype.scrollInstant();
+    } catch {
+      setTimeout(function() {
+        scrollToBottom.prototype.init();
+      },200);
+    };
+  });
+};
+
+//Start
 scrollToBottom.prototype.start = function() {
-  scrollToBottom.prototype.hook();
-  scrollToBottom.prototype.mutationTargetWatches();
-  scrollToBottom.prototype.scrollInstant();
+  scrollToBottom.prototype.init();
 };
 
 //Stop

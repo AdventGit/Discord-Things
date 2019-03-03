@@ -42,24 +42,23 @@ class ReadAllNotificationsButton {
 	}
 	load () {}
 	start () {
-        var libraryScript = document.querySelector('head script[src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js"]');
-        if (!libraryScript || performance.now() - libraryScript.getAttribute("date") > 600000) {
-			if (libraryScript) libraryScript.remove();
-			libraryScript = document.createElement("script");
-			libraryScript.setAttribute("type", "text/javascript");
-			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js");
-            libraryScript.setAttribute("date", performance.now());
-            libraryScript.addEventListener("load", () => {
-                BDFDB.loaded = true;
-                this.initialize();
-            });
-            document.head.appendChild(libraryScript);
-		} else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
-            this.initialize();
-        } else {
-            this.startTimeout = setTimeout(() => {this.initialize();}, 4500);
-        }
-        
+    var libraryScript = document.querySelector('head script[src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js"]');
+    if (!libraryScript || performance.now() - libraryScript.getAttribute("date") > 600000) {
+      if (libraryScript) libraryScript.remove();
+      libraryScript = document.createElement("script");
+      libraryScript.setAttribute("type", "text/javascript");
+      libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js");
+      libraryScript.setAttribute("date", performance.now());
+      libraryScript.addEventListener("load", () => {
+        BDFDB.loaded = true;
+        this.initialize();
+      });
+      document.head.appendChild(libraryScript);
+    } else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
+      this.initialize();
+    } else {
+      this.startTimeout = setTimeout(() => {this.initialize();},1500);
+    }
 	}
 	initialize () {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {

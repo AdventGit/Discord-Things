@@ -1,22 +1,26 @@
-//META{"name":"ShowHiddenChannels"}*//
+//META{"name":"ShowHiddenChannels","website":"https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/ShowHiddenChannels","source":"https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/ShowHiddenChannels/ShowHiddenChannels.plugin.js"}*//
 
 class ShowHiddenChannels {
 	getName () {return "ShowHiddenChannels";}
 
-	getVersion () {return "2.4.1";}
+	getVersion () {return "2.4.3";}
 
 	getAuthor () {return "DevilBro";}
 
 	getDescription () {return "Displays channels that are hidden from you by role restrictions.";}
-	
+
 	initConstructor () {
+		this.changelog = {
+			"fixed":[["Discord","Fixed a bug caused by retarded Discord Devs"]]
+		};
+		
 		this.patchModules = {
 			"Channels":["componentDidMount","componentDidUpdate"],
 			"ChannelItem":"componentDidMount",
-			"CategoryItem":"componentDidMount",
+			"ChannelCategoryItem":"componentDidMount",
 			"StandardSidebarView":"componentWillUnmount"
 		};
-		
+
 		this.categoryMarkup = 
 			`<div class="container-hidden">
 				<div class="${BDFDB.disCN.categorycontainerdefault} hidden-channel">
@@ -24,11 +28,11 @@ class ShowHiddenChannels {
 						<svg class="${BDFDB.disCNS.categoryicondefault + BDFDB.disCN.categoryicontransition}" width="12" height="12" viewBox="0 0 24 24">
 							<path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 10L12 15 17 10"></path>
 						</svg>
-						<div class="${BDFDB.disCNS.categorynamedefault + BDFDB.disCNS.categorycolortransition + BDFDB.disCN.overflowellipsis}" style="flex: 1 1 auto;">hidden</div>
+						<div class="${BDFDB.disCNS.categorynamedefault + BDFDB.disCNS.categorycolortransition + BDFDB.disCN.categoryoverflowellipsis}" style="flex: 1 1 auto;">hidden</div>
 					</div>
 				</div>
 			</div>`;
-			
+
 		this.channelTextMarkup = 
 			`<div class="${BDFDB.disCN.channelcontainerdefault} hidden-channel">
 				<div class="${BDFDB.disCNS.channelwrapperdefaulttext + BDFDB.disCN.channelwrapper}">
@@ -39,12 +43,12 @@ class ShowHiddenChannels {
 								<path class="${BDFDB.disCN.channelforeground}" fill="currentColor" fill-rule="nonzero" d="M15.1,3.2 L15.1,2 C15.1,0.88 14.05,0 13,0 C11.95,0 10.9,0.88 10.9,2 L10.9,3.2 C10.45,3.2 10,3.68 10,4.16 L10,6.96 C10,7.52 10.45,8 10.9,8 L15.025,8 C15.55,8 16,7.52 16,7.04 L16,4.24 C16,3.68 15.55,3.2 15.1,3.2 Z M14,3 L12,3 L12,1.92857143 C12,1.35714286 12.4666667,1 13,1 C13.5333333,1 14,1.35714286 14,1.92857143 L14,3 Z"></path>
 							</svg>
 						</div>
-						<div class="${BDFDB.disCNS.channelnamedefaulttext + BDFDB.disCNS.channelname + BDFDB.disCN.overflowellipsis}" style="flex: 1 1 auto;"></div>
+						<div class="${BDFDB.disCNS.channelnamedefaulttext + BDFDB.disCNS.channelname + BDFDB.disCN.channeloverflowellipsis}" style="flex: 1 1 auto;"></div>
 						<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginreset}" style="flex: 0 1 auto;"></div>
 					</div>
 				</div>
 			</div>`;
-			
+
 		this.channelVoiceMarkup = 
 			`<div class="${BDFDB.disCN.channelcontainerdefault} hidden-channel">
 				<div class="${BDFDB.disCNS.channelwrapperdefaultvoice + BDFDB.disCN.channelwrapper}">
@@ -55,27 +59,27 @@ class ShowHiddenChannels {
 								<path class="${BDFDB.disCN.channelforeground}" fill="currentColor" fill-rule="nonzero" d="M15.1,3.2 L15.1,2 C15.1,0.88 14.05,0 13,0 C11.95,0 10.9,0.88 10.9,2 L10.9,3.2 C10.45,3.2 10,3.68 10,4.16 L10,6.96 C10,7.52 10.45,8 10.9,8 L15.025,8 C15.55,8 16,7.52 16,7.04 L16,4.24 C16,3.68 15.55,3.2 15.1,3.2 Z M14,3 L12,3 L12,1.92857143 C12,1.35714286 12.4666667,1 13,1 C13.5333333,1 14,1.35714286 14,1.92857143 L14,3 Z"></path>
 							</svg>
 						</div>
-						<div class="${BDFDB.disCNS.channelnamedefaultvoice + BDFDB.disCNS.channelname + BDFDB.disCN.overflowellipsis}" style="flex: 1 1 auto;"></div>
+						<div class="${BDFDB.disCNS.channelnamedefaultvoice + BDFDB.disCNS.channelname + BDFDB.disCN.channeloverflowellipsis}" style="flex: 1 1 auto;"></div>
 						<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginreset}" style="flex: 0 1 auto;"></div>
 					</div>
 				</div>
 			</div>`;
-			
+
 		this.channelCategoryMarkup = 
 			`<div class="${BDFDB.disCN.channelcontainerdefault} hidden-channel">
 				<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCNS.cursorpointer + BDFDB.disCNS.categorywrappercollapsed + BDFDB.disCN.channelcontent}" style="flex: 1 1 auto;">
 					<svg class="${BDFDB.disCNS.categoryicontransition + BDFDB.disCNS.directionright + BDFDB.disCN.categoryiconcollapsed}" width="12" height="12" viewBox="0 0 24 24">
 						<path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 10L12 15 17 10"></path>
 					</svg>
-					<div class="${BDFDB.disCNS.categorycolortransition + BDFDB.disCNS.overflowellipsis + BDFDB.disCN.categorynamecollapsed}" style="flex: 1 1 auto;"></div>
+					<div class="${BDFDB.disCNS.categorycolortransition + BDFDB.disCNS.categoryoverflowellipsis + BDFDB.disCN.categorynamecollapsed}" style="flex: 1 1 auto;"></div>
 				</div>
 			</div>`;
-			
+
 		this.css = `
 			.container-hidden .containerDefault-1ZnADq .iconTransition-2pOJ7l {
 				position: static;
 			}`;
-			
+
 		this.defaults = {
 			settings: {
 				showText:				{value:true, 	description:"Show hidden Textchannels:"},
@@ -90,33 +94,28 @@ class ShowHiddenChannels {
 				showTopic:				{value:false, 	description:"Show the topic of hidden channels:"}
 			},
 			amounts: {
-				hoverDelay:				{value:0, 		description:"Tooltip delay in millisec:"}
+				hoverDelay:				{value:0, 		min:0,	description:"Tooltip delay in millisec:"}
 			}
 		};
 	}
-	
+
 	getSettingsPanel () {
-		if (!this.started || typeof BDFDB !== "object") return;
+		if (!global.BDFDB || typeof BDFDB != "object" || !BDFDB.loaded || !this.started) return;
 		var settings = BDFDB.getAllData(this, "settings");
 		var amounts = BDFDB.getAllData(this, "amounts");
-		var settingshtml = `<div class="${this.getName()}-settings DevilBro-settings"><div class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.size18 + BDFDB.disCNS.height24 + BDFDB.disCNS.weightnormal + BDFDB.disCN.marginbottom8}">${this.getName()}</div><div class="DevilBro-settings-inner">`;
+		var settingshtml = `<div class="${this.name}-settings DevilBro-settings"><div class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.size18 + BDFDB.disCNS.height24 + BDFDB.disCNS.weightnormal + BDFDB.disCN.marginbottom8}">${this.name}</div><div class="DevilBro-settings-inner">`;
 		for (let key in settings) {
 			settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom8}" style="flex: 1 1 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">${this.defaults.settings[key].description}</h3><div class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.switchenabled + BDFDB.disCNS.switch + BDFDB.disCNS.switchvalue + BDFDB.disCNS.switchsizedefault + BDFDB.disCNS.switchsize + BDFDB.disCN.switchthemedefault}" style="flex: 0 0 auto;"><input type="checkbox" value="settings ${key}" class="${BDFDB.disCNS.switchinnerenabled + BDFDB.disCN.switchinner} settings-switch"${settings[key] ? " checked" : ""}></div></div>`;
 		}
 		for (let key in amounts) {
-			settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom8}" style="flex: 1 1 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCN.flexchild}" style="flex: 0 0 50%;">${this.defaults.amounts[key].description}</h3><div class="${BDFDB.disCN.inputwrapper} inputNumberWrapper ${BDFDB.disCNS.vertical +  BDFDB.disCNS.flex + BDFDB.disCNS.directioncolumn}" style="flex: 1 1 auto;"><span class="numberinput-buttons-zone"><span class="numberinput-button-up"></span><span class="numberinput-button-down"></span></span><input type="number" min="0" option="${key}" value="${amounts[key]}" class="${BDFDB.disCNS.inputdefault + BDFDB.disCNS.input + BDFDB.disCN.size16} amountInput"></div></div>`;
+			settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom8}" style="flex: 1 1 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCN.flexchild}" style="flex: 0 0 50%;">${this.defaults.amounts[key].description}</h3><div class="${BDFDB.disCN.inputwrapper} inputNumberWrapper ${BDFDB.disCNS.vertical +  BDFDB.disCNS.flex + BDFDB.disCNS.directioncolumn}" style="flex: 1 1 auto;"><span class="numberinput-buttons-zone"><span class="numberinput-button-up"></span><span class="numberinput-button-down"></span></span><input type="number"${(!isNaN(this.defaults.amounts[key].min) && this.defaults.amounts[key].min !== null ? ' min="' + this.defaults.amounts[key].min + '"' : '') + (!isNaN(this.defaults.amounts[key].max) && this.defaults.amounts[key].max !== null ? ' max="' + this.defaults.amounts[key].max + '"' : '')} option="${key}" value="${amounts[key]}" class="${BDFDB.disCNS.inputdefault + BDFDB.disCNS.input + BDFDB.disCN.size16} amount-input"></div></div>`;
 		}
 		settingshtml += `</div></div>`;
-		
+
 		let settingspanel = BDFDB.htmlToElement(settingshtml);
 
 		BDFDB.initElements(settingspanel, this);
 
-		BDFDB.addEventListener(this, settingspanel, "input", ".amountInput", e => {
-			var input = parseInt(e.currentTarget.value);
-			if (!isNaN(input) && input > -1) BDFDB.saveData(e.currentTarget.getAttribute("option"), input, this, "amounts");
-		});
-			
 		return settingspanel;
 	}
 
@@ -124,6 +123,8 @@ class ShowHiddenChannels {
 	load () {}
 
 	start () {
+		if (!global.BDFDB) global.BDFDB = {myPlugins:{}};
+		if (global.BDFDB && global.BDFDB.myPlugins && typeof global.BDFDB.myPlugins == "object") global.BDFDB.myPlugins[this.getName()] = this;
 		var libraryScript = document.querySelector('head script[src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js"]');
 		if (!libraryScript || performance.now() - libraryScript.getAttribute("date") > 600000) {
 			if (libraryScript) libraryScript.remove();
@@ -131,10 +132,7 @@ class ShowHiddenChannels {
 			libraryScript.setAttribute("type", "text/javascript");
 			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js");
 			libraryScript.setAttribute("date", performance.now());
-			libraryScript.addEventListener("load", () => {
-				BDFDB.loaded = true;
-				this.initialize();
-			});
+			libraryScript.addEventListener("load", () => {if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();});
 			document.head.appendChild(libraryScript);
 		}
 		else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
@@ -143,8 +141,9 @@ class ShowHiddenChannels {
 
 	initialize () {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
+			if (this.started) return;
 			BDFDB.loadMessage(this);
-			
+
 			this.React = BDFDB.WebModules.findByProperties("createElement", "cloneElement");
 			this.ChannelTypes = BDFDB.WebModules.findByProperties("ChannelTypes").ChannelTypes;
 			this.UserStore = BDFDB.WebModules.findByProperties("getUsers", "getUser");
@@ -153,11 +152,11 @@ class ShowHiddenChannels {
 			this.ChannelStore = BDFDB.WebModules.findByProperties("getChannels", "getDMFromUserId");
 			this.GuildChannels = BDFDB.WebModules.findByProperties("getChannels", "getDefaultChannel");
 			this.Permissions = BDFDB.WebModules.findByProperties("Permissions", "ActivityTypes").Permissions;
-			
+
 			BDFDB.WebModules.forceAllUpdates(this, "Channels");
 		}
 		else {
-			console.error(this.getName() + ": Fatal Error: Could not load BD functions!");
+			console.error(`%c[${this.getName()}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
 		}
 	}
 
@@ -168,31 +167,31 @@ class ShowHiddenChannels {
 		}
 	}
 
-	
+
 	// begin of own functions
-	
+
 	processChannels (instance, wrapper, methodnames) {
 		if (instance.props && instance.props.guild) {
 			if (methodnames.includes("componentDidMount")) this.appendHiddenContainer(instance.props.guild);
 			if (methodnames.includes("componentDidUpdate")) this.reappendHiddenContainer(instance.props.guild);
 		}
 	}
-	
+
 	processChannelItem (instance, wrapper) {
 		if (instance.props && instance.props.channel) this.reappendHiddenContainer(this.GuildStore.getGuild(instance.props.channel.guild_id));
 	}
-	
-	processCategoryItem (instance, wrapper) {
+
+	processChannelCategoryItem (instance, wrapper) {
 		if (instance.props && instance.props.channel) this.reappendHiddenContainer(this.GuildStore.getGuild(instance.props.channel.guild_id));
 	}
-	
+
 	processStandardSidebarView (instance, wrapper) {
 		if (this.SettingsUpdated) {
 			delete this.SettingsUpdated;
 			BDFDB.WebModules.forceAllUpdates(this, "Channels");
 		}
 	}
-	
+
 	appendHiddenContainer (guild) {
 		BDFDB.removeEles(".container-hidden");
 		if (!guild) return;
@@ -200,23 +199,27 @@ class ShowHiddenChannels {
 		var allChannels = this.ChannelStore.getChannels();
 		var shownChannels = this.GuildChannels.getChannels(guild.id);
 		var hiddenChannels = {};
-		
+
 		for (let type in this.ChannelTypes) hiddenChannels[this.ChannelTypes[type]] = [];
-		
+
 		for (let channel_id in allChannels) {
 			var channel = allChannels[channel_id];
 			if (channel.guild_id == guild.id) {
 				var isHidden = true;
 				if (channel.type == this.ChannelTypes.GUILD_CATEGORY) {
-					for (let type in this.ChannelTypes) if (shownChannels[this.ChannelTypes[type]]) for (let shownChannel of shownChannels[this.ChannelTypes[type]]) {
-						if (!channel.id || shownChannel.channel.parent_id == channel.id) {
-							isHidden = false;
-							break;
+					for (let type in this.ChannelTypes) {
+						let shownChannelsOfType = this.ChannelTypes[type] == 0 && shownChannels.SELECTABLE ? shownChannels.SELECTABLE : shownChannels[this.ChannelTypes[type]];
+						if (shownChannelsOfType) for (let shownChannel of shownChannelsOfType) {
+							if (!channel.id || shownChannel.channel.parent_id == channel.id) {
+								isHidden = false;
+								break;
+							}
 						}
 					}
 				}
 				else {
-					for (let shownChannel of shownChannels[channel.type]) if (shownChannel.channel.id == channel.id) {
+					let shownChannelsOfType = channel.type == 0 && shownChannels.SELECTABLE ? shownChannels.SELECTABLE : shownChannels[channel.type];
+					if (shownChannelsOfType) for (let shownChannel of shownChannelsOfType) if (shownChannel.channel.id == channel.id) {
 						isHidden = false;
 						break;
 					}
@@ -224,8 +227,8 @@ class ShowHiddenChannels {
 				if (isHidden) hiddenChannels[channel.type].push(channel);
 			}
 		}
-		
-				
+
+
 		var settings = BDFDB.getAllData(this, "settings"); 
 		var count = 0;
 		for (let type in this.ChannelTypes) {
@@ -236,7 +239,7 @@ class ShowHiddenChannels {
 			count += hiddenChannels[this.ChannelTypes[type]].length;
 		}
 		hiddenChannels.count = count;
-		
+
 		if (count > 0) {
 			var category = BDFDB.htmlToElement(this.categoryMarkup);
 			var wrapper = category.querySelector(BDFDB.dotCN.cursorpointer);
@@ -248,7 +251,7 @@ class ShowHiddenChannels {
 				BDFDB.toggleClass(wrapper, BDFDB.disCN.categorywrapperhovered, BDFDB.disCN.categorywrapperhoveredcollapsed);
 				BDFDB.toggleClass(svg, BDFDB.disCN.categoryiconhovered, BDFDB.disCN.categoryiconhoveredcollapsed, BDFDB.disCN.directionright);
 				BDFDB.toggleClass(name, BDFDB.disCN.categorynamehovered, BDFDB.disCN.categorynamehoveredcollapsed);
-				
+
 				var visible = BDFDB.containsClass(svg, BDFDB.disCN.directionright);
 				BDFDB.toggleEles(category.querySelectorAll(BDFDB.dotCN.channelcontainerdefault), !visible);
 				BDFDB.saveData(guild.id, !visible, this, "categorystatus");
@@ -267,7 +270,7 @@ class ShowHiddenChannels {
 			};
 			inner.addEventListener("mouseenter", togglecontainer);
 			inner.addEventListener("mouseleave", togglecontainer);
-			
+
 			for (let hiddenChannel of hiddenChannels[0]) {
 				let channel = BDFDB.htmlToElement(this.channelTextMarkup);
 				let channelwrapper = channel.querySelector(BDFDB.dotCN.channelwrapper);
@@ -284,14 +287,14 @@ class ShowHiddenChannels {
 					this.showAccessRoles(guild, hiddenChannel, e, false);
 				});
 				channel.addEventListener("click", () => {
-					BDFDB.showToast(`You can not enter the hidden textchannel ${hiddenChannel.name}.`, {type:"error"});
+					BDFDB.showToast(`You can not enter the hidden textchannel&nbsp;&nbsp;<strong>${BDFDB.encodeToHTML(hiddenChannel.name)}</strong>.`, {type:"error", html:true});
 				});
 				channel.addEventListener("contextmenu", e => {
 					this.createHiddenObjContextMenu(guild, hiddenChannel, "TEXT", e);
 				});
 				category.appendChild(channel);
 			}
-			
+
 			for (let hiddenChannel of hiddenChannels[2]) {
 				let channel = BDFDB.htmlToElement(this.channelVoiceMarkup);
 				let channelwrapper = channel.querySelector(BDFDB.dotCN.channelwrapper);
@@ -308,14 +311,14 @@ class ShowHiddenChannels {
 					this.showAccessRoles(guild, hiddenChannel, e, false);
 				});
 				channel.addEventListener("click", () => {
-					BDFDB.showToast(`You can not enter the hidden voicechannel ${hiddenChannel.name}.`, {type:"error"});
+					BDFDB.showToast(`You can not enter the hidden voicechannel&nbsp;&nbsp;<strong>${BDFDB.encodeToHTML(hiddenChannel.name)}</strong>.`, {type:"error", html:true});
 				});
 				channel.addEventListener("contextmenu", e => {
 					this.createHiddenObjContextMenu(guild, hiddenChannel, "VOICE", e);
 				});
 				category.appendChild(channel);
 			}
-			
+
 			for (let hiddenChannel of hiddenChannels[4]) {
 				let channel =  BDFDB.htmlToElement(this.channelCategoryMarkup);
 				let channelwrapper = channel.querySelector(BDFDB.dotCN.categorywrappercollapsed);
@@ -330,7 +333,7 @@ class ShowHiddenChannels {
 					this.showAccessRoles(guild, hiddenChannel, e, false);
 				});
 				channel.addEventListener("click", () => {
-					BDFDB.showToast(`You can not open the hidden category ${hiddenChannel.name}.`, {type:"error"});
+					BDFDB.showToast(`You can not open the hidden category&nbsp;&nbsp;<strong>${BDFDB.encodeToHTML(hiddenChannel.name)}</strong>.`, {type:"error", html:true});
 				});
 				channel.addEventListener("contextmenu", e => {
 					this.createHiddenObjContextMenu(guild, hiddenChannel, "CATEGORY", e);
@@ -341,10 +344,10 @@ class ShowHiddenChannels {
 				BDFDB.toggleClass(wrapper, BDFDB.disCN.categorywrapperdefault, BDFDB.disCN.categorywrappercollapsed);
 				BDFDB.toggleClass(svg, BDFDB.disCN.categoryicondefault, BDFDB.disCN.categoryiconcollapsed, BDFDB.disCN.directionright);
 				BDFDB.toggleClass(name, BDFDB.disCN.categorynamedefault, BDFDB.disCN.categorynamecollapsed);
-				
+
 				BDFDB.toggleEles(category.querySelectorAll(BDFDB.dotCN.channelcontainerdefault), false);
 			}
-			
+
 			this.reappendHiddenContainer(guild, category);
 		}
 		let channellist = document.querySelector(BDFDB.dotCNS.channels + BDFDB.dotCN.scroller);
@@ -358,7 +361,7 @@ class ShowHiddenChannels {
 			});
 		}
 	}
-	
+
 	reappendHiddenContainer (guild, category = document.querySelector(BDFDB.dotCNS.channels + BDFDB.dotCNS.scroller + ".container-hidden")) {
 		if (!guild) return;
 		if (guild.id != this.currentGuild) this.appendHiddenContainer(guild);
@@ -371,16 +374,15 @@ class ShowHiddenChannels {
 			scroller.insertBefore(category, scroller.lastChild);
 		}
 	}
-	
+
 	setReactInstanceOfChannel (guild, div) {
 		var reactInstance = BDFDB.React.createElement(div);
 		reactInstance.memoizedProps = {channel:guild};
 		div.__reactInternalInstance = reactInstance;
 	}
-	
+
 	createHiddenObjContextMenu (guild, channel, type, e) {
-		e.preventDefault();
-		e.stopPropagation();
+		BDFDB.stopEvent(e);
 		var contextMenu = BDFDB.htmlToElement(`<div class="${BDFDB.disCN.contextmenu} showhiddenchannels-contextmenu">${BDFDB.isPluginEnabled("PermissionsViewer") ? '<div class="' + BDFDB.disCN.contextmenuitemgroup + '"><div class="' + BDFDB.disCN.contextmenuitem + '" style="display: none !important;"></div></div>' : ''}<div class="${BDFDB.disCN.contextmenuitemgroup}"><div class="${BDFDB.disCN.contextmenuitem} copyid-item"><span>${BDFDB.LanguageStrings.COPY_ID}</span><div class="${BDFDB.disCN.contextmenuhint}"></div></div></div></div>`);
 		var reactInstance = BDFDB.React.createElement(contextMenu);
 		reactInstance.memoizedProps = {displayName:"ChannelDeleteGroup",guild,channel};
@@ -390,10 +392,10 @@ class ShowHiddenChannels {
 			contextMenu.remove();
 			require("electron").clipboard.write({text: channel.id});
 		});
-		
+
 		BDFDB.appendContextMenu(contextMenu, e);
 	}
-	
+
 	showAccessRoles (guild, channel, e, allowed) {
 		if ((e.type != "mouseenter" && e.type != "mouseover") || !guild || !channel) return;
 		var settings = BDFDB.getAllData(this, "settings");

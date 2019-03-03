@@ -710,6 +710,9 @@ class EditUsers {
 		if (data.name || data.color1 || data.color2 || username.getAttribute("changed-by-editusers")) {
 			let member = this.MemberUtils.getMember(guildid, info.id) || {};
 			let isBRCenabled = BDFDB.isPluginEnabled("BetterRoleColors");
+      if (isBRCenabled != true) {
+        let isBRCenabled = false;
+      };
 			let usenick = !BDFDB.containsClass(username, BDFDB.disCN.userprofileusername) && !BDFDB.containsClass(username.parentElement, BDFDB.disCN.userprofilelistname, BDFDB.disCN.accountinfodetails, false) && member.nick;
 			let usemembercolor = !BDFDB.containsClass(username.parentElement, BDFDB.disCN.userprofilelistname) && (BDFDB.containsClass(username, BDFDB.disCN.memberusername, BDFDB.disCN.messageusername, false) || isBRCenabled);
 			username.style.setProperty("color", BDFDB.colorCONVERT(data.color1 || (usemembercolor ? member.colorString : null), "RGB"), "important");
@@ -777,7 +780,8 @@ class EditUsers {
 	changeBotTags (data, username, member) {
 		for (let tag of username.parentElement.querySelectorAll(BDFDB.dotCN.bottag)) {
 			let invert = tag.className.indexOf(BDFDB.disCN.bottaginvert) > -1;
-			let tagcolor =  BDFDB.colorCONVERT(data.color1 || (isBRCenabled || BDFDB.containsClass(tag, "owner-tag-rolecolor") ? member.colorString : null), "RGB");
+      
+			let tagcolor = BDFDB.colorCONVERT(data.color1 || (isBRCenabled || BDFDB.containsClass(tag, "owner-tag-rolecolor") ? member.colorString : null), "RGB");
 			tagcolor = BDFDB.colorISBRIGHT(tagcolor) ? BDFDB.colorCHANGE(tagcolor, -0.3) : tagcolor;
 			tag.style.setProperty(invert ? "color" : "background-color", tagcolor, "important");
 		}

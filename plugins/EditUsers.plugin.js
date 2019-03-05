@@ -780,7 +780,9 @@ class EditUsers {
 	changeBotTags (data, username, member) {
 		for (let tag of username.parentElement.querySelectorAll(BDFDB.dotCN.bottag)) {
 			let invert = tag.className.indexOf(BDFDB.disCN.bottaginvert) > -1;
-      
+      if (isBRCenabled != true) {
+        let isBRCenabled = false;
+      };
 			let tagcolor = BDFDB.colorCONVERT(data.color1 || (isBRCenabled || BDFDB.containsClass(tag, "owner-tag-rolecolor") ? member.colorString : null), "RGB");
 			tagcolor = BDFDB.colorISBRIGHT(tagcolor) ? BDFDB.colorCHANGE(tagcolor, -0.3) : tagcolor;
 			tag.style.setProperty(invert ? "color" : "background-color", tagcolor, "important");

@@ -458,6 +458,7 @@ tV2.prototype.updateTheme = function() {
     };
     const dms_transform = ((numGuildSize + 6) * -1);
     const dms_margin = ((-1 * dms_transform) + 4);
+    const badge_top = ((numGuildSize / 2) + 5);
     const tV2_base = '\
 <style class="tV2-base">\
 :root{\
@@ -483,6 +484,7 @@ background: rgba(0,0,0,' + BDA.loadData('tV2', 'trans') + ') !important;\
 --guild-size: ' + numGuildSize + 'px;\
 --server-menu-width: ' + server_menu_width + 'px;\
 --badge-size: ' + numBadgeSize + 'px;\
+--badge-top: ' + badge_top + 'px;\
 --font-size: ' + font_size + 'px;\
 --read-all-font-size: ' + read_all_font_size + 'px;\
 --guild-base-size: ' + guild_base_size + 'px;\
@@ -824,19 +826,44 @@ backdrop-filter: blur(5px) !important;\
         $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(4)').addClass('whatsnew-bs');
         $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(4) > div:nth-of-type(1)').addClass('whatsnew-bs-child');
     };
+    if (document.body.contains($('div.wrapper-1Rf91z div.scrollerWrap-2lJEkd div.scroller-2FKFPG > div[class=""]').get(0))) {
+        $('div.wrapper-1Rf91z div.scrollerWrap-2lJEkd div.scroller-2FKFPG > div[class=""]').addClass('container-11WMXy');
+    };
 };
 
 tV2.prototype.activityFeed = new MutationObserver(function(mutations) {
     if (document.body.contains($('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9').get(0))) {
+        if (document.body.contains($('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div.personalizationNotice-2HTAH2').get(0))) {
+            $('.contents-18-Yxp:contains(I don\'t want to)').click()
+        }
         $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(1)').addClass('carousel-bs');
         $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(2)').addClass('quicklaunch-bs');
         $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(3)').addClass('nowplaying-bs');
+        $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(3) > div:nth-of-type(1)').addClass('nowplaying-bs-child');
         $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(4)').addClass('whatsnew-bs');
+        $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(4) > div:nth-of-type(1)').addClass('whatsnew-bs-child');
     };
 });
 
-tV2.prototype.activityfeedclasses = function() {
+tV2.prototype.guildButtons = new MutationObserver(function(mutations) {
+    if (document.body.contains($('div.wrapper-1Rf91z div.scrollerWrap-2lJEkd div.scroller-2FKFPG > div[class=""]').get(0))) {
+        $('div.wrapper-1Rf91z div.scrollerWrap-2lJEkd div.scroller-2FKFPG > div[class=""]').addClass('container-11WMXy');
+    };
+});
+
+tV2.prototype.activityFeedClasses = function() {
     tV2.prototype.activityFeed.observe($('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5').get(0), {
+        attributeOldValue: false,
+        attributes: false,
+        characterData: false,
+        characterDataoldValue: false,
+        childList: true,
+        subtree: true
+    });
+};
+
+tV2.prototype.guildButtonClasses = function() {
+    tV2.prototype.guildButtons.observe($('div.wrapper-1Rf91z div.scrollerWrap-2lJEkd div.scroller-2FKFPG > div[class=""]').get(0), {
         attributeOldValue: false,
         attributes: false,
         characterData: false,
@@ -850,8 +877,9 @@ tV2.prototype.activityfeedclasses = function() {
 tV2.prototype.start = function() {
     tV2.prototype.startupSetup();
     tV2.prototype.updateTheme();
+    tV2.prototype.activityFeedClasses();
+    tV2.prototype.guildButtonClasses();
     tV2.prototype.runOnce();
-    tV2.prototype.activityfeedclasses();
     BDA.showToast('tV2: Loaded!');
 };
 
@@ -867,6 +895,7 @@ tV2.prototype.stop = function() {
         $('head .tV2-text').remove();
         $('head .tV2-jQ3').remove();
         tV2.prototype.activityFeed.disconnect();
+        tV2.prototype.guildButtons.disconnect();
     }
     finally {
         BDA.saveData('tV2', 'loaded', 'False');

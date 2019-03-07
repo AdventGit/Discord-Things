@@ -826,9 +826,6 @@ backdrop-filter: blur(5px) !important;\
         $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(4)').addClass('whatsnew-bs');
         $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5 > div.activityFeed-28jde9 > div.flex-1xMQg5 > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div.body-vr4WiF > div:nth-of-type(4) > div:nth-of-type(1)').addClass('whatsnew-bs-child');
     };
-    if (document.body.contains($('div.wrapper-1Rf91z div.scrollerWrap-2lJEkd div.scroller-2FKFPG > div[class=""]').get(0))) {
-        $('div.wrapper-1Rf91z div.scrollerWrap-2lJEkd div.scroller-2FKFPG > div[class=""]').addClass('container-11WMXy');
-    };
 };
 
 tV2.prototype.activityFeed = new MutationObserver(function(mutations) {
@@ -845,25 +842,8 @@ tV2.prototype.activityFeed = new MutationObserver(function(mutations) {
     };
 });
 
-tV2.prototype.guildButtons = new MutationObserver(function(mutations) {
-    if (document.body.contains($('div.wrapper-1Rf91z div.scrollerWrap-2lJEkd div.scroller-2FKFPG > div[class=""]').get(0))) {
-        $('div.wrapper-1Rf91z div.scrollerWrap-2lJEkd div.scroller-2FKFPG > div[class=""]').addClass('container-11WMXy');
-    };
-});
-
 tV2.prototype.activityFeedClasses = function() {
     tV2.prototype.activityFeed.observe($('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5').get(0), {
-        attributeOldValue: false,
-        attributes: false,
-        characterData: false,
-        characterDataoldValue: false,
-        childList: true,
-        subtree: true
-    });
-};
-
-tV2.prototype.guildButtonClasses = function() {
-    tV2.prototype.guildButtons.observe($('div.wrapper-1Rf91z div.scrollerWrap-2lJEkd div.scroller-2FKFPG > div[class=""]').get(0), {
         attributeOldValue: false,
         attributes: false,
         characterData: false,
@@ -878,7 +858,6 @@ tV2.prototype.start = function() {
     tV2.prototype.startupSetup();
     tV2.prototype.updateTheme();
     tV2.prototype.activityFeedClasses();
-    tV2.prototype.guildButtonClasses();
     tV2.prototype.runOnce();
     BDA.showToast('tV2: Loaded!');
 };
@@ -895,7 +874,6 @@ tV2.prototype.stop = function() {
         $('head .tV2-text').remove();
         $('head .tV2-jQ3').remove();
         tV2.prototype.activityFeed.disconnect();
-        tV2.prototype.guildButtons.disconnect();
     }
     finally {
         BDA.saveData('tV2', 'loaded', 'False');

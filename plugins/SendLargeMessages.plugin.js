@@ -1,42 +1,45 @@
-//META{"name":"SendLargeMessages"}*//
+//META{"name":"SendLargeMessages","website":"https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/SendLargeMessages","source":"https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/SendLargeMessages/SendLargeMessages.plugin.js"}*//
 
 class SendLargeMessages {
 	getName () {return "SendLargeMessages";}
 
-	getVersion () {return "1.5.2";}
+	getVersion () {return "1.5.3";}
 
 	getAuthor () {return "DevilBro";}
 
 	getDescription () {return "Opens a popout when your message is too large, which allows you to automatically send the message in several smaller messages.";}
-	
+
 	initConstructor () {
+		this.changelog = {
+			"fixed":[["Sending","Fixed the issue where Messages are not being sent"]]
+		};
 		this.labels = {};
-		
+
 		this.patchModules = {
 			"ChannelTextArea":"componentDidMount"
 		};
-		
+
 		this.messageDelay = 1000; //changing at own risk, might result in bans or mutes
-		
+
 		this.css = `
-			.${this.getName()}-modal textarea {
+			.${this.name}-modal textarea {
 				rows: 0;
 				cols: 0;
 				height: 100vw;
 				resize: none;
 			}
-			.${this.getName()}-modal #warning-message {
+			.${this.name}-modal #warning-message {
 				color: red;
 			}
-			
-			.${this.getName()}-modal #character-counter {
+
+			.${this.name}-modal #character-counter {
 				float: right;
 				color: white;
 				opacity: .5;
 			}`;
 
 		this.sendMessageModalMarkup =
-			`<span class="${this.getName()}-modal DevilBro-modal">
+			`<span class="${this.name}-modal DevilBro-modal">
 				<div class="${BDFDB.disCN.backdrop}"></div>
 				<div class="${BDFDB.disCN.modal}">
 					<div class="${BDFDB.disCN.modalinner}">
@@ -46,12 +49,16 @@ class SendLargeMessages {
 									<h4 class="${BDFDB.disCNS.h4 + BDFDB.disCNS.headertitle + BDFDB.disCNS.size16 + BDFDB.disCNS.height20 + BDFDB.disCNS.weightsemibold + BDFDB.disCNS.defaultcolor + BDFDB.disCNS.h4defaultmargin + BDFDB.disCN.marginreset}">REPLACE_modal_header_text</h4>
 									<div class="${BDFDB.disCNS.modalguildname + BDFDB.disCNS.small + BDFDB.disCNS.size12 + BDFDB.disCNS.height16 + BDFDB.disCN.primary}"></div>
 								</div>
-								<svg class="${BDFDB.disCNS.modalclose + BDFDB.disCN.flexchild}" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 12 12">
-									<g fill="none" fill-rule="evenodd">
-										<path d="M0 0h12v12H0"></path>
-										<path class="fill" fill="currentColor" d="M9.5 3.205L8.795 2.5 6 5.295 3.205 2.5l-.705.705L5.295 6 2.5 8.795l.705.705L6 6.705 8.795 9.5l.705-.705L6.705 6"></path>
-									</g>
-								</svg>
+								<button type="button" class="${BDFDB.disCNS.modalclose + BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookblank + BDFDB.disCNS.buttoncolorbrand + BDFDB.disCN.buttongrow}">
+									<div class="${BDFDB.disCN.buttoncontents}">
+										<svg name="Close" width="18" height="18" viewBox="0 0 12 12" style="flex: 0 1 auto;">
+											<g fill="none" fill-rule="evenodd">
+												<path d="M0 0h12v12H0"></path>
+												<path class="fill" fill="currentColor" d="M9.5 3.205L8.795 2.5 6 5.295 3.205 2.5l-.705.705L5.295 6 2.5 8.795l.705.705L6 6.705 8.795 9.5l.705-.705L6.705 6"></path>
+											</g>
+										</svg>
+									</div>
+								</button>
 							</div>
 							<div class="${BDFDB.disCNS.scrollerwrap + BDFDB.disCNS.modalcontent + BDFDB.disCNS.scrollerthemed + BDFDB.disCNS.themeghosthairline + BDFDB.disCNS.inputwrapper + BDFDB.disCNS.vertical + BDFDB.disCNS.flex + BDFDB.disCNS.directioncolumn + BDFDB.disCNS.flexchild + BDFDB.disCN.modalsubinner}" style="flex: 1 1 auto;">
 								<textarea class="${BDFDB.disCNS.scroller + BDFDB.disCNS.inputdefault + BDFDB.disCN.input}" id="modal-inputtext"></textarea>
@@ -75,6 +82,8 @@ class SendLargeMessages {
 	load () {}
 
 	start () {
+		if (!global.BDFDB) global.BDFDB = {myPlugins:{}};
+		if (global.BDFDB && global.BDFDB.myPlugins && typeof global.BDFDB.myPlugins == "object") global.BDFDB.myPlugins[this.getName()] = this;
 		var libraryScript = document.querySelector('head script[src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js"]');
 		if (!libraryScript || performance.now() - libraryScript.getAttribute("date") > 600000) {
 			if (libraryScript) libraryScript.remove();
@@ -82,10 +91,7 @@ class SendLargeMessages {
 			libraryScript.setAttribute("type", "text/javascript");
 			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js");
 			libraryScript.setAttribute("date", performance.now());
-			libraryScript.addEventListener("load", () => {
-				BDFDB.loaded = true;
-				this.initialize();
-			});
+			libraryScript.addEventListener("load", () => {if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();});
 			document.head.appendChild(libraryScript);
 		}
 		else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
@@ -94,25 +100,26 @@ class SendLargeMessages {
 
 	initialize () {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
+			if (this.started) return;
 			BDFDB.loadMessage(this);
-			
+
 			this.clipboard = require("electron").clipboard;
-			
+
 			BDFDB.WebModules.forceAllUpdates(this);
 		}
 		else {
-			console.error(this.getName() + ": Fatal Error: Could not load BD functions!");
+			console.error(`%c[${this.getName()}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
 		}
 	}
 
 
 	stop () {
-		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {			
+		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
 			BDFDB.unloadMessage(this);
 		}
 	}
 
-	
+
 	// begin of own functions
 
 	changeLanguageStrings () {
@@ -120,7 +127,7 @@ class SendLargeMessages {
 		this.sendMessageModalMarkup = 		this.sendMessageModalMarkup.replace("REPLACE_btn_cancel_text", this.labels.btn_cancel_text);
 		this.sendMessageModalMarkup = 		this.sendMessageModalMarkup.replace("REPLACE_btn_send_text", this.labels.btn_send_text);
 	}
-	
+
 	processChannelTextArea (instance, wrapper) {
 		if (instance.props && instance.props.type && instance.props.type == "normal") {
 			var textarea = wrapper.querySelector("textarea");
@@ -146,24 +153,23 @@ class SendLargeMessages {
 			});
 		}
 	}
-	
+
 	showSendModal (text) {
 		let sendMessageModal = BDFDB.htmlToElement(this.sendMessageModalMarkup);
 		let textinput = sendMessageModal.querySelector("#modal-inputtext");
 		let warning = sendMessageModal.querySelector("#warning-message");
 		let counter = sendMessageModal.querySelector("#character-counter");
-		
+
 		let updateCounter = () => {
 			let parsedlength = BDFDB.getParsedLength(textinput.value);
 			let messageAmount = Math.ceil(parsedlength/1900);
 			warning.innerText = messageAmount > 15 ? this.labels.modal_messages_warning : "";
 			counter.innerText = parsedlength + " (" + (textinput.selectionEnd - textinput.selectionStart) + ") => " + this.labels.modal_messages_translation + ": " + messageAmount;
 		};
-		
+
 		BDFDB.appendModal(sendMessageModal);
-		
+
 		BDFDB.addChildEventListener(sendMessageModal, "click", ".btn-send", e => {
-			e.preventDefault();
 			let messages = this.formatText(textinput.value || "");
 			messages.forEach((message,i) => {
 				setTimeout(() => {
@@ -172,7 +178,7 @@ class SendLargeMessages {
 				},this.messageDelay * i);
 			});
 		});
-		
+
 		textinput.value = text || "";
 		textinput.addEventListener("keyup", () => {setTimeout(() => {updateCounter();},10);});
 		textinput.addEventListener("click", () => {updateCounter();});
@@ -190,7 +196,7 @@ class SendLargeMessages {
 		updateCounter();
 		textinput.focus();
 	}
-	
+
 	formatText (text) {
 		text = text.replace(new RegExp("\t", 'g'), "	");
 		let longwords = text.match(/[\S]{1800,}/gm);
@@ -210,7 +216,7 @@ class SendLargeMessages {
 			if (messages[count2] && BDFDB.getParsedLength(messages[count2] + "" + word) > 1900) count2++;
 			messages[count2] = messages[count2] ? messages[count2] + " " + word : word;
 		});
-		
+
 		let insertCodeBlock = null, insertCodeLine = null;
 		for (let j = 0; j < messages.length; j++) {
 			if (insertCodeBlock) {
@@ -221,10 +227,10 @@ class SendLargeMessages {
 				messages[j] = insertCodeLine + messages[j];
 				insertCodeLine = null;
 			}
-			
+
 			let codeBlocks = messages[j].match(/`{3,}[\S]*\n|`{3,}/gm);
 			let codeLines = messages[j].match(/[^`]{0,1}`{1,2}[^`]|[^`]`{1,2}[^`]{0,1}/gm);
-			
+
 			if (codeBlocks && codeBlocks.length % 2 == 1) {
 				messages[j] = messages[j] + "```";
 				insertCodeBlock = codeBlocks[codeBlocks.length-1] + "\n";
@@ -234,21 +240,21 @@ class SendLargeMessages {
 				messages[j] = messages[j] + insertCodeLine;
 			}
 		}
-		
+
 		return messages;
 	}
-	
+
 	sendMessage (text) {
 		let textarea = document.querySelector(BDFDB.dotCNS.textareawrapchat + "textarea");
 		if (textarea) {
-			let instance = BDFDB.getOwnerInstance({"node":textarea.parentElement, "name":"ChannelTextAreaForm", "up":true});
+			let instance = BDFDB.getOwnerInstance({"node":BDFDB.getParentEle(BDFDB.dotCNS.chat + "form", textarea), "name":"ChannelTextAreaForm", "up":true});
 			if (instance) {
 				instance.setState({textValue:text});
 				BDFDB.triggerSend(textarea);
 			}
 		}
 	}
-	
+
 	setLabelsByLanguage () {
 		switch (BDFDB.getDiscordLanguage().id) {
 			case "hr":		//croatian

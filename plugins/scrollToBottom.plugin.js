@@ -9,7 +9,7 @@ scrollToBottom.prototype.getDescription = function() {
   return 'When entering any text channel, scrolls to the bottom.';
 };
 scrollToBottom.prototype.getVersion = function() {
-  return '1.1';
+  return '1.2';
 };
 scrollToBottom.prototype.getAuthor = function() {
   return 'AdventDiscord (square inspired)';
@@ -17,10 +17,10 @@ scrollToBottom.prototype.getAuthor = function() {
 
 //Elements I target
 scrollToBottom.prototype.guildTarget = function() {
-  return $('div.guild-1EfMGQ');
+  return $('div.container-2td-dC');
 };
 scrollToBottom.prototype.guildDMTarget = function() {
-  return $('span.dms-rcsEnV');
+  return $('div.container-1aNBdK');
 };
 scrollToBottom.prototype.channelTarget = function() {
   return $('div.wrapper-KpKNwI');

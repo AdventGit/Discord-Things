@@ -3,7 +3,7 @@
 class EditUsers {
 	getName () {return "EditUsers";}
 
-	getVersion () {return "3.2.9";}
+	getVersion () {return "3.3.0";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -11,7 +11,7 @@ class EditUsers {
 
 	initConstructor () {
 		this.changelog = {
-			"fixed":[["Typing Users","The plugin now properly changes the names in the typing users list"]]
+			"fixed":[["Changes","Fixed for the new server classes"]]
 		};
 		
 		this.labels = {};
@@ -265,7 +265,7 @@ class EditUsers {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
 			let data = BDFDB.loadAllData(this, "users");
 			BDFDB.removeAllData(this, "users");
-			BDFDB.WebModules.forceAllUpdates(this);
+			try {BDFDB.WebModules.forceAllUpdates(this);} catch (err) {}
 			BDFDB.saveAllData(data, this, "users");
 
 			BDFDB.removeEles(".autocompleteEditUsers", ".autocompleteEditUsersRow");
@@ -309,14 +309,14 @@ class EditUsers {
 				let userContextSubMenu = BDFDB.htmlToElement(this.userContextSubMenuMarkup);
 				let useritem = userContextSubMenu.querySelector(".usersettings-item");
 				useritem.addEventListener("click", () => {
-					instance._reactInternalFiber.return.memoizedProps.closeContextMenu();
+					BDFDB.closeContextMenu(menu);
 					this.showUserSettings(instance.props.user);
 				});
 				if (BDFDB.loadData(instance.props.user.id, this, "users")) {
 					let resetitem = userContextSubMenu.querySelector(".resetsettings-item");
 					BDFDB.removeClass(resetitem, BDFDB.disCN.contextmenuitemdisabled);
 					resetitem.addEventListener("click", () => {
-						instance._reactInternalFiber.return.memoizedProps.closeContextMenu();
+						BDFDB.closeContextMenu(menu);
 						BDFDB.removeData(instance.props.user.id, this, "users");
 						BDFDB.WebModules.forceAllUpdates(this);
 					});
@@ -710,9 +710,6 @@ class EditUsers {
 		if (data.name || data.color1 || data.color2 || username.getAttribute("changed-by-editusers")) {
 			let member = this.MemberUtils.getMember(guildid, info.id) || {};
 			let isBRCenabled = BDFDB.isPluginEnabled("BetterRoleColors");
-      if (isBRCenabled != true) {
-        let isBRCenabled = false;
-      };
 			let usenick = !BDFDB.containsClass(username, BDFDB.disCN.userprofileusername) && !BDFDB.containsClass(username.parentElement, BDFDB.disCN.userprofilelistname, BDFDB.disCN.accountinfodetails, false) && member.nick;
 			let usemembercolor = !BDFDB.containsClass(username.parentElement, BDFDB.disCN.userprofilelistname) && (BDFDB.containsClass(username, BDFDB.disCN.memberusername, BDFDB.disCN.messageusername, false) || isBRCenabled);
 			username.style.setProperty("color", BDFDB.colorCONVERT(data.color1 || (usemembercolor ? member.colorString : null), "RGB"), "important");
@@ -780,10 +777,7 @@ class EditUsers {
 	changeBotTags (data, username, member) {
 		for (let tag of username.parentElement.querySelectorAll(BDFDB.dotCN.bottag)) {
 			let invert = tag.className.indexOf(BDFDB.disCN.bottaginvert) > -1;
-      if (isBRCenabled != true) {
-        let isBRCenabled = false;
-      };
-			let tagcolor = BDFDB.colorCONVERT(data.color1 || (isBRCenabled || BDFDB.containsClass(tag, "owner-tag-rolecolor") ? member.colorString : null), "RGB");
+			let tagcolor =  BDFDB.colorCONVERT(data.color1 || (isBRCenabled || BDFDB.containsClass(tag, "owner-tag-rolecolor") ? member.colorString : null), "RGB");
 			tagcolor = BDFDB.colorISBRIGHT(tagcolor) ? BDFDB.colorCHANGE(tagcolor, -0.3) : tagcolor;
 			tag.style.setProperty(invert ? "color" : "background-color", tagcolor, "important");
 		}
@@ -975,7 +969,7 @@ class EditUsers {
 		else if (BDFDB.getParentEle(BDFDB.dotCN.textareawrapchat, wrapper)) key = "changeInChatTextarea";
 		else if (BDFDB.getParentEle(BDFDB.dotCN.voiceuser, wrapper)) key = "changeInVoiceChat";
 		else if (BDFDB.getParentEle(BDFDB.dotCN.members, wrapper)) key = "changeInMemberList";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.dms, wrapper)) key = "changeInRecentDms";
+		else if (BDFDB.getParentEle(BDFDB.dotCN.dmguild, wrapper)) key = "changeInRecentDms";
 		else if (BDFDB.getParentEle(BDFDB.dotCN.dmchannels, wrapper)) key = "changeInDmsList";
 		else if (BDFDB.getParentEle(BDFDB.dotCN.channelheaderheaderbar, wrapper)) key = "changeInDmHeader";
 		else if (BDFDB.getParentEle(BDFDB.dotCN.callavatarwrapper, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.callincoming, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.callcurrentcontainer, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.pictureinpicture, wrapper)) key = "changeInDmCalls";

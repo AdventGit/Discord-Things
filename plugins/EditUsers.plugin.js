@@ -3,7 +3,7 @@
 class EditUsers {
 	getName () {return "EditUsers";}
 
-	getVersion () {return "3.3.0";}
+	getVersion () {return "3.3.1";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -11,7 +11,7 @@ class EditUsers {
 
 	initConstructor () {
 		this.changelog = {
-			"fixed":[["Changes","Fixed for the new server classes"]]
+			"fixed":[["Quick Switcher","Fixed Users not being changed in the Quick Switcher"]]
 		};
 		
 		this.labels = {};
@@ -303,7 +303,9 @@ class EditUsers {
 	onUserContextMenu (instance, menu) {
 		if (instance.props && instance.props.user && !menu.querySelector(".localusersettings-item")) {
 			let userContextEntry = BDFDB.htmlToElement(this.userContextEntryMarkup);
-			menu.appendChild(userContextEntry);
+			let devgroup = BDFDB.React.findDOMNodeSafe(BDFDB.getOwnerInstance({node:menu,name:["DeveloperModeGroup","MessageDeveloperModeGroup"]}));
+			if (devgroup) devgroup.parentElement.insertBefore(userContextEntry, devgroup);
+			else menu.appendChild(userContextEntry, menu);
 			let settingsitem = userContextEntry.querySelector(".localusersettings-item");
 			settingsitem.addEventListener("mouseenter", () => {
 				let userContextSubMenu = BDFDB.htmlToElement(this.userContextSubMenuMarkup);
@@ -647,10 +649,10 @@ class EditUsers {
 			}
 		}
 		else if (instance.props.tag == "div" && instance.props.className.indexOf(BDFDB.disCN.quickswitchresult) > -1) {
-			let result = BDFDB.getReactValue(instance, "_reactInternalFiber.return.memoizedProps.result");
-			if (result && result.type == "USER") {
-				this.changeName2(result.record, wrapper.querySelector(BDFDB.dotCN.quickswitchresultmatch));
-				this.changeAvatar(result.record, this.getAvatarDiv(wrapper));
+			let user = BDFDB.getReactValue(instance, "_reactInternalFiber.return.return.memoizedProps.user");
+			if (user) {
+				this.changeName2(user, wrapper.querySelector(BDFDB.dotCN.quickswitchresultmatch));
+				this.changeAvatar(user, this.getAvatarDiv(wrapper));
 			}
 		}
 		else if (instance.props.tag == "div" && instance.props.className.indexOf(BDFDB.disCN.autocompleterow) > -1) {

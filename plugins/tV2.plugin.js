@@ -12,11 +12,24 @@ tV2.prototype.getDescription = function() {
     return 'Better theming idea';
 };
 tV2.prototype.getVersion = function() {
-    return '1.0.0';
+    return '1.1.0';
 };
 tV2.prototype.getAuthor = function() {
     return 'Advent';
 };
+
+tV2.prototype.mutTarget = function() {
+    return 'div.content-98HsJk';
+}
+tV2.prototype.activityTarget = function() {
+    return tV2.prototype.mutTarget()+' > div.activityFeed-1C0EmJ';
+}
+tV2.prototype.removeTarget = function() {
+    return tV2.prototype.activityTarget()+' > div.scrollerWrap-2lJEkd > div.scroller-2FKFPG > div';
+}
+tV2.prototype.mutationObserverConfig = function() {
+    return {attributeOldValue: false, attributes: false, characterData: false, characterDataoldValue: false, childList: true, subtree: true};
+}
 
 //Settings
 tV2.prototype.getSettingsPanel = function() {
@@ -792,92 +805,20 @@ width: 240px !important;}</style>';
 div.popouts-3dRSmE {\
 backdrop-filter: blur(5px) !important;\
 }</style>';
-    $('.layers-3iHuyZ').prop('onclick',null);
-    document.getElementsByClassName('layers-3iHuyZ')[0].onclick = function() {
-        setTimeout(function() {
-            try {
-                $('.header-2o-2hj').prop('onclick',null);
-                document.getElementsByClassName('header-2o-2hj')[0].onclick = function() {
-                    setTimeout(function() {
-                        if ($('head .tV2-server-menu-css').length === 0) {
-                            $(tV2_server_menu_css).insertAfter('head .tV2-base-css');
-                        };
-                    }, 0);
-                };
-            } catch (e) {};
-            if ($('head .tV2-server-menu-css').length !== 0) {
-                if ($('.popouts-3dRSmE .container-3cGP6G .item-2J1YMK.button-38aScr.lookBlank-3eh9lL.colorBrand-3pXr91.grow-q77ONN').length !== 0) {
-                    $('head .tV2-server-menu-css').remove()
-                };
-            };
-            $('head .tV2-text').remove();
-            if ($('div.container-3ayLPN').length !== 0) {
-                $(tV2_search_blur).insertAfter('head .tV2-base-css');
-            } else {
-                $('head .tV2-search-blur').remove()
-            }
-        }, 0);
-    };
 };
 
+tV2.prototype.mutAction = function() {
+    if ($(tV2.prototype.activityTarget()).length > 0) {
+        if ($(tV2.prototype.removeTarget()).length > 0) {
+            $(tV2.prototype.removeTarget()).remove();
+        }
+    }
+}
 tV2.prototype.mutObvs = new MutationObserver(function(mutations) {
-    if ($('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5').find('>div').get(0).hasClass('channels-Ie2l6A')) {
-        var target = $('.' + $('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5').find('>div').get(1).className.split(' ').join('.') + ' .toolbar-94eLIm');
-        if ($('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5').find('>div').get(1).hasClass('chat-3bRxxu')) {
-            if (!(target.find('>a').get(0).hasClass('toolbar-nuke-bs'))) {
-                target.find('>a').get(0).addClass('toolbar-nuke-bs');
-            };
-            if (!(target.find('>span').get(3).hasClass('toolbar-nuke-bs'))) {
-                target.find('>span').get(3).addClass('toolbar-nuke-bs');
-            };
-            if (!(target.find('>div').get(1).hasClass('toolbar-nuke-bs'))) {
-                target.find('>div').get(1).addClass('toolbar-nuke-bs');
-            };
-        } else if ($('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5').find('>div').get(1).hasClass('activityFeed-1C0EmJ')) {
-            target.get(0).addClass('toolbar-nuke-bs');
-        } else if ($('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5').find('>div').get(1).hasClass('gameLibrary-TTDw4Y')) {
-            if (!(target.find('>a').get(0).hasClass('toolbar-nuke-bs'))) {
-                target.find('>a').get(0).addClass('toolbar-nuke-bs');
-            };
-            if (!(target.find('>span').get(0).hasClass('toolbar-nuke-bs'))) {
-                target.find('>span').get(0).addClass('toolbar-nuke-bs');
-            };
-            if (!(target.find('>div').get(1).hasClass('toolbar-nuke-bs'))) {
-                target.find('>div').get(1).addClass('toolbar-nuke-bs');
-            };
-        } else if ($('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5').find('>div').get(1).hasClass('applicationStore-1pNvnv')) {
-            if (!(target.find('>a').get(0).hasClass('toolbar-nuke-bs'))) {
-                target.find('>a').get(0).addClass('toolbar-nuke-bs');
-            };
-            if (!(target.find('>span').get(0).hasClass('toolbar-nuke-bs'))) {
-                target.find('>span').get(0).addClass('toolbar-nuke-bs');
-            };
-            if (!(target.find('>div').get(1).hasClass('toolbar-nuke-bs'))) {
-                target.find('>div').get(1).addClass('toolbar-nuke-bs');
-            };
-        } else if ($('body > div#app-mount > div.app-19_DXt > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.flex-1xMQg5 > div.flex-1xMQg5 > div.flex-1xMQg5').find('>div').get(1).hasClass('container-3gCOGc')) {
-            if (!(target.find('>a').get(0).hasClass('toolbar-nuke-bs'))) {
-                target.find('>a').get(0).addClass('toolbar-nuke-bs');
-            };
-            if (!(target.find('>span').get(1).hasClass('toolbar-nuke-bs'))) {
-                target.find('>span').get(1).addClass('toolbar-nuke-bs');
-            };
-            if (!(target.find('>div').get(0).hasClass('toolbar-nuke-bs'))) {
-                target.find('>div').get(0).addClass('toolbar-nuke-bs');
-            };
-        };
-    };
+    tV2.prototype.mutAction();
 });
-
 tV2.prototype.mutTargets = function() {
-    tV2.prototype.mutObvs.observe($('body div#app-mount div.app-19_DXt').get(0), {
-        attributeOldValue: false,
-        attributes: false,
-        characterData: false,
-        characterDataoldValue: false,
-        childList: true,
-        subtree: true
-    });
+    tV2.prototype.mutObvs.observe($(tV2.prototype.mutTarget()).get(0), tV2.prototype.mutationObserverConfig());
 };
 
 //On plugin start
@@ -886,6 +827,7 @@ tV2.prototype.start = function() {
     tV2.prototype.updateTheme();
     tV2.prototype.runOnce();
     tV2.prototype.mutTargets();
+    tV2.prototype.mutAction();
     BDA.showToast('tV2: Loaded!');
 };
 

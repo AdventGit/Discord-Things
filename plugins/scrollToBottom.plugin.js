@@ -9,7 +9,7 @@ scrollToBottom.prototype.getDescription = function() {
   return 'When entering any channel with chat; scrolls to the bottom.';
 };
 scrollToBottom.prototype.getVersion = function() {
-  return '2.0';
+  return '2.1';
 };
 scrollToBottom.prototype.getAuthor = function() {
   return 'AdventDiscord (square inspired)';
@@ -29,7 +29,7 @@ scrollToBottom.prototype.scrollTarget = function() {
   return $('div.messagesWrapper-3lZDfY div.scrollerWrap-2lJEkd div.scroller-2FKFPG');
 };
 scrollToBottom.prototype.windowMutationTarget = function() {
-  return $('div.chat-3bRxxu div.content-yTz4x3 div.spacer-1fA9zc');
+  return $('div.chat-3bRxxu');
 };
 scrollToBottom.prototype.channelMutationTarget = function() {
   return $('div.container-PNkimc div.scrollerWrap-2lJEkd div.scroller-2FKFPG');

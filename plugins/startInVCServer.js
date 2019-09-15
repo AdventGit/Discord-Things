@@ -3,7 +3,7 @@
 const startInVCServer = function () {};
 
 startInVCServer.prototype.getName = function () {
-    return 'Auto-Select Server';
+    return 'Start In Voice Chat Server';
 }
 startInVCServer.prototype.getDescription = function () {
     return 'Selects the server you'+"'"+'re speaking in on startup.';

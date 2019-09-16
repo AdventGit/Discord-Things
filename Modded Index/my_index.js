@@ -3,31 +3,26 @@ const electron = require("electron");
 const Module = require("module");
 const BetterDiscord = require("./betterdiscord");
 const config = require("./config");
-const app = electron.app
-const acmdsw = app.commandLine.appendSwitch
 
 class BrowserWindow extends electron.BrowserWindow {
     constructor(options) {
         if (!options || !options.webPreferences || !options.webPreferences.preload || !options.title) return super(options);
-        options.webPreferences.nodeIntegration = true;
-        if (process.platform !== "win32" && process.platform !== "darwin") config.frame = true;
         options.webPreferences.allowRunningInsecureContent = true;
         options.webPreferences.backgroundThrottling = true;
         options.webPreferences.experimentalFeatures = true;
         options.webPreferences.nodeIntegration = true;
+        options.webPreferences.nodeIntegrationInWorker = true;
         options.webPreferences.offscreen = false;
         options.webPreferences.scrollBounce = true;
         options.webPreferences.webSecurity = false;
-        Object.assign(options, config)
+        if (process.platform !== "win32" && process.platform !== "darwin") config.frame = true;
+        Object.assign(options, config);
         super(options);
         new BetterDiscord(this);
     }
 }
 
 Object.assign(BrowserWindow, electron.BrowserWindow);
-
-app.disableHardwareAcceleration();
-acmdsw('enable-transparent-visuals');
 
 if (electron.deprecate && electron.deprecate.promisify) {
     const originalDeprecate = electron.deprecate.promisify;
@@ -57,5 +52,7 @@ if (process.platform == "win32" || process.platform == "darwin") {
     const pkg = require(path.join(basePath, "package.json"));
     electron.app.setAppPath(basePath);
     electron.app.setName(pkg.name);
+    electron.app.disableHardwareAcceleration();
+    electron.app.commandLine.appendSwitch('enable-transparent-visuals');
     Module._load(path.join(basePath, pkg.main), null, true);
 }

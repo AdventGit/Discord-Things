@@ -9,7 +9,7 @@ dblClickEdit.prototype.getDescription = function () {
     return 'Double Click your own messages to edit them';
 }
 dblClickEdit.prototype.getVersion = function () {
-    return '2.1';
+    return '2.2';
 }
 dblClickEdit.prototype.getAuthor = function () {
     return 'AdventDiscord (Jiiks Inspired)';
@@ -17,6 +17,9 @@ dblClickEdit.prototype.getAuthor = function () {
 
 dblClickEdit.prototype.baseTarget = function() {
   return 'div.container-1YxwTf';
+}
+dblClickEdit.prototype.baseTarget2 = function() {
+  return 'code';
 }
 dblClickEdit.prototype.buttonTarget = function() {
   return 'div.button-3Jq0g9';
@@ -40,14 +43,25 @@ dblClickEdit.prototype.mutationObserverConfig = function() {
 dblClickEdit.prototype.mutAction = function() {
     $(dblClickEdit.prototype.baseTarget()).off('dblclick.dce');
     $(dblClickEdit.prototype.baseTarget()).on('dblclick.dce', function(e) {
-        $(e.target).parent().find(dblClickEdit.prototype.buttonTarget())[0].click();
-        $(dblClickEdit.prototype.popoutsTarget()+' > div').css('visibility','hidden');
-        $.each(dblClickEdit.prototype.eachTarget(), (index, item) => {
-            if($(item).text() === 'Edit') {
-                $(item).click();
-                return;
-            }
-        });
+        try {
+            $(e.target).parent().find(dblClickEdit.prototype.buttonTarget())[0].click();
+            $(dblClickEdit.prototype.popoutsTarget()+' > div').css('visibility','hidden');
+            $.each(dblClickEdit.prototype.eachTarget(), (index, item) => {
+                if($(item).text() === 'Edit') {
+                    $(item).click();
+                    return;
+                }
+            });
+        } catch {
+            $(e.target).parent().parent().parent().find(dblClickEdit.prototype.buttonTarget())[0].click();
+            $(dblClickEdit.prototype.popoutsTarget()+' > div').css('visibility','hidden');
+            $.each(dblClickEdit.prototype.eachTarget(), (index, item) => {
+                if($(item).text() === 'Edit') {
+                    $(item).click();
+                    return;
+                }
+            });
+        }
     });
 }
 

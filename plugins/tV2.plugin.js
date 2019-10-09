@@ -1,7 +1,6 @@
 //META{"name":"tV2"}*//
 
 //Base functions
-const BDA = BdApi;
 const tV2 = function(){};
 
 //BD information init
@@ -31,6 +30,13 @@ tV2.prototype.mutationObserverConfig = function() {
     return {attributeOldValue: false, attributes: false, characterData: false, characterDataoldValue: false, childList: true, subtree: true};
 }
 
+tV2.prototype.mutTarget2 = function() {
+    return 'div.chat-3bRxxu';
+}
+tV2.prototype.mutationObserverConfig2 = function() {
+    return {attributeOldValue: false, attributes: false, characterData: false, characterDataoldValue: false, childList: true, subtree: false};
+}
+
 //Settings
 tV2.prototype.getSettingsPanel = function() {
     try {
@@ -43,7 +49,7 @@ tV2.prototype.getSettingsPanel = function() {
 float: right !important;\
 margin: -1px 2px 0px 2px !important;\
 padding: 10px 10px 10px 10px !important;\
-background: url(https://puu.sh/CcbNy.png) !important;\
+background: url(https://puu.sh/Eqvwl.png) !important;\
 background-repeat: no-repeat !important;\
 background-size: 16px 16px !important;\
 background-position: center !important;\
@@ -52,7 +58,7 @@ color: white !important;\
 border: none !important;\
 border-radius: 5px !important;\
 "></button>\
-        <input type="color" value="' + BDA.loadData('tV2', 'startcolor') + '" name="tV2-usercolor" class="tV2-usercolor" style="\
+        <input type="color" value="' + BdApi.loadData('tV2', 'startcolor') + '" name="tV2-usercolor" class="tV2-usercolor" style="\
 background: transparent !important;\
 border: none !important;\
 outline: none !important;\
@@ -68,7 +74,7 @@ height: 28px !important;\
 float: right !important;\
 margin: -2px 2px 0px 2px !important;\
 padding: 10px 10px 10px 10px !important;\
-background: url(https://puu.sh/CcbNy.png) !important;\
+background: url(https://puu.sh/Eqvwl.png) !important;\
 background-repeat: no-repeat !important;\
 background-size: 16px 16px !important;\
 background-position: center !important;\
@@ -77,7 +83,7 @@ color: white !important;\
 border: none !important;\
 border-radius: 5px !important;\
 "></button>\
-        <input type="number" min="0" max="1" value="' + BDA.loadData('tV2', 'starttrans') + '" step=".01" name="tV2-trans-num" class="tV2-trans-num" style="\
+        <input type="number" min="0" max="1" value="' + BdApi.loadData('tV2', 'starttrans') + '" step=".01" name="tV2-trans-num" class="tV2-trans-num" style="\
 float: right !important;\
 margin: -2px 2px 0px 10px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -89,7 +95,7 @@ border: 1px solid #777777 !important;\
 width: 48px !important;\
 height: 20px !important;\
 ">\
-        <input type="range" min="0" max="1" value="' + BDA.loadData('tV2', 'starttrans') + '" step=".01" name="tV2-trans" class="tV2-trans" style="\
+        <input type="range" min="0" max="1" value="' + BdApi.loadData('tV2', 'starttrans') + '" step=".01" name="tV2-trans" class="tV2-trans" style="\
 float: right !important;\
 margin: 2px 0px 0px 0px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -106,7 +112,7 @@ border: 1px solid #777777 !important;\
 float: right !important;\
 margin: -2px 2px 0px 2px !important;\
 padding: 10px 10px 10px 10px !important;\
-background: url(https://puu.sh/CcbNy.png) !important;\
+background: url(https://puu.sh/Eqvwl.png) !important;\
 background-repeat: no-repeat !important;\
 background-size: 16px 16px !important;\
 background-position: center !important;\
@@ -115,7 +121,7 @@ color: white !important;\
 border: none !important;\
 border-radius: 5px !important;\
 "></button>\
-        <input type="number" min="30" max="70" value="' + BDA.loadData('tV2', 'startguilds') + '" step="1" name="tV2-guilds-num" class="tV2-guilds-num" style="\
+        <input type="number" min="30" max="70" value="' + BdApi.loadData('tV2', 'startguilds') + '" step="1" name="tV2-guilds-num" class="tV2-guilds-num" style="\
 float: right !important;\
 margin: -2px 2px 0px 10px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -127,7 +133,7 @@ border: 1px solid #777777 !important;\
 width: 48px !important;\
 height: 20px !important;\
 ">\
-        <input type="range" min="30" max="70" value="' + BDA.loadData('tV2', 'guilds') + '" step="1" name="tV2-guilds" class="tV2-guilds" style="\
+        <input type="range" min="30" max="70" value="' + BdApi.loadData('tV2', 'guilds') + '" step="1" name="tV2-guilds" class="tV2-guilds" style="\
 float: right !important;\
 margin: 2px 0px 0px 0px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -144,7 +150,7 @@ border: 1px solid #777777 !important;\
 float: right !important;\
 margin: -2px 2px 0px 2px !important;\
 padding: 10px 10px 10px 10px !important;\
-background: url(https://puu.sh/CcbNy.png) !important;\
+background: url(https://puu.sh/Eqvwl.png) !important;\
 background-repeat: no-repeat !important;\
 background-size: 16px 16px !important;\
 background-position: center !important;\
@@ -153,7 +159,7 @@ color: white !important;\
 border: none !important;\
 border-radius: 5px !important;\
 "></button>\
-        <input type="number" min="16" max="22" pattern="^\d+$" value="' + BDA.loadData('tV2', 'startbadge') + '" step="2" name="tV2-badge-num" class="tV2-badge-num" style="\
+        <input type="number" min="16" max="22" pattern="^\d+$" value="' + BdApi.loadData('tV2', 'startbadge') + '" step="2" name="tV2-badge-num" class="tV2-badge-num" style="\
 float: right !important;\
 margin: -2px 2px 0px 10px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -165,7 +171,7 @@ border: 1px solid #777777 !important;\
 width: 48px !important;\
 height: 20px !important;\
 ">\
-        <input type="range" min="16" max="22" pattern="^\d+$" value="' + BDA.loadData('tV2', 'badge') + '" step="2" name="tV2-badge" class="tV2-badge" style="\
+        <input type="range" min="16" max="22" pattern="^\d+$" value="' + BdApi.loadData('tV2', 'badge') + '" step="2" name="tV2-badge" class="tV2-badge" style="\
 float: right !important;\
 margin: 2px 0px 0px 0px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -182,7 +188,7 @@ border: 1px solid #777777 !important;\
 float: right !important;\
 margin: -2px 2px 0px 2px !important;\
 padding: 10px 10px 10px 10px !important;\
-background: url(https://puu.sh/CcbNy.png) !important;\
+background: url(https://puu.sh/Eqvwl.png) !important;\
 background-repeat: no-repeat !important;\
 background-size: 16px 16px !important;\
 background-position: center !important;\
@@ -191,7 +197,7 @@ color: white !important;\
 border: none !important;\
 border-radius: 5px !important;\
 "></button>\
-        <input type="text" value="' + BDA.loadData('tV2', 'image') + '" name="tV2-image" class="tV2-image" style="\
+        <input type="text" value="' + BdApi.loadData('tV2', 'image') + '" name="tV2-image" class="tV2-image" style="\
 float: right !important;\
 margin: -2px 2px 0px 0px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -211,7 +217,7 @@ height: 20px !important;\
 float: right !important;\
 margin: -2px 2px 0px 2px !important;\
 padding: 10px 10px 10px 10px !important;\
-background: url(https://puu.sh/CcbNy.png) !important;\
+background: url(https://puu.sh/Eqvwl.png) !important;\
 background-repeat: no-repeat !important;\
 background-size: 16px 16px !important;\
 background-position: center !important;\
@@ -220,7 +226,7 @@ color: white !important;\
 border: none !important;\
 border-radius: 5px !important;\
 "></button>\
-        <input type="number" min="0" max="1" pattern="^\d+$" value="' + BDA.loadData('tV2', 'startimagetrans') + '" step=".01" name="tV2-image-trans-num" class="tV2-image-trans-num" style="\
+        <input type="number" min="0" max="1" pattern="^\d+$" value="' + BdApi.loadData('tV2', 'startimagetrans') + '" step=".01" name="tV2-image-trans-num" class="tV2-image-trans-num" style="\
 float: right !important;\
 margin: -2px 2px 0px 10px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -232,7 +238,7 @@ border: 1px solid #777777 !important;\
 width: 48px !important;\
 height: 20px !important;\
 ">\
-        <input type="range" min="0" max="1" pattern="^\d+$" value="' + BDA.loadData('tV2', 'imagetrans') + '" step=".01" name="tV2-image-trans" class="tV2-image-trans" style="\
+        <input type="range" min="0" max="1" pattern="^\d+$" value="' + BdApi.loadData('tV2', 'imagetrans') + '" step=".01" name="tV2-image-trans" class="tV2-image-trans" style="\
 float: right !important;\
 margin: 2px 0px 0px 0px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -314,24 +320,24 @@ tV2.prototype.settingsPanelJS = function() {
             const guilds = $('.tV2-guilds').val();
             const badge = $('.tV2-badge').val();
             const imagetrans = $('.tV2-image-trans').val();
-            BDA.saveData('tV2', 'usercolor', usercolor);
-            BDA.saveData('tV2', 'startcolor', startcolor);
+            BdApi.saveData('tV2', 'usercolor', usercolor);
+            BdApi.saveData('tV2', 'startcolor', startcolor);
             if (trans.length === 1) {
-                BDA.saveData('tV2', 'trans', trans);
+                BdApi.saveData('tV2', 'trans', trans);
             } else {
-                BDA.saveData('tV2', 'trans', trans.substr(1));
+                BdApi.saveData('tV2', 'trans', trans.substr(1));
             };
-            BDA.saveData('tV2', 'starttrans', trans);
-            BDA.saveData('tV2', 'startguilds', guilds);
-            BDA.saveData('tV2', 'startbadge', badge);
-            BDA.saveData('tV2', 'startimagetrans', imagetrans);
-            BDA.saveData('tV2', 'guilds', guilds);
-            BDA.saveData('tV2', 'badge', badge);
-            BDA.saveData('tV2', 'imagetrans', imagetrans);
+            BdApi.saveData('tV2', 'starttrans', trans);
+            BdApi.saveData('tV2', 'startguilds', guilds);
+            BdApi.saveData('tV2', 'startbadge', badge);
+            BdApi.saveData('tV2', 'startimagetrans', imagetrans);
+            BdApi.saveData('tV2', 'guilds', guilds);
+            BdApi.saveData('tV2', 'badge', badge);
+            BdApi.saveData('tV2', 'imagetrans', imagetrans);
             if ($('.tV2-image').val() == 0) {
-                BDA.saveData('tV2', 'image', 'None');;
+                BdApi.saveData('tV2', 'image', 'None');;
             } else {
-                BDA.saveData('tV2', 'image', ($('.tV2-image').val()));;
+                BdApi.saveData('tV2', 'image', ($('.tV2-image').val()));;
             };
             tV2.prototype.updateTheme();
         });
@@ -388,8 +394,8 @@ tV2.prototype.settingsPanelJS = function() {
             const userhex = parseInt($('.tV2-usercolor').val().substr(1), 16);
             const usercolor = ((userhex >> 16) & 255) + ',' + ((userhex >> 8) & 255) + ',' + (userhex & 255)
             const startcolor = $('.tV2-usercolor').val()
-            BDA.saveData('tV2', 'usercolor', usercolor);
-            BDA.saveData('tV2', 'startcolor', startcolor);
+            BdApi.saveData('tV2', 'usercolor', usercolor);
+            BdApi.saveData('tV2', 'startcolor', startcolor);
         });
     }, 1);
 };
@@ -399,47 +405,47 @@ tV2.prototype.startupSetup = function() {
     const jQ3 = document.createElement('script');
     jQ3.src = '//code.jquery.com/jquery-3.3.1.min.js';
     jQ3.classList.add('tV2-jQ3');
-    if (BDA.loadData('tV2', 'loaded') == undefined) {
-        BDA.saveData('tV2', 'loaded', 'False');
-        BDA.saveData('tV2', 'startcolor', '#000000');
-        BDA.saveData('tV2', 'starttrans', '1');
-        BDA.saveData('tV2', 'startguilds', '50');
-        BDA.saveData('tV2', 'startbadge', '18');
-        BDA.saveData('tV2', 'startimagetrans', '.15');
-        BDA.saveData('tV2', 'usercolor', '#000000');
-        BDA.saveData('tV2', 'trans', '1');
-        BDA.saveData('tV2', 'guilds', '50');
-        BDA.saveData('tV2', 'badge', '18');
-        BDA.saveData('tV2', 'image', 'None');
-        BDA.saveData('tV2', 'imagetrans', '.15');
+    if (BdApi.loadData('tV2', 'loaded') == undefined) {
+        BdApi.saveData('tV2', 'loaded', 'False');
+        BdApi.saveData('tV2', 'startcolor', '#000000');
+        BdApi.saveData('tV2', 'starttrans', '1');
+        BdApi.saveData('tV2', 'startguilds', '50');
+        BdApi.saveData('tV2', 'startbadge', '18');
+        BdApi.saveData('tV2', 'startimagetrans', '.15');
+        BdApi.saveData('tV2', 'usercolor', '#000000');
+        BdApi.saveData('tV2', 'trans', '1');
+        BdApi.saveData('tV2', 'guilds', '50');
+        BdApi.saveData('tV2', 'badge', '18');
+        BdApi.saveData('tV2', 'image', 'None');
+        BdApi.saveData('tV2', 'imagetrans', '.15');
         document.getElementsByTagName('head')[0].appendChild(jQ3);
-        BDA.saveData('tV2', 'loaded', 'True');
-    } else if (BDA.loadData('tV2', 'loaded') == 'False') {
-        if (BDA.loadData('tV2', 'startcolor') == undefined) {
-            BDA.saveData('tV2', 'startcolor', '#000000');
-            BDA.saveData('tV2', 'usercolor', '#000000');
+        BdApi.saveData('tV2', 'loaded', 'True');
+    } else if (BdApi.loadData('tV2', 'loaded') == 'False') {
+        if (BdApi.loadData('tV2', 'startcolor') == undefined) {
+            BdApi.saveData('tV2', 'startcolor', '#000000');
+            BdApi.saveData('tV2', 'usercolor', '#000000');
         };
-        if (BDA.loadData('tV2', 'starttrans') == undefined) {
-            BDA.saveData('tV2', 'starttrans', '1');
-            BDA.saveData('tV2', 'trans', '1');
+        if (BdApi.loadData('tV2', 'starttrans') == undefined) {
+            BdApi.saveData('tV2', 'starttrans', '1');
+            BdApi.saveData('tV2', 'trans', '1');
         };
-        if (BDA.loadData('tV2', 'startguilds') == undefined) {
-            BDA.saveData('tV2', 'startguilds', '50');
-            BDA.saveData('tV2', 'guilds', '50');
+        if (BdApi.loadData('tV2', 'startguilds') == undefined) {
+            BdApi.saveData('tV2', 'startguilds', '50');
+            BdApi.saveData('tV2', 'guilds', '50');
         };
-        if (BDA.loadData('tV2', 'startbadge') == undefined) {
-            BDA.saveData('tV2', 'startbadge', '18');
-            BDA.saveData('tV2', 'badge', '18');
+        if (BdApi.loadData('tV2', 'startbadge') == undefined) {
+            BdApi.saveData('tV2', 'startbadge', '18');
+            BdApi.saveData('tV2', 'badge', '18');
         };
-        if (BDA.loadData('tV2', 'image') == undefined) {
-            BDA.saveData('tV2', 'image', 'None');
+        if (BdApi.loadData('tV2', 'image') == undefined) {
+            BdApi.saveData('tV2', 'image', 'None');
         };
-        if (BDA.loadData('tV2', 'startimagetrans') == undefined) {
-            BDA.saveData('tV2', 'startimagetrans', '.15');
-            BDA.saveData('tV2', 'imagetrans', '.15');
+        if (BdApi.loadData('tV2', 'startimagetrans') == undefined) {
+            BdApi.saveData('tV2', 'startimagetrans', '.15');
+            BdApi.saveData('tV2', 'imagetrans', '.15');
         };
         document.getElementsByTagName('head')[0].appendChild(jQ3);
-        BDA.saveData('tV2', 'loaded', 'True');
+        BdApi.saveData('tV2', 'loaded', 'True');
     };
 };
 
@@ -447,10 +453,10 @@ tV2.prototype.startupSetup = function() {
 tV2.prototype.updateTheme = function() {
     const tV2_web = '\
 <style class="tV2-web">\
-@import url("https://raw.githack.com/AdventGit/Discord-Things/master/themes/tV2.css")\
+/*@import url("https://raw.githack.com/AdventGit/Discord-Things/master/tV2/New_Advent.theme.css")*/\
 </style>';
-    const numGuildSize = parseInt(BDA.loadData('tV2', 'guilds'), 10);
-    const numBadgeSize = parseInt(BDA.loadData('tV2', 'badge'), 10);
+    const numGuildSize = parseInt(BdApi.loadData('tV2', 'guilds'), 10);
+    const numBadgeSize = parseInt(BdApi.loadData('tV2', 'badge'), 10);
     const font_size = ((numGuildSize * 2.2) / (10 + (numGuildSize / 125)));
     const read_all_font_size = ((numGuildSize * 2.5) / (10 + (numGuildSize / 49)));
     const guild_base_size = (numGuildSize + 4);
@@ -462,10 +468,10 @@ tV2.prototype.updateTheme = function() {
     const guild_base_h = (guild_error_size_h / 11);
     const guild_size_search = (numGuildSize - 4);
     const guild_search_top_left = (numGuildSize - 29) - ((numGuildSize - 30) / 2);
-    if (BDA.loadData('tV2', 'guilds') < 50) {
-        var server_menu_width = (65 - (50 - BDA.loadData('tV2', 'guilds')));
-    } else if (BDA.loadData('tV2', 'guilds') > 50)  {
-        var server_menu_width = (65 + (BDA.loadData('tV2', 'guilds') - 50));
+    if (BdApi.loadData('tV2', 'guilds') < 50) {
+        var server_menu_width = (65 - (50 - BdApi.loadData('tV2', 'guilds')));
+    } else if (BdApi.loadData('tV2', 'guilds') > 50)  {
+        var server_menu_width = (65 + (BdApi.loadData('tV2', 'guilds') - 50));
     } else {
         var server_menu_width = 65;
     };
@@ -479,9 +485,9 @@ text-rendering: geometricPrecision !important;\
 -webkit-font-smoothing: antialiased !important;\
 font-variant-ligatures: none !important;\
 text-decoration: none !important;\
-background: rgba(0,0,0,' + BDA.loadData('tV2', 'trans') + ') !important;\
---user-color: rgba(' + BDA.loadData('tV2', 'usercolor') + ',1);\
---user-color-smooth: rgba(' + BDA.loadData('tV2', 'usercolor') + ',.22);\
+background: rgba(0,0,0,' + BdApi.loadData('tV2', 'trans') + ') !important;\
+--user-color: rgba(' + BdApi.loadData('tV2', 'usercolor') + ',1);\
+--user-color-smooth: rgba(' + BdApi.loadData('tV2', 'usercolor') + ',.22);\
 --neutral: rgba(100, 100, 100, .5);\
 --neutral-opaque: hsla(0, 0%, 16%, .78);\
 --neutral-mini-trans: hsla(0, 0%, 16%, .94);\
@@ -512,238 +518,6 @@ background: rgba(0,0,0,' + BDA.loadData('tV2', 'trans') + ') !important;\
 --guild-size-search: ' + guild_size_search + 'px;\
 --guild-search-top-left: ' + guild_search_top_left + 'px;}\
 </style>';
-    const tV2_base_css = '\
-<style class="tV2-base-css">\
-.tV2-trans::-webkit-slider-thumb,\
-.tV2-guilds::-webkit-slider-thumb,\
-.tV2-badge::-webkit-slider-thumb,\
-.tV2-image-trans::-webkit-slider-thumb{\
--webkit-appearance: none !important;\
-appearance: none !important;\
-width: 12px !important;\
-height: 12px !important;\
-background: #777777 !important;}\
-.tV2-hide{\
--webkit-box-direction: unset !important;\
--webkit-box-orient: unset !important;\
--webkit-box-pack: unset !important;\
-animation: none !important;\
-background: transparent !important;\
-border-radius: 0px !important;\
-border: none !important;\
-bottom: unset !important;\
-box-shadow: none !important;\
-box-sizing: unset !important;\
-color: unset !important;\
-cursor: unset !important;\
-display: none !important;\
-flex-direction: unset !important;\
-flex-wrap: unset !important;\
-font-size: 0px !important;\
-height: 0px !important;\
-justify-content: unset !important;\
-left: unset !important;\
-letter-spacing: 0px !important;\
-line-height: 0px !important;\
-margin: 0px !important;\
-opacity: 0 !important;\
-outline: none !important;\
-overflow: unset !important;\
-padding: 0px !important;\
-pointer-events: unset !important;\
-position: absolute !important;\
-right: unset !important;\
-top: unset !important;\
-transform: none !important;\
-transition: none !important;\
-vertical-align: unset !important;\
-visibility: hidden !important;\
-width: 0px !important;\
-z-index: -99999 !important;}\
-body div#app-mount div.popouts-3dRSmE div[class="noArrow-3BYQ0Z noShadow-321ZPm popout-3sVMXz \
-popoutBottom-1YbShG arrowAlignmentTop-iGQczz popoutbottom theme-undefined"]{\
-left: 100% !important;\
-top: 51px !important;\
-transform: translateX(-123.7%) !important;}\
-body div#app-mount div.app-19_DXt div.app div.layers-3iHuyZ div.layer-3QrUeG \
-div.flex-1xMQg5.container-2lgZY8 div.flex-1xMQg5.base-3dtUhz div.flex-1xMQg5.spacer-29U_x8 div.chat-3bRxxu \
-div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY \
-div.search-l1Wz-Q{\
-margin: 0px 4px 0px 8px !important;\
-min-width: 321px !important;\
-max-width: 321px !important;\
-width: 321px !important;}\
-body div#app-mount div.app-19_DXt div.app div.layers-3iHuyZ div.layer-3QrUeG \
-div.flex-1xMQg5.container-2lgZY8 div.flex-1xMQg5.base-3dtUhz div.flex-1xMQg5.spacer-29U_x8 div.chat-3bRxxu \
-div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY \
-div.search-l1Wz-Q div.search-2oPWTC div.searchBar-3dMhjb{\
-min-width: 322px !important;\
-max-width: 322px !important;\
-width: 322px !important;}\
-body div#app-mount div.app-19_DXt div.app div.layers-3iHuyZ div.layer-3QrUeG \
-div.flex-1xMQg5.container-2lgZY8 div.flex-1xMQg5.base-3dtUhz div.flex-1xMQg5.spacer-29U_x8 div.chat-3bRxxu \
-div.titleWrapper-1l0xT9 div.flex-1xMQg5.headerBar-UHpsPw div.flex-1xMQg5.flex-1O1GKY.flex-1O1GKY \
-.divider-2PMBlV{\
--webkit-box-direction: unset !important;\
--webkit-box-orient: unset !important;\
--webkit-box-pack: unset !important;\
-animation: none !important;\
-background: transparent !important;\
-border-radius: 0px !important;\
-border: none !important;\
-bottom: unset !important;\
-box-shadow: none !important;\
-box-sizing: unset !important;\
-color: unset !important;\
-cursor: unset !important;\
-display: none !important;\
-flex-direction: unset !important;\
-flex-wrap: unset !important;\
-font-size: 0px !important;\
-height: 0px !important;\
-justify-content: unset !important;\
-left: unset !important;\
-letter-spacing: 0px !important;\
-line-height: 0px !important;\
-margin: 0px !important;\
-opacity: 0 !important;\
-outline: none !important;\
-overflow: unset !important;\
-padding: 0px !important;\
-pointer-events: unset !important;\
-position: absolute !important;\
-right: unset !important;\
-top: unset !important;\
-transform: none !important;\
-transition: none !important;\
-vertical-align: unset !important;\
-visibility: hidden !important;\
-width: 0px !important;\
-z-index: -99999 !important;}</style>';
-    const tV2_base_bd = '\
-<style class="tV2-base-bd">\
-.bda-slist li{\
-background: var(--neutral-hsla-trans);\
-border: none !important;\
-border-radius: 3px !important;\
-box-shadow: 0px 0px 4px 1px var(--neutral) inset !important;}\
-.bda-header,\
-.bda-description-wrap,\
-.bda-footer{\
-border: none !important;}\
-.bda-links a{\
-color: var(--user-color) !important;}\
-.downloadLink-2oSgiF:hover{\
-text-decoration: none !important;}\
-.translate-button{\
-width: 22px !important;\
-height: 22px !important;}\
-.send-button{\
-width: 26px !important;\
-height: 26px !important;\
-position: absolute !important;\
-right: 9px !important;\
-top: 9px !important;}\
-#files_directDownload{\
-cursor: move !important;}\
-#files_directDownload span{\
-color: var(--neutral-text) !important;\
-background: var(--neutral-hsla-trans) !important;\
-border: 1px solid var(--neutral) !important;\
-border-radius: 3px !important;}\
-#files_directDownload svg{\
-fill: var(--neutral) !important;}\
-#files_directDownload .file .progress-bar{\
-background: var(--user-color) !important;}\
-#qs_button{\
-display: block !important;\
-margin-top: -30px !important;\
-margin-left: 90px !important;}\
-body > [id^="app"] > [class^="context"] > div > span{\
-color: var(--neutral-text) !important;}\
-body > [id^="app"] > [class^="context"] > div[class^="item-"]:hover{\
-background: var(--neutral-hsla-trans) !important;}\
-.downloadLink-1ywL9o{\
-width: fit-content !important;}\
-.toasts{\
-display: block !important;\
-position: absolute !important;\
-width: inherit !important;\
-float: left !important;\
-bottom: 8% !important;\
-left: 0px !important;\
-right: 0px !important;\
-top: unset !important;\
-flex-direction: inherit !important;\
-align-items: baseline !important;\
-justify-content: inherit !important;\
-pointer-events: none !important;\
-z-index: 9999 !important;}\
-.toast{\
-background: var(--neutral-hsla-trans) !important;\
-opacity: 1 !important;\
-border-radius: 4px !important;\
-box-shadow: none !important;\
-font-weight: 500 !important;\
-font-size: 14px !important;\
-color: var(--user-color) !important;\
-user-select: text !important;\
-pointer-events: none !important;\
-transform: translateY(-10px) !important;\
-width: fit-content !important;\
-margin: 10px auto 0px auto !important;\
-padding: 10px !important;}\
-.notice-2FJMB4{\
-background: transparent !important;\
--webkit-app-region: no-drag !important;\
-border-bottom: 1px solid var(--user-color) !important;\
-border-radius: 0px !important;\
-width: fit-content !important;\
-left: calc(50% - 10px) !important;\
-transform: translate(-50%, 0%) !important;}\
-.dismiss-SCAH9H{\
-width: 36px !important;\
-height: 36px !important;\
-background-position: 98% !important;\
-background-size: 10px !important;\
-bottom: 0px !important;\
-right: 8px !important;\
-left: unset !important;\
-top: 0px !important;\
-opacity: 1 !important;\
-transition: none !important;\
-border-bottom: 1px solid var(--user-color) !important;}\
-.bd-toasts{\
-display: block !important;\
-position: absolute !important;\
-float: left !important;\
-bottom: 8% !important;\
-left: 50% !important;\
-right: 0px !important;\
-top: unset !important;\
-transform: translate(-50%, 0%) !important;\
-flex-direction: inherit !important;\
-align-items: baseline !important;\
-justify-content: inherit !important;\
-pointer-events: none !important;\
-width: max-content !important;\
-height: max-content !important;\
-z-index: 9999 !important;}\
-.bd-toast{\
-background: var(--neutral-hsla-trans) !important;\
-opacity: 1 !important;\
-border-radius: 4px !important;\
-box-shadow: none !important;\
-font-weight: 500 !important;\
-font-size: 14px !important;\
-color: var(--user-color) !important;\
-user-select: none !important;\
-pointer-events: none !important;\
-width: fit-content !important;\
-margin: 10px auto 0px auto !important;\
-padding: 10px !important;\
-transform: none !important;\
-}</style>';
     if ($('head .tV2-web').length === 0) {
         $('head').prepend(tV2_web);
     };
@@ -753,20 +527,14 @@ transform: none !important;\
         $('head .tV2-base').remove();
         $(tV2_base).insertBefore('head .tV2-web');
     };
-    if ($('head .tV2-base-css').length === 0) {
-        $(tV2_base_css).insertAfter('head .tV2-web');
-    };
-    if ($('head .tV2-base-bd').length === 0) {
-        $(tV2_base_bd).insertAfter('head .tV2-web');
-    };
-    if (BDA.loadData('tV2', 'image') !== 'None') {
+    if (BdApi.loadData('tV2', 'image') !== 'None') {
     const tV2_optional_image = '\
 <style class="tV2-image-css">\
 :root::after {\
 content: "";\
 width: inherit !important;\
 height: inherit !important;\
-background-image: url("' + BDA.loadData('tV2', 'image') + '") !important;\
+background-image: url("' + BdApi.loadData('tV2', 'image') + '") !important;\
 background-size: cover !important;\
 background-repeat: no-repeat !important;\
 background-position: center !important;\
@@ -775,43 +543,26 @@ top: 0px !important;\
 left: 0px !important;\
 bottom: 0px !important;\
 right: 0px !important;\
-opacity: ' + BDA.loadData('tV2', 'imagetrans') + ' !important;\
+opacity: ' + BdApi.loadData('tV2', 'imagetrans') + ' !important;\
 z-index: -1 !important;\
 }</style>';
     if ($('head .tV2-image-css').length === 0) {
         $(tV2_optional_image).insertAfter('head .tV2-base');
-    } else if (($('head .tV2-image-css').length !== 0) && (BDA.loadData('tV2', 'image') !== 'None')) {
+    } else if (($('head .tV2-image-css').length !== 0) && (BdApi.loadData('tV2', 'image') !== 'None')) {
         $('head .tV2-image-css').remove();
         $(tV2_optional_image).insertAfter('head .tV2-base');
     };
-    } else if ((BDA.loadData('tV2', 'image') == 'None') && ($('head .tV2-image-css').length !== 0)) {
+    } else if ((BdApi.loadData('tV2', 'image') == 'None') && ($('head .tV2-image-css').length !== 0)) {
         $('head .tV2-image-css').remove();
     };
 };
 
 //Functions that should only run once after setup
-tV2.prototype.runOnce = function() {
-    const tV2_server_menu_css = '\
-<style class="tV2-server-menu-css">\
-body div#app-mount div.popouts-3dRSmE div[class="noArrow-3BYQ0Z popout-3sVMXz \
-popoutBottom-1YbShG arrowAlignmentTop-iGQczz popoutbottom theme-undefined"]{\
-top: 61px !important;\
-width: 240px !important;}\
-body div#app-mount div.popouts-3dRSmE div[class="noArrow-3BYQ0Z popout-3sVMXz \
-popoutBottom-1YbShG arrowAlignmentTop-iGQczz popoutbottom theme-undefined"] div.menu-Sp6bN1{\
-width: 240px !important;}</style>';
-    const tV2_search_blur = '\
-<style class="tV2-search-blur">\
-div.popouts-3dRSmE {\
-backdrop-filter: blur(5px) !important;\
-}</style>';
-};
+//tV2.prototype.runOnce = function() {};
 
 tV2.prototype.mutAction = function() {
-    if ($(tV2.prototype.activityTarget()).length > 0) {
-        if ($(tV2.prototype.removeTarget()).length > 0) {
-            $(tV2.prototype.removeTarget()).remove();
-        }
+    if ($(tV2.prototype.activityTarget()).length > 0 && $(tV2.prototype.removeTarget()).length > 0) {
+        $(tV2.prototype.removeTarget()).remove();
     }
 }
 tV2.prototype.mutObvs = new MutationObserver(function(mutations) {
@@ -821,31 +572,50 @@ tV2.prototype.mutTargets = function() {
     tV2.prototype.mutObvs.observe($(tV2.prototype.mutTarget()).get(0), tV2.prototype.mutationObserverConfig());
 };
 
+tV2.prototype.mutAction2 = function() {
+    $('div.search-36MZv-').next().next().addClass('customNuke');
+    $('div.search-36MZv-').insertAfter($('div.iconWrapper-2OrFZ1[aria-label="Mentions"]'));
+    if ($('div.children-19S4PO div.status-1XNdyw').length === 0) {
+        $('div.iconWrapper-2OrFZ1[aria-label="Member List"]').insertAfter($('div.iconWrapper-2OrFZ1[aria-label="Mentions"]'));
+    } else {
+        $('div.iconWrapper-2OrFZ1[aria-label="Add Friends to DM"]').insertBefore($('div.iconWrapper-2OrFZ1[aria-label="Start Voice Call"]'));
+    }
+    $('div.inner-zqa7da div.buttons-205you button[aria-label="Send a gift"]').addClass('customNuke');
+    $('div.inner-zqa7da div.buttons-205you > div').addClass('customNuke');
+}
+tV2.prototype.mutObvs2 = new MutationObserver(function(mutations) {
+    tV2.prototype.mutAction2();
+});
+tV2.prototype.mutTargets2 = function() {
+    tV2.prototype.mutObvs2.observe($(tV2.prototype.mutTarget()).get(0), tV2.prototype.mutationObserverConfig2());
+    tV2.prototype.mutObvs2.observe($(tV2.prototype.mutTarget2()).get(0), tV2.prototype.mutationObserverConfig2());
+}
+
 //On plugin start
 tV2.prototype.start = function() {
     tV2.prototype.startupSetup();
     tV2.prototype.updateTheme();
-    tV2.prototype.runOnce();
+    //tV2.prototype.runOnce();
     tV2.prototype.mutTargets();
+    tV2.prototype.mutTargets2();
     tV2.prototype.mutAction();
-    BDA.showToast('tV2: Loaded!');
+    tV2.prototype.mutAction2();
+    BdApi.showToast('tV2: Loaded!');
 };
 
 //On plugin stop
 tV2.prototype.stop = function() {
     try {
         $('.layers-3iHuyZ').prop('onclick',null)
-        $('head .tV2-base-bd').remove();
-        $('head .tV2-base-css').remove();
         $('head .tV2-base').remove();
         $('head .tV2-web').remove();
         $('head .tV2-image-css').remove();
-        $('head .tV2-text').remove();
         $('head .tV2-jQ3').remove();
         tV2.prototype.mutObvs.disconnect();
+        test.prototype.mutObvs2.disconnect();
     }
     finally {
-        BDA.saveData('tV2', 'loaded', 'False');
-        BDA.showToast('tV2: Unloaded!');
+        BdApi.saveData('tV2', 'loaded', 'False');
+        BdApi.showToast('tV2: Unloaded!');
     };
 };

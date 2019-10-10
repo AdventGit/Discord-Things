@@ -463,7 +463,7 @@ tV2.prototype.startupSetup = function() {
 tV2.prototype.updateTheme = function() {
     const tV2_web = '\
 <style class="tV2-web">\
-@import url("https://raw.githack.com/AdventGit/Discord-Things/master/tV2/New_Advent.theme.css")\
+@import url("https://raw.githack.com/AdventGit/Discord-Things/master/themes/tV2.css")\
 </style>';
     const numGuildSize = parseInt(BdApi.loadData('tV2', 'guilds'), 10);
     const numBadgeSize = parseInt(BdApi.loadData('tV2', 'badge'), 10);

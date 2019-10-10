@@ -594,16 +594,18 @@ tV2.prototype.mutTargets3 = function() {
 
 //On plugin start
 tV2.prototype.start = function() {
-    tV2.prototype.startupSetup();
-    tV2.prototype.updateTheme();
-    tV2.prototype.runOnce();
-    tV2.prototype.mutTargets();
-    tV2.prototype.mutTargets2();
-    tV2.prototype.mutTargets3();
-    tV2.prototype.mutAction();
-    tV2.prototype.mutAction2();
-    tV2.prototype.mutAction3();
-    BdApi.showToast('tV2: Loaded!');
+    setTimeout(function() {
+        tV2.prototype.startupSetup();
+        tV2.prototype.updateTheme();
+        tV2.prototype.runOnce();
+        tV2.prototype.mutTargets();
+        tV2.prototype.mutTargets2();
+        tV2.prototype.mutTargets3();
+        tV2.prototype.mutAction();
+        tV2.prototype.mutAction2();
+        tV2.prototype.mutAction3();
+        BdApi.showToast('tV2: Loaded!');
+    }, 1);
 };
 
 //On plugin stop

@@ -469,6 +469,7 @@ tV2.prototype.updateTheme = function() {
     const numBadgeSize = parseInt(BdApi.loadData('tV2', 'badge'), 10);
     const shiftPos = (numGuildSize-58);
     const guildWidth = (72+shiftPos);
+    const pillHoverHeight = (numGuildSize/1.5)
     const tV2_base = '\
 <style class="tV2-base">\
 :root{\
@@ -480,20 +481,17 @@ background: rgba(0,0,0,'+BdApi.loadData('tV2', 'trans')+') !important;\
 --user-color: rgba('+BdApi.loadData('tV2', 'usercolor')+',1);\
 --user-color-smooth: rgba('+BdApi.loadData('tV2', 'usercolor')+',.22);\
 --neutral: rgba(100, 100, 100, .5);\
---neutral-opaque: hsla(0, 0%, 16%, .78);\
---neutral-mini-trans: hsla(0, 0%, 16%, .94);\
---neutral-semi-trans: rgba(127, 127, 127, .42);\
 --neutral-hsla-trans: hsla(0, 0%, 42%, .3);\
---neutral-hsla-trans-plugin: hsla(0, 0%, 21%, .3);\
 --neutral-text: hsla(0, 0%, 100%, .26);\
 --neutral-smooth: hsla(0, 0%, 100%, .1);\
 --neutral-guild: hsla(0, 0%, 100%, .48);\
 --dark: rgba(26, 26, 26, .92);\
---light: rgba(229, 229, 229, .78);\
+--light: rgba(220, 220, 220, .78);\
 --light-o: rgba(229, 229, 229, 1);\
---guild-size2: '+numGuildSize+'px;\
+--guild-size: '+numGuildSize+'px;\
 --shift-pos: '+shiftPos+'px;\
 --guild-width: '+guildWidth+'px;\
+--pill-hover-h: '+pillHoverHeight+'px;\
 </style>';
     if ($('head .tV2-web').length === 0) {
         $('head').append(tV2_web);

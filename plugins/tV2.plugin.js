@@ -496,10 +496,10 @@ background: rgba(0,0,0,'+BdApi.loadData('tV2', 'trans')+') !important;\
 --guild-width: '+guildWidth+'px;\
 </style>';
     if ($('head .tV2-web').length === 0) {
-        $('head').prepend(tV2_web);
+        $('head').append(tV2_web);
     };
     if ($('head .tV2-base').length === 0) {
-        $('head').prepend(tV2_base);
+        $('head').append(tV2_base);
     } else {
         $('head .tV2-base').remove();
         $(tV2_base).insertBefore('head .tV2-web');

@@ -3,6 +3,16 @@
 //Base functions
 const tV2 = function(){};
 
+//Version control
+tV2.prototype.curVer = function() {
+    return '2.0.0'
+}
+tV2.prototype.verAction = function() {
+    BdApi.alert('Update Available!','Place in %appdata%\\BetterDiscord\\plugins');
+    $('form.modal-yWgWj- div.footer-3rDWdC').append($('<a href="https://raw.githubusercontent.com/AdventGit/Discord-Things/master/plugins/tV2.plugin.js" download="tV2.plugin.js" class="primaryButton-2BsGPp button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 sizeXlarge-2yFAlZ grow-q77ONN" style="margin-right: 10px !important;"><div class="contents-18-Yxp">Download</div></button>'));
+    return true;
+}
+
 //BD information init
 tV2.prototype.getName = function() {
     return 'tV2';
@@ -11,7 +21,7 @@ tV2.prototype.getDescription = function() {
     return 'Better theming idea';
 };
 tV2.prototype.getVersion = function() {
-    return '1.1.0';
+    return tV2.prototype.curVer();
 };
 tV2.prototype.getAuthor = function() {
     return 'Advent';
@@ -58,7 +68,7 @@ color: white !important;\
 border: none !important;\
 border-radius: 5px !important;\
 "></button>\
-        <input type="color" value="' + BdApi.loadData('tV2', 'startcolor') + '" name="tV2-usercolor" class="tV2-usercolor" style="\
+        <input type="color" value="'+BdApi.loadData('tV2', 'startcolor')+'" name="tV2-usercolor" class="tV2-usercolor" style="\
 background: transparent !important;\
 border: none !important;\
 outline: none !important;\
@@ -83,7 +93,7 @@ color: white !important;\
 border: none !important;\
 border-radius: 5px !important;\
 "></button>\
-        <input type="number" min="0" max="1" value="' + BdApi.loadData('tV2', 'starttrans') + '" step=".01" name="tV2-trans-num" class="tV2-trans-num" style="\
+        <input type="number" min="0" max="1" value="'+BdApi.loadData('tV2', 'starttrans')+'" step=".01" name="tV2-trans-num" class="tV2-trans-num" style="\
 float: right !important;\
 margin: -2px 2px 0px 10px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -95,7 +105,7 @@ border: 1px solid #777777 !important;\
 width: 48px !important;\
 height: 20px !important;\
 ">\
-        <input type="range" min="0" max="1" value="' + BdApi.loadData('tV2', 'starttrans') + '" step=".01" name="tV2-trans" class="tV2-trans" style="\
+        <input type="range" min="0" max="1" value="'+BdApi.loadData('tV2', 'starttrans')+'" step=".01" name="tV2-trans" class="tV2-trans" style="\
 float: right !important;\
 margin: 2px 0px 0px 0px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -121,7 +131,7 @@ color: white !important;\
 border: none !important;\
 border-radius: 5px !important;\
 "></button>\
-        <input type="number" min="30" max="70" value="' + BdApi.loadData('tV2', 'startguilds') + '" step="1" name="tV2-guilds-num" class="tV2-guilds-num" style="\
+        <input type="number" min="38" max="58" value="'+BdApi.loadData('tV2', 'startguilds')+'" step="1" name="tV2-guilds-num" class="tV2-guilds-num" style="\
 float: right !important;\
 margin: -2px 2px 0px 10px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -133,7 +143,7 @@ border: 1px solid #777777 !important;\
 width: 48px !important;\
 height: 20px !important;\
 ">\
-        <input type="range" min="30" max="70" value="' + BdApi.loadData('tV2', 'guilds') + '" step="1" name="tV2-guilds" class="tV2-guilds" style="\
+        <input type="range" min="38" max="58" value="'+BdApi.loadData('tV2', 'guilds')+'" step="1" name="tV2-guilds" class="tV2-guilds" style="\
 float: right !important;\
 margin: 2px 0px 0px 0px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -159,7 +169,7 @@ color: white !important;\
 border: none !important;\
 border-radius: 5px !important;\
 "></button>\
-        <input type="number" min="16" max="22" pattern="^\d+$" value="' + BdApi.loadData('tV2', 'startbadge') + '" step="2" name="tV2-badge-num" class="tV2-badge-num" style="\
+        <input type="number" min="16" max="22" pattern="^\d+$" value="'+BdApi.loadData('tV2', 'startbadge')+'" step="2" name="tV2-badge-num" class="tV2-badge-num" style="\
 float: right !important;\
 margin: -2px 2px 0px 10px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -171,7 +181,7 @@ border: 1px solid #777777 !important;\
 width: 48px !important;\
 height: 20px !important;\
 ">\
-        <input type="range" min="16" max="22" pattern="^\d+$" value="' + BdApi.loadData('tV2', 'badge') + '" step="2" name="tV2-badge" class="tV2-badge" style="\
+        <input type="range" min="16" max="22" pattern="^\d+$" value="'+BdApi.loadData('tV2', 'badge')+'" step="2" name="tV2-badge" class="tV2-badge" style="\
 float: right !important;\
 margin: 2px 0px 0px 0px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -197,7 +207,7 @@ color: white !important;\
 border: none !important;\
 border-radius: 5px !important;\
 "></button>\
-        <input type="text" value="' + BdApi.loadData('tV2', 'image') + '" name="tV2-image" class="tV2-image" style="\
+        <input type="text" value="'+BdApi.loadData('tV2', 'image')+'" name="tV2-image" class="tV2-image" style="\
 float: right !important;\
 margin: -2px 2px 0px 0px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -226,7 +236,7 @@ color: white !important;\
 border: none !important;\
 border-radius: 5px !important;\
 "></button>\
-        <input type="number" min="0" max="1" pattern="^\d+$" value="' + BdApi.loadData('tV2', 'startimagetrans') + '" step=".01" name="tV2-image-trans-num" class="tV2-image-trans-num" style="\
+        <input type="number" min="0" max="1" pattern="^\d+$" value="'+BdApi.loadData('tV2', 'startimagetrans')+'" step=".01" name="tV2-image-trans-num" class="tV2-image-trans-num" style="\
 float: right !important;\
 margin: -2px 2px 0px 10px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -238,7 +248,7 @@ border: 1px solid #777777 !important;\
 width: 48px !important;\
 height: 20px !important;\
 ">\
-        <input type="range" min="0" max="1" pattern="^\d+$" value="' + BdApi.loadData('tV2', 'imagetrans') + '" step=".01" name="tV2-image-trans" class="tV2-image-trans" style="\
+        <input type="range" min="0" max="1" pattern="^\d+$" value="'+BdApi.loadData('tV2', 'imagetrans')+'" step=".01" name="tV2-image-trans" class="tV2-image-trans" style="\
 float: right !important;\
 margin: 2px 0px 0px 0px !important;\
 padding: 0px 0px 0px 0px !important;\
@@ -284,12 +294,12 @@ tV2.prototype.settingsPanelJS = function() {
         };
         $.fn.autoresize = function(options) {
             $(this).on('input mousemove', function() {
-                $(this).css('width', Math.min(options.maxWidth,Math.max(options.minWidth,$(this).textWidth() + options.padding)));
+                $(this).css('width', Math.min(options.maxWidth,Math.max(options.minWidth,$(this).textWidth()+options.padding)));
             }).trigger('input mousemove');
             return this;
         };
         $.fn.autoresizeOnDemand = function(options) {
-            $(this).css('width', Math.min(options.maxWidth,Math.max(options.minWidth,$(this).textWidth() + options.padding)));
+            $(this).css('width', Math.min(options.maxWidth,Math.max(options.minWidth,$(this).textWidth()+options.padding)));
             return this;
         };
         const bgimageBounds = {padding:4,minWidth:48,maxWidth:465};
@@ -314,7 +324,7 @@ tV2.prototype.settingsPanelJS = function() {
         });
         $('.tV2-submit').on('click', function() {
             const userhex = parseInt($('.tV2-usercolor').val().substr(1), 16);
-            const usercolor = ((userhex >> 16) & 255) + ',' + ((userhex >> 8) & 255) + ',' + (userhex & 255)
+            const usercolor = ((userhex >> 16) & 255)+','+((userhex >> 8) & 255)+','+(userhex & 255)
             const startcolor = $('.tV2-usercolor').val()
             const trans = $('.tV2-trans').val();
             const guilds = $('.tV2-guilds').val();
@@ -349,8 +359,8 @@ tV2.prototype.settingsPanelJS = function() {
             $('.tV2-trans').val('1');
         });
         $('.tV2-guild-reset').on('click', function() {
-            $('.tV2-guilds-num').val('50');
-            $('.tV2-guilds').val('50');
+            $('.tV2-guilds-num').val('48');
+            $('.tV2-guilds').val('48');
         });
         $('.tV2-badge-reset').on('click', function() {
             $('.tV2-badge-num').val('18');
@@ -392,7 +402,7 @@ tV2.prototype.settingsPanelJS = function() {
         $('.tV2-image').autoresize(bgimageBounds);
         $('.tV2-usercolor').on('input', function() {
             const userhex = parseInt($('.tV2-usercolor').val().substr(1), 16);
-            const usercolor = ((userhex >> 16) & 255) + ',' + ((userhex >> 8) & 255) + ',' + (userhex & 255)
+            const usercolor = ((userhex >> 16) & 255)+','+((userhex >> 8) & 255)+','+(userhex & 255)
             const startcolor = $('.tV2-usercolor').val()
             BdApi.saveData('tV2', 'usercolor', usercolor);
             BdApi.saveData('tV2', 'startcolor', startcolor);
@@ -409,12 +419,12 @@ tV2.prototype.startupSetup = function() {
         BdApi.saveData('tV2', 'loaded', 'False');
         BdApi.saveData('tV2', 'startcolor', '#000000');
         BdApi.saveData('tV2', 'starttrans', '1');
-        BdApi.saveData('tV2', 'startguilds', '50');
+        BdApi.saveData('tV2', 'startguilds', '48');
         BdApi.saveData('tV2', 'startbadge', '18');
         BdApi.saveData('tV2', 'startimagetrans', '.15');
         BdApi.saveData('tV2', 'usercolor', '#000000');
         BdApi.saveData('tV2', 'trans', '1');
-        BdApi.saveData('tV2', 'guilds', '50');
+        BdApi.saveData('tV2', 'guilds', '48');
         BdApi.saveData('tV2', 'badge', '18');
         BdApi.saveData('tV2', 'image', 'None');
         BdApi.saveData('tV2', 'imagetrans', '.15');
@@ -430,8 +440,8 @@ tV2.prototype.startupSetup = function() {
             BdApi.saveData('tV2', 'trans', '1');
         };
         if (BdApi.loadData('tV2', 'startguilds') == undefined) {
-            BdApi.saveData('tV2', 'startguilds', '50');
-            BdApi.saveData('tV2', 'guilds', '50');
+            BdApi.saveData('tV2', 'startguilds', '48');
+            BdApi.saveData('tV2', 'guilds', '48');
         };
         if (BdApi.loadData('tV2', 'startbadge') == undefined) {
             BdApi.saveData('tV2', 'startbadge', '18');
@@ -457,27 +467,8 @@ tV2.prototype.updateTheme = function() {
 </style>';
     const numGuildSize = parseInt(BdApi.loadData('tV2', 'guilds'), 10);
     const numBadgeSize = parseInt(BdApi.loadData('tV2', 'badge'), 10);
-    const font_size = ((numGuildSize * 2.2) / (10 + (numGuildSize / 125)));
-    const read_all_font_size = ((numGuildSize * 2.5) / (10 + (numGuildSize / 49)));
-    const guild_base_size = (numGuildSize + 4);
-    const friend_icon_size = (numGuildSize / 1.35);
-    const guild_add_size_h = ((numGuildSize / -1) + ((numGuildSize * 2) / 3.95));
-    const guild_add_size_v = -1;
-    const guild_error_size_h = (guild_add_size_h - 1);
-    const guild_error_size_v = (((((numGuildSize * 2) / 2) / 4.6) + 0) * 2);
-    const guild_base_h = (guild_error_size_h / 11);
-    const guild_size_search = (numGuildSize - 4);
-    const guild_search_top_left = (numGuildSize - 29) - ((numGuildSize - 30) / 2);
-    if (BdApi.loadData('tV2', 'guilds') < 50) {
-        var server_menu_width = (65 - (50 - BdApi.loadData('tV2', 'guilds')));
-    } else if (BdApi.loadData('tV2', 'guilds') > 50)  {
-        var server_menu_width = (65 + (BdApi.loadData('tV2', 'guilds') - 50));
-    } else {
-        var server_menu_width = 65;
-    };
-    const dms_transform = ((numGuildSize + 6) * -1);
-    const dms_margin = ((-1 * dms_transform) + 4);
-    const badge_top = ((numGuildSize / 2) + 5);
+    const shiftPos = (numGuildSize-58);
+    const guildWidth = (72+shiftPos);
     const tV2_base = '\
 <style class="tV2-base">\
 :root{\
@@ -485,9 +476,9 @@ text-rendering: geometricPrecision !important;\
 -webkit-font-smoothing: antialiased !important;\
 font-variant-ligatures: none !important;\
 text-decoration: none !important;\
-background: rgba(0,0,0,' + BdApi.loadData('tV2', 'trans') + ') !important;\
---user-color: rgba(' + BdApi.loadData('tV2', 'usercolor') + ',1);\
---user-color-smooth: rgba(' + BdApi.loadData('tV2', 'usercolor') + ',.22);\
+background: rgba(0,0,0,'+BdApi.loadData('tV2', 'trans')+') !important;\
+--user-color: rgba('+BdApi.loadData('tV2', 'usercolor')+',1);\
+--user-color-smooth: rgba('+BdApi.loadData('tV2', 'usercolor')+',.22);\
 --neutral: rgba(100, 100, 100, .5);\
 --neutral-opaque: hsla(0, 0%, 16%, .78);\
 --neutral-mini-trans: hsla(0, 0%, 16%, .94);\
@@ -500,23 +491,9 @@ background: rgba(0,0,0,' + BdApi.loadData('tV2', 'trans') + ') !important;\
 --dark: rgba(26, 26, 26, .92);\
 --light: rgba(229, 229, 229, .78);\
 --light-o: rgba(229, 229, 229, 1);\
---guild-size: ' + numGuildSize + 'px;\
---server-menu-width: ' + server_menu_width + 'px;\
---badge-size: ' + numBadgeSize + 'px;\
---badge-top: ' + badge_top + 'px;\
---font-size: ' + font_size + 'px;\
---read-all-font-size: ' + read_all_font_size + 'px;\
---guild-base-size: ' + guild_base_size + 'px;\
---guild-base-h: ' + guild_base_h + 'px;\
---friend-icon-size: ' + friend_icon_size + 'px;\
---dms-transform: ' + dms_transform + 'px;\
---dms-margin: ' + dms_margin + 'px;\
---guild-add-size-h: ' + guild_add_size_h + 'px;\
---guild-add-size-v: ' + guild_add_size_v + 'px;\
---guild-error-size-h: -' + guild_error_size_h + 'px;\
---guild-error-size-v: ' + guild_error_size_v + 'px;\
---guild-size-search: ' + guild_size_search + 'px;\
---guild-search-top-left: ' + guild_search_top_left + 'px;}\
+--guild-size2: '+numGuildSize+'px;\
+--shift-pos: '+shiftPos+'px;\
+--guild-width: '+guildWidth+'px;\
 </style>';
     if ($('head .tV2-web').length === 0) {
         $('head').prepend(tV2_web);
@@ -534,7 +511,7 @@ background: rgba(0,0,0,' + BdApi.loadData('tV2', 'trans') + ') !important;\
 content: "";\
 width: inherit !important;\
 height: inherit !important;\
-background-image: url("' + BdApi.loadData('tV2', 'image') + '") !important;\
+background-image: url("'+BdApi.loadData('tV2', 'image')+'") !important;\
 background-size: cover !important;\
 background-repeat: no-repeat !important;\
 background-position: center !important;\
@@ -543,7 +520,7 @@ top: 0px !important;\
 left: 0px !important;\
 bottom: 0px !important;\
 right: 0px !important;\
-opacity: ' + BdApi.loadData('tV2', 'imagetrans') + ' !important;\
+opacity: '+BdApi.loadData('tV2', 'imagetrans')+' !important;\
 z-index: -1 !important;\
 }</style>';
     if ($('head .tV2-image-css').length === 0) {
@@ -558,7 +535,11 @@ z-index: -1 !important;\
 };
 
 //Functions that should only run once after setup
-//tV2.prototype.runOnce = function() {};
+tV2.prototype.runOnce = function() {
+    if ($('div[data-no-focus-lock="true"] div.modal-3c3bKg').length !== 0) {
+        $('form.modal-yWgWj- div.footer-3rDWdC button div.contents-18-Yxp:contains(Okay)').click();
+    }
+};
 
 tV2.prototype.mutAction = function() {
     if ($(tV2.prototype.activityTarget()).length > 0 && $(tV2.prototype.removeTarget()).length > 0) {
@@ -591,15 +572,39 @@ tV2.prototype.mutTargets2 = function() {
     tV2.prototype.mutObvs2.observe($(tV2.prototype.mutTarget2()).get(0), tV2.prototype.mutationObserverConfig2());
 }
 
+tV2.prototype.mutAction3 = function() {
+    if (String(window.getComputedStyle($('head')[0]).getPropertyValue('--curVer')) === "") {
+        setTimeout(function() {
+            const onVer = String(window.getComputedStyle($('head')[0]).getPropertyValue('--curVer')).substr(1);
+            if ($('div.theme-dark div.modal-3c3bKg').length === 0 && tV2.prototype.curVer() < onVer) {
+                tV2.prototype.verAction();
+            }
+        }, 1);
+    } else {
+        const onVer = String(window.getComputedStyle($('head')[0]).getPropertyValue('--curVer')).substr(1);
+        if ($('div.theme-dark div.modal-3c3bKg').length === 0 && tV2.prototype.curVer() < onVer) {
+            tV2.prototype.verAction();
+        }
+    }
+}
+tV2.prototype.mutObvs3 = new MutationObserver(function(mutations) {
+    tV2.prototype.mutAction3();
+});
+tV2.prototype.mutTargets3 = function() {
+    tV2.prototype.mutObvs3.observe($(tV2.prototype.mutTarget()).get(0), tV2.prototype.mutationObserverConfig2());
+}
+
 //On plugin start
 tV2.prototype.start = function() {
     tV2.prototype.startupSetup();
     tV2.prototype.updateTheme();
-    //tV2.prototype.runOnce();
+    tV2.prototype.runOnce();
     tV2.prototype.mutTargets();
     tV2.prototype.mutTargets2();
+    tV2.prototype.mutTargets3();
     tV2.prototype.mutAction();
     tV2.prototype.mutAction2();
+    tV2.prototype.mutAction3();
     BdApi.showToast('tV2: Loaded!');
 };
 
@@ -612,7 +617,8 @@ tV2.prototype.stop = function() {
         $('head .tV2-image-css').remove();
         $('head .tV2-jQ3').remove();
         tV2.prototype.mutObvs.disconnect();
-        test.prototype.mutObvs2.disconnect();
+        tV2.prototype.mutObvs2.disconnect();
+        tV2.prototype.mutObvs3.disconnect();
     }
     finally {
         BdApi.saveData('tV2', 'loaded', 'False');

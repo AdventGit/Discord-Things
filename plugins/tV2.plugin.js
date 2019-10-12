@@ -5,7 +5,7 @@ const tV2 = function(){};
 
 //Version control
 tV2.prototype.curVer = function() {
-    return '2.0.1'
+    return '2.0.2'
 }
 tV2.prototype.verAction = function() {
     BdApi.alert('Update Available!','Place in %appdata%\\BetterDiscord\\plugins');
@@ -552,15 +552,17 @@ tV2.prototype.mutTargets = function() {
 };
 
 tV2.prototype.mutAction2 = function() {
-    $('div.search-36MZv-').next().next().addClass('customNuke');
-    $('div.search-36MZv-').insertAfter($('div.iconWrapper-2OrFZ1[aria-label="Mentions"]'));
-    if ($('div.children-19S4PO div.status-1XNdyw').length === 0) {
-        $('div.iconWrapper-2OrFZ1[aria-label="Member List"]').insertAfter($('div.iconWrapper-2OrFZ1[aria-label="Mentions"]'));
-    } else {
-        $('div.iconWrapper-2OrFZ1[aria-label="Add Friends to DM"]').insertBefore($('div.iconWrapper-2OrFZ1[aria-label="Start Voice Call"]'));
+    if ($('div.search-36MZv-').length !== 0) {
+        $('div.search-36MZv-').next().next().addClass('customNuke');
+        $('div.search-36MZv-').insertAfter($('div.iconWrapper-2OrFZ1[aria-label="Mentions"]'));
+        if ($('div.children-19S4PO div.status-1XNdyw').length === 0) {
+            $('div.iconWrapper-2OrFZ1[aria-label="Member List"]').insertAfter($('div.iconWrapper-2OrFZ1[aria-label="Mentions"]'));
+        } else {
+            $('div.iconWrapper-2OrFZ1[aria-label="Add Friends to DM"]').insertBefore($('div.iconWrapper-2OrFZ1[aria-label="Start Voice Call"]'));
+        }
+        $('div.inner-zqa7da div.buttons-205you button[aria-label="Send a gift"]').addClass('customNuke');
+        $('div.inner-zqa7da div.buttons-205you > div').addClass('customNuke');
     }
-    $('div.inner-zqa7da div.buttons-205you button[aria-label="Send a gift"]').addClass('customNuke');
-    $('div.inner-zqa7da div.buttons-205you > div').addClass('customNuke');
 }
 tV2.prototype.mutObvs2 = new MutationObserver(function(mutations) {
     tV2.prototype.mutAction2();
@@ -592,24 +594,31 @@ tV2.prototype.mutTargets3 = function() {
     tV2.prototype.mutObvs3.observe($(tV2.prototype.mutTarget()).get(0), tV2.prototype.mutationObserverConfig2());
 }
 
-//On plugin start
-tV2.prototype.start = function() {
+tV2.prototype.startTargets = function() {
     try {
-        tV2.prototype.startupSetup();
-        tV2.prototype.updateTheme();
-        tV2.prototype.runOnce();
         tV2.prototype.mutTargets();
         tV2.prototype.mutTargets2();
         tV2.prototype.mutTargets3();
         tV2.prototype.mutAction();
         tV2.prototype.mutAction2();
         tV2.prototype.mutAction3();
-        BdApi.showToast('tV2: Loaded!');
     } catch {
-        tV2.prototype.stop();
-    } finally {
-        tV2.prototype.start();
+        tV2.prototype.mutObvs.disconnect();
+        tV2.prototype.mutObvs2.disconnect();
+        tV2.prototype.mutObvs3.disconnect();
+        setTimeout(function() {
+            tV2.prototype.startTargets();
+        }, 500);
     }
+}
+
+//On plugin start
+tV2.prototype.start = function() {
+    tV2.prototype.startupSetup();
+    tV2.prototype.updateTheme();
+    tV2.prototype.startTargets();
+    tV2.prototype.runOnce();
+    BdApi.showToast('tV2: Loaded!');
 };
 
 //On plugin stop

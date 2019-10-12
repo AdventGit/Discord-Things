@@ -594,7 +594,7 @@ tV2.prototype.mutTargets3 = function() {
 
 //On plugin start
 tV2.prototype.start = function() {
-    setTimeout(function() {
+    try {
         tV2.prototype.startupSetup();
         tV2.prototype.updateTheme();
         tV2.prototype.runOnce();
@@ -605,7 +605,11 @@ tV2.prototype.start = function() {
         tV2.prototype.mutAction2();
         tV2.prototype.mutAction3();
         BdApi.showToast('tV2: Loaded!');
-    }, 1);
+    } catch {
+        tV2.prototype.stop();
+    } finally {
+        tV2.prototype.start();
+    }
 };
 
 //On plugin stop
@@ -619,8 +623,7 @@ tV2.prototype.stop = function() {
         tV2.prototype.mutObvs.disconnect();
         tV2.prototype.mutObvs2.disconnect();
         tV2.prototype.mutObvs3.disconnect();
-    }
-    finally {
+    } finally {
         BdApi.saveData('tV2', 'loaded', 'False');
         BdApi.showToast('tV2: Unloaded!');
     };

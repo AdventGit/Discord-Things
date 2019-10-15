@@ -172,7 +172,7 @@ body div#app-mount div.app-19_DXt div.app-2rEoOp div.layers-3iHuyZ div.layer-3Qr
 }
 
 :root {
-  --curVer: 2..0..2;
+  --curVer: 2..0..3;
 }
 
 .theme-dark {
@@ -203,6 +203,10 @@ body div#app-mount div.app-19_DXt div.app-2rEoOp div.layers-3iHuyZ div.layer-3Qr
   --deprecated-text-input-border-hover: transparent;
   --deprecated-text-input-border-disabled: transparent;
   --deprecated-text-input-prefix: transparent;
+}
+
+form.modal-yWgWj- {
+  user-select: text !important;
 }
 
 *::selection {

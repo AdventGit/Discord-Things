@@ -5,7 +5,7 @@ const tV2 = function(){};
 
 //Version control
 tV2.prototype.curVer = function() {
-    return '2.0.2'
+    return '2.0.3'
 }
 tV2.prototype.verAction = function() {
     BdApi.alert('Update Available!','Place in %appdata%\\BetterDiscord\\plugins');
@@ -539,6 +539,7 @@ tV2.prototype.runOnce = function() {
     }
 };
 
+//Mutation Observer 1: Activity Feed
 tV2.prototype.mutAction = function() {
     if ($(tV2.prototype.activityTarget()).length > 0 && $(tV2.prototype.removeTarget()).length > 0) {
         $(tV2.prototype.removeTarget()).remove();
@@ -551,6 +552,7 @@ tV2.prototype.mutTargets = function() {
     tV2.prototype.mutObvs.observe($(tV2.prototype.mutTarget()).get(0), tV2.prototype.mutationObserverConfig());
 };
 
+//Mutation Observer 2: Search Bar Icon Positions
 tV2.prototype.mutAction2 = function() {
     if ($('div.search-36MZv-').length !== 0) {
         $('div.search-36MZv-').next().next().addClass('customNuke');
@@ -572,6 +574,7 @@ tV2.prototype.mutTargets2 = function() {
     tV2.prototype.mutObvs2.observe($(tV2.prototype.mutTarget2()).get(0), tV2.prototype.mutationObserverConfig2());
 }
 
+//Mutation Observer 3: tV2 Version Checking
 tV2.prototype.mutAction3 = function() {
     if (String(window.getComputedStyle($('head')[0]).getPropertyValue('--curVer')) === "") {
         setTimeout(function() {
@@ -594,6 +597,7 @@ tV2.prototype.mutTargets3 = function() {
     tV2.prototype.mutObvs3.observe($(tV2.prototype.mutTarget()).get(0), tV2.prototype.mutationObserverConfig2());
 }
 
+//Function Starter Loop
 tV2.prototype.startTargets = function() {
     try {
         tV2.prototype.mutTargets();
@@ -602,29 +606,31 @@ tV2.prototype.startTargets = function() {
         tV2.prototype.mutAction();
         tV2.prototype.mutAction2();
         tV2.prototype.mutAction3();
-    } catch {
+    } catch(err) {
+        console.log(err);
         tV2.prototype.mutObvs.disconnect();
         tV2.prototype.mutObvs2.disconnect();
         tV2.prototype.mutObvs3.disconnect();
         setTimeout(function() {
             tV2.prototype.startTargets();
         }, 500);
+    } finally {
+        tV2.prototype.runOnce();
+        BdApi.showToast('tV2: Loaded!');
     }
 }
 
-//On plugin start
-tV2.prototype.start = function() {
+//Entry Point to Load
+tV2.prototype.mainEntry = function() {
     tV2.prototype.startupSetup();
     tV2.prototype.updateTheme();
     tV2.prototype.startTargets();
-    tV2.prototype.runOnce();
-    BdApi.showToast('tV2: Loaded!');
-};
+}
 
-//On plugin stop
-tV2.prototype.stop = function() {
+//Exit Point to Unload
+tV2.prototype.mainExit = function() {
     try {
-        $('.layers-3iHuyZ').prop('onclick',null)
+        $('.layers-3iHuyZ').prop('onclick',null);
         $('head .tV2-base').remove();
         $('head .tV2-web').remove();
         $('head .tV2-image-css').remove();
@@ -632,8 +638,23 @@ tV2.prototype.stop = function() {
         tV2.prototype.mutObvs.disconnect();
         tV2.prototype.mutObvs2.disconnect();
         tV2.prototype.mutObvs3.disconnect();
+    } catch(err) {
+        console.log(err);
+        setTimeout(function() {
+            tV2.prototype.mainExit();
+        }, 500);
     } finally {
         BdApi.saveData('tV2', 'loaded', 'False');
         BdApi.showToast('tV2: Unloaded!');
-    };
+    }
+}
+
+//On plugin start
+tV2.prototype.start = function() {
+    tV2.prototype.mainEntry();
+};
+
+//On plugin stop
+tV2.prototype.stop = function() {
+    tV2.prototype.mainExit();
 };

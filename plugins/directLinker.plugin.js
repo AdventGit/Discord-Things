@@ -87,20 +87,24 @@ directLinker.prototype.baseTarget = function() {
     return 'div.container-1YxwTf div.markup-2BOw-j > a';
 }
 directLinker.prototype.baseTarget2 = function() {
-    return 'div.modal-3c3bKg div.connectedAccounts-repVzS a';
+    return 'div.modal-3c3bKg div.connectedAccounts-repVzS div.connectedAccount-36nQx7 > a';
 }
 directLinker.prototype.mutTarget = function() {
     return 'div.content-98HsJk';
 }
 directLinker.prototype.mutTarget2 = function() {
-    return 'div#app-mount > div[data-no-focus-lock="true"] > div:nth-of-type(2)';
+    return 'div#app-mount div.popouts-2bnG9Z';
 }
 directLinker.prototype.mutationObserverConfig = function() {
     return {attributeOldValue: false, attributes: false, characterData: false, characterDataoldValue: false, childList: true, subtree: true};
 }
 
 directLinker.prototype.mainAct = function(e) {
-    const hrefLink = String($(e.target).parent().attr('href'))
+    if (e.target.tagName === 'svg') {
+        var hrefLink = $(e.target).parent().attr('href');
+    } else if (e.target.tagName === 'path') {
+        var hrefLink = $(e.target).parent().parent().attr('href');
+    }
     const steamConditions = ['//steamcommunity.com/','//store.steampowered.com/'];
     const osuConditions = ['//osu.ppy.sh/s/','//osu.ppy.sh/b/','//osu.ppy.sh/beatmapsets/'];
     if (BdApi.loadData('directLinker', 'Steam') == 'Enabled') {
@@ -137,16 +141,45 @@ directLinker.prototype.mutObvs = new MutationObserver(function(mutations) {
 });
 directLinker.prototype.mutTargets = function() {
     directLinker.prototype.mutObvs.observe($(directLinker.prototype.mutTarget()).get(0), directLinker.prototype.mutationObserverConfig());
-    directLinker.prototype.mutObvs.observe($(directLinker.prototype.mutTarget2()).get(0), directLinker.prototype.mutationObserverConfig());
+    directLinker.prototype.mutObvs.observe($(directLinker.prototype.mutTarget2()).next().get(0), directLinker.prototype.mutationObserverConfig());
+}
+
+directLinker.prototype.startTargets = function() {
+    try {
+        directLinker.prototype.mutTargets();
+        directLinker.prototype.mutAction();
+    } catch(err) {
+        console.log(err);
+        $(directLinker.prototype.baseTarget()).off('click.directLinker');
+        $(directLinker.prototype.baseTarget2()).off('click.directLinker');
+        directLinker.prototype.mutObvs.disconnect();
+        setTimeout(function() {
+            tV2d.prototype.startTargets();
+        }, 500);
+    } finally {
+        BdApi.showToast('directLinker: Loaded!');
+    }
+}
+
+directLinker.prototype.mainExit = function() {
+    try {
+        $(directLinker.prototype.baseTarget()).off('click.directLinker');
+        $(directLinker.prototype.baseTarget2()).off('click.directLinker');
+        directLinker.prototype.mutObvs.disconnect();
+    } catch(err) {
+        console.log(err);
+        setTimeout(function() {
+            directLinker.prototype.mainExit();
+        }, 500);
+    } finally {
+        BdApi.showToast('directLinker: Unloaded!');
+    }
 }
 
 directLinker.prototype.start = function() {
-    directLinker.prototype.mutTargets();
-    directLinker.prototype.mutAction();
+    directLinker.prototype.startTargets();
 }
 
 directLinker.prototype.stop = function() {
-    $(directLinker.prototype.baseTarget()).off('click.directLinker');
-    $(directLinker.prototype.baseTarget2()).off('click.directLinker');
-    directLinker.prototype.mutObvs.disconnect();
+    directLinker.prototype.mainExit();
 }

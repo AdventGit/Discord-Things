@@ -84,38 +84,52 @@ directLinker.prototype.settingsPanelJS = function() {
 };
 
 directLinker.prototype.baseTarget = function() {
-    return '.container-1YxwTf div.markup-2BOw-j > a';
+    return 'div.container-1YxwTf div.markup-2BOw-j > a';
+}
+directLinker.prototype.baseTarget2 = function() {
+    return 'div.modal-3c3bKg div.connectedAccounts-repVzS a';
 }
 directLinker.prototype.mutTarget = function() {
-    return '.content-98HsJk';
+    return 'div.content-98HsJk';
+}
+directLinker.prototype.mutTarget2 = function() {
+    return 'div#app-mount > div[data-no-focus-lock="true"] > div:nth-of-type(2)';
 }
 directLinker.prototype.mutationObserverConfig = function() {
     return {attributeOldValue: false, attributes: false, characterData: false, characterDataoldValue: false, childList: true, subtree: true};
 }
 
+directLinker.prototype.mainAct = function(e) {
+    const hrefLink = String($(e.target).parent().attr('href'))
+    const steamConditions = ['//steamcommunity.com/','//store.steampowered.com/'];
+    const osuConditions = ['//osu.ppy.sh/s/','//osu.ppy.sh/b/','//osu.ppy.sh/beatmapsets/'];
+    if (BdApi.loadData('directLinker', 'Steam') == 'Enabled') {
+        if (steamConditions.some(cond => hrefLink.includes(cond))) {
+            if (require('electron').shell.openExternal('steam://openurl/'+hrefLink)) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+            }
+        }
+    }
+    if (BdApi.loadData('directLinker', 'OSU!') == 'Enabled') {
+        if (osuConditions.some(cond => hrefLink.includes(cond))) {
+            const bmid = hrefLink.split('?')[0].split('/').pop();
+            if (require('electron').shell.openExternal('osu://b/'+bmid)) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+            }
+        }
+    }
+}
+
 directLinker.prototype.mutAction = function() {
     $(directLinker.prototype.baseTarget()).off('click.directLinker');
+    $(directLinker.prototype.baseTarget2()).off('click.directLinker');
     $(directLinker.prototype.baseTarget()).on('click.directLinker', function(e) {
-        const hrefLink = $(e.target).attr('href');
-        const steamConditions = ['//steamcommunity.com/','//store.steampowered.com/'];
-        const osuConditions = ['//osu.ppy.sh/s/','//osu.ppy.sh/b/','//osu.ppy.sh/beatmapsets/'];
-        if (BdApi.loadData('directLinker', 'Steam') == 'Enabled') {
-            if (steamConditions.some(cond => hrefLink.includes(cond))) {
-                if (require('electron').shell.openExternal('steam://openurl/'+hrefLink)) {
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
-                }
-            }
-        }
-        if (BdApi.loadData('directLinker', 'OSU!') == 'Enabled') {
-            if (osuConditions.some(cond => hrefLink.includes(cond))) {
-                const bmid = hrefLink.split('?')[0].split('/').pop();
-                if (require('electron').shell.openExternal('osu://b/'+bmid)) {
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
-                }
-            }
-        }
+        directLinker.prototype.mainAct(e);
+    });
+    $(directLinker.prototype.baseTarget2()).on('click.directLinker', function(e) {
+        directLinker.prototype.mainAct(e);
     });
 }
 directLinker.prototype.mutObvs = new MutationObserver(function(mutations) {
@@ -123,6 +137,7 @@ directLinker.prototype.mutObvs = new MutationObserver(function(mutations) {
 });
 directLinker.prototype.mutTargets = function() {
     directLinker.prototype.mutObvs.observe($(directLinker.prototype.mutTarget()).get(0), directLinker.prototype.mutationObserverConfig());
+    directLinker.prototype.mutObvs.observe($(directLinker.prototype.mutTarget2()).get(0), directLinker.prototype.mutationObserverConfig());
 }
 
 directLinker.prototype.start = function() {
@@ -132,5 +147,6 @@ directLinker.prototype.start = function() {
 
 directLinker.prototype.stop = function() {
     $(directLinker.prototype.baseTarget()).off('click.directLinker');
+    $(directLinker.prototype.baseTarget2()).off('click.directLinker');
     directLinker.prototype.mutObvs.disconnect();
 }

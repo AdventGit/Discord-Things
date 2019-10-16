@@ -5,7 +5,7 @@ const tV2 = function(){};
 
 //Version control
 tV2.prototype.curVer = function() {
-    return '2.0.3'
+    return '2.0.4'
 }
 tV2.prototype.verAction = function() {
     BdApi.alert('Update Available!','Place in %appdata%\\BetterDiscord\\plugins');

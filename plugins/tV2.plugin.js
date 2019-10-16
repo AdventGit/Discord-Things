@@ -606,6 +606,8 @@ tV2.prototype.startTargets = function() {
         tV2.prototype.mutAction();
         tV2.prototype.mutAction2();
         tV2.prototype.mutAction3();
+        tV2.prototype.runOnce();
+        BdApi.showToast('tV2: Loaded!');
     } catch(err) {
         console.log(err);
         tV2.prototype.mutObvs.disconnect();
@@ -614,9 +616,6 @@ tV2.prototype.startTargets = function() {
         setTimeout(function() {
             tV2.prototype.startTargets();
         }, 500);
-    } finally {
-        tV2.prototype.runOnce();
-        BdApi.showToast('tV2: Loaded!');
     }
 }
 
@@ -638,14 +637,13 @@ tV2.prototype.mainExit = function() {
         tV2.prototype.mutObvs.disconnect();
         tV2.prototype.mutObvs2.disconnect();
         tV2.prototype.mutObvs3.disconnect();
+        BdApi.saveData('tV2', 'loaded', 'False');
+        BdApi.showToast('tV2: Unloaded!');
     } catch(err) {
         console.log(err);
         setTimeout(function() {
             tV2.prototype.mainExit();
         }, 500);
-    } finally {
-        BdApi.saveData('tV2', 'loaded', 'False');
-        BdApi.showToast('tV2: Unloaded!');
     }
 }
 

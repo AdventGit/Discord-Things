@@ -3,7 +3,7 @@
 class EditChannels {
 	getName () {return "EditChannels";}
 
-	getVersion () {return "4.0.5";}
+	getVersion () {return "4.0.7";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -11,7 +11,7 @@ class EditChannels {
 
 	constructor () {
 		this.changelog = {
-			"improved":[["Switching to React","Using React to create settings and modals, faster and more less likely to break"]]
+			"fixed":[["Settings","Fixed issue where settings could not be saved"]]
 		};
 
 		this.labels = {};
@@ -80,7 +80,7 @@ class EditChannels {
 					this.forceUpdateAll();
 				});
 			},
-			children: BDFDB.LanguageStrings.RESET
+			children: BDFDB.LanguageUtils.LanguageStrings.RESET
 		}));
 		
 		return BDFDB.createSettingsPanel(this, settingsitems);
@@ -98,24 +98,10 @@ class EditChannels {
 			libraryScript = document.createElement("script");
 			libraryScript.setAttribute("id", "BDFDBLibraryScript");
 			libraryScript.setAttribute("type", "text/javascript");
-			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js");
+			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.min.js");
 			libraryScript.setAttribute("date", performance.now());
 			libraryScript.addEventListener("load", () => {this.initialize();});
 			document.head.appendChild(libraryScript);
-			this.libLoadTimeout = setTimeout(() => {
-				libraryScript.remove();
-				BDFDB.LibraryRequires.request("https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js", (error, response, body) => {
-					if (body) {
-						libraryScript = document.createElement("script");
-						libraryScript.setAttribute("id", "BDFDBLibraryScript");
-						libraryScript.setAttribute("type", "text/javascript");
-						libraryScript.setAttribute("date", performance.now());
-						libraryScript.innerText = body;
-						document.head.appendChild(libraryScript);
-					}
-					this.initialize();
-				});
-			}, 15000);
 		}
 		else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
 		this.startTimeout = setTimeout(() => {this.initialize();}, 30000);
@@ -238,16 +224,19 @@ class EditChannels {
 				})
 			],
 			buttons: [{
-				contents: BDFDB.LanguageStrings.SAVE,
+				contents: BDFDB.LanguageUtils.LanguageStrings.SAVE,
 				color: "BRAND",
 				close: true,
 				click: modal => {
+					let olddata = Object.assign({}, data);
+					
 					let channelnameinput = modal.querySelector(".input-channelname " + BDFDB.dotCN.input);
 					let inheritcolorinput = modal.querySelector(".input-inheritcolor " + BDFDB.dotCN.switchinner);
 					
 					data.name = channelnameinput.value.trim() || null;
 
 					data.color = BDFDB.getSwatchColor(modal, 1);
+					console.log(data.color);
 					if (data.color != null && !BDFDB.isObject(data.color)) {
 						if (data.color[0] < 30 && data.color[1] < 30 && data.color[2] < 30) data.color = BDFDB.colorCHANGE(data.color, 30);
 						else if (data.color[0] > 225 && data.color[1] > 225 && data.color[2] > 225) data.color = BDFDB.colorCHANGE(data.color, -30);
@@ -271,7 +260,7 @@ class EditChannels {
 			if (!textarea) return;
 			if (channel.type == 0 && instance.props.type == "normal" && !instance.props.disabled) {
 				let data = this.getChannelData(channel.id, wrapper);
-				wrapper.querySelector("textarea").setAttribute("placeholder", BDFDB.LanguageStringsFormat("TEXTAREA_PLACEHOLDER", "#" + (data.name || channel.name)));
+				wrapper.querySelector("textarea").setAttribute("placeholder", BDFDB.LanguageUtils.LanguageStringsFormat("TEXTAREA_PLACEHOLDER", "#" + (data.name || channel.name)));
 			}
 			BDFDB.removeEventListener(this, textarea);
 			if (BDFDB.getData("changeInAutoComplete", this, "settings")) {
@@ -545,7 +534,7 @@ class EditChannels {
 			mention.EditChannelsHovered = true;
 			colorHover();
 			let categorydata = this.getChannelData(categoryinfo.id, null, mention);
-			if (categorydata.name) BDFDB.createTooltip(categorydata.name, mention, {type:"top",selector:"EditChannels-tooltip",css:`body ${BDFDB.dotCN.tooltip}:not(.EditChannels-tooltip) {display: none !important;}`});
+			if (categorydata.name) BDFDB.createTooltip(categorydata.name, mention, {type:"top", selector:"EditChannels-tooltip", hide:true});
 		};
 		mention.mouseoutListenerEditChannels = () => {
 			delete mention.EditChannelsHovered;
@@ -633,7 +622,7 @@ class EditChannels {
 				let settings = BDFDB.getAllData(this, "settings");
 				let autocompletemenu = textarea.parentElement.querySelector(BDFDB.dotCNS.autocomplete + BDFDB.dotCN.autocompleteinner), amount = 15;
 				if (!autocompletemenu) {
-					autocompletemenu = BDFDB.htmlToElement(`<div class="${BDFDB.disCNS.autocomplete + BDFDB.disCN.autocomplete2} autocompleteEditChannels"><div class="${BDFDB.disCN.autocompleteinner}"><div class="${BDFDB.disCNS.autocompleterowvertical + BDFDB.disCN.autocompleterow} autocompleteEditChannelsRow"><div class="${BDFDB.disCN.autocompleteselector} autocompleteEditChannelsSelector"><div class="${BDFDB.disCNS.autocompletecontenttitle + BDFDB.disCNS.small + BDFDB.disCNS.titlesize12 + BDFDB.disCNS.height16 + BDFDB.disCN.weightsemibold}">${BDFDB.LanguageStrings.TEXT_CHANNELS_MATCHING.replace("{{prefix}}", BDFDB.encodeToHTML(lastword))}</strong></div></div></div></div></div>`);
+					autocompletemenu = BDFDB.htmlToElement(`<div class="${BDFDB.disCNS.autocomplete + BDFDB.disCN.autocomplete2} autocompleteEditChannels"><div class="${BDFDB.disCN.autocompleteinner}"><div class="${BDFDB.disCNS.autocompleterowvertical + BDFDB.disCN.autocompleterow} autocompleteEditChannelsRow"><div class="${BDFDB.disCN.autocompleteselector} autocompleteEditChannelsSelector"><div class="${BDFDB.disCNS.autocompletecontenttitle + BDFDB.disCNS.small + BDFDB.disCNS.titlesize12 + BDFDB.disCNS.height16 + BDFDB.disCN.weightsemibold}">${BDFDB.LanguageUtils.LanguageStrings.TEXT_CHANNELS_MATCHING.replace("{{prefix}}", BDFDB.encodeToHTML(lastword))}</strong></div></div></div></div></div>`);
 					textarea.parentElement.appendChild(autocompletemenu);
 					autocompletemenu = autocompletemenu.firstElementChild;
 				}

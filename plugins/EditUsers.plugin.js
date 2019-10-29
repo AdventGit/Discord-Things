@@ -3,7 +3,7 @@
 class EditUsers {
 	getName () {return "EditUsers";}
 
-	getVersion () {return "3.6.4";}
+	getVersion () {return "3.6.7";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -11,10 +11,8 @@ class EditUsers {
 
 	constructor () {
 		this.changelog = {
-			"improved":[["Switching to React","Using React to create settings and modals, faster and more less likely to break"]]
+			"fixed":[["Account","Fixed the coloring in the account details container"]]
 		};
-
-		this.labels = {};
 
 		this.patchModules = {
 			"ChannelTextArea":"componentDidMount",
@@ -74,62 +72,62 @@ class EditUsers {
 
 		this.defaults = {
 			settings: {
-				changeInChatTextarea:	{value:true, 	description:"Chat Textarea"},
-				changeInChatWindow:		{value:true, 	description:"Messages"},
-				changeInMentions:		{value:true, 	description:"Mentions"},
-				changeInVoiceChat:		{value:true, 	description:"Voice Channels"},
-				changeInMemberList:		{value:true, 	description:"Member List"},
-				changeInRecentDms:		{value:true, 	description:"Direct Message Notifications"},
-				changeInDmsList:		{value:true, 	description:"Direct Message List"},
-				changeInDmHeader:		{value:true, 	description:"Direct Message Header"},
-				changeInDmCalls:		{value:true, 	description:"Calls/ScreenShares"},
-				changeInTyping:			{value:true, 	description:"Typing List"},
-				changeInFriendList:		{value:true, 	description:"Friend List"},
-				changeInInviteList:		{value:true, 	description:"Invite List"},
-				changeInActivity:		{value:true, 	description:"Activity Page"},
-				changeInUserPopout:		{value:true, 	description:"User Popouts"},
-				changeInUserProfil:		{value:true, 	description:"User Profile Modal"},
-				changeInAutoComplete:	{value:true, 	description:"Autocomplete Menu"},
-				changeInAuditLog:		{value:true, 	description:"Audit Log"},
-				changeInMemberLog:		{value:true, 	description:"Member Log"},
-				changeInSearchPopout:	{value:true, 	description:"Search Popout"},
-				changeInUserAccount:	{value:true, 	description:"Your Account Information"},
-				changeInAppTitle:		{value:true, 	description:"Discord App Title (DMs)"}
+				changeInChatTextarea:	{value:true, 	inner:true,		description:"Chat Textarea"},
+				changeInChatWindow:		{value:true, 	inner:true,		description:"Messages"},
+				changeInMentions:		{value:true, 	inner:true,		description:"Mentions"},
+				changeInVoiceChat:		{value:true, 	inner:true,		description:"Voice Channels"},
+				changeInMemberList:		{value:true, 	inner:true,		description:"Member List"},
+				changeInRecentDms:		{value:true, 	inner:true,		description:"Direct Message Notifications"},
+				changeInDmsList:		{value:true, 	inner:true,		description:"Direct Message List"},
+				changeInDmHeader:		{value:true, 	inner:true,		description:"Direct Message Header"},
+				changeInDmCalls:		{value:true, 	inner:true,		description:"Calls/ScreenShares"},
+				changeInTyping:			{value:true, 	inner:true,		description:"Typing List"},
+				changeInFriendList:		{value:true, 	inner:true,		description:"Friend List"},
+				changeInInviteList:		{value:true, 	inner:true,		description:"Invite List"},
+				changeInActivity:		{value:true, 	inner:true,		description:"Activity Page"},
+				changeInUserPopout:		{value:true, 	inner:true,		description:"User Popouts"},
+				changeInUserProfil:		{value:true, 	inner:true,		description:"User Profile Modal"},
+				changeInAutoComplete:	{value:true, 	inner:true,		description:"Autocomplete Menu"},
+				changeInAuditLog:		{value:true, 	inner:true,		description:"Audit Log"},
+				changeInMemberLog:		{value:true, 	inner:true,		description:"Member Log"},
+				changeInSearchPopout:	{value:true, 	inner:true,		description:"Search Popout"},
+				changeInUserAccount:	{value:true, 	inner:true,		description:"Your Account Information"},
+				changeInAppTitle:		{value:true, 	inner:true,		description:"Discord App Title (DMs)"}
 			}
 		};
 	}
 
 	getSettingsPanel () {
 		if (!global.BDFDB || typeof BDFDB != "object" || !BDFDB.loaded || !this.started) return;
-		var settings = BDFDB.getAllData(this, "settings");
+		let settings = BDFDB.DataUtils.get(this, "settings");
 		var settingsitems = [], inneritems = [];
 		
-		for (let key in settings) (!this.defaults.settings[key].inner ? settingsitems : inneritems).push(BDFDB.React.createElement(BDFDB.LibraryComponents.SettingsSwitch, {
+		for (let key in settings) (!this.defaults.settings[key].inner ? settingsitems : inneritems).push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsSwitch, {
 			className: BDFDB.disCN.marginbottom8,
 			plugin: this,
 			keys: ["settings", key],
 			label: this.defaults.settings[key].description,
 			value: settings[key]
 		}));
-		settingsitems.push(BDFDB.React.createElement(BDFDB.LibraryComponents.SettingsPanelInner, {
+		settingsitems.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsPanelInner, {
 			title: "Change Users in:",
 			children: inneritems
 		}));
-		settingsitems.push(BDFDB.React.createElement(BDFDB.LibraryComponents.SettingsItem, {
-			type: "BUTTON",
+		settingsitems.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsItem, {
+			type: "Button",
 			className: BDFDB.disCN.marginbottom8,
 			color: BDFDB.LibraryComponents.Button.Colors.RED,
 			label: "Reset all Users",
 			onClick: _ => {
 				BDFDB.openConfirmModal(this, "Are you sure you want to reset all users?", () => {
-					BDFDB.removeAllData(this, "users");
+					BDFDB.DataUtils.remove(this, "users");
 					this.forceUpdateAll();
 				});
 			},
-			children: BDFDB.LanguageStrings.RESET
+			children: BDFDB.LanguageUtils.LanguageStrings.RESET
 		}));
 		
-		return BDFDB.createSettingsPanel(this, settingsitems);
+		return BDFDB.PluginUtils.createSettingsPanel(this, settingsitems);
 	}
 
 	//legacy
@@ -144,24 +142,10 @@ class EditUsers {
 			libraryScript = document.createElement("script");
 			libraryScript.setAttribute("id", "BDFDBLibraryScript");
 			libraryScript.setAttribute("type", "text/javascript");
-			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js");
+			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.min.js");
 			libraryScript.setAttribute("date", performance.now());
 			libraryScript.addEventListener("load", () => {this.initialize();});
 			document.head.appendChild(libraryScript);
-			this.libLoadTimeout = setTimeout(() => {
-				libraryScript.remove();
-				BDFDB.LibraryRequires.request("https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js", (error, response, body) => {
-					if (body) {
-						libraryScript = document.createElement("script");
-						libraryScript.setAttribute("id", "BDFDBLibraryScript");
-						libraryScript.setAttribute("type", "text/javascript");
-						libraryScript.setAttribute("date", performance.now());
-						libraryScript.innerText = body;
-						document.head.appendChild(libraryScript);
-					}
-					this.initialize();
-				});
-			}, 15000);
 		}
 		else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
 		this.startTimeout = setTimeout(() => {this.initialize();}, 30000);
@@ -170,29 +154,29 @@ class EditUsers {
 	initialize () {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
 			if (this.started) return;
-			BDFDB.loadMessage(this);
+			BDFDB.PluginUtils.init(this);
 
 			var observer = new MutationObserver(() => {this.changeAppTitle();});
-			BDFDB.addObserver(this, document.head.querySelector("title"), {name:"appTitleObserver",instance:observer}, {childList:true});
+			BDFDB.ObserverUtils.connect(this, document.head.querySelector("title"), {name:"appTitleObserver",instance:observer}, {childList:true});
 			
 			this.forceUpdateAll();
 		}
-		else {
-			console.error(`%c[${this.getName()}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
-		}
+		else console.error(`%c[${this.getName()}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
 	}
 
 
 	stop () {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
-			let data = BDFDB.loadAllData(this, "users");
-			BDFDB.removeAllData(this, "users");
+			this.stopping = true;
+
+			let data = BDFDB.DataUtils.load(this, "users");
+			BDFDB.DataUtils.remove(this, "users");
 			try {this.forceUpdateAll();} catch (err) {}
-			BDFDB.saveAllData(data, this, "users");
+			BDFDB.DataUtils.save(data, this, "users");
 
-			BDFDB.removeEles(".autocompleteEditUsers", ".autocompleteEditUsersRow");
+			BDFDB.DOMUtils.remove(".autocompleteEditUsers", ".autocompleteEditUsersRow");
 
-			BDFDB.unloadMessage(this);
+			BDFDB.PluginUtils.clear(this);
 		}
 	}
 
@@ -201,17 +185,17 @@ class EditUsers {
 	
 	onUserContextMenu (instance, menu, returnvalue) {
 		if (instance.props && instance.props.user && !menu.querySelector(`${this.name}-contextMenuSubItem`)) {
-			let [children, index] = BDFDB.getContextMenuGroupAndIndex(returnvalue, ["FluxContainer(MessageDeveloperModeGroup)", "DeveloperModeGroup"]);
-			const itemgroup = BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItemGroup, {
+			let [children, index] = BDFDB.ReactUtils.findChildren(returnvalue, {name:["FluxContainer(MessageDeveloperModeGroup)", "DeveloperModeGroup"]});
+			const itemgroup = BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItemGroup, {
 				className: `BDFDB-contextMenuItemGroup ${this.name}-contextMenuItemGroup`,
 				children: [
-					BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuSubItem, {
+					BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuSubItem, {
 						label: this.labels.context_localusersettings_text,
 						className: `BDFDB-contextMenuSubItem ${this.name}-contextMenuSubItem ${this.name}-usersettings-contextMenuSubItem`,
-						render: [BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItemGroup, {
+						render: [BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItemGroup, {
 							className: `BDFDB-contextMenuItemGroup ${this.name}-contextMenuItemGroup`,
 							children: [
-								BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
 									label: this.labels.submenu_usersettings_text,
 									className: `BDFDB-ContextMenuItem ${this.name}-ContextMenuItem ${this.name}-usersettings-ContextMenuItem`,
 									action: e => {
@@ -219,13 +203,13 @@ class EditUsers {
 										this.showUserSettings(instance.props.user);
 									}
 								}),
-								BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
 									label: this.labels.submenu_resetsettings_text,
 									className: `BDFDB-ContextMenuItem ${this.name}-ContextMenuItem ${this.name}-resetsettings-ContextMenuItem`,
-									disabled: !BDFDB.loadData(instance.props.user.id, this, "users"),
+									disabled: !BDFDB.DataUtils.load(this, "users", instance.props.user.id),
 									action: e => {
 										BDFDB.closeContextMenu(menu);
-										BDFDB.removeData(instance.props.user.id, this, "users");
+										BDFDB.DataUtils.remove(this, "users", instance.props.user.id);
 										this.forceUpdateAll();
 									}
 								})
@@ -241,11 +225,11 @@ class EditUsers {
 	
 	forceUpdateAll () {
 		this.changeAppTitle();
-		BDFDB.WebModules.forceAllUpdates(this);
+		BDFDB.ModuleUtils.forceAllUpdates(this);
 	}
 
 	showUserSettings (info) {
-		let data = BDFDB.loadData(info.id, this, "users") || {};
+		let data = BDFDB.DataUtils.load(this, "users", info.id) || {};
 		let member = BDFDB.LibraryModules.MemberStore.getMember(BDFDB.LibraryModules.LastGuildStore.getGuildId(), info.id) || {};
 		
 		BDFDB.openModal(this, {
@@ -253,37 +237,38 @@ class EditUsers {
 			header: this.labels.modal_header_text,
 			subheader: member.nick || info.username,
 			children: [
-				BDFDB.React.createElement(BDFDB.LibraryComponents.ModalTabContent, {
+				BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ModalComponents.ModalTabContent, {
 					tab: this.labels.modal_tabheader1_text,
 					children: [
-						BDFDB.React.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
+						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_username_text,
 							className: BDFDB.disCN.marginbottom20 + " input-username",
 							children: [
-								BDFDB.React.createElement(BDFDB.LibraryComponents.TextInput, {
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TextInput, {
 									value: data.name,
 									placeholder: member.nick || info.username,
 									autoFocus: true
 								})
 							]
 						}),
-						BDFDB.React.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
+						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_usertag_text,
 							className: BDFDB.disCN.marginbottom20 + " input-usertag",
 							children: [
-								BDFDB.React.createElement(BDFDB.LibraryComponents.TextInput, {
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TextInput, {
 									value: data.tag
 								})
 							]
 						}),
-						BDFDB.React.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
+						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_useravatar_text,
 							className: BDFDB.disCN.marginbottom8 + " input-useravatar",
 							children: [
-								BDFDB.React.createElement(BDFDB.LibraryComponents.TextInput, {
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TextInput, {
 									inputClassName: !data.removeIcon && data.url ? BDFDB.disCN.inputsuccess : null,
+									inputId: "USERAVATAR",
 									value: data.url,
-									placeholder: BDFDB.getUserAvatar(info.id),
+									placeholder: BDFDB.UserUtils.getAvatar(info.id),
 									disabled: data.removeIcon,
 									onFocus: e => {
 										this.createNoticeTooltip(e.target);
@@ -294,40 +279,40 @@ class EditUsers {
 								})
 							]
 						}),
-						BDFDB.React.createElement(BDFDB.LibraryComponents.SettingsItem, {
+						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsItem, {
 							type: "Switch",
 							className: BDFDB.disCN.marginbottom20 + " input-removeicon",
 							label: this.labels.modal_removeicon_text,
 							value: data.removeIcon,
 							onChange: (value, instance) => {
-								let avatarinputins = BDFDB.getReactValue(instance, "_reactInternalFiber.return.child.sibling.sibling.child.child.sibling.child.stateNode");
+								let avatarinputins = BDFDB.ReactUtils.findOwner(instance._reactInternalFiber.return, {props:[["inputId","USERAVATAR"]]});
 								if (avatarinputins) {
 									avatarinputins.props.inputClassName = null;
 									avatarinputins.props.disabled = value;
-									avatarinputins.forceUpdate();
+									BDFDB.ReactUtils.forceUpdate(avatarinputins);
 								}
 							}
 						})
 					]
 				}),
-				BDFDB.React.createElement(BDFDB.LibraryComponents.ModalTabContent, {
+				BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ModalComponents.ModalTabContent, {
 					tab: this.labels.modal_tabheader2_text,
 					children: [
-						BDFDB.React.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
+						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_colorpicker1_text,
 							className: BDFDB.disCN.marginbottom20,
 							children: [
-								BDFDB.React.createElement(BDFDB.LibraryComponents.ColorSwatches, {
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ColorSwatches, {
 									color: data.color1,
 									number: 1
 								})
 							]
 						}),
-						BDFDB.React.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
+						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_colorpicker2_text,
 							className: BDFDB.disCN.marginbottom20,
 							children: [
-								BDFDB.React.createElement(BDFDB.LibraryComponents.ColorSwatches, {
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ColorSwatches, {
 									color: data.color2,
 									number: 2
 								})
@@ -335,39 +320,39 @@ class EditUsers {
 						})
 					]
 				}),
-				BDFDB.React.createElement(BDFDB.LibraryComponents.ModalTabContent, {
+				BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ModalComponents.ModalTabContent, {
 					tab: this.labels.modal_tabheader3_text,
 					children: [
-						BDFDB.React.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
+						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_colorpicker3_text,
 							className: BDFDB.disCN.marginbottom20,
 							children: [
-								BDFDB.React.createElement(BDFDB.LibraryComponents.ColorSwatches, {
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ColorSwatches, {
 									color: data.color3,
 									number: 3,
 									disabled: data.ignoreTagColor
 								})
 							]
 						}),
-						BDFDB.React.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
+						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_colorpicker4_text,
 							className: BDFDB.disCN.marginbottom20,
 							children: [
-								BDFDB.React.createElement(BDFDB.LibraryComponents.ColorSwatches, {
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ColorSwatches, {
 									color: data.color4,
 									number: 4,
 									disabled: data.ignoreTagColor
 								})
 							]
 						}),
-						BDFDB.React.createElement(BDFDB.LibraryComponents.SettingsItem, {
+						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsItem, {
 							type: "Switch",
 							className: BDFDB.disCN.marginbottom20 + " input-ignoretagcolor",
 							label: this.labels.modal_ignoretagcolor_text,
 							value: data.ignoreTagColor,
 							onChange: (value, instance) => {
-								let colorpicker3ins = BDFDB.getReactValue(instance, "_reactInternalFiber.return.child.child.child.sibling.child.stateNode");
-								let colorpicker4ins = BDFDB.getReactValue(instance, "_reactInternalFiber.return.child.sibling.child.child.sibling.child.stateNode");
+								let colorpicker3ins = BDFDB.ReactUtils.findOwner(instance._reactInternalFiber.return, {props:[["number",3]]});
+								let colorpicker4ins = BDFDB.ReactUtils.findOwner(instance._reactInternalFiber.return, {props:[["number",4]]});
 								if (colorpicker3ins) colorpicker3ins.setState({disabled: value});
 								if (colorpicker4ins) colorpicker4ins.setState({disabled: value});
 							}
@@ -376,7 +361,7 @@ class EditUsers {
 				})
 			],
 			buttons: [{
-				contents: BDFDB.LanguageStrings.SAVE,
+				contents: BDFDB.LanguageUtils.LanguageStrings.SAVE,
 				color: "BRAND",
 				close: true,
 				click: modal => {
@@ -390,18 +375,18 @@ class EditUsers {
 					
 					data.name = usernameinput.value.trim() || null;
 					data.tag = usertaginput.value.trim() || null;
-					data.url = (!data.removeIcon && BDFDB.containsClass(useravatarinput, BDFDB.disCN.inputsuccess) ? useravatarinput.value.trim() : null) || null;
+					data.url = (!data.removeIcon && BDFDB.DOMUtils.containsClass(useravatarinput, BDFDB.disCN.inputsuccess) ? useravatarinput.value.trim() : null) || null;
 					data.removeIcon = removeiconinput.checked;
 					data.ignoreTagColor = ignoretagcolorinput.checked;
 
-					data.color1 = BDFDB.getSwatchColor(modal, 1);
-					data.color2 = BDFDB.getSwatchColor(modal, 2);
-					data.color3 = BDFDB.getSwatchColor(modal, 3);
-					data.color4 = BDFDB.getSwatchColor(modal, 4);
+					data.color1 = BDFDB.ColorUtils.getSwatchColor(modal, 1);
+					data.color2 = BDFDB.ColorUtils.getSwatchColor(modal, 2);
+					data.color3 = BDFDB.ColorUtils.getSwatchColor(modal, 3);
+					data.color4 = BDFDB.ColorUtils.getSwatchColor(modal, 4);
 
 					let changed = false;
-					if (Object.keys(data).every(key => data[key] == null || data[key] == false) && (changed = true)) BDFDB.removeData(info.id, this, "users");
-					else if (!BDFDB.equals(olddata, data) && (changed = true)) BDFDB.saveData(info.id, data, this, "users");
+					if (Object.keys(data).every(key => data[key] == null || data[key] == false) && (changed = true)) BDFDB.DataUtils.remove(this, "users", info.id);
+					else if (!BDFDB.equals(olddata, data) && (changed = true)) BDFDB.DataUtils.save(data, this, "users", info.id);
 					if (changed) this.forceUpdateAll();
 				}
 			}]
@@ -409,7 +394,7 @@ class EditUsers {
 	}
 	
 	processChannelTextArea (instance, wrapper, returnvalue) {
-		let channel = BDFDB.getReactValue(instance, "props.channel");
+		let channel = BDFDB.ReactUtils.getValue(instance, "props.channel");
 		if (channel) {
 			var textarea = wrapper.querySelector("textarea");
 			if (!textarea) return;
@@ -417,28 +402,28 @@ class EditUsers {
 				let user = BDFDB.LibraryModules.UserStore.getUser(channel.recipients[0]);
 				if (user) {
 					let data = this.getUserData(user.id, wrapper);
-					textarea.setAttribute("placeholder", BDFDB.LanguageStrings.TEXTAREA_PLACEHOLDER.replace("{{channel}}", "@" + (data.name || user.username)));
+					textarea.setAttribute("placeholder", BDFDB.LanguageUtils.LanguageStringsFormat("TEXTAREA_PLACEHOLDER", `@${data.name || user.username}`));
 				}
 			}
-			BDFDB.removeEventListener(this, textarea);
-			if (BDFDB.getData("changeInAutoComplete", this, "settings")) {
-				BDFDB.addEventListener(this, textarea, "keydown", e => {
+			BDFDB.ListenerUtils.remove(this, textarea);
+			if (BDFDB.DataUtils.get(this, "settings", "changeInAutoComplete")) {
+				BDFDB.ListenerUtils.add(this, textarea, "keydown", e => {
 					let autocompletemenu = textarea.parentElement.querySelector(BDFDB.dotCN.autocomplete);
 					if (autocompletemenu && (e.which == 9 || e.which == 13)) {
-						if (BDFDB.containsClass(autocompletemenu.querySelector(BDFDB.dotCN.autocompleteselected).parentElement, "autocompleteEditUsersRow")) {
-							BDFDB.stopEvent(e);
+						if (BDFDB.DOMUtils.containsClass(autocompletemenu.querySelector(BDFDB.dotCN.autocompleteselected).parentElement, "autocompleteEditUsersRow")) {
+							BDFDB.ListenerUtils.stopEvent(e);
 							this.swapWordWithMention(textarea);
 						}
 					}
 					else if (autocompletemenu && (e.which == 38 || e.which == 40)) {
 						let autocompleteitems = autocompletemenu.querySelectorAll(BDFDB.dotCN.autocompleteselectable + ":not(.autocompleteEditUsersSelector)");
 						let selected = autocompletemenu.querySelector(BDFDB.dotCN.autocompleteselected);
-						if (BDFDB.containsClass(selected, "autocompleteEditUsersSelector") || autocompleteitems[e.which == 38 ? 0 : (autocompleteitems.length-1)] == selected) {
-							BDFDB.stopEvent(e);
+						if (BDFDB.DOMUtils.containsClass(selected, "autocompleteEditUsersSelector") || autocompleteitems[e.which == 38 ? 0 : (autocompleteitems.length-1)] == selected) {
+							BDFDB.ListenerUtils.stopEvent(e);
 							let next = this.getNextSelection(autocompletemenu, null, e.which == 38 ? false : true);
-							BDFDB.removeClass(selected, BDFDB.disCN.autocompleteselected);
-							BDFDB.addClass(selected, BDFDB.disCN.autocompleteselector);
-							BDFDB.addClass(next, BDFDB.disCN.autocompleteselected);
+							BDFDB.DOMUtils.removeClass(selected, BDFDB.disCN.autocompleteselected);
+							BDFDB.DOMUtils.addClass(selected, BDFDB.disCN.autocompleteselector);
+							BDFDB.DOMUtils.addClass(next, BDFDB.disCN.autocompleteselected);
 						}
 					}
 					else if (textarea.value && !e.shiftKey && e.which == 13 && !autocompletemenu && textarea.value.indexOf("s/") != 0) {
@@ -450,9 +435,9 @@ class EditUsers {
 						textarea.EditUsersAutocompleteTimeout = setTimeout(() => {this.addAutoCompleteMenu(textarea, channel);},100);
 					}
 
-					if (!e.ctrlKey && e.which != 38 && e.which != 40 && !(e.which == 39 && textarea.selectionStart == textarea.selectionEnd && textarea.selectionEnd == textarea.value.length)) BDFDB.removeEles(".autocompleteEditUsers", ".autocompleteEditUsersRow");
+					if (!e.ctrlKey && e.which != 38 && e.which != 40 && !(e.which == 39 && textarea.selectionStart == textarea.selectionEnd && textarea.selectionEnd == textarea.value.length)) BDFDB.DOMUtils.remove(".autocompleteEditUsers", ".autocompleteEditUsersRow");
 				});
-				BDFDB.addEventListener(this, textarea, "click", e => {
+				BDFDB.ListenerUtils.add(this, textarea, "click", e => {
 					if (textarea.selectionStart == textarea.selectionEnd && textarea.selectionEnd == textarea.value.length) setImmediate(() => {this.addAutoCompleteMenu(textarea, channel);});
 				});
 			}
@@ -503,7 +488,7 @@ class EditUsers {
 	}
 
 	processAccount (instance, wrapper, returnvalue) {
-		let user = BDFDB.getReactValue(instance, "_reactInternalFiber.child.stateNode.props.currentUser");
+		let user = instance.props.currentUser;
 		if (user) {
 			this.changeName(user, wrapper.querySelector(BDFDB.dotCN.accountinfodetails).firstElementChild);
 			this.changeAvatar(user, this.getAvatarDiv(wrapper));
@@ -511,24 +496,24 @@ class EditUsers {
 	}
 
 	processMessageUsername (instance, wrapper, returnvalue) {
-		let message = BDFDB.getReactValue(instance, "props.message");
+		let message = BDFDB.ReactUtils.getValue(instance, "props.message");
 		if (message) {
 			let username = wrapper.querySelector(BDFDB.dotCN.messageusername);
 			if (username) {
 				let channel = BDFDB.LibraryModules.ChannelStore.getChannel(message.channel_id) || {};
 				this.changeName(message.author, username, channel.guild_id);
-				if (!BDFDB.containsClass(wrapper.parentElement, BDFDB.disCN.messageheadercompact)) this.changeAvatar(message.author, this.getAvatarDiv(wrapper));
-				let messagegroup = BDFDB.getParentEle(BDFDB.dotCN.messagegroup, wrapper);
-				this.addTag(message.author, wrapper, BDFDB.containsClass(messagegroup, BDFDB.disCN.messagegroupcozy) ? BDFDB.disCN.bottagmessagecozy : BDFDB.disCN.bottagmessagecompact);
+				if (!BDFDB.DOMUtils.containsClass(wrapper.parentElement, BDFDB.disCN.messageheadercompact)) this.changeAvatar(message.author, this.getAvatarDiv(wrapper));
+				let messagegroup = BDFDB.DOMUtils.getParent(BDFDB.dotCN.messagegroup, wrapper);
+				this.addTag(message.author, wrapper, BDFDB.DOMUtils.containsClass(messagegroup, BDFDB.disCN.messagegroupcozy) ? BDFDB.disCN.bottagmessagecozy : BDFDB.disCN.bottagmessagecompact);
 			}
 		}
 	}
 
 	processAuditLog (instance, wrapper, returnvalue) {
-		let log = BDFDB.getReactValue(instance, "props.log");
+		let log = BDFDB.ReactUtils.getValue(instance, "props.log");
 		if (log && log.user) {
 			let hooks = wrapper.querySelectorAll(BDFDB.dotCN.auditloguserhook);
-			let guild_id = BDFDB.getReactValue(instance, "_reactInternalFiber.return.memoizedProps.guildId");
+			let guild_id = BDFDB.ReactUtils.getValue(instance, "_reactInternalFiber.return.memoizedProps.guildId");
 			if (hooks.length > 0) this.changeName2(log.user, hooks[0].firstChild, guild_id);
 			if (hooks.length > 1 && log.targetType == "USER") this.changeName2(log.target, hooks[1].firstChild, guild_id);
 		}
@@ -545,7 +530,7 @@ class EditUsers {
 	}
 
 	processInviteCard (instance, wrapper, returnvalue) {
-		let invite = BDFDB.getReactValue(instance, "props.invite");
+		let invite = BDFDB.ReactUtils.getValue(instance, "props.invite");
 		if (invite && invite.inviter && invite.guild) {
 			let username = wrapper.querySelector(BDFDB.dotCN.username);
 			if (username) {
@@ -576,14 +561,14 @@ class EditUsers {
 	}
 
 	processTypingUsers (instance, wrapper, returnvalue) {
-		let users = !instance.props.typingUsers ? [] : Object.keys(instance.props.typingUsers).filter(id => id != BDFDB.myData.id).filter(id => !BDFDB.LibraryModules.FriendUtils.isBlocked(id)).map(id => BDFDB.LibraryModules.UserStore.getUser(id)).filter(id => id != null);
+		let users = !instance.props.typingUsers ? [] : Object.keys(instance.props.typingUsers).filter(id => id != BDFDB.UserUtils.me.id).filter(id => !BDFDB.LibraryModules.FriendUtils.isBlocked(id)).map(id => BDFDB.LibraryModules.UserStore.getUser(id)).filter(id => id != null);
 		wrapper.querySelectorAll(BDFDB.dotCNS.typing + "strong").forEach((username, i) => {
 			if (users[i] && username) this.changeName2(users[i], username);
 		});
 	}
 
 	processDirectMessage (instance, wrapper, returnvalue) {
-		let channel = BDFDB.getReactValue(instance, "props.channel");
+		let channel = BDFDB.ReactUtils.getValue(instance, "props.channel");
 		if (channel && channel.type == 1) {
 			let user = BDFDB.LibraryModules.UserStore.getUser(channel.recipients[0]);
 			if (user) {
@@ -608,7 +593,7 @@ class EditUsers {
 				let avatar = this.getAvatarDiv(wrapper);
 				if (avatar) {
 					this.changeAvatar(user, avatar);
-					if (BDFDB.containsClass(avatar.parentElement, BDFDB.disCN.callvideo)) this.changeTooltip(user, avatar.parentElement, "left");
+					if (BDFDB.DOMUtils.containsClass(avatar.parentElement, BDFDB.disCN.callvideo)) this.changeTooltip(user, avatar.parentElement, "left");
 				}
 			}
 		}
@@ -638,7 +623,7 @@ class EditUsers {
 	}
 
 	processHeaderBar (instance, wrapper, returnvalue) {
-		let channel_id = BDFDB.getReactValue(instance, "props.channelId") || BDFDB.getReactValue(instance, "_reactInternalFiber.return.memoizedProps.channelId");
+		let channel_id = BDFDB.ReactUtils.getValue(instance, "props.channelId") || BDFDB.ReactUtils.getValue(instance, "_reactInternalFiber.return.memoizedProps.channelId");
 		if (channel_id) {
 			let channelname = wrapper.querySelector(BDFDB.dotCN.channelheaderheaderbartitle);
 			if (channelname) {
@@ -647,11 +632,11 @@ class EditUsers {
 					if (channel.type == 1) this.changeName(BDFDB.LibraryModules.UserStore.getUser(channel.recipients[0]), channelname);
 					else {
 						if (channelname.EditUsersChangeObserver && typeof channelname.EditUsersChangeObserver.disconnect == "function") channelname.EditUsersChangeObserver.disconnect();
-						if (BDFDB.isPluginEnabled("EditChannels")) BDFDB.getPlugin("EditChannels").changeChannel(channel, channelname);
+						if (BDFDB.BDUtils.isPluginEnabled("EditChannels")) BDFDB.BDUtils.getPlugin("EditChannels").changeChannel(channel, channelname);
 						else {
 							channelname.style.removeProperty("color");
 							channelname.style.removeProperty("background");
-							BDFDB.setInnerText(channelname, channel.name);
+							BDFDB.DOMUtils.setText(channelname, channel.name);
 						}
 					}
 				}
@@ -662,8 +647,8 @@ class EditUsers {
 	processClickable (instance, wrapper, returnvalue) {
 		if (!wrapper || !instance.props || !instance.props.className) return;
 		if (instance.props.tag == "a" && instance.props.className.indexOf(BDFDB.disCN.anchorunderlineonhover) > -1) {
-			if (BDFDB.containsClass(wrapper.parentElement, BDFDB.disCN.messagesystemcontent) && wrapper.parentElement.querySelector("a") == wrapper) {
-				let message = BDFDB.getKeyInformation({node:wrapper.parentElement, key:"message", up:true});
+			if (BDFDB.DOMUtils.containsClass(wrapper.parentElement, BDFDB.disCN.messagesystemcontent) && wrapper.parentElement.querySelector("a") == wrapper) {
+				let message = BDFDB.ReactUtils.findValue(wrapper.parentElement, "message", {up:true});
 				if (message) {
 					this.changeName(message.author, wrapper);
 					if (message.mentions.length == 1) this.changeName(BDFDB.LibraryModules.UserStore.getUser(message.mentions[0]), wrapper.parentElement.querySelectorAll("a")[1]);
@@ -671,7 +656,7 @@ class EditUsers {
 			}
 		}
 		else if (instance.props.tag == "span" && instance.props.className.indexOf(BDFDB.disCN.mention) > -1) {
-			let render = BDFDB.getReactValue(instance, "_reactInternalFiber.return.return.stateNode.props.render");
+			let render = BDFDB.ReactUtils.getValue(instance, "_reactInternalFiber.return.return.stateNode.props.render");
 			if (typeof render == "function") {
 				var props = render().props;
 				if (props && props.user) this.changeMention(props.user, wrapper);
@@ -679,21 +664,21 @@ class EditUsers {
 			}
 		}
 		else if (instance.props.tag == "div" && instance.props.className.indexOf(BDFDB.disCN.quickswitchresult) > -1) {
-			let user = BDFDB.getReactValue(instance, "_reactInternalFiber.return.return.memoizedProps.user");
+			let user = BDFDB.ReactUtils.getValue(instance, "_reactInternalFiber.return.return.memoizedProps.user");
 			if (user) {
 				this.changeName2(user, wrapper.querySelector(BDFDB.dotCN.quickswitchresultmatch));
 				this.changeAvatar(user, this.getAvatarDiv(wrapper));
 			}
 		}
 		else if (instance.props.tag == "div" && instance.props.className.indexOf(BDFDB.disCN.autocompleterow) > -1) {
-			let user = BDFDB.getReactValue(instance, "_reactInternalFiber.return.memoizedProps.user");
+			let user = BDFDB.ReactUtils.getValue(instance, "_reactInternalFiber.return.memoizedProps.user");
 			if (user) {
 				this.changeName2(user, wrapper.querySelector(BDFDB.dotCN.marginleft8));
 				this.changeAvatar(user, this.getAvatarDiv(wrapper));
 			}
 		}
 		else if (instance.props.tag == "div" && instance.props.className.indexOf(BDFDB.disCN.searchpopoutuser) > -1) {
-			let result = BDFDB.getReactValue(instance, "_reactInternalFiber.return.memoizedProps.result");
+			let result = BDFDB.ReactUtils.getValue(instance, "_reactInternalFiber.return.memoizedProps.result");
 			if (result && result.user) {
 				this.changeName3(result.user, wrapper.querySelector(BDFDB.dotCN.searchpopoutdisplayednick));
 				this.changeAvatar(result.user, wrapper.querySelector(BDFDB.dotCN.searchpopoutdisplayavatar));
@@ -702,14 +687,14 @@ class EditUsers {
 	}
 
 	processMessageContent (instance, wrapper, returnvalue) {
-		let message = BDFDB.getReactValue(instance, "props.message");
+		let message = BDFDB.ReactUtils.getValue(instance, "props.message");
 		if (message && message.author) {
 			let markup = wrapper.querySelector(BDFDB.dotCN.messagemarkup);
 			if (markup) {
 				let channel = BDFDB.LibraryModules.ChannelStore.getChannel(message.channel_id) || {};
 				let member = BDFDB.LibraryModules.MemberStore.getMember(channel.guild_id, message.author.id) || {};
 				let data = this.getUserData(message.author.id, wrapper);
-				markup.style.setProperty("color", window.settingsCookie["bda-gs-7"] ? BDFDB.colorCONVERT(data.color1 && !BDFDB.isObject(data.color1) ? data.color1 : member.colorString, "RGBA") : null, "important");
+				markup.style.setProperty("color", window.settingsCookie["bda-gs-7"] ? BDFDB.ColorUtils.convert(data.color1 && !BDFDB.ObjectUtils.is(data.color1) ? data.color1 : member.colorString, "RGBA") : null, "important");
 			}
 		}
 	}
@@ -722,17 +707,17 @@ class EditUsers {
 	}
 	
 	checkUrl (url, instance) {
-		let input = BDFDB.React.findDOMNode(instance).firstElementChild;
+		let input = BDFDB.ReactUtils.findDOMNode(instance).firstElementChild;
 		clearTimeout(instance.checkTimeout);
 		if (url == null || !url.trim()) {
-			if (input) BDFDB.removeEles(input.tooltip);
+			if (input) BDFDB.DOMUtils.remove(input.tooltip);
 			instance.props.inputClassName = null;
 			instance.forceUpdate();
 		}
 		else instance.checkTimeout = setTimeout(() => {
 			BDFDB.LibraryRequires.request(url.trim(), (error, response, result) => {
 				if (response && response.headers["content-type"] && response.headers["content-type"].indexOf("image") != -1) {
-					if (input) BDFDB.removeEles(input.tooltip);
+					if (input) BDFDB.DOMUtils.remove(input.tooltip);
 					instance.props.inputClassName = BDFDB.disCN.inputsuccess;
 				}
 				else {
@@ -747,10 +732,10 @@ class EditUsers {
 
 	createNoticeTooltip (input, isinvalid = false) {
 		if (!input) return;
-		BDFDB.removeEles(input.tooltip);
-		var invalid = isinvalid || BDFDB.containsClass(input, BDFDB.disCN.inputerror);
-		var valid = invalid ? false : BDFDB.containsClass(input, BDFDB.disCN.inputsuccess);
-		if (invalid || valid) input.tooltip = BDFDB.createTooltip(invalid ? this.labels.modal_invalidurl_text : this.labels.modal_validurl_text, input, {type:"right", selector:"notice-tooltip", color: invalid ? "red" : "green"});
+		BDFDB.DOMUtils.remove(input.tooltip);
+		var invalid = isinvalid || BDFDB.DOMUtils.containsClass(input, BDFDB.disCN.inputerror);
+		var valid = invalid ? false : BDFDB.DOMUtils.containsClass(input, BDFDB.disCN.inputsuccess);
+		if (invalid || valid) input.tooltip = BDFDB.TooltipUtils.create(input, invalid ? this.labels.modal_invalidurl_text : this.labels.modal_validurl_text, {type:"right", selector:"notice-tooltip", color: invalid ? "red" : "green"});
 	}
 
 	changeAppTitle () {
@@ -760,7 +745,7 @@ class EditUsers {
 			let info = BDFDB.LibraryModules.UserStore.getUser(channel.recipients[0]);
 			if (info) {
 				let data = this.getUserData(info.id, title);
-				BDFDB.setInnerText(title, "@" + (data.name || info.username));
+				BDFDB.DOMUtils.setText(title, "@" + (data.name || info.username));
 			}
 		}
 	}
@@ -772,20 +757,20 @@ class EditUsers {
 		let member = BDFDB.LibraryModules.MemberStore.getMember(guildid, info.id) || {};
 		this.changeBotTags(data, username, member);
 		if (data.name || data.color1 || data.color2 || username.getAttribute("changed-by-editusers")) {
-			let isBRCenabled = BDFDB.isPluginEnabled("BetterRoleColors");
-			let usenick = !BDFDB.containsClass(username, BDFDB.disCN.userprofileusername) && !BDFDB.containsClass(username.parentElement, BDFDB.disCN.userprofilelistname, BDFDB.disCN.accountinfodetails, false) && member.nick;
-			let usemembercolor = !BDFDB.containsClass(username.parentElement, BDFDB.disCN.userprofilelistname) && (BDFDB.containsClass(username, BDFDB.disCN.memberusername, BDFDB.disCN.messageusername, false) || isBRCenabled);
+			let isBRCenabled = BDFDB.BDUtils.isPluginEnabled("BetterRoleColors");
+			let usenick = !BDFDB.DOMUtils.containsClass(username, BDFDB.disCN.userprofileusername) && !BDFDB.DOMUtils.containsClass(username.parentElement, BDFDB.disCN.userprofilelistname, BDFDB.disCN.accountinfodetails, false) && member.nick;
+			let usemembercolor = !BDFDB.DOMUtils.containsClass(username.parentElement, BDFDB.disCN.userprofilelistname) && (BDFDB.DOMUtils.containsClass(username, BDFDB.disCN.memberusername, BDFDB.disCN.messageusername, false) || isBRCenabled);
 
-			if (BDFDB.isObject(data.color1)) {
-				username.style.setProperty("color", BDFDB.colorCONVERT(data.color1[Object.keys(data.color1)[0]], "RGBA"), "important");
-				BDFDB.setInnerText(username, BDFDB.htmlToElement(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${BDFDB.colorGRADIENT(data.color1)} !important;">${BDFDB.encodeToHTML(data.name || (usenick ? member.nick : info.username))}</span>`));
+			if (BDFDB.ObjectUtils.is(data.color1)) {
+				username.style.setProperty("color", BDFDB.ColorUtils.convert(data.color1[Object.keys(data.color1)[0]], "RGBA"), "important");
+				BDFDB.DOMUtils.setText(username, BDFDB.DOMUtils.create(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${BDFDB.ColorUtils.createGradient(data.color1)} !important;">${BDFDB.StringUtils.htmlEscape(data.name || (usenick ? member.nick : info.username))}</span>`));
 			}
 			else {
-				username.style.setProperty("color", BDFDB.colorCONVERT(data.color1 || (usemembercolor ? member.colorString : null), "RGBA"), "important");
-				BDFDB.setInnerText(username, data.name || (usenick ? member.nick : info.username));
+				username.style.setProperty("color", BDFDB.ColorUtils.convert(data.color1 || (usemembercolor ? member.colorString : null), "RGBA"), "important");
+				BDFDB.DOMUtils.setText(username, data.name || (usenick ? member.nick : info.username));
 			}
 
-			username.style.setProperty("background", BDFDB.isObject(data.color2) ? BDFDB.colorGRADIENT(data.color2) : BDFDB.colorCONVERT(data.color2, "RGBA"), "important");
+			username.style.setProperty("background", BDFDB.ObjectUtils.is(data.color2) ? BDFDB.ColorUtils.createGradient(data.color2) : BDFDB.ColorUtils.convert(data.color2, "RGBA"), "important");
 
 			if (data.name || data.color1 || data.color2) {
 				username.setAttribute("changed-by-editusers", true);
@@ -806,13 +791,13 @@ class EditUsers {
 		let member = BDFDB.LibraryModules.MemberStore.getMember(guildid, info.id) || {};
 		this.changeBotTags(data, username, member);
 		if (data.name || data.color1 || username.getAttribute("changed-by-editusers")) {
-			if (BDFDB.isObject(data.color1)) {
-				username.style.setProperty("color", BDFDB.colorCONVERT(data.color1[Object.keys(data.color1)[0]], "RGBA"), "important");
-				BDFDB.setInnerText(username, BDFDB.htmlToElement(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${BDFDB.colorGRADIENT(data.color1)} !important;">${BDFDB.encodeToHTML(data.name || member.nick || info.username)}</span>`));
+			if (BDFDB.ObjectUtils.is(data.color1)) {
+				username.style.setProperty("color", BDFDB.ColorUtils.convert(data.color1[Object.keys(data.color1)[0]], "RGBA"), "important");
+				BDFDB.DOMUtils.setText(username, BDFDB.DOMUtils.create(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${BDFDB.ColorUtils.createGradient(data.color1)} !important;">${BDFDB.StringUtils.htmlEscape(data.name || member.nick || info.username)}</span>`));
 			}
 			else {
-				username.style.setProperty("color", BDFDB.colorCONVERT(data.color1 || (BDFDB.isPluginEnabled("BetterRoleColors") ? member.colorString : null), "RGBA"), "important");
-				BDFDB.setInnerText(username, data.name || member.nick || info.username);
+				username.style.setProperty("color", BDFDB.ColorUtils.convert(data.color1 || (BDFDB.BDUtils.isPluginEnabled("BetterRoleColors") ? member.colorString : null), "RGBA"), "important");
+				BDFDB.DOMUtils.setText(username, data.name || member.nick || info.username);
 			}
 			if (data.name || data.color1) {
 				username.setAttribute("changed-by-editusers", true);
@@ -832,16 +817,16 @@ class EditUsers {
 		let data = this.getUserData(info.id, username);
 		if (data.name || data.color1 || username.getAttribute("changed-by-editusers")) {
 			if (adddisc) {
-				BDFDB.setInnerText(username, BDFDB.htmlToElement(`<span ${data.color1 ? (BDFDB.isObject(data.color1) ? 'style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image:' + BDFDB.colorGRADIENT(data.color1) + ' !important;"' : 'style="color:' + data.color1 + ' !important;"'): ''}>${BDFDB.encodeToHTML(data.name || info.username)}</span><span${typeof adddisc == "string" ? ' class="' + adddisc + '"' : ''}>#${info.discriminator}</span>`));
+				BDFDB.DOMUtils.setText(username, BDFDB.DOMUtils.create(`<span ${data.color1 ? (BDFDB.ObjectUtils.is(data.color1) ? 'style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image:' + BDFDB.ColorUtils.createGradient(data.color1) + ' !important;"' : 'style="color:' + data.color1 + ' !important;"'): ''}>${BDFDB.StringUtils.htmlEscape(data.name || info.username)}</span><span${typeof adddisc == "string" ? ' class="' + adddisc + '"' : ''}>#${info.discriminator}</span>`));
 			}
 			else {
-				if (BDFDB.isObject(data.color1)) {
-					username.style.setProperty("color", BDFDB.colorCONVERT(data.color1[Object.keys(data.color1)[0]], "RGBA"), "important");
-					BDFDB.setInnerText(username, BDFDB.htmlToElement(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${BDFDB.colorGRADIENT(data.color1)} !important;">${BDFDB.encodeToHTML(data.name || info.username)}</span>`));
+				if (BDFDB.ObjectUtils.is(data.color1)) {
+					username.style.setProperty("color", BDFDB.ColorUtils.convert(data.color1[Object.keys(data.color1)[0]], "RGBA"), "important");
+					BDFDB.DOMUtils.setText(username, BDFDB.DOMUtils.create(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${BDFDB.ColorUtils.createGradient(data.color1)} !important;">${BDFDB.StringUtils.htmlEscape(data.name || info.username)}</span>`));
 				}
 				else {
-					username.style.setProperty("color", BDFDB.colorCONVERT(data.color1, "RGBA"), "important");
-					BDFDB.setInnerText(username, data.name || info.username);
+					username.style.setProperty("color", BDFDB.ColorUtils.convert(data.color1, "RGBA"), "important");
+					BDFDB.DOMUtils.setText(username, data.name || info.username);
 				}
 			}
 			if (data.name || data.color1) {
@@ -857,11 +842,11 @@ class EditUsers {
 	}
 
 	changeBotTags (data, username, member) {
-		for (let tag of username.parentElement.parentElement.querySelectorAll(BDFDB.dotCN.bottag)) if (!BDFDB.containsClass(tag, "TRE-tag")) {
-			let isBRCbottagsEnabled = BDFDB.getReactValue(BDFDB.getPlugin("BetterRoleColors", true), "settings.modules.botTags");
-			let tagcolor =  BDFDB.colorCONVERT(data.color1 || (isBRCbottagsEnabled || BDFDB.containsClass(tag, "owner-tag-rolecolor") ? member.colorString : null), "RGBA");
-			tagcolor = BDFDB.colorISBRIGHT(tagcolor) ? BDFDB.colorCHANGE(tagcolor, -0.3) : tagcolor;
-			tag.style.setProperty(BDFDB.containsClass(tag, BDFDB.disCN.bottaginvert) ? "color" : "background-color", tagcolor, "important");
+		for (let tag of username.parentElement.parentElement.querySelectorAll(BDFDB.dotCN.bottag)) if (!BDFDB.DOMUtils.containsClass(tag, "TRE-tag")) {
+			let isBRCbottagsEnabled = BDFDB.ReactUtils.getValue(BDFDB.BDUtils.getPlugin("BetterRoleColors", true), "settings.modules.botTags");
+			let tagcolor =  BDFDB.ColorUtils.convert(data.color1 || (isBRCbottagsEnabled || BDFDB.DOMUtils.containsClass(tag, "owner-tag-rolecolor") ? member.colorString : null), "RGBA");
+			tagcolor = BDFDB.ColorUtils.isBright(tagcolor) ? BDFDB.ColorUtils.change(tagcolor, -0.3) : tagcolor;
+			tag.style.setProperty(BDFDB.DOMUtils.containsClass(tag, BDFDB.disCN.bottaginvert) ? "color" : "background-color", tagcolor, "important");
 		}
 	}
 
@@ -870,10 +855,10 @@ class EditUsers {
 		if (avatar.EditUsersChangeObserver && typeof avatar.EditUsersChangeObserver.disconnect == "function") avatar.EditUsersChangeObserver.disconnect();
 		let data = this.getUserData(info.id, avatar);
 		if (data.url || data.removeIcon || avatar.getAttribute("changed-by-editusers")) {
-			if (avatar.tagName == "IMG") avatar.setAttribute("src", data.removeIcon ? null : (data.url || BDFDB.getUserAvatar(info.id)));
+			if (avatar.tagName == "IMG") avatar.setAttribute("src", data.removeIcon ? null : (data.url || BDFDB.UserUtils.getAvatar(info.id)));
 			else {
-				let url = data.removeIcon ? null : ("url(" + (data.url || BDFDB.getUserAvatar(info.id)) + ")");
-				if (url && BDFDB.getParentEle(BDFDB.dotCN.userprofile, avatar) && url.search(/discordapp\.com\/avatars\/[0-9]*\/a_/) > -1) url = url.replace(".webp)", ".gif)");
+				let url = data.removeIcon ? null : ("url(" + (data.url || BDFDB.UserUtils.getAvatar(info.id)) + ")");
+				if (url && BDFDB.DOMUtils.getParent(BDFDB.dotCN.userprofile, avatar) && url.search(/discordapp\.com\/avatars\/[0-9]*\/a_/) > -1) url = url.replace(".webp)", ".gif)");
 				avatar.style.setProperty("background-image", url);
 				if (data.url && !data.removeIcon) {
 					avatar.style.setProperty("background-position", "center");
@@ -895,31 +880,31 @@ class EditUsers {
 	changeTooltip (info, wrapper, type) {
 		if (!info || !wrapper || !wrapper.parentElement) return;
 		let data = this.getUserData(info.id, wrapper);
-		wrapper = BDFDB.containsClass(wrapper, BDFDB.disCN.guildicon) ? wrapper.parentElement.parentElement.parentElement : wrapper;
+		wrapper = BDFDB.DOMUtils.containsClass(wrapper, BDFDB.disCN.guildicon) ? wrapper.parentElement.parentElement.parentElement : wrapper;
 		wrapper.removeEventListener("mouseenter", wrapper.tooltipListenerEditUsers);
 		if (data.name) {
 			wrapper.tooltipListenerEditUsers = () => {
-				BDFDB.createTooltip(data.name, wrapper, {type,selector:"EditUsers-tooltip",css:`body ${BDFDB.dotCN.tooltip}:not(.EditUsers-tooltip) {display: none !important;}`});
+				BDFDB.TooltipUtils.create(wrapper, data.name, {type, selector:"EditUsers-tooltip", hide:true});
 			};
 			wrapper.addEventListener("mouseenter", wrapper.tooltipListenerEditUsers);
 		}
 	}
 
 	addTag (info, wrapper, selector = "", container) {
-		if (!info || !wrapper || !wrapper.parentElement || BDFDB.containsClass(wrapper, BDFDB.disCN.accountinfodetails) || BDFDB.containsClass(wrapper, "discord-tag")) return;
-		BDFDB.removeEles(wrapper.querySelectorAll(".EditUsers-tag"));
+		if (!info || !wrapper || !wrapper.parentElement || BDFDB.DOMUtils.containsClass(wrapper, BDFDB.disCN.accountinfodetails) || BDFDB.DOMUtils.containsClass(wrapper, "discord-tag")) return;
+		BDFDB.DOMUtils.remove(wrapper.querySelectorAll(".EditUsers-tag"));
 		let data = this.getUserData(info.id, wrapper);
 		if (data.tag) {
 			let member = data.ignoreTagColor ? (BDFDB.LibraryModules.MemberStore.getMember(BDFDB.LibraryModules.LastGuildStore.getGuildId(), info.id) || {}) : {};
-			let color3 = BDFDB.isObject(data.color3) && !data.ignoreTagColor ? BDFDB.colorGRADIENT(data.color3) : BDFDB.colorCONVERT(!data.ignoreTagColor ? data.color3 : member.colorString, "RGBA");
-			let color4 = BDFDB.isObject(data.color4) && !data.ignoreTagColor ? BDFDB.colorGRADIENT(data.color4) : (!data.ignoreTagColor && data.color4 ? BDFDB.colorCONVERT(data.color4, "RGBA") : (color3 ? (BDFDB.colorISBRIGHT(color3) ? "black" : "white") : null));
+			let color3 = BDFDB.ObjectUtils.is(data.color3) && !data.ignoreTagColor ? BDFDB.ColorUtils.createGradient(data.color3) : BDFDB.ColorUtils.convert(!data.ignoreTagColor ? data.color3 : member.colorString, "RGBA");
+			let color4 = BDFDB.ObjectUtils.is(data.color4) && !data.ignoreTagColor ? BDFDB.ColorUtils.createGradient(data.color4) : (!data.ignoreTagColor && data.color4 ? BDFDB.ColorUtils.convert(data.color4, "RGBA") : (color3 ? (BDFDB.ColorUtils.isBright(color3) ? "black" : "white") : null));
 			let tag = document.createElement("span");
-			let invert = container && !color3 && !color4 && container.firstElementChild && !(BDFDB.containsClass(container.firstElementChild, BDFDB.disCN.userpopoutheadernormal) || BDFDB.containsClass(container.firstElementChild, BDFDB.disCN.userprofiletopsectionnormal));
+			let invert = container && !color3 && !color4 && container.firstElementChild && !(BDFDB.DOMUtils.containsClass(container.firstElementChild, BDFDB.disCN.userpopoutheadernormal) || BDFDB.DOMUtils.containsClass(container.firstElementChild, BDFDB.disCN.userprofiletopsectionnormal));
 			tag.className = "EditUsers-tag " + (!invert ? BDFDB.disCN.bottagregular : BDFDB.disCN.bottaginvert) + (selector ? (" " + selector) : "");
 			tag.style.setProperty("background", !invert ? color3 : color4, "important");
 			let fontcolor = invert ? color3 : color4;
 			let fontobj = invert ? data.color3 : data.color4;
-			if (BDFDB.isObject(fontobj)) tag.appendChild(BDFDB.htmlToElement(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${fontcolor} !important;">${BDFDB.encodeToHTML(data.tag)}</span>`));
+			if (BDFDB.ObjectUtils.is(fontobj)) tag.appendChild(BDFDB.DOMUtils.create(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${fontcolor} !important;">${BDFDB.StringUtils.htmlEscape(data.tag)}</span>`));
 			else {
 				tag.innerText = data.tag;
 				tag.style.setProperty("color", fontcolor, "important");
@@ -930,14 +915,14 @@ class EditUsers {
 
 	changePrivateChannel (info, username) {
 		if (!info || !username || !username.parentElement) return;
-		let dmchannel = BDFDB.getParentEle(BDFDB.dotCN.dmchannel, username);
+		let dmchannel = BDFDB.DOMUtils.getParent(BDFDB.dotCN.dmchannel, username);
 		if (!dmchannel) return;
 		if (username.EditUsersChangeObserver && typeof username.EditUsersChangeObserver.disconnect == "function") username.EditUsersChangeObserver.disconnect();
 		dmchannel.removeEventListener("mouseenter", dmchannel.mouseenterListenerEditUsers);
 		dmchannel.removeEventListener("mouseleave", dmchannel.mouseleaveListenerEditUsers);
 		let data = this.getUserData(info.id, username);
 		if (data.name || data.color1 || data.color2 || username.getAttribute("changed-by-editusers")) {
-			if (username.EditUsersHovered || BDFDB.containsClass(dmchannel, BDFDB.disCN.namecontainerselected)) colorHover();
+			if (username.EditUsersHovered || BDFDB.DOMUtils.containsClass(dmchannel, BDFDB.disCN.namecontainerselected)) colorHover();
 			else colorDefault();
 
 			if (data.name || data.color1 || data.color2) {
@@ -960,26 +945,26 @@ class EditUsers {
 			}
 			else username.removeAttribute("changed-by-editusers");
 			function colorDefault() {
-				if (BDFDB.isObject(data.color1)) {
+				if (BDFDB.ObjectUtils.is(data.color1)) {
 					username.style.removeProperty("color");
-					BDFDB.setInnerText(username, BDFDB.htmlToElement(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${BDFDB.colorGRADIENT(BDFDB.colorCHANGE(data.color1, -0.5))} !important;">${BDFDB.encodeToHTML(data.name || info.username)}</span>`));
+					BDFDB.DOMUtils.setText(username, BDFDB.DOMUtils.create(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${BDFDB.ColorUtils.createGradient(BDFDB.ColorUtils.change(data.color1, -0.5))} !important;">${BDFDB.StringUtils.htmlEscape(data.name || info.username)}</span>`));
 				}
 				else {
-					username.style.setProperty("color", BDFDB.colorCHANGE(data.color1, -0.5, "RGBA"), "important");
-					BDFDB.setInnerText(username, data.name || info.username);
+					username.style.setProperty("color", BDFDB.ColorUtils.change(data.color1, -0.5, "RGBA"), "important");
+					BDFDB.DOMUtils.setText(username, data.name || info.username);
 				}
-				username.style.setProperty("background", BDFDB.isObject(data.color2) ? BDFDB.colorGRADIENT(BDFDB.colorCHANGE(data.color2, -0.5)) : BDFDB.colorCHANGE(data.color2, -0.5, "RGBA"), "important");
+				username.style.setProperty("background", BDFDB.ObjectUtils.is(data.color2) ? BDFDB.ColorUtils.createGradient(BDFDB.ColorUtils.change(data.color2, -0.5)) : BDFDB.ColorUtils.change(data.color2, -0.5, "RGBA"), "important");
 			}
 			function colorHover() {
-				if (BDFDB.isObject(data.color1)) {
+				if (BDFDB.ObjectUtils.is(data.color1)) {
 					username.style.removeProperty("color");
-					BDFDB.setInnerText(username, BDFDB.htmlToElement(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${BDFDB.colorGRADIENT(data.color1)} !important;">${BDFDB.encodeToHTML(data.name || info.username)}</span>`));
+					BDFDB.DOMUtils.setText(username, BDFDB.DOMUtils.create(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${BDFDB.ColorUtils.createGradient(data.color1)} !important;">${BDFDB.StringUtils.htmlEscape(data.name || info.username)}</span>`));
 				}
 				else {
-					username.style.setProperty("color", BDFDB.colorCONVERT(data.color1, "RGBA"), "important");
-					BDFDB.setInnerText(username, data.name || info.username);
+					username.style.setProperty("color", BDFDB.ColorUtils.convert(data.color1, "RGBA"), "important");
+					BDFDB.DOMUtils.setText(username, data.name || info.username);
 				}
-				username.style.setProperty("background", BDFDB.isObject(data.color2) ? BDFDB.colorGRADIENT(data.color2) : BDFDB.colorCONVERT(data.color2, "RGBA"), "important");
+				username.style.setProperty("background", BDFDB.ObjectUtils.is(data.color2) ? BDFDB.ColorUtils.createGradient(data.color2) : BDFDB.ColorUtils.convert(data.color2, "RGBA"), "important");
 			}
 		}
 	}
@@ -991,13 +976,13 @@ class EditUsers {
 		mention.removeEventListener("mouseout", mention.mouseoutListenerEditUsers);
 		let data = this.getUserData(info.id, mention);
 		let member = BDFDB.LibraryModules.MemberStore.getMember(BDFDB.LibraryModules.LastGuildStore.getGuildId(), info.id) || {};
-		let name = "@" + (data.name ? data.name : (BDFDB.isPluginEnabled("RemoveNicknames") ? BDFDB.getPlugin("RemoveNicknames").getNewName(info, mention) : member.nick || info.username));
+		let name = "@" + (data.name ? data.name : (BDFDB.BDUtils.isPluginEnabled("RemoveNicknames") ? BDFDB.BDUtils.getPlugin("RemoveNicknames").getNewName(info, mention) : member.nick || info.username));
 
-		let isgradient = data.color1 && BDFDB.isObject(data.color1);
-		let datacolor = data.color1 || (BDFDB.isPluginEnabled("BetterRoleColors") ? member.colorString : null);
-		let color = isgradient ? BDFDB.colorGRADIENT(data.color1) : BDFDB.colorCONVERT(datacolor, "RGBA");
-		let color0_1 = isgradient ? BDFDB.colorGRADIENT(BDFDB.colorSETALPHA(data.color1, 0.1, "RGBA")) : BDFDB.colorSETALPHA(datacolor, 0.1, "RGBA");
-		let color0_7 = isgradient ? BDFDB.colorGRADIENT(BDFDB.colorSETALPHA(data.color1, 0.7, "RGBA")) : BDFDB.colorSETALPHA(datacolor, 0.7, "RGBA");
+		let isgradient = data.color1 && BDFDB.ObjectUtils.is(data.color1);
+		let datacolor = data.color1 || (BDFDB.BDUtils.isPluginEnabled("BetterRoleColors") ? member.colorString : null);
+		let color = isgradient ? BDFDB.ColorUtils.createGradient(data.color1) : BDFDB.ColorUtils.convert(datacolor, "RGBA");
+		let color0_1 = isgradient ? BDFDB.ColorUtils.createGradient(BDFDB.ColorUtils.setAlpha(data.color1, 0.1, "RGBA")) : BDFDB.ColorUtils.setAlpha(datacolor, 0.1, "RGBA");
+		let color0_7 = isgradient ? BDFDB.ColorUtils.createGradient(BDFDB.ColorUtils.setAlpha(data.color1, 0.7, "RGBA")) : BDFDB.ColorUtils.setAlpha(datacolor, 0.7, "RGBA");
 
 		if (mention.EditUsersHovered) colorHover();
 		else colorDefault();
@@ -1020,17 +1005,17 @@ class EditUsers {
 			mention.style.setProperty("background", color0_1, "important");
 			if (isgradient) {
 				mention.style.removeProperty("color");
-				BDFDB.setInnerText(mention, BDFDB.htmlToElement(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${color} !important;">${BDFDB.encodeToHTML(name)}</span>`));
+				BDFDB.DOMUtils.setText(mention, BDFDB.DOMUtils.create(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${color} !important;">${BDFDB.StringUtils.htmlEscape(name)}</span>`));
 			}
 			else {
 				mention.style.setProperty("color", color, "important");
-				BDFDB.setInnerText(mention, name);
+				BDFDB.DOMUtils.setText(mention, name);
 			}
 		}
 		function colorHover() {
 			mention.style.setProperty("background", color0_7, "important");
 			mention.style.setProperty("color", data.color1 ? "#FFFFFF" : null, "important");
-			BDFDB.setInnerText(mention, name);
+			BDFDB.DOMUtils.setText(mention, name);
 		}
 	}
 
@@ -1063,24 +1048,24 @@ class EditUsers {
 			}
 			else username.removeAttribute("changed-by-editusers");
 			function colorDefault() {
-				if (BDFDB.isObject(data.color1)) {
+				if (BDFDB.ObjectUtils.is(data.color1)) {
 					username.style.removeProperty("color");
-					BDFDB.setInnerText(username, BDFDB.htmlToElement(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${BDFDB.colorGRADIENT(!speaking ? BDFDB.colorCHANGE(data.color1, -50) : data.color1)} !important;">${BDFDB.encodeToHTML(data.name || member.nick || info.username)}</span>`));
+					BDFDB.DOMUtils.setText(username, BDFDB.DOMUtils.create(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${BDFDB.ColorUtils.createGradient(!speaking ? BDFDB.ColorUtils.change(data.color1, -50) : data.color1)} !important;">${BDFDB.StringUtils.htmlEscape(data.name || member.nick || info.username)}</span>`));
 				}
 				else {
-					var color1 = data.color1 || (BDFDB.isPluginEnabled("BetterRoleColors") ? member.colorString : "");
-					username.style.setProperty("color", !speaking ? BDFDB.colorCHANGE(color1, -50, "RGBA") : BDFDB.colorCONVERT(color1, "RGBA"), "important");
-					BDFDB.setInnerText(username, data.name || member.nick || info.username);
+					var color1 = data.color1 || (BDFDB.BDUtils.isPluginEnabled("BetterRoleColors") ? member.colorString : "");
+					username.style.setProperty("color", !speaking ? BDFDB.ColorUtils.change(color1, -50, "RGBA") : BDFDB.ColorUtils.convert(color1, "RGBA"), "important");
+					BDFDB.DOMUtils.setText(username, data.name || member.nick || info.username);
 				}
 			}
 			function colorHover() {
-				if (BDFDB.isObject(data.color1)) {
+				if (BDFDB.ObjectUtils.is(data.color1)) {
 					username.style.removeProperty("color");
-					BDFDB.setInnerText(username, BDFDB.htmlToElement(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${BDFDB.colorGRADIENT(data.color1)} !important;">${BDFDB.encodeToHTML(data.name || member.nick || info.username)}</span>`));
+					BDFDB.DOMUtils.setText(username, BDFDB.DOMUtils.create(`<span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${BDFDB.ColorUtils.createGradient(data.color1)} !important;">${BDFDB.StringUtils.htmlEscape(data.name || member.nick || info.username)}</span>`));
 				}
 				else {
-					username.style.setProperty("color", BDFDB.colorCONVERT(data.color1, "RGBA"), "important");
-					BDFDB.setInnerText(username, data.name || member.nick || info.username);
+					username.style.setProperty("color", BDFDB.ColorUtils.convert(data.color1, "RGBA"), "important");
+					BDFDB.DOMUtils.setText(username, data.name || member.nick || info.username);
 				}
 			}
 		}
@@ -1096,7 +1081,7 @@ class EditUsers {
 	}
 
 	getUserData (id, wrapper) {
-		let data = BDFDB.loadData(id, this, "users");
+		let data = BDFDB.DataUtils.load(this, "users", id);
 		if (!data) {
 			delete wrapper.EditUsersCachedDataState;
 			return {};
@@ -1105,7 +1090,7 @@ class EditUsers {
 			return data;
 		}
 
-		let allenabled = true, settings = BDFDB.getAllData(this, "settings");
+		let allenabled = true, settings = BDFDB.DataUtils.get(this, "settings");
 		for (let i in settings) if (!settings[i]) {
 			allenabled = false;
 			break;
@@ -1113,35 +1098,33 @@ class EditUsers {
 		if (allenabled) return data;
 
 		let key = null;
-		if (!BDFDB.containsClass(wrapper, BDFDB.disCN.mention) && BDFDB.getParentEle(BDFDB.dotCN.messagegroup, wrapper)) key = "changeInChatWindow";
-		else if (BDFDB.containsClass(wrapper, BDFDB.disCN.mention)) key = "changeInMentions";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.textareawrapchat, wrapper)) key = "changeInChatTextarea";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.voiceuser, wrapper)) key = "changeInVoiceChat";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.members, wrapper)) key = "changeInMemberList";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.guildouter, wrapper)) key = "changeInRecentDms";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.dmchannels, wrapper)) key = "changeInDmsList";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.channelheaderheaderbar, wrapper)) key = "changeInDmHeader";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.callavatarwrapper, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.callincoming, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.callcurrentcontainer, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.pictureinpicture, wrapper)) key = "changeInDmCalls";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.typing, wrapper)) key = "changeInTyping";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.friends, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.userprofilebody, wrapper)) key = "changeInFriendList";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.invitemodalinviterow, wrapper)) key = "changeInInviteList";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.activityfeed, wrapper)) key = "changeInActivity";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.userpopout, wrapper)) key = "changeInUserPopout";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.userprofileheader, wrapper)) key = "changeInUserProfil";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.autocomplete, wrapper)) key = "changeInAutoComplete";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.auditlog, wrapper)) key = "changeInAuditLog";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.guildsettingsbannedcard, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.guildsettingsinvitecard, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.guildsettingsmembercard, wrapper)) key = "changeInMemberLog";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.searchpopout, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.searchpopoutdmaddpopout, wrapper) || BDFDB.getParentEle(BDFDB.dotCN.quickswitcher, wrapper)) key = "changeInSearchPopout";
-		else if (BDFDB.getParentEle(BDFDB.dotCN.accountinfo, wrapper)) key = "changeInUserAccount";
+		if (!BDFDB.DOMUtils.containsClass(wrapper, BDFDB.disCN.mention) && BDFDB.DOMUtils.getParent(BDFDB.dotCN.messagegroup, wrapper)) key = "changeInChatWindow";
+		else if (BDFDB.DOMUtils.containsClass(wrapper, BDFDB.disCN.mention)) key = "changeInMentions";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.textareawrapchat, wrapper)) key = "changeInChatTextarea";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.voiceuser, wrapper)) key = "changeInVoiceChat";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.members, wrapper)) key = "changeInMemberList";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.guildouter, wrapper)) key = "changeInRecentDms";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.dmchannels, wrapper)) key = "changeInDmsList";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.channelheaderheaderbar, wrapper)) key = "changeInDmHeader";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.callavatarwrapper, wrapper) || BDFDB.DOMUtils.getParent(BDFDB.dotCN.callincoming, wrapper) || BDFDB.DOMUtils.getParent(BDFDB.dotCN.callcurrentcontainer, wrapper) || BDFDB.DOMUtils.getParent(BDFDB.dotCN.pictureinpicture, wrapper)) key = "changeInDmCalls";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.typing, wrapper)) key = "changeInTyping";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.friends, wrapper) || BDFDB.DOMUtils.getParent(BDFDB.dotCN.userprofilebody, wrapper)) key = "changeInFriendList";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.invitemodalinviterow, wrapper)) key = "changeInInviteList";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.activityfeed, wrapper)) key = "changeInActivity";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.userpopout, wrapper)) key = "changeInUserPopout";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.userprofileheader, wrapper)) key = "changeInUserProfil";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.autocomplete, wrapper)) key = "changeInAutoComplete";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.auditlog, wrapper)) key = "changeInAuditLog";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.guildsettingsbannedcard, wrapper) || BDFDB.DOMUtils.getParent(BDFDB.dotCN.guildsettingsinvitecard, wrapper) || BDFDB.DOMUtils.getParent(BDFDB.dotCN.guildsettingsmembercard, wrapper)) key = "changeInMemberLog";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.searchpopout, wrapper) || BDFDB.DOMUtils.getParent(BDFDB.dotCN.searchpopoutdmaddpopout, wrapper) || BDFDB.DOMUtils.getParent(BDFDB.dotCN.quickswitcher, wrapper)) key = "changeInSearchPopout";
+		else if (BDFDB.DOMUtils.getParent(BDFDB.dotCN.accountinfo, wrapper)) key = "changeInUserAccount";
 		else if (wrapper.parentElement == document.head) key = "changeInAppTitle";
 
 		if (!key || settings[key]) {
 			wrapper.EditUsersCachedDataState = true;
 			return data;
 		}
-		else {
-			return {};
-		}
+		else return {};
 	}
 
 	addAutoCompleteMenu (textarea, channel) {
@@ -1149,7 +1132,7 @@ class EditUsers {
 		let words = textarea.value.split(/\s/);
 		let lastword = words[words.length-1].trim();
 		if (lastword && lastword.length > 1 && lastword[0] == "@") {
-			let users = BDFDB.loadAllData(this, "users");
+			let users = BDFDB.DataUtils.load(this, "users");
 			if (!users) return;
 			let userarray = [];
 			for (let id in users) if (users[id].name) {
@@ -1157,11 +1140,11 @@ class EditUsers {
 				let member = user ? BDFDB.LibraryModules.MemberStore.getMember(channel.guild_id, id) : null;
 				if (user && member) userarray.push(Object.assign({lowercasename:users[id].name.toLowerCase(),user,member},users[id]));
 			}
-			userarray = BDFDB.sortArrayByKey(userarray.filter(n => n.lowercasename.indexOf(lastword.toLowerCase().slice(1)) != -1), "lowercasename");
+			userarray = BDFDB.ArrayUtils.keySort(userarray.filter(n => n.lowercasename.indexOf(lastword.toLowerCase().slice(1)) != -1), "lowercasename");
 			if (userarray.length) {
 				let autocompletemenu = textarea.parentElement.querySelector(BDFDB.dotCNS.autocomplete + BDFDB.dotCN.autocompleteinner), amount = 15;
 				if (!autocompletemenu) {
-					autocompletemenu = BDFDB.htmlToElement(`<div class="${BDFDB.disCNS.autocomplete + BDFDB.disCN.autocomplete2} autocompleteEditUsers"><div class="${BDFDB.disCN.autocompleteinner}"><div class="${BDFDB.disCNS.autocompleterowvertical + BDFDB.disCN.autocompleterow} autocompleteEditUsersRow"><div class="${BDFDB.disCN.autocompleteselector} autocompleteEditUsersSelector"><div class="${BDFDB.disCNS.autocompletecontenttitle + BDFDB.disCNS.small + BDFDB.disCNS.titlesize12 + BDFDB.disCNS.height16 + BDFDB.disCN.weightsemibold}">${BDFDB.LanguageStrings.MEMBERS_MATCHING.replace("{{prefix}}", BDFDB.encodeToHTML(lastword))}</strong></div></div></div></div></div>`);
+					autocompletemenu = BDFDB.DOMUtils.create(`<div class="${BDFDB.disCNS.autocomplete + BDFDB.disCN.autocomplete2} autocompleteEditUsers"><div class="${BDFDB.disCN.autocompleteinner}"><div class="${BDFDB.disCNS.autocompleterowvertical + BDFDB.disCN.autocompleterow} autocompleteEditUsersRow"><div class="${BDFDB.disCN.autocompleteselector} autocompleteEditUsersSelector"><div class="${BDFDB.disCNS.autocompletecontenttitle + BDFDB.disCNS.small + BDFDB.disCNS.titlesize12 + BDFDB.disCNS.height16 + BDFDB.disCN.weightsemibold}">${BDFDB.LanguageUtils.LanguageStrings.MEMBERS_MATCHING.replace("{{prefix}}", BDFDB.StringUtils.htmlEscape(lastword))}</strong></div></div></div></div></div>`);
 					textarea.parentElement.appendChild(autocompletemenu);
 					autocompletemenu = autocompletemenu.firstElementChild;
 				}
@@ -1169,24 +1152,24 @@ class EditUsers {
 					amount -= autocompletemenu.querySelectorAll(BDFDB.dotCN.autocompleteselectable).length;
 				}
 
-				BDFDB.addEventListener(this, autocompletemenu, "mouseenter", BDFDB.dotCN.autocompleteselectable, e => {
+				BDFDB.ListenerUtils.add(this, autocompletemenu, "mouseenter", BDFDB.dotCN.autocompleteselectable, e => {
 					var selected = autocompletemenu.querySelectorAll(BDFDB.dotCN.autocompleteselected);
-					BDFDB.removeClass(selected, BDFDB.disCN.autocompleteselected);
-					BDFDB.addClass(selected, BDFDB.disCN.autocompleteselector);
-					BDFDB.addClass(e.currentTarget, BDFDB.disCN.autocompleteselected);
+					BDFDB.DOMUtils.removeClass(selected, BDFDB.disCN.autocompleteselected);
+					BDFDB.DOMUtils.addClass(selected, BDFDB.disCN.autocompleteselector);
+					BDFDB.DOMUtils.addClass(e.currentTarget, BDFDB.disCN.autocompleteselected);
 				});
 
 				for (let data of userarray) {
 					if (amount-- < 1) break;
-					let status = BDFDB.getUserStatus(data.user.id);
-					let isgradient = data.color1 && BDFDB.isObject(data.color1);
-					let username = isgradient ? `<div class="${BDFDB.disCN.marginleft8}" changed-by-editusers="true" style="flex: 1 1 auto;"><span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${BDFDB.colorGRADIENT(data.color1)} !important;">${BDFDB.encodeToHTML(data.name || data.member.nick || data.user.username)}</span></div>` : `<div class="${BDFDB.disCN.marginleft8}" changed-by-editusers="true" style="flex: 1 1 auto;${data.color1 ? (' color: ' + BDFDB.colorCONVERT(data.color1, 'RGB') + ' !important;') : ''}">${BDFDB.encodeToHTML(data.name || data.member.nick || data.user.username)}</div>`;
-					let autocompleterow = BDFDB.htmlToElement(`<div class="${BDFDB.disCNS.autocompleterowvertical + BDFDB.disCN.autocompleterow} autocompleteEditUsersRow"><div userid="${data.user.id}" class="${BDFDB.disCNS.autocompleteselector + BDFDB.disCN.autocompleteselectable} autocompleteEditUsersSelector"><div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.autocompletecontent}" style="flex: 1 1 auto;"><div class="${BDFDB.disCN.avatarwrapper}" role="img" aria-label="${data.user.username}, ${BDFDB.LanguageStrings["STATUS_" + status.toUpperCase()]}" aria-hidden="false" style="width: 24px; height: 24px;"><svg width="30" height="24" viewBox="0 0 30 24" class="${BDFDB.disCN.avatarmask}" aria-hidden="true"><foreignObject x="0" y="0" width="24" height="24" mask="url(#svg-mask-avatar-status-round-24)"><img src="${data.url || BDFDB.getUserAvatar(data.user.id)}" alt=" " class="${BDFDB.disCN.avatar}" aria-hidden="true"></foreignObject><rect width="8" height="8" x="16" y="16" fill="${BDFDB.getUserStatusColor(status)}" mask="url(#svg-mask-status-${status})" class="${BDFDB.disCN.avatarpointerevents}"></rect></svg></div>${username}<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignbaseline + BDFDB.disCNS.nowrap + BDFDB.disCN.autocompletedescription}" style="flex: 0 1 auto;"><div class="${BDFDB.disCN.autocompletedescriptionusername}">${BDFDB.encodeToHTML(data.user.username)}</div><div class="${BDFDB.disCN.autocompletedescriptiondiscriminator}">#${data.user.discriminator}</div></div></div></div></div>`);
+					let status = BDFDB.UserUtils.getStatus(data.user.id);
+					let isgradient = data.color1 && BDFDB.ObjectUtils.is(data.color1);
+					let username = isgradient ? `<div class="${BDFDB.disCN.marginleft8}" changed-by-editusers="true" style="flex: 1 1 auto;"><span style="pointer-events: none; -webkit-background-clip: text !important; color: transparent !important; background-image: ${BDFDB.ColorUtils.createGradient(data.color1)} !important;">${BDFDB.StringUtils.htmlEscape(data.name || data.member.nick || data.user.username)}</span></div>` : `<div class="${BDFDB.disCN.marginleft8}" changed-by-editusers="true" style="flex: 1 1 auto;${data.color1 ? (' color: ' + BDFDB.ColorUtils.convert(data.color1, 'RGB') + ' !important;') : ''}">${BDFDB.StringUtils.htmlEscape(data.name || data.member.nick || data.user.username)}</div>`;
+					let autocompleterow = BDFDB.DOMUtils.create(`<div class="${BDFDB.disCNS.autocompleterowvertical + BDFDB.disCN.autocompleterow} autocompleteEditUsersRow"><div userid="${data.user.id}" class="${BDFDB.disCNS.autocompleteselector + BDFDB.disCN.autocompleteselectable} autocompleteEditUsersSelector"><div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.autocompletecontent}" style="flex: 1 1 auto;"><div class="${BDFDB.disCN.avatarwrapper}" role="img" aria-label="${data.user.username}, ${BDFDB.LanguageUtils.LanguageStrings["STATUS_" + status.toUpperCase()]}" aria-hidden="false" style="width: 24px; height: 24px;"><svg width="30" height="24" viewBox="0 0 30 24" class="${BDFDB.disCN.avatarmask}" aria-hidden="true"><foreignObject x="0" y="0" width="24" height="24" mask="url(#svg-mask-avatar-status-round-24)"><img src="${data.url || BDFDB.UserUtils.getAvatar(data.user.id)}" alt=" " class="${BDFDB.disCN.avatar}" aria-hidden="true"></foreignObject><rect width="8" height="8" x="16" y="16" fill="${BDFDB.UserUtils.getStatusColor(status)}" mask="url(#svg-mask-status-${status})" class="${BDFDB.disCN.avatarpointerevents}"></rect></svg></div>${username}<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignbaseline + BDFDB.disCNS.nowrap + BDFDB.disCN.autocompletedescription}" style="flex: 0 1 auto;"><div class="${BDFDB.disCN.autocompletedescriptionusername}">${BDFDB.StringUtils.htmlEscape(data.user.username)}</div><div class="${BDFDB.disCN.autocompletedescriptiondiscriminator}">#${data.user.discriminator}</div></div></div></div></div>`);
 					autocompleterow.querySelector(BDFDB.dotCN.autocompleteselectable).addEventListener("click", () => {this.swapWordWithMention(textarea);});
 					autocompletemenu.appendChild(autocompleterow);
 				}
 				if (!autocompletemenu.querySelector(BDFDB.dotCN.autocompleteselected)) {
-					BDFDB.addClass(autocompletemenu.querySelector(".autocompleteEditUsersRow " + BDFDB.dotCN.autocompleteselectable), BDFDB.disCN.autocompleteselected);
+					BDFDB.DOMUtils.addClass(autocompletemenu.querySelector(".autocompleteEditUsersRow " + BDFDB.dotCN.autocompleteselectable), BDFDB.disCN.autocompleteselected);
 				}
 			}
 		}
@@ -1213,7 +1196,7 @@ class EditUsers {
 			let username = selected.querySelector(BDFDB.dotCN.autocompletedescriptionusername).textContent;
 			let discriminator = selected.querySelector(BDFDB.dotCN.autocompletedescriptiondiscriminator).textContent;
 			let userid = selected.getAttribute("userid");
-			BDFDB.removeEles(".autocompleteEditUsers", ".autocompleteEditUsersRow");
+			BDFDB.DOMUtils.remove(".autocompleteEditUsers", ".autocompleteEditUsersRow");
 			textarea.focus();
 			textarea.selectionStart = textarea.value.length - lastword.length;
 			textarea.selectionEnd = textarea.value.length;
@@ -1224,7 +1207,7 @@ class EditUsers {
 	}
 
 	setLabelsByLanguage () {
-		switch (BDFDB.getDiscordLanguage().id) {
+		switch (BDFDB.LanguageUtils.getLanguage().id) {
 			case "hr":		//croatian
 				return {
 					context_localusersettings_text:		"Lokalne korisničke postavke",

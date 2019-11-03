@@ -3,7 +3,7 @@
 class BetterNsfwTag {
 	getName () {return "BetterNsfwTag";}
 
-	getVersion () {return "1.2.1";}
+	getVersion () {return "1.2.2";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -11,11 +11,11 @@ class BetterNsfwTag {
 
 	constructor () {
 		this.changelog = {
-			"fixed":[["Light Theme Update","Fixed bugs for the Light Theme Update, which broke 99% of my plugins"]]
+			"improved":[["New Library Structure & React","Restructured my Library and switched to React rendering instead of DOM manipulation"]]
 		};
 		
 		this.patchModules = {
-			"ChannelItem":"componentDidMount"
+			"ChannelItem":"render"
 		};
 	}
 
@@ -31,24 +31,10 @@ class BetterNsfwTag {
 			libraryScript = document.createElement("script");
 			libraryScript.setAttribute("id", "BDFDBLibraryScript");
 			libraryScript.setAttribute("type", "text/javascript");
-			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js");
+			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.min.js");
 			libraryScript.setAttribute("date", performance.now());
 			libraryScript.addEventListener("load", () => {this.initialize();});
 			document.head.appendChild(libraryScript);
-			this.libLoadTimeout = setTimeout(() => {
-				libraryScript.remove();
-				BDFDB.LibraryRequires.request("https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js", (error, response, body) => {
-					if (body) {
-						libraryScript = document.createElement("script");
-						libraryScript.setAttribute("id", "BDFDBLibraryScript");
-						libraryScript.setAttribute("type", "text/javascript");
-						libraryScript.setAttribute("date", performance.now());
-						libraryScript.innerText = body;
-						document.head.appendChild(libraryScript);
-					}
-					this.initialize();
-				});
-			}, 15000);
 		}
 		else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
 		this.startTimeout = setTimeout(() => {this.initialize();}, 30000);
@@ -57,29 +43,39 @@ class BetterNsfwTag {
 	initialize () {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
 			if (this.started) return;
-			BDFDB.loadMessage(this);
+			
+			BDFDB.PluginUtils.init(this);
 
-			BDFDB.WebModules.forceAllUpdates(this);
+			BDFDB.ModuleUtils.forceAllUpdates(this);
 		}
-		else {
-			console.error(`%c[${this.getName()}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
-		}
+		else console.error(`%c[${this.getName()}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
 	}
 
 	stop () {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
-			BDFDB.removeEles(".NSFW-tag");
-			BDFDB.unloadMessage(this);
+			this.stopping = true;
+
+			BDFDB.ModuleUtils.forceAllUpdates(this);
+			
+			BDFDB.PluginUtils.clear(this);
 		}
 	}
 
 
 	// begin of own functions
 
-	processChannelItem (instance, wrapper, returnvalue) {
-		if (instance.props && instance.props.channel && instance.props.channel.nsfw) {
-			let channelname = wrapper.querySelector(BDFDB.dotCN.channelname);
-			if (channelname) channelname.parentElement.insertBefore(BDFDB.htmlToElement(`<span class="NSFW-tag ${BDFDB.disCNS.bottag + BDFDB.disCNS.bottagregular + BDFDB.disCN.bottagnametag}" style="background-color: rgb(241, 71, 71); top: 0px; min-width: 28px;">NSFW</span>`), channelname.nextElementSibling);
+	processChannelItem (e) {
+		if (e.instance.props && e.instance.props.channel && e.instance.props.channel.nsfw) {
+			let [children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue, {props:[["className", BDFDB.disCN.channelchildren]]});
+			let firstChildClassName = index > -1 && BDFDB.ReactUtils.getValue(children[index], "props.children.0.props.className");
+			if (firstChildClassName && firstChildClassName.indexOf("NSFW-tag") > -1) children[index].props.children.shift();
+			if (!this.stopping && index > -1 && children[index].props && children[index].props.children) {
+				children[index].props.children.unshift(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.BotTag, {
+					className: "NSFW-tag",
+					tag: "NSFW",
+					style: {backgroundColor: "#F04747"}
+				}));
+			}
 		}
 	}
 }

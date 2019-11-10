@@ -3,7 +3,7 @@
 class RevealAllSpoilersOption {
 	getName () {return "RevealAllSpoilersOption";}
 
-	getVersion () {return "1.0.1";}
+	getVersion () {return "1.0.2";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -11,11 +11,7 @@ class RevealAllSpoilersOption {
 
 	constructor () {
 		this.changelog = {
-			"fixed":[["Light Theme Update","Fixed bugs for the Light Theme Update, which broke 99% of my plugins"]]
-		};
-
-		this.patchModules = {
-			"StandardSidebarView":"componentWillUnmount"
+			"improved":[["New Library Structure & React","Restructured my Library and switched to React rendering instead of DOM manipulation"]]
 		};
 	}
 
@@ -32,62 +28,51 @@ class RevealAllSpoilersOption {
 			libraryScript = document.createElement("script");
 			libraryScript.setAttribute("id", "BDFDBLibraryScript");
 			libraryScript.setAttribute("type", "text/javascript");
-			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js");
+			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.min.js");
 			libraryScript.setAttribute("date", performance.now());
 			libraryScript.addEventListener("load", () => {this.initialize();});
 			document.head.appendChild(libraryScript);
-			this.libLoadTimeout = setTimeout(() => {
-				libraryScript.remove();
-				BDFDB.LibraryRequires.request("https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js", (error, response, body) => {
-					if (body) {
-						libraryScript = document.createElement("script");
-						libraryScript.setAttribute("id", "BDFDBLibraryScript");
-						libraryScript.setAttribute("type", "text/javascript");
-						libraryScript.setAttribute("date", performance.now());
-						libraryScript.innerText = body;
-						document.head.appendChild(libraryScript);
-					}
-					this.initialize();
-				});
-			}, 15000);
 		}
 		else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
-		this.startTimeout = setTimeout(() => {this.initialize();}, 30000);
+		this.startTimeout = setTimeout(() => {
+			try {return this.initialize();}
+			catch (err) {console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not initiate plugin! " + err);}
+		}, 30000);
 	}
 
 	initialize () {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
 			if (this.started) return;
-			BDFDB.loadMessage(this);
+			BDFDB.PluginUtils.init(this);
 		}
-		else {
-			console.error(`%c[${this.getName()}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
-		}
+		else console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not load BD functions!");
 	}
 
 	stop () {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
-			BDFDB.unloadMessage(this);
+			this.stopping = true;
+
+			BDFDB.PluginUtils.clear(this);
 		}
 	}
 
 
 	// begin of own functions
 
-	onMessageContextMenu (instance, menu, returnvalue) {
-		if (instance.props && instance.props.message && instance.props.target && !menu.querySelector(`${this.name}-contextMenuItem`)) {
-			let messagediv = BDFDB.getParentEle(BDFDB.dotCN.messagegroup + "> [aria-disabled]", instance.props.target);
+	onMessageContextMenu (e) {
+		if (e.instance.props && e.instance.props.message && e.instance.props.target) {
+			let messagediv = BDFDB.DOMUtils.getParent(BDFDB.dotCN.messagegroup + "> [aria-disabled]", e.instance.props.target) || BDFDB.DOMUtils.getParent(BDFDB.dotCN.messagegroup + "> * > [aria-disabled]", e.instance.props.target);
 			if (!messagediv || !messagediv.querySelector(BDFDB.dotCN.spoilerhidden)) return;
-			let [children, index] = BDFDB.getContextMenuGroupAndIndex(returnvalue, ["FluxContainer(MessageDeveloperModeGroup)", "DeveloperModeGroup"]);
-			const itemgroup = BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItemGroup, {
+			let [children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue, {name:["FluxContainer(MessageDeveloperModeGroup)", "DeveloperModeGroup"]});
+			const itemgroup = BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItemGroup, {
 				className: `BDFDB-contextMenuItemGroup ${this.name}-contextMenuItemGroup`,
 				children: [
-					BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+					BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
 						label: "Reveal all Spoilers",
-						hint: BDFDB.isPluginEnabled("MessageUtilities") ? window.bdplugins.MessageUtilities.plugin.getActiveShortcutString("__Reveal_Spoilers") : null,
+						hint: BDFDB.BDUtils.isPluginEnabled("MessageUtilities") ? BDFDB.BDUtils.getPlugin("MessageUtilities").getActiveShortcutString("__Reveal_Spoilers") : null,
 						className: `BDFDB-contextMenuItem ${this.name}-contextMenuItem ${this.name}-reveal-contextMenuItem`,
 						action: e => {
-							BDFDB.closeContextMenu(menu);
+							BDFDB.ContextMenuUtils.close(e.instance);
 							this.revealAllSpoilers(messagediv);
 						}
 					})
@@ -99,7 +84,7 @@ class RevealAllSpoilersOption {
 	}
 
 	revealAllSpoilers (target) {
-		let messagediv = BDFDB.getParentEle(BDFDB.dotCN.messagegroup + "> [aria-disabled]", target);
+		let messagediv = BDFDB.DOMUtils.getParent(BDFDB.dotCN.messagegroup + "> [aria-disabled]", target) || BDFDB.DOMUtils.getParent(BDFDB.dotCN.messagegroup + "> * > [aria-disabled]", target);
 		if (!messagediv) return;
 		for (let spoiler of messagediv.querySelectorAll(BDFDB.dotCN.spoilerhidden)) spoiler.click();
 	}

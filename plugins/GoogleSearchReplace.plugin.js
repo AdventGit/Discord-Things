@@ -3,7 +3,7 @@
 class GoogleSearchReplace {
 	getName () {return "GoogleSearchReplace";}
 
-	getVersion () {return "1.1.9";}
+	getVersion () {return "1.2.0";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -11,10 +11,8 @@ class GoogleSearchReplace {
 
 	constructor () {
 		this.changelog = {
-			"fixed":[["Light Theme Update","Fixed bugs for the Light Theme Update, which broke 99% of my plugins"]]
+			"improved":[["New Library Structure & React","Restructured my Library and switched to React rendering instead of DOM manipulation"]]
 		};
-		
-		this.labels = {};
 	}
 
 	initConstructor () {
@@ -22,7 +20,7 @@ class GoogleSearchReplace {
 
 		this.defaults = {
 			engines: {
-				_all: 				{value:true, 	name:BDFDB.getLibraryStrings().btn_all_text, 	url:null},
+				_all: 				{value:true, 	name:BDFDB.LanguageUtils.LanguageStrings.FORM_LABEL_ALL, 	url:null},
 				Ask: 				{value:true, 	name:"Ask", 				url:"https://ask.com/web?q=" + this.textUrlReplaceString},
 				Bing: 				{value:true, 	name:"Bing", 				url:"https://www.bing.com/search?q=" + this.textUrlReplaceString},
 				DogPile:			{value:true, 	name:"DogPile", 			url:"http://www.dogpile.com/search/web?q=" + this.textUrlReplaceString},
@@ -43,20 +41,25 @@ class GoogleSearchReplace {
 
 	getSettingsPanel () {
 		if (!global.BDFDB || typeof BDFDB != "object" || !BDFDB.loaded || !this.started) return;
-		let engines = BDFDB.getAllData(this, "engines");
-		let settingshtml = `<div class="${this.name}-settings BDFDB-settings"><div class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.size18 + BDFDB.disCNS.height24 + BDFDB.disCNS.weightnormal + BDFDB.disCN.marginbottom8}">${this.name}</div><div class="BDFDB-settings-inner">`;
-		settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom8}" style="flex: 1 1 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 0 0 auto;">Search Engines:</h3></div><div class="BDFDB-settings-inner-list">`;
-		for (let key in engines) {
-			settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom8}" style="flex: 1 1 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">${this.defaults.engines[key].name}</h3><div class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.switchenabled + BDFDB.disCNS.switch + BDFDB.disCNS.switchvalue + BDFDB.disCNS.switchsizedefault + BDFDB.disCNS.switchsize + BDFDB.disCN.switchthemedefault}" style="flex: 0 0 auto;"><input type="checkbox" value="engines ${key}" class="${BDFDB.disCNS.switchinnerenabled + BDFDB.disCN.switchinner} settings-switch"${engines[key] ? " checked" : ""}></div></div>`;
-		}
-		settingshtml += `</div>`;
-		settingshtml += `</div></div>`;
-
-		let settingspanel = BDFDB.htmlToElement(settingshtml);
-
-		BDFDB.initElements(settingspanel, this);
-
-		return settingspanel;
+		let engines = BDFDB.DataUtils.get(this, "engines");
+		let settingsitems = [], inneritems = [];
+		
+		for (let key in engines) inneritems.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsSaveItem, {
+			className: BDFDB.disCN.marginbottom8,
+			type: "Switch",
+			plugin: this,
+			keys: ["engines", key],
+			label: this.defaults.engines[key].name,
+			value: engines[key]
+		}));
+		settingsitems.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsPanelInner, {
+			title: "Search Engines:",
+			first: settingsitems.length == 0,
+			last: true,
+			children: inneritems
+		}));
+		
+		return BDFDB.PluginUtils.createSettingsPanel(this, settingsitems);
 	}
 
 	//legacy
@@ -71,82 +74,70 @@ class GoogleSearchReplace {
 			libraryScript = document.createElement("script");
 			libraryScript.setAttribute("id", "BDFDBLibraryScript");
 			libraryScript.setAttribute("type", "text/javascript");
-			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js");
+			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.min.js");
 			libraryScript.setAttribute("date", performance.now());
 			libraryScript.addEventListener("load", () => {this.initialize();});
 			document.head.appendChild(libraryScript);
-			this.libLoadTimeout = setTimeout(() => {
-				libraryScript.remove();
-				BDFDB.LibraryRequires.request("https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js", (error, response, body) => {
-					if (body) {
-						libraryScript = document.createElement("script");
-						libraryScript.setAttribute("id", "BDFDBLibraryScript");
-						libraryScript.setAttribute("type", "text/javascript");
-						libraryScript.setAttribute("date", performance.now());
-						libraryScript.innerText = body;
-						document.head.appendChild(libraryScript);
-					}
-					this.initialize();
-				});
-			}, 15000);
 		}
 		else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
-		this.startTimeout = setTimeout(() => {this.initialize();}, 30000);
+		this.startTimeout = setTimeout(() => {
+			try {return this.initialize();}
+			catch (err) {console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not initiate plugin! " + err);}
+		}, 30000);
 	}
 
 	initialize () {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
 			if (this.started) return;
-			BDFDB.loadMessage(this);
+			BDFDB.PluginUtils.init(this);
 		}
-		else {
-			console.error(`%c[${this.getName()}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
-		}
+		else console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not load BD functions!");
 	}
 
 	stop () {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
-			BDFDB.unloadMessage(this);
+			this.stopping = true;
+
+			BDFDB.PluginUtils.clear(this);
 		}
 	}
 
 
 	// begin of own functions
 
-	onNativeContextMenu (instance, menu, returnvalue) {
-		if (instance.props && instance.props.type == "NATIVE_TEXT" && instance.props.value && !menu.querySelector(`${this.name}-contextMenuSubItem`)) {
-			this.appendItem(menu, returnvalue, instance.props.value);
-		}
+	onNativeContextMenu (e) {
+		if (e.instance.props && e.instance.props.type == "NATIVE_TEXT" && e.instance.props.value) this.injectItem(e, e.instance.props.value);
 	}
 
-	onMessageContextMenu (instance, menu, returnvalue) {
-		if (instance.props && instance.props.message && instance.props.channel && instance.props.target && !menu.querySelector(`${this.name}-contextMenuSubItem`)) {
+	onMessageContextMenu (e) {
+		if (e.instance.props && e.instance.props.message && e.instance.props.channel && e.instance.props.target) {
 			let text = document.getSelection().toString();
-			if (text) this.appendItem(menu, returnvalue, text);
+			if (text) this.injectItem(e, text);
 		}
 	}
 
-	appendItem (menu, returnvalue, text) {
-		let engines = BDFDB.getAllData(this, "engines");
+	injectItem (e, text) {
+		let engines = BDFDB.DataUtils.get(this, "engines");
 		let items = [];
-		for (let key in engines) if (engines[key]) items.push(BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+		for (let key in engines) if (engines[key]) items.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
 			label: this.defaults.engines[key].name,
 			className: `BDFDB-contextMenuItem ${this.name}-contextMenuItem ${this.name}-engine-contextMenuItem`,
+			danger: key == "_all",
 			action: e => {
-				if (!e.shiftKey) BDFDB.closeContextMenu(menu);
+				if (!e.shiftKey) BDFDB.ContextMenuUtils.close(e.instance);
 				if (key == "_all") {
 					for (let key2 in engines) if (key2 != "_all" && engines[key2]) window.open(this.defaults.engines[key2].url.replace(this.textUrlReplaceString, encodeURIComponent(text)), "_blank");
 				}
 				else window.open(this.defaults.engines[key].url.replace(this.textUrlReplaceString, encodeURIComponent(text)), "_blank");
 			}
 		}));
-		if (!items.length) items.push(BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+		if (!items.length) items.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
 			label: this.labels.submenu_disabled_text,
 			className: `BDFDB-contextMenuItem ${this.name}-contextMenuItem ${this.name}-disabled-contextMenuItem`,
 			disabled: true
 		}));
-		let [children, index] = BDFDB.getContextMenuGroupAndIndex(returnvalue, "SearchWithGoogle");
-		const item = BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuSubItem, {
+		let [children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue, {name:"SearchWithGoogle"});
+		const item = BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuSubItem, {
 			label: this.labels.context_googlesearchreplace_text,
 			className: `BDFDB-contextMenuSubItem ${this.name}-contextMenuSubItem ${this.name}-search-contextMenuSubItem`,
 			render: items
@@ -156,7 +147,7 @@ class GoogleSearchReplace {
 	}
 
 	setLabelsByLanguage () {
-		switch (BDFDB.getDiscordLanguage().id) {
+		switch (BDFDB.LanguageUtils.getLanguage().id) {
 			case "hr":		//croatian
 				return {
 					context_googlesearchreplace_text:	"Pretražujte s ...",

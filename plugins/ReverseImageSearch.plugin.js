@@ -3,7 +3,7 @@
 class ReverseImageSearch {
 	getName () {return "ReverseImageSearch";}
 
-	getVersion () {return "3.4.7";}
+	getVersion () {return "3.4.8";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -116,25 +116,25 @@ class ReverseImageSearch {
 	// begin of own functions
 
 	onGuildContextMenu (e) {
-		if (e.instance.props && e.instance.props.guild && e.instance.props.target) {
+		if (e.instance.props.guild && e.instance.props.target) {
 			let guildicon = BDFDB.DOMUtils.containsClass(e.instance.props.target, BDFDB.disCN.avataricon) ? e.instance.props.target : e.instance.props.target.querySelector(BDFDB.dotCN.guildicon);
 			if (guildicon && BDFDB.DataUtils.get(this, "settings", "addGuildIconEntry")) this.injectItem(e, guildicon.tagName == "IMG" ? guildicon.getAttribute("src") :  guildicon.style.getPropertyValue("background-image"));
 		}
 	}
 
 	onUserContextMenu (e) {
-		if (e.instance.props && e.instance.props.user && e.instance.props.target) {
+		if (e.instance.props.user && e.instance.props.target) {
 			let avatar = BDFDB.DOMUtils.containsClass(e.instance.props.target, BDFDB.disCN.avataricon) ? e.instance.props.target : e.instance.props.target.querySelector(BDFDB.dotCN.avatar);
 			if (avatar && BDFDB.DataUtils.get(this, "settings", "addUserAvatarEntry")) this.injectItem(e, avatar.tagName == "IMG" ? avatar.getAttribute("src") :  avatar.style.getPropertyValue("background-image"));
 		}
 	}
 
 	onNativeContextMenu (e) {
-		if (e.instance.props && e.instance.props.type == "NATIVE_IMAGE" && (e.instance.props.href || e.instance.props.src)) this.injectItem(e, e.instance.props.href || e.instance.props.src);
+		if (e.instance.props.type == "NATIVE_IMAGE" && (e.instance.props.href || e.instance.props.src)) this.injectItem(e, e.instance.props.href || e.instance.props.src);
 	}
 
 	onMessageContextMenu (e) {
-		if (e.instance.props && e.instance.props.message && e.instance.props.channel && e.instance.props.target) {
+		if (e.instance.props.message && e.instance.props.channel && e.instance.props.target) {
 			if (e.instance.props.attachment) this.injectItem(e, e.instance.props.attachment.url);
 			else if (e.instance.props.target.tagName == "A" && e.instance.props.message.embeds && e.instance.props.message.embeds[0] && e.instance.props.message.embeds[0].type == "image") this.injectItem(e, e.instance.props.target.href);
 			else if (e.instance.props.target.tagName == "IMG" && BDFDB.DOMUtils.containsClass(e.instance.props.target, "emoji", "emote", false) && BDFDB.DataUtils.get(this, "settings", "addEmojiEntry")) this.injectItem(e, e.instance.props.target.src);
@@ -152,10 +152,9 @@ class ReverseImageSearch {
 			let items = [];
 			for (let key in engines) if (engines[key]) items.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
 				label: this.defaults.engines[key].name,
-				className: `BDFDB-contextMenuItem ${this.name}-contextMenuItem ${this.name}-engine-contextMenuItem`,
 				danger: key == "_all",
-				action: e => {
-					if (!e.shiftKey) BDFDB.ContextMenuUtils.close(e.instance);
+				action: event => {
+					if (!event.shiftKey) BDFDB.ContextMenuUtils.close(e.instance);
 					if (key == "_all") {
 						for (let key2 in engines) if (key2 != "_all" && engines[key2]) window.open(this.defaults.engines[key2].url.replace(this.imgUrlReplaceString, encodeURIComponent(url)), "_blank");
 					}
@@ -164,16 +163,13 @@ class ReverseImageSearch {
 			}));
 			if (!items.length) items.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
 				label: this.labels.submenu_disabled_text,
-				className: `BDFDB-contextMenuItem ${this.name}-contextMenuItem ${this.name}-disabled-contextMenuItem`,
 				disabled: true
 			}));
 			let [children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue, {name:["FluxContainer(MessageDeveloperModeGroup)", "DeveloperModeGroup"]});
 			const itemgroup = BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItemGroup, {
-				className: `BDFDB-contextMenuItemGroup ${this.name}-contextMenuItemGroup`,
 				children: [
 					BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuSubItem, {
 						label: "Reverse Image Search",
-						className: `BDFDB-contextMenuSubItem ${this.name}-contextMenuSubItem ${this.name}-search-contextMenuSubItem`,
 						render: items
 					})
 				]

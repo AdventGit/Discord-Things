@@ -3,7 +3,7 @@
 class GoogleSearchReplace {
 	getName () {return "GoogleSearchReplace";}
 
-	getVersion () {return "1.2.0";}
+	getVersion () {return "1.2.1";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -106,11 +106,11 @@ class GoogleSearchReplace {
 	// begin of own functions
 
 	onNativeContextMenu (e) {
-		if (e.instance.props && e.instance.props.type == "NATIVE_TEXT" && e.instance.props.value) this.injectItem(e, e.instance.props.value);
+		if (e.instance.props.type == "NATIVE_TEXT" && e.instance.props.value) this.injectItem(e, e.instance.props.value);
 	}
 
 	onMessageContextMenu (e) {
-		if (e.instance.props && e.instance.props.message && e.instance.props.channel && e.instance.props.target) {
+		if (e.instance.props.message && e.instance.props.channel && e.instance.props.target) {
 			let text = document.getSelection().toString();
 			if (text) this.injectItem(e, text);
 		}
@@ -121,10 +121,9 @@ class GoogleSearchReplace {
 		let items = [];
 		for (let key in engines) if (engines[key]) items.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
 			label: this.defaults.engines[key].name,
-			className: `BDFDB-contextMenuItem ${this.name}-contextMenuItem ${this.name}-engine-contextMenuItem`,
 			danger: key == "_all",
-			action: e => {
-				if (!e.shiftKey) BDFDB.ContextMenuUtils.close(e.instance);
+			action: event => {
+				if (!event.shiftKey) BDFDB.ContextMenuUtils.close(e.instance);
 				if (key == "_all") {
 					for (let key2 in engines) if (key2 != "_all" && engines[key2]) window.open(this.defaults.engines[key2].url.replace(this.textUrlReplaceString, encodeURIComponent(text)), "_blank");
 				}
@@ -133,13 +132,11 @@ class GoogleSearchReplace {
 		}));
 		if (!items.length) items.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
 			label: this.labels.submenu_disabled_text,
-			className: `BDFDB-contextMenuItem ${this.name}-contextMenuItem ${this.name}-disabled-contextMenuItem`,
 			disabled: true
 		}));
 		let [children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue, {name:"SearchWithGoogle"});
 		const item = BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuSubItem, {
 			label: this.labels.context_googlesearchreplace_text,
-			className: `BDFDB-contextMenuSubItem ${this.name}-contextMenuSubItem ${this.name}-search-contextMenuSubItem`,
 			render: items
 		});
 		if (index > -1) children.splice(index, 1, item);

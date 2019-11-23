@@ -108,7 +108,7 @@ const BetterDiscord = class BetterDiscord {
                 }, [['__extra_id__']]]);
                 delete req.m['__extra_id__'];
                 delete req.c['__extra_id__'];
-                while (Object.keys(req.c).length < 3889) await new Promise(r => setTimeout(r, 100));
+                while (Object.keys(req.c).length < 0) await new Promise(r => setTimeout(r, 100));
             })();
         `);
     }

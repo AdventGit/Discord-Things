@@ -3,7 +3,7 @@
 class JoinedAtDate {
 	getName () {return "JoinedAtDate";}
 
-	getVersion () {return "1.1.6";}
+	getVersion () {return "1.1.7";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -11,12 +11,15 @@ class JoinedAtDate {
 
 	constructor () {
 		this.changelog = {
+			"fixed":[["BetterRoleColors","Fixed now working when BRC is enabled ......"]],
 			"improved":[["New Library Structure & React","Restructured my Library and switched to React rendering instead of DOM manipulation"]]
 		};
 
-		this.patchModules = {
-			UserPopout: "render",
-			AnalyticsContext: "render"
+		this.patchedModules = {
+			after: {
+				UserPopout: "render",
+				AnalyticsContext: "render"
+			}
 		};
 	}
 
@@ -230,11 +233,11 @@ class JoinedAtDate {
 	}
 
 	processAnalyticsContext (e) {
-		if (typeof e.returnvalue.props.children == "function" && e.instance.props && e.instance.props.section == "Profile Modal" && BDFDB.DataUtils.get(this, "settings", "addInUserProfil")) {
+		if (typeof e.returnvalue.props.children == "function" && e.instance.props.section == "Profile Modal" && BDFDB.DataUtils.get(this, "settings", "addInUserProfil")) {
 			let renderChildren = e.returnvalue.props.children;
-			e.returnvalue.props.children = () => {
-				let renderedChildren = renderChildren(e.instance);
-				let [children, index] = BDFDB.ReactUtils.findChildren(renderedChildren, {name: "DiscordTag"});
+			e.returnvalue.props.children = (...args) => {
+				let renderedChildren = renderChildren(...args);
+				let [children, index] = BDFDB.ReactUtils.findChildren(renderedChildren, {name: ["DiscordTag", "ColoredFluxTag"]});
 				if (index > -1) this.injectDate(e.instance, children, 1, children[index].props.user);
 				return renderedChildren;
 			};

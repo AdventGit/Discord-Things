@@ -3,7 +3,7 @@
 class BetterSearchPage {
 	getName () {return "BetterSearchPage";}
 
-	getVersion () {return "1.0.9";}
+	getVersion () {return "1.1.0";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -11,11 +11,14 @@ class BetterSearchPage {
 
 	constructor () {
 		this.changelog = {
+			"fixed":[["Jump to","Pressing the Jump to button now properly works again"]],
 			"improved":[["New Library Structure & React","Restructured my Library and switched to React rendering instead of DOM manipulation"]]
 		};
 
-		this.patchModules = {
-			"SearchResults":"render"
+		this.patchedModules = {
+			after: {
+				SearchResults: "render"
+			}
 		};
 	}
 
@@ -99,7 +102,10 @@ class BetterSearchPage {
 			document.head.appendChild(libraryScript);
 		}
 		else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
-		this.startTimeout = setTimeout(() => {this.initialize();}, 30000);
+		this.startTimeout = setTimeout(() => {
+			try {return this.initialize();}
+			catch (err) {console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not initiate plugin! " + err);}
+		}, 30000);
 	}
 
 	initialize () {
@@ -109,7 +115,7 @@ class BetterSearchPage {
 			
 			BDFDB.ModuleUtils.forceAllUpdates(this);
 		}
-		else console.error(`%c[${this.getName()}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
+		else console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not load BD functions!");
 	}
 
 	stop () {
@@ -133,7 +139,7 @@ class BetterSearchPage {
 	}
 
 	processSearchResults (e) {
-		if (!this.stopping && e.instance.props && e.instance.props.search) {
+		if (e.instance.props.search) {
 			let [children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue, {name:"Pagination"});
 			if (index > -1) {
 				let settings = BDFDB.DataUtils.get(this, "settings");
@@ -188,7 +194,7 @@ class BetterSearchPage {
 							className: "BSP-pagination-button BSP-pagination-jump",
 							text: BDFDB.LanguageUtils.LanguageStrings.JUMP,
 							"aria-label": BDFDB.LanguageUtils.LanguageStrings.JUMP,
-							onClick: buttoninstance => {
+							onClick: (e, buttoninstance) => {
 								let jumpinput = BDFDB.ReactUtils.findOwner(buttoninstance._reactInternalFiber.return, {props:[["id","BSP-pagination-jumpinput"]]});
 								if (jumpinput) doJump(jumpinput.props.value);
 							}

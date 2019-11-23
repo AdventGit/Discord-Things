@@ -3,7 +3,7 @@
 class ReadAllNotificationsButton {
 	getName () {return "ReadAllNotificationsButton";}
 
-	getVersion () {return "1.5.1";}
+	getVersion () {return "1.5.2";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -11,29 +11,16 @@ class ReadAllNotificationsButton {
 
 	constructor () {
 		this.changelog = {
-			"added":[["Pinged servers","Added the contextmenu item to only clear unread notifications on pinged servers"]]
+			"improved":[["New Library Structure & React","Restructured my Library and switched to React rendering instead of DOM manipulation"]]
 		};
 
 		this.patchModules = {
-			"Guilds":["componentDidMount","componentDidUpdate"],
-			"RecentMentions":"componentDidMount",
-			"DirectMessage":"componentDidMount"
+			Guilds: "render",
+			RecentMentions: "render"
 		};
 	}
 
 	initConstructor () {
-		this.RANbuttonMarkup = 
-			`<div class="${BDFDB.disCN.guildouter} RANbutton-frame" style="height: 20px;">
-				<div class="${BDFDB.disCN.guildiconwrapper} RANbutton-inner" style="height: 20px;">
-					<div class="${BDFDB.disCNS.guildiconchildwrapper + BDFDB.disCN.guildiconacronym} RANbutton" style="height: 20px;">read all</div>
-				</div>
-			</div>`;
-
-		this.RAMbuttonMarkup = 
-			`<button type="button" class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookfilled + BDFDB.disCNS.buttoncolorbrand + BDFDB.disCNS.buttonsizemin + BDFDB.disCN.buttongrow} RAMbutton" style="flex: 0 0 auto; margin-left: 25px; height: 25px;">
-				<div class="${BDFDB.disCN.buttoncontents}">Clear Mentions</div>
-			</button>`;
-
 		this.css = `
 			.RANbutton-frame {
 				margin-bottom: 10px;
@@ -58,11 +45,12 @@ class ReadAllNotificationsButton {
 
 	getSettingsPanel () {
 		if (!global.BDFDB || typeof BDFDB != "object" || !BDFDB.loaded || !this.started) return;
-		var settings = BDFDB.getAllData(this, "settings");
-		var settingsitems = [], inneritems = [];
+		let settings = BDFDB.DataUtils.get(this, "settings");
+		let settingsitems = [], inneritems = [];
 		
-		for (let key in settings) (!this.defaults.settings[key].inner ? settingsitems : inneritems).push(BDFDB.React.createElement(BDFDB.LibraryComponents.SettingsSwitch, {
+		for (let key in settings) (!this.defaults.settings[key].inner ? settingsitems : inneritems).push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsSaveItem, {
 			className: BDFDB.disCN.marginbottom8,
+			type: "Switch",
 			plugin: this,
 			keys: ["settings", key],
 			label: this.defaults.settings[key].description,
@@ -77,12 +65,14 @@ class ReadAllNotificationsButton {
 				}
 			}
 		}));
-		settingsitems.push(BDFDB.React.createElement(BDFDB.LibraryComponents.SettingsPanelInner, {
+		settingsitems.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsPanelInner, {
 			title: "When left clicking the 'read all' button mark following Elements as read:",
+			first: settingsitems.length == 0,
+			last: true,
 			children: inneritems
 		}));
 		
-		return BDFDB.createSettingsPanel(this, settingsitems);
+		return BDFDB.PluginUtils.createSettingsPanel(this, settingsitems);
 	}
 
 	//legacy
@@ -103,139 +93,142 @@ class ReadAllNotificationsButton {
 			document.head.appendChild(libraryScript);
 		}
 		else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
-		this.startTimeout = setTimeout(() => {this.initialize();}, 30000);
+		this.startTimeout = setTimeout(() => {
+			try {return this.initialize();}
+			catch (err) {console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not initiate plugin! " + err);}
+		}, 30000);
 	}
 
 	initialize () {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
 			if (this.started) return;
-			BDFDB.loadMessage(this);
+			BDFDB.PluginUtils.init(this);
 
-			BDFDB.WebModules.forceAllUpdates(this);
+			BDFDB.ModuleUtils.forceAllUpdates(this);
 		}
-		else {
-			console.error(`%c[${this.getName()}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
-		}
+		else console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not load BD functions!");
 	}
 
 	stop () {
 		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
-			BDFDB.removeEles(".RANbutton-frame", ".RAMbutton");
-			BDFDB.removeClasses("RAN-added", "RAM-added");
-			BDFDB.unloadMessage(this);
+			this.stopping = true;
+
+			BDFDB.ModuleUtils.forceAllUpdates(this);
+			
+			BDFDB.PluginUtils.clear(this);
 		}
 	}
 
 
 	// begin of own functions
 
-	processGuilds (instance, wrapper, returnvalue, methodnames) {
-		if (methodnames.includes("componentDidMount") || (methodnames.includes("componentDidUpdate") && document.querySelector(".bd-guild ~ .RANbutton-frame"))) {
-			BDFDB.removeEles(".RANbutton-frame");
-			let insertnode = this.getInsertNode();
-			if (insertnode) {
-				let ranbutton = BDFDB.htmlToElement(this.RANbuttonMarkup);
-				insertnode.parentElement.insertBefore(ranbutton, insertnode);
-				ranbutton.addEventListener("click", () => {
-					let settings = BDFDB.getAllData(this, "settings");
-					if (settings.includeGuilds) BDFDB.markGuildAsRead(settings.includeMuted ? BDFDB.readServerList() : BDFDB.readUnreadServerList());
-					if (settings.includeDMs) BDFDB.markChannelAsRead(BDFDB.readDmList());
-				});
-				ranbutton.addEventListener("contextmenu", e => {
-					const itemGroup = BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItemGroup, {
-						className: `BDFDB-contextMenuItemGroup ${this.name}-contextMenuItemGroup`,
-						children: [
-							BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
-								label: this.labels.context_unreadguilds_text,
-								className: `BDFDB-contextMenuItem ${this.name}-contextMenuItem ${this.name}-unreadguilds-contextMenuItem`,
-								action: e => {
-									BDFDB.closeContextMenu(BDFDB.getParentEle(BDFDB.dotCN.contextmenu, e.target));
-									BDFDB.markGuildAsRead(BDFDB.readUnreadServerList());
-								}
-							}),
-							BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
-								label: this.labels.context_pingedguilds_text,
-								className: `BDFDB-contextMenuItem ${this.name}-contextMenuItem ${this.name}-pingedguilds-contextMenuItem`,
-								action: e => {
-									BDFDB.closeContextMenu(BDFDB.getParentEle(BDFDB.dotCN.contextmenu, e.target));
-									BDFDB.markGuildAsRead(BDFDB.readPingedServerList());
-								}
-							}),
-							BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
-								label: this.labels.context_mutedguilds_text,
-								className: `BDFDB-contextMenuItem ${this.name}-contextMenuItem ${this.name}-mutedguilds-contextMenuItem`,
-								action: e => {
-									BDFDB.closeContextMenu(BDFDB.getParentEle(BDFDB.dotCN.contextmenu, e.target));
-									BDFDB.markGuildAsRead(BDFDB.readMutedServerList());
-								}
-							}),
-							BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
-								label: this.labels.context_guilds_text,
-								className: `BDFDB-contextMenuItem ${this.name}-contextMenuItem ${this.name}-guilds-contextMenuItem`,
-								action: e => {
-									BDFDB.closeContextMenu(BDFDB.getParentEle(BDFDB.dotCN.contextmenu, e.target));
-									this.addPinnedRecent(instance.props.channel.id);
-									BDFDB.markGuildAsRead(BDFDB.readServerList());
-								}
-							}),
-							BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
-								label: this.labels.context_dms_text,
-								className: `BDFDB-contextMenuItem ${this.name}-contextMenuItem ${this.name}-dms-contextMenuItem`,
-								action: e => {
-									BDFDB.closeContextMenu(BDFDB.getParentEle(BDFDB.dotCN.contextmenu, e.target));
-									BDFDB.markChannelAsRead(BDFDB.readDmList());
+	processGuilds (e) {
+		let [children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue, {name: "ConnectedUnreadDMs"});
+		if (index > -1) children.splice(index + 1, 0, BDFDB.ReactUtils.createElement("div", {
+			className: `${BDFDB.disCN.guildouter} RANbutton-frame`,
+			style: {height: 20},
+			children: BDFDB.ReactUtils.createElement("div", {
+				className: `${BDFDB.disCN.guildiconwrapper} RANbutton-inner`,
+				style: {height: 20},
+					children: BDFDB.ReactUtils.createElement("div", {
+					className: `${BDFDB.disCN.guildiconchildwrapper} RANbutton`,
+					style: {height: 20},
+					children: "read all",
+					onClick: _ => {
+						let settings = BDFDB.DataUtils.get(this, "settings");
+						if (settings.includeGuilds) BDFDB.GuildUtils.markAsRead(settings.includeMuted ? BDFDB.GuildUtils.getAll() : BDFDB.GuildUtils.getUnread());
+						if (settings.includeDMs) BDFDB.DMUtils.markAsRead(BDFDB.DMUtils.getAll());
+					},
+					onContextMenu: event => {
+						BDFDB.ContextMenuUtils.open(this, event, BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItemGroup, {
+							children: [
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+									label: this.labels.context_unreadguilds_text,
+									action: event2 => {
+										BDFDB.ContextMenuUtils.close(event2._targetInst);
+										BDFDB.GuildUtils.markAsRead(BDFDB.GuildUtils.getUnread());
+									}
+								}),
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+									label: this.labels.context_pingedguilds_text,
+									action: event2 => {
+										BDFDB.ContextMenuUtils.close(event2._targetInst);
+										BDFDB.GuildUtils.markAsRead(BDFDB.GuildUtils.getPinged());
+									}
+								}),
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+									label: this.labels.context_mutedguilds_text,
+									action: event2 => {
+										BDFDB.ContextMenuUtils.close(event2._targetInst);
+										BDFDB.GuildUtils.markAsRead(BDFDB.GuildUtils.getMuted());
+									}
+								}),
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+									label: this.labels.context_guilds_text,
+									action: event2 => {
+										BDFDB.ContextMenuUtils.close(event2._targetInst);
+										this.addPinnedRecent(instance.props.channel.id);
+										BDFDB.GuildUtils.markAsRead(BDFDB.GuildUtils.getAll());
+									}
+								}),
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+									label: this.labels.context_dms_text,
+									action: event2 => {
+										BDFDB.ContextMenuUtils.close(event2._targetInst);
+										BDFDB.DMUtils.markAsRead(BDFDB.DMUtils.getAll());
+									}
+								})
+							]
+						}));
+					}
+				})
+			})
+		}));
+	}
+
+	processRecentMentions (e) {
+		if (typeof e.returnvalue.props.renderHeader == "function" && e.instance.props.popoutName == "RECENT_MENTIONS_POPOUT" && BDFDB.DataUtils.get(this, "settings", "addClearButton")) {
+			let renderHeader = e.returnvalue.props.renderHeader;
+			e.returnvalue.props.renderHeader = () => {
+				let renderedHeader = renderHeader(e.instance);
+				renderedHeader.props.children = BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.Flex, {
+					align: BDFDB.LibraryComponents.Flex.Align.BASELINE,
+					children: [,
+						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.Flex.Child, {
+							children: renderedHeader.props.children
+						}),
+						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.Flex.Child, {
+							grow: 0,
+							children: BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.Button, {
+								look: BDFDB.LibraryComponents.Button.Looks.OUTLINED,
+								color: BDFDB.LibraryComponents.Button.Colors.GREY,
+								hover: BDFDB.LibraryComponents.Button.Hovers.RED,
+								size: BDFDB.LibraryComponents.Button.Sizes.SMALL,
+								children: BDFDB.LanguageUtils.LanguageStrings.REMOVE,
+								onClick: (event, buttoninstance) => {
+									this.clearMentions(e.instance, BDFDB.DOMUtils.getParent(BDFDB.dotCN.messagespopoutwrap, BDFDB.ReactUtils.findDOMNode(buttoninstance)));
 								}
 							})
-						]
-					});
-					BDFDB.openContextMenu(this, e, itemGroup);
+						})
+					]
 				});
-				BDFDB.addClass(wrapper, "RAN-added");
-			}
-		}
-	}
-
-	processDirectMessage (instance, wrapper, returnvalue, methodnames) {
-		let ranbutton = document.querySelector(".RANbutton-frame");
-		let insertnode = this.getInsertNode();
-		if (ranbutton && insertnode) insertnode.parentElement.insertBefore(ranbutton, insertnode);
-	}
-
-	processRecentMentions (instance, wrapper, returnvalue) {
-		BDFDB.removeEles(".RAMbutton");
-		if (instance.props && instance.props.popoutName == "RECENT_MENTIONS_POPOUT" && BDFDB.getData("addClearButton", this, "settings")) {
-			let recentmentionstitle = wrapper.querySelector(BDFDB.dotCN.messagespopouttitle);
-			if (recentmentionstitle) {
-				let ranbutton = BDFDB.htmlToElement(this.RAMbuttonMarkup);
-				recentmentionstitle.appendChild(ranbutton);
-				ranbutton.addEventListener("click", () => {this.clearMentions(instance, wrapper);});
-				BDFDB.addClass(wrapper, "RAM-added");
-			}
+				return renderedHeader;
+			};
 		}
 	}
 
 	clearMentions (instance, wrapper) {
+		if (!Node.prototype.isPrototypeOf(wrapper)) return;
 		let closebuttons = wrapper.querySelectorAll(BDFDB.dotCN.messagespopoutclosebutton);
 		for (let btn of wrapper.querySelectorAll(BDFDB.dotCN.messagespopoutclosebutton)) btn.click();
 		if (closebuttons.length) {
 			instance.loadMore();
-			setTimeout(() => {this.clearMentions(instance, wrapper);},3000);
+			BDFDB.TimeUtils.timeout(() => {this.clearMentions(instance, wrapper);},3000);
 		}
-	}
-
-	getInsertNode () {
-		let homebutton = BDFDB.getParentEle(BDFDB.dotCN.guildouter, document.querySelector(BDFDB.dotCN.homebuttonicon));
-		if (!homebutton) return null;
-		let nextsibling = homebutton.nextElementSibling, insertnode = null;
-		while (nextsibling && insertnode == null) {
-			if (nextsibling.querySelector(`${BDFDB.dotCN.guildseparator}:not(.folderseparator)`)) insertnode = nextsibling;
-			nextsibling = nextsibling.nextElementSibling
-		}
-		return insertnode;
 	}
 
 	setLabelsByLanguage () {
-		switch (BDFDB.getDiscordLanguage().id) {
+		switch (BDFDB.LanguageUtils.getLanguage().id) {
 			case "hr":		//croatian
 				return {
 					context_unreadguilds_text:	"Nepročitani poslužitelje",

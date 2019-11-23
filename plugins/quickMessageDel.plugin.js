@@ -24,7 +24,7 @@ quickMessageDel.prototype.buttonTarget = function() {
     return 'div.button-3Jq0g9';
 }
 quickMessageDel.prototype.popoutsTarget = function() {
-    return 'div.popouts-2bnG9Z';
+    return 'div.layer-v9HyYc';
 }
 quickMessageDel.prototype.labelTarget = function() {
     return 'div.label-JWQiNe';
@@ -50,24 +50,24 @@ quickMessageDel.prototype.mutAction = function() {
     $(quickMessageDel.prototype.baseTarget()).on('click.qmd', function(e) {
         if (isHeld == true) {
             $(e.target).parent().find(quickMessageDel.prototype.buttonTarget())[0].click();
-            $(quickMessageDel.prototype.popoutsTarget()+' > div').css('visibility','hidden');
+            $(quickMessageDel.prototype.popoutsTarget()).css('visibility','hidden');
             $.each(quickMessageDel.prototype.eachTarget(), (index, item) => {
                 if($(item).text() === 'Delete') {
                     $(item).click();
-                    $(quickMessageDel.prototype.backdropTarget()).css('visibility','hidden');
-                    $(quickMessageDel.prototype.modalTarget()).css('visibility','hidden');
-                    $(quickMessageDel.prototype.modalTarget()+' button[type="submit"]')[0].click();
+                    setTimeout(function() {
+                        $(quickMessageDel.prototype.backdropTarget()).css('visibility','hidden');
+                        $(quickMessageDel.prototype.modalTarget()).css('visibility','hidden');
+                        $(quickMessageDel.prototype.modalTarget()+' button[type="submit"]')[0].click();
+                    },1);
                     return;
                 }
             });
         }
     });
 }
-
 quickMessageDel.prototype.mutObvs = new MutationObserver(function(mutations) {
     quickMessageDel.prototype.mutAction();
 });
-
 quickMessageDel.prototype.mutTargets = function() {
     quickMessageDel.prototype.mutObvs.observe($(quickMessageDel.prototype.mutTarget()).get(0), quickMessageDel.prototype.mutationObserverConfig());
 }
@@ -86,7 +86,6 @@ quickMessageDel.prototype.start = function() {
     quickMessageDel.prototype.mutTargets();
     quickMessageDel.prototype.mutAction();
 }
-
 quickMessageDel.prototype.stop = function() {
     $(window).off('keydown.qmd');
     $(window).off('keyup.qmd');

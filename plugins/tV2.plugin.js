@@ -5,7 +5,7 @@ const tV2 = function(){};
 
 //Version control
 tV2.prototype.curVer = function() {
-    return '2.0.4'
+    return '2.0.5'
 }
 tV2.prototype.verAction = function() {
     BdApi.alert('Update Available!','Place in %appdata%\\BetterDiscord\\plugins');
@@ -412,9 +412,9 @@ tV2.prototype.settingsPanelJS = function() {
 
 //Sets up the plugin and injects the newest jQuery
 tV2.prototype.startupSetup = function() {
-    const jQ3 = document.createElement('script');
-    jQ3.src = '//code.jquery.com/jquery-3.3.1.min.js';
-    jQ3.classList.add('tV2-jQ3');
+    //const jQ3 = document.createElement('script');
+    //jQ3.src = '//code.jquery.com/jquery-3.3.1.min.js';
+    //jQ3.classList.add('tV2-jQ3');
     if (BdApi.loadData('tV2', 'loaded') == undefined) {
         BdApi.saveData('tV2', 'loaded', 'False');
         BdApi.saveData('tV2', 'startcolor', '#000000');
@@ -428,7 +428,7 @@ tV2.prototype.startupSetup = function() {
         BdApi.saveData('tV2', 'badge', '18');
         BdApi.saveData('tV2', 'image', 'None');
         BdApi.saveData('tV2', 'imagetrans', '.15');
-        document.getElementsByTagName('head')[0].appendChild(jQ3);
+        //document.getElementsByTagName('head')[0].appendChild(jQ3);
         BdApi.saveData('tV2', 'loaded', 'True');
     } else if (BdApi.loadData('tV2', 'loaded') == 'False') {
         if (BdApi.loadData('tV2', 'startcolor') == undefined) {
@@ -454,7 +454,7 @@ tV2.prototype.startupSetup = function() {
             BdApi.saveData('tV2', 'startimagetrans', '.15');
             BdApi.saveData('tV2', 'imagetrans', '.15');
         };
-        document.getElementsByTagName('head')[0].appendChild(jQ3);
+        //document.getElementsByTagName('head')[0].appendChild(jQ3);
         BdApi.saveData('tV2', 'loaded', 'True');
     };
 };
@@ -463,7 +463,7 @@ tV2.prototype.startupSetup = function() {
 tV2.prototype.updateTheme = function() {
     const tV2_web = '\
 <style class="tV2-web">\
-@import url("https://raw.githack.com/AdventGit/Discord-Things/master/themes/tV2.css")\
+/*@import url("https://raw.githack.com/AdventGit/Discord-Things/master/themes/tV2.css")*/\
 </style>';
     const numGuildSize = parseInt(BdApi.loadData('tV2', 'guilds'), 10);
     const numBadgeSize = parseInt(BdApi.loadData('tV2', 'badge'), 10);
@@ -492,7 +492,7 @@ background: rgba(0,0,0,'+BdApi.loadData('tV2', 'trans')+') !important;\
 --shift-pos: '+shiftPos+'px;\
 --guild-width: '+guildWidth+'px;\
 --pill-hover-h: '+pillHoverHeight+'px;\
-</style>';
+}</style>';
     if ($('head .tV2-web').length === 0) {
         $('head').append(tV2_web);
     };
@@ -633,7 +633,7 @@ tV2.prototype.mainExit = function() {
         $('head .tV2-base').remove();
         $('head .tV2-web').remove();
         $('head .tV2-image-css').remove();
-        $('head .tV2-jQ3').remove();
+        //$('head .tV2-jQ3').remove();
         tV2.prototype.mutObvs.disconnect();
         tV2.prototype.mutObvs2.disconnect();
         tV2.prototype.mutObvs3.disconnect();

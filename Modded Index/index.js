@@ -16,7 +16,7 @@ class BrowserWindow extends electron.BrowserWindow {
         options.webPreferences.scrollBounce = true;
         options.webPreferences.webSecurity = false;
         if (process.platform !== "win32" && process.platform !== "darwin") config.frame = true;
-        Object.assign(options, config);
+        Object.assign(options, config)
         super(options);
         new BetterDiscord(this);
     }
@@ -34,18 +34,13 @@ const onReady = () => {
     const electronPath = require.resolve("electron");
     const newElectron = Object.assign({}, electron, {BrowserWindow});
     require.cache[electronPath].exports = newElectron;
-    if (require.cache[electronPath].exports === newElectron) {
-        return;
-    }
+    if (require.cache[electronPath].exports === newElectron) return;
     delete require.cache[electronPath].exports;
     require.cache[electronPath].exports = newElectron;
 };
 
-if (process.platform == "win32" || process.platform == "darwin") {
-    electron.app.once("ready", onReady);
-} else {
-    onReady();
-}
+if (process.platform == "win32" || process.platform == "darwin") electron.app.once("ready", onReady);
+else onReady();
 
 if (process.platform == "win32" || process.platform == "darwin") {
     const basePath = path.join(__dirname, "..", "app.asar");

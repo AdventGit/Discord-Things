@@ -545,11 +545,11 @@ body > div#app-mount > div.app-1q1i1E > div.app-2rEoOp > div.layers-3iHuyZ > div
   text-shadow: 0px 0px 0px transparent !important;
 }
 
-body > div#app-mount > div.app-1q1i1E > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.container-2lgZY8 > div.base-3dtUhz > div.content-98HsJk > div.chat-3bRxxu > div.content-yTz4x3 > div.chatContent-a9vAAp > form.form-2fGMdU > div.channelTextArea-1LDbYG > div.scrollableContainer-38zsVD {
+body > div#app-mount > div.app-1q1i1E > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.container-2lgZY8 > div.base-3dtUhz > div.content-98HsJk > div.chat-3bRxxu > div.content-yTz4x3 > div.chatContent-a9vAAp > form.form-2fGMdU > div.channelTextArea-rNsIhG > div.scrollableContainer-2NUZem {
   box-shadow: 0px 0px 1px 1px var(--dark), 0px 0px 0.5px 0.5px var(--dark-smooth) !important;
 }
 
-body > div#app-mount > div.app-1q1i1E > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.container-2lgZY8 > div.base-3dtUhz > div.content-98HsJk > div.chat-3bRxxu > div.content-yTz4x3 > div.chatContent-a9vAAp > form.form-2fGMdU > div.channelTextArea-1LDbYG > div.scrollableContainer-38zsVD > div.inner-zqa7da > div.textArea-2Spzkt > div.markup-2BOw-j > div[data-slate-object="block"] > span[data-slate-object="text"] > span > span[data-slate-object="decoration"] {
+body > div#app-mount > div.app-1q1i1E > div.app-2rEoOp > div.layers-3iHuyZ > div.layer-3QrUeG > div.container-2lgZY8 > div.base-3dtUhz > div.content-98HsJk > div.chat-3bRxxu > div.content-yTz4x3 > div.chatContent-a9vAAp > form.form-2fGMdU > div.channelTextArea-rNsIhG > div.scrollableContainer-2NUZem > div.inner-MADQqc > div.textArea-12jD-V > div.markup-2BOw-j > div[data-slate-object="block"] > span[data-slate-object="text"] > span > span[data-slate-object="decoration"] {
   color: var(--user-color) !important;
 }
 
@@ -565,6 +565,10 @@ body > div#app-mount > div.app-1q1i1E > div.app-2rEoOp > div.layers-3iHuyZ > div
   --neutral-smooth: hsla(0,0%,100%,.05);
   --dark: #181818;
   --dark-smooth: hsla(0,0%,100%,.26);
+}
+
+*::selection {
+  background-color: var(--user-color-smooth) !important;
 }
 
 .theme-dark,

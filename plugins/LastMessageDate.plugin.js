@@ -3,7 +3,7 @@
 class LastMessageDate {
 	getName () {return "LastMessageDate";}
 
-	getVersion () {return "1.1.2";}
+	getVersion () {return "1.1.4";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -11,6 +11,7 @@ class LastMessageDate {
 
 	constructor () {
 		this.changelog = {
+			"added":[["Days Ago","Added a days ago $daysago placeholder, to check how it works read the guide in the settings"]],
 			"improved":[["New Library Structure & React","Restructured my Library and switched to React rendering instead of DOM manipulation"]]
 		};
 
@@ -73,7 +74,7 @@ class LastMessageDate {
 		let settings = BDFDB.DataUtils.get(this, "settings");
 		let choices = BDFDB.DataUtils.get(this, "choices");
 		let formats = BDFDB.DataUtils.get(this, "formats");
-		let settingsitems = [], inneritems = [];
+		let settingspanel, settingsitems = [], inneritems = [];
 		
 		for (let key in settings) settingsitems.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsSaveItem, {
 			className: BDFDB.disCN.marginbottom8,
@@ -161,7 +162,7 @@ class LastMessageDate {
 			title: "Placeholder Guide",
 			dividertop: true,
 			collapsed: BDFDB.DataUtils.load(this, "hideInfo", "hideInfo"),
-			children: ["$hour will be replaced with the current hour", "$minute will be replaced with the current minutes", "$second will be replaced with the current seconds", "$msecond will be replaced with the current milliseconds", "$timemode will change $hour to a 12h format and will be replaced with AM/PM", "$year will be replaced with the current year", "$month will be replaced with the current month", "$day will be replaced with the current day", "$monthnameL will be replaced with the monthname in long format based on the Discord Language", "$monthnameS will be replaced with the monthname in short format based on the Discord Language", "$weekdayL will be replaced with the weekday in long format based on the Discord Language", "$weekdayS will be replaced with the weekday in short format based on the Discord Language"].map(string => {
+			children: ["$hour will be replaced with the current hour", "$minute will be replaced with the current minutes", "$second will be replaced with the current seconds", "$msecond will be replaced with the current milliseconds", "$timemode will change $hour to a 12h format and will be replaced with AM/PM", "$year will be replaced with the current year", "$month will be replaced with the current month", "$day will be replaced with the current day", "$monthnameL will be replaced with the monthname in long format based on the Discord Language", "$monthnameS will be replaced with the monthname in short format based on the Discord Language", "$weekdayL will be replaced with the weekday in long format based on the Discord Language", "$weekdayS will be replaced with the weekday in short format based on the Discord Language", "$daysago will be replaced with a string to tell you how many days ago the event occured. For Example: " + BDFDB.LanguageUtils.LanguageStringsFormat("ACTIVITY_FEED_USER_PLAYED_DAYS_AGO", 3)].map(string => {
 				return BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormText, {
 					type: BDFDB.LibraryComponents.FormComponents.FormTextTypes.DESCRIPTION,
 					children: string
@@ -172,7 +173,7 @@ class LastMessageDate {
 			}
 		}));
 		
-		return BDFDB.PluginUtils.createSettingsPanel(this, settingsitems);
+		return settingspanel = BDFDB.PluginUtils.createSettingsPanel(this, settingsitems);
 	}
 
 	//legacy
@@ -206,10 +207,12 @@ class LastMessageDate {
 
 			this.languages = Object.assign({"own":{name:"Own",id:"own",integrated:false,dic:false}}, BDFDB.LanguageUtils.languages);
 
-			BDFDB.ModuleUtils.patch(this, BDFDB.LibraryModules.MessageUtils, "receiveMessage", {after: e => {
-				let message = e.methodArguments[1];
-				let guildid = message.guild_id || message.channel_id;
-				if (guildid && this.loadedusers[guildid] && this.loadedusers[guildid][message.author.id]) this.loadedusers[guildid][message.author.id] = new Date(message.timestamp);
+			BDFDB.ModuleUtils.patch(this, BDFDB.LibraryModules.DispatchApiUtils, "dirtyDispatch", {after: e => {
+				if (BDFDB.ObjectUtils.is(e.methodArguments[0]) && e.methodArguments[0].type == BDFDB.DiscordConstants.ActionTypes.MESSAGE_CREATE && e.methodArguments[0].message) {
+					let message = e.methodArguments[0].message;
+					let guildId = message.guild_id || message.channel_id;
+					if (guildId && this.loadedusers[guildId] && this.loadedusers[guildId][message.author.id]) this.loadedusers[guildId][message.author.id] = new Date(message.timestamp);
+				}
 			}});
 
 			BDFDB.ModuleUtils.forceAllUpdates(this);
@@ -300,7 +303,7 @@ class LastMessageDate {
 		else {
 			let ownformat = BDFDB.DataUtils.get(this, "formats", "ownFormat");
 			languageid = BDFDB.LanguageUtils.getLanguage().id;
-			let hour = timeobj.getHours(), minute = timeobj.getMinutes(), second = timeobj.getSeconds(), msecond = timeobj.getMilliseconds(), day = timeobj.getDate(), month = timeobj.getMonth()+1, timemode = "";
+			let hour = timeobj.getHours(), minute = timeobj.getMinutes(), second = timeobj.getSeconds(), msecond = timeobj.getMilliseconds(), day = timeobj.getDate(), month = timeobj.getMonth()+1, timemode = "", daysago = Math.round((new Date() - timeobj)/(1000*60*60*24));
 			if (ownformat.indexOf("$timemode") > -1) {
 				timemode = hour >= 12 ? "PM" : "AM";
 				hour = hour % 12;
@@ -316,9 +319,11 @@ class LastMessageDate {
 				.replace("$weekdayS", timeobj.toLocaleDateString(languageid,{weekday: "short"}))
 				.replace("$monthnameL", timeobj.toLocaleDateString(languageid,{month: "long"}))
 				.replace("$monthnameS", timeobj.toLocaleDateString(languageid,{month: "short"}))
+				.replace("$daysago", daysago > 0 ? BDFDB.LanguageUtils.LanguageStringsFormat("ACTIVITY_FEED_USER_PLAYED_DAYS_AGO", daysago) : BDFDB.LanguageUtils.LanguageStrings.SEARCH_SHORTCUT_TODAY)
 				.replace("$day", settings.forceZeros && day < 10 ? "0" + day : day)
 				.replace("$month", settings.forceZeros && month < 10 ? "0" + month : month)
-				.replace("$year", timeobj.getFullYear());
+				.replace("$year", timeobj.getFullYear())
+				.trim().split(" ").filter(n => n).join(" ");
 		}
 		return timestring;
 	}

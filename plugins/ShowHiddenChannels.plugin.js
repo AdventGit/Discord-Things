@@ -3,7 +3,7 @@
 class ShowHiddenChannels {
 	getName () {return "ShowHiddenChannels";}
 
-	getVersion () {return "2.6.6";}
+	getVersion () {return "2.6.9";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -11,8 +11,7 @@ class ShowHiddenChannels {
 
 	constructor () {
 		this.changelog = {
-			"fixed":[["Permission Changes","No longer allows or denies you to see a channel incorrectly after a permission update changed your access to a channel"],["Big gaps","Finally managed to sort out the bug that created huge gaps in the channel list"],["Flashing","Channel list no longer flashes and twitches when connectiong to a voice channel/collapsing a category/scrolling"]],
-			"improved":[["New Library Structure & React","Restructured my Library and switched to React rendering instead of DOM manipulation"],["Sort", "You can now sort hidden channels in the native way, meaning they will be placed below their rightful category"],["Tooltip", "The tooltip was removed and was turned into a more friendly modal, which can be access via the right click menu on a channel"]]
+			"improved":[["New Library Structure & React","Restructured my Library and switched to React rendering instead of DOM manipulation"]]
 		};
 
 		this.patchedModules = {
@@ -71,7 +70,7 @@ class ShowHiddenChannels {
 	getSettingsPanel () {
 		if (!global.BDFDB || typeof BDFDB != "object" || !BDFDB.loaded || !this.started) return;
 		let settings = BDFDB.DataUtils.get(this, "settings");
-		let settingsitems = [], inneritems = [];
+		let settingspanel, settingsitems = [], inneritems = [];
 		
 		for (let key in settings) settingsitems.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsSaveItem, {
 			className: BDFDB.disCN.marginbottom8,
@@ -82,7 +81,7 @@ class ShowHiddenChannels {
 			value: settings[key]
 		}));
 		
-		return BDFDB.PluginUtils.createSettingsPanel(this, settingsitems);
+		return settingspanel = BDFDB.PluginUtils.createSettingsPanel(this, settingsitems);
 	}
 
 	//legacy
@@ -116,6 +115,10 @@ class ShowHiddenChannels {
 			
 			BDFDB.ModuleUtils.patch(this, BDFDB.LibraryModules.UnreadChannelUtils, "hasUnread", {after: e => {
 				return e.returnValue && !this.isChannelHidden(e.methodArguments[0]);
+			}});
+			
+			BDFDB.ModuleUtils.patch(this, BDFDB.LibraryModules.UnreadChannelUtils, "getMentionCount", {after: e => {
+				return this.isChannelHidden(e.methodArguments[0]) ? 0 : e.returnValue;
 			}});
 			
 			BDFDB.ModuleUtils.patch(this, BDFDB.LibraryModules.CategoryCollapseStore, "isCollapsed", {after: e => {
@@ -184,8 +187,8 @@ class ShowHiddenChannels {
 			let isHidden = this.isChannelHidden(e.instance.props.channel.id);
 			if (isHidden || BDFDB.DataUtils.get(this, "settings", "showForNormal")) {
 				let [children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue, {name:["FluxContainer(MessageDeveloperModeGroup)", "DeveloperModeGroup"]});
-				children.splice(index > -1 ? index : children.length, 0, BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItemGroup, {
-					children: BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+				children.splice(index > -1 ? index : children.length, 0, BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItems.Group, {
+					children: BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItems.Item, {
 						label: BDFDB.LanguageUtils.LanguageStrings.CHANNEL + " " + BDFDB.LanguageUtils.LanguageStrings.ACCESSIBILITY,
 						action: _ => {
 							BDFDB.ContextMenuUtils.close(e.instance);
@@ -264,11 +267,10 @@ class ShowHiddenChannels {
 		if (e.instance.props.channel && this.isChannelHidden(e.instance.props.channel.id)) {
 			if (e.returnvalue) {
 				let [children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue, {name: "Icon"});
-				if (index > -1) {
-					delete children[index].props.name;
-					children[index].props.nativeClass = true;
-					children[index].props.iconSVG = `<svg class="${BDFDB.disCN.channelicon}" width="24" height="24" viewBox="0 0 24 24"><mask id="${this.name + e.instance.props.channel.id}" fill="black"><path d="M 0 0 H 24 V 24 H 0 Z" fill="white"></path><path d="M24 0 H 13 V 12 H 24 Z" fill="black"></path></mask><path mask="url(#${this.name + e.instance.props.channel.id})" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="${this.channelIcons[this.channelTypes[e.instance.props.channel.type]] || this.channelIcons.DEFAULT}"></path><path fill="currentColor" d="M 21.025 5 V 4 C 21.025 2.88 20.05 2 19 2 C 17.95 2 17 2.88 17 4 V 5 C 16.4477 5 16 5.44772 16 6 V 9 C 16 9.55228 16.4477 10 17 10 H 19 H 21 C 21.5523 10 22 9.55228 22 9 V 5.975C22 5.43652 21.5635 5 21.025 5 Z M 20 5 H 18 V 4 C 18 3.42857 18.4667 3 19 3 C 19.5333 3 20 3.42857 20 4 V 5 Z"></path></svg>`;
-				}
+				if (index > -1) children[index] = BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SvgIcon, {
+					nativeClass: true,
+					iconSVG: `<svg class="${BDFDB.disCN.channelicon}" width="24" height="24" viewBox="0 0 24 24"><mask id="${this.name + e.instance.props.channel.id}" fill="black"><path d="M 0 0 H 24 V 24 H 0 Z" fill="white"></path><path d="M24 0 H 13 V 12 H 24 Z" fill="black"></path></mask><path mask="url(#${this.name + e.instance.props.channel.id})" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="${this.channelIcons[this.channelTypes[e.instance.props.channel.type]] || this.channelIcons.DEFAULT}"></path><path fill="currentColor" d="M 21.025 5 V 4 C 21.025 2.88 20.05 2 19 2 C 17.95 2 17 2.88 17 4 V 5 C 16.4477 5 16 5.44772 16 6 V 9 C 16 9.55228 16.4477 10 17 10 H 19 H 21 C 21.5523 10 22 9.55228 22 9 V 5.975C22 5.43652 21.5635 5 21.025 5 Z M 20 5 H 18 V 4 C 18 3.42857 18.4667 3 19 3 C 19.5333 3 20 3.42857 20 4 V 5 Z"></path></svg>`
+				});
 				[children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue, {props:[["className", BDFDB.disCN.channelchildren]]});
 				if (index > -1 && children[index].props && children[index].props.children) {
 					children[index].props.children = [BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TooltipContainer, {
@@ -313,8 +315,8 @@ class ShowHiddenChannels {
 		}
 	}
 	
-	isChannelHidden (channelid) {
-		return !BDFDB.UserUtils.can("VIEW_CHANNEL", BDFDB.UserUtils.me.id, channelid);
+	isChannelHidden (channelId) {
+		return !BDFDB.DMUtils.isDMChannel(channelId) && !BDFDB.UserUtils.can("VIEW_CHANNEL", BDFDB.UserUtils.me.id, channelId);
 	}
 	
 	getHiddenChannels (guild) {

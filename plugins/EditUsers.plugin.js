@@ -3,7 +3,7 @@
 class EditUsers {
 	getName () {return "EditUsers";}
 
-	getVersion () {return "3.6.7";}
+	getVersion () {return "3.6.8";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -14,31 +14,33 @@ class EditUsers {
 			"fixed":[["Account","Fixed the coloring in the account details container"]]
 		};
 
-		this.patchModules = {
-			"ChannelTextArea":"componentDidMount",
-			"MemberListItem":["componentDidMount","componentDidUpdate"],
-			"UserPopout":["componentDidMount","componentDidUpdate"],
-			"UserProfile":["componentDidMount","componentDidUpdate"],
-			"FriendRow":"componentDidMount",
-			"VoiceUser":["componentDidMount","componentDidUpdate"],
-			"Account":["componentDidMount","componentDidUpdate"],
-			"AuditLog":"componentDidMount",
-			"BannedCard":"render",
-			"InviteCard":"render",
-			"MemberCard":"render",
-			"InvitationCard":"componentDidMount",
-			"TypingUsers":"componentDidUpdate",
-			"MessageUsername":["componentDidMount","componentDidUpdate"],
-			"DirectMessage":"componentDidMount",
-			"CallAvatar":"componentDidMount",
-			"VideoTile":"componentDidMount",
-			"PictureInPictureVideo":"componentDidMount",
-			"PrivateChannel":["componentDidMount","componentDidUpdate"],
-			"HeaderBar":["componentDidMount","componentDidUpdate"],
-			"HeaderBarContainer":["componentDidMount","componentDidUpdate"],
-			"Clickable":"componentDidMount",
-			"MessageContent":["componentDidMount","componentDidUpdate"],
-			"StandardSidebarView":"componentWillUnmount"
+		this.patchedModules = {
+			after: {
+				"ChannelTextArea":"componentDidMount",
+				"MemberListItem":["componentDidMount","componentDidUpdate"],
+				"UserPopout":["componentDidMount","componentDidUpdate"],
+				"UserProfile":["componentDidMount","componentDidUpdate"],
+				"FriendRow":"componentDidMount",
+				"VoiceUser":["componentDidMount","componentDidUpdate"],
+				"Account":["componentDidMount","componentDidUpdate"],
+				"AuditLog":"componentDidMount",
+				"BannedCard":"render",
+				"InviteCard":"render",
+				"MemberCard":"render",
+				"InvitationCard":"componentDidMount",
+				"TypingUsers":"componentDidUpdate",
+				"MessageUsername":["componentDidMount","componentDidUpdate"],
+				"DirectMessage":"componentDidMount",
+				"CallAvatar":"componentDidMount",
+				"VideoTile":"componentDidMount",
+				"PictureInPictureVideo":"componentDidMount",
+				"PrivateChannel":["componentDidMount","componentDidUpdate"],
+				"HeaderBar":["componentDidMount","componentDidUpdate"],
+				"HeaderBarContainer":["componentDidMount","componentDidUpdate"],
+				"Clickable":"componentDidMount",
+				"MessageContent":["componentDidMount","componentDidUpdate"],
+				"StandardSidebarView":"componentWillUnmount"
+			}
 		};
 	}
 
@@ -100,10 +102,11 @@ class EditUsers {
 	getSettingsPanel () {
 		if (!global.BDFDB || typeof BDFDB != "object" || !BDFDB.loaded || !this.started) return;
 		let settings = BDFDB.DataUtils.get(this, "settings");
-		var settingsitems = [], inneritems = [];
+		let settingspanel, settingsitems = [], inneritems = [];
 		
-		for (let key in settings) (!this.defaults.settings[key].inner ? settingsitems : inneritems).push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsSwitch, {
+		for (let key in settings) (!this.defaults.settings[key].inner ? settingsitems : inneritems).push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsSaveItem, {
 			className: BDFDB.disCN.marginbottom8,
+			type: "Switch",
 			plugin: this,
 			keys: ["settings", key],
 			label: this.defaults.settings[key].description,
@@ -111,6 +114,7 @@ class EditUsers {
 		}));
 		settingsitems.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsPanelInner, {
 			title: "Change Users in:",
+			first: settingsitems.length == 0,
 			children: inneritems
 		}));
 		settingsitems.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsItem, {
@@ -119,7 +123,7 @@ class EditUsers {
 			color: BDFDB.LibraryComponents.Button.Colors.RED,
 			label: "Reset all Users",
 			onClick: _ => {
-				BDFDB.openConfirmModal(this, "Are you sure you want to reset all users?", () => {
+				BDFDB.ModalUtils.confirm(this, "Are you sure you want to reset all users?", () => {
 					BDFDB.DataUtils.remove(this, "users");
 					this.forceUpdateAll();
 				});
@@ -127,7 +131,7 @@ class EditUsers {
 			children: BDFDB.LanguageUtils.LanguageStrings.RESET
 		}));
 		
-		return BDFDB.PluginUtils.createSettingsPanel(this, settingsitems);
+		return settingspanel = BDFDB.PluginUtils.createSettingsPanel(this, settingsitems);
 	}
 
 	//legacy
@@ -148,7 +152,10 @@ class EditUsers {
 			document.head.appendChild(libraryScript);
 		}
 		else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
-		this.startTimeout = setTimeout(() => {this.initialize();}, 30000);
+		this.startTimeout = setTimeout(() => {
+			try {return this.initialize();}
+			catch (err) {console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not initiate plugin! " + err);}
+		}, 30000);
 	}
 
 	initialize () {
@@ -161,7 +168,7 @@ class EditUsers {
 			
 			this.forceUpdateAll();
 		}
-		else console.error(`%c[${this.getName()}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
+		else console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not load BD functions!");
 	}
 
 
@@ -183,33 +190,28 @@ class EditUsers {
 
 	// begin of own functions
 	
-	onUserContextMenu (instance, menu, returnvalue) {
-		if (instance.props && instance.props.user && !menu.querySelector(`${this.name}-contextMenuSubItem`)) {
-			let [children, index] = BDFDB.ReactUtils.findChildren(returnvalue, {name:["FluxContainer(MessageDeveloperModeGroup)", "DeveloperModeGroup"]});
-			const itemgroup = BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItemGroup, {
-				className: `BDFDB-contextMenuItemGroup ${this.name}-contextMenuItemGroup`,
+	onUserContextMenu (e) {
+		if (e.instance.props.user) {
+			let [children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue, {name:["FluxContainer(MessageDeveloperModeGroup)", "DeveloperModeGroup"]});
+			children.splice(index > -1 ? index : children.length, 0, BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItems.Group, {
 				children: [
-					BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuSubItem, {
+					BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItems.Sub, {
 						label: this.labels.context_localusersettings_text,
-						className: `BDFDB-contextMenuSubItem ${this.name}-contextMenuSubItem ${this.name}-usersettings-contextMenuSubItem`,
-						render: [BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItemGroup, {
-							className: `BDFDB-contextMenuItemGroup ${this.name}-contextMenuItemGroup`,
+						render: [BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItems.Group, {
 							children: [
-								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItems.Item, {
 									label: this.labels.submenu_usersettings_text,
-									className: `BDFDB-ContextMenuItem ${this.name}-ContextMenuItem ${this.name}-usersettings-ContextMenuItem`,
-									action: e => {
-										BDFDB.closeContextMenu(menu);
-										this.showUserSettings(instance.props.user);
+									action: _ => {
+										BDFDB.ContextMenuUtils.close(e.instance);
+										this.showUserSettings(e.instance.props.user);
 									}
 								}),
-								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItems.Item, {
 									label: this.labels.submenu_resetsettings_text,
-									className: `BDFDB-ContextMenuItem ${this.name}-ContextMenuItem ${this.name}-resetsettings-ContextMenuItem`,
-									disabled: !BDFDB.DataUtils.load(this, "users", instance.props.user.id),
-									action: e => {
-										BDFDB.closeContextMenu(menu);
-										BDFDB.DataUtils.remove(this, "users", instance.props.user.id);
+									disabled: !BDFDB.DataUtils.load(this, "users", e.instance.props.user.id),
+									action: _ => {
+										BDFDB.ContextMenuUtils.close(e.instance);
+										BDFDB.DataUtils.remove(this, "users", e.instance.props.user.id);
 										this.forceUpdateAll();
 									}
 								})
@@ -217,9 +219,7 @@ class EditUsers {
 						})]
 					})
 				]
-			});
-			if (index > -1) children.splice(index, 0, itemgroup);
-			else children.push(itemgroup);
+			}));
 		}
 	}
 	
@@ -232,7 +232,7 @@ class EditUsers {
 		let data = BDFDB.DataUtils.load(this, "users", info.id) || {};
 		let member = BDFDB.LibraryModules.MemberStore.getMember(BDFDB.LibraryModules.LastGuildStore.getGuildId(), info.id) || {};
 		
-		BDFDB.openModal(this, {
+		BDFDB.ModalUtils.open(this, {
 			size: "MEDIUM",
 			header: this.labels.modal_header_text,
 			subheader: member.nick || info.username,
@@ -243,41 +243,35 @@ class EditUsers {
 						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_username_text,
 							className: BDFDB.disCN.marginbottom20 + " input-username",
-							children: [
-								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TextInput, {
-									value: data.name,
-									placeholder: member.nick || info.username,
-									autoFocus: true
-								})
-							]
+							children: BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TextInput, {
+								value: data.name,
+								placeholder: member.nick || info.username,
+								autoFocus: true
+							})
 						}),
 						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_usertag_text,
 							className: BDFDB.disCN.marginbottom20 + " input-usertag",
-							children: [
-								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TextInput, {
-									value: data.tag
-								})
-							]
+							children: BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TextInput, {
+								value: data.tag
+							})
 						}),
 						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_useravatar_text,
 							className: BDFDB.disCN.marginbottom8 + " input-useravatar",
-							children: [
-								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TextInput, {
-									inputClassName: !data.removeIcon && data.url ? BDFDB.disCN.inputsuccess : null,
-									inputId: "USERAVATAR",
-									value: data.url,
-									placeholder: BDFDB.UserUtils.getAvatar(info.id),
-									disabled: data.removeIcon,
-									onFocus: e => {
-										this.createNoticeTooltip(e.target);
-									},
-									onChange: (value, instance) => {
-										this.checkUrl(value, instance);
-									}
-								})
-							]
+							children: BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TextInput, {
+								inputClassName: !data.removeIcon && data.url ? BDFDB.disCN.inputsuccess : null,
+								inputId: "USERAVATAR",
+								value: data.url,
+								placeholder: BDFDB.UserUtils.getAvatar(info.id),
+								disabled: data.removeIcon,
+								onFocus: e => {
+									this.createNoticeTooltip(e.target);
+								},
+								onChange: (value, instance) => {
+									this.checkUrl(value, instance);
+								}
+							})
 						}),
 						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsItem, {
 							type: "Switch",
@@ -301,22 +295,18 @@ class EditUsers {
 						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_colorpicker1_text,
 							className: BDFDB.disCN.marginbottom20,
-							children: [
-								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ColorSwatches, {
-									color: data.color1,
-									number: 1
-								})
-							]
+							children: BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ColorSwatches, {
+								color: data.color1,
+								number: 1
+							})
 						}),
 						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_colorpicker2_text,
 							className: BDFDB.disCN.marginbottom20,
-							children: [
-								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ColorSwatches, {
-									color: data.color2,
-									number: 2
-								})
-							]
+							children: BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ColorSwatches, {
+								color: data.color2,
+								number: 2
+							})
 						})
 					]
 				}),
@@ -326,24 +316,20 @@ class EditUsers {
 						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_colorpicker3_text,
 							className: BDFDB.disCN.marginbottom20,
-							children: [
-								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ColorSwatches, {
-									color: data.color3,
-									number: 3,
-									disabled: data.ignoreTagColor
-								})
-							]
+							children: BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ColorSwatches, {
+								color: data.color3,
+								number: 3,
+								disabled: data.ignoreTagColor
+							})
 						}),
 						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_colorpicker4_text,
 							className: BDFDB.disCN.marginbottom20,
-							children: [
-								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ColorSwatches, {
-									color: data.color4,
-									number: 4,
-									disabled: data.ignoreTagColor
-								})
-							]
+							children: BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ColorSwatches, {
+								color: data.color4,
+								number: 4,
+								disabled: data.ignoreTagColor
+							})
 						}),
 						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsItem, {
 							type: "Switch",
@@ -431,14 +417,14 @@ class EditUsers {
 						textarea.dispatchEvent(new Event("input"));
 					}
 					else if (!e.ctrlKey && e.which != 16 && textarea.selectionStart == textarea.selectionEnd && textarea.selectionEnd == textarea.value.length) {
-						clearTimeout(textarea.EditUsersAutocompleteTimeout);
-						textarea.EditUsersAutocompleteTimeout = setTimeout(() => {this.addAutoCompleteMenu(textarea, channel);},100);
+						BDFDB.TimeUtils.clear(textarea.EditUsersAutocompleteTimeout);
+						textarea.EditUsersAutocompleteTimeout = BDFDB.TimeUtils.timeout(() => {this.addAutoCompleteMenu(textarea, channel);},100);
 					}
 
 					if (!e.ctrlKey && e.which != 38 && e.which != 40 && !(e.which == 39 && textarea.selectionStart == textarea.selectionEnd && textarea.selectionEnd == textarea.value.length)) BDFDB.DOMUtils.remove(".autocompleteEditUsers", ".autocompleteEditUsersRow");
 				});
 				BDFDB.ListenerUtils.add(this, textarea, "click", e => {
-					if (textarea.selectionStart == textarea.selectionEnd && textarea.selectionEnd == textarea.value.length) setImmediate(() => {this.addAutoCompleteMenu(textarea, channel);});
+					if (textarea.selectionStart == textarea.selectionEnd && textarea.selectionEnd == textarea.value.length) BDFDB.TimeUtils.timeout(() => {this.addAutoCompleteMenu(textarea, channel);});
 				});
 			}
 		}
@@ -520,7 +506,7 @@ class EditUsers {
 	}
 
 	processBannedCard (instance, wrapper, returnvalue) {
-		if (instance.props && instance.props.user && instance.props.guild) {
+		if (instance.props.user && instance.props.guild) {
 			let username = wrapper.querySelector(BDFDB.dotCN.guildsettingsbannedusername);
 			if (username) {
 				this.changeName3(instance.props.user, username);
@@ -541,7 +527,7 @@ class EditUsers {
 	}
 
 	processMemberCard (instance, wrapper, returnvalue) {
-		if (instance.props && instance.props.user && instance.props.guild) {
+		if (instance.props.user && instance.props.guild) {
 			let username = wrapper.querySelector(BDFDB.dotCN.guildsettingsmembername);
 			if (username) {
 				this.changeName2(instance.props.user, username, instance.props.guild.id);
@@ -551,7 +537,7 @@ class EditUsers {
 	}
 
 	processInvitationCard (instance, wrapper, returnvalue) {
-		if (instance.props && instance.props.user) {
+		if (instance.props.user) {
 			let username = wrapper.querySelector(BDFDB.dotCN.invitemodalinviterowname);
 			if (username) {
 				this.changeName3(instance.props.user, username);
@@ -582,7 +568,7 @@ class EditUsers {
 	}
 
 	processCallAvatar (instance, wrapper, returnvalue) {
-		if (instance.props && instance.props.id) {
+		if (instance.props.id) {
 			let user = BDFDB.LibraryModules.UserStore.getUser(instance.props.id);
 			if (!user) {
 				let channel = BDFDB.LibraryModules.ChannelStore.getChannel(instance.props.id);
@@ -600,18 +586,18 @@ class EditUsers {
 	}
 
 	processVideoTile (instance, wrapper, returnvalue) {
-		if (instance.props && instance.props.user) this.changeAvatar(instance.props.user, this.getAvatarDiv(wrapper));
+		if (instance.props.user) this.changeAvatar(instance.props.user, this.getAvatarDiv(wrapper));
 	}
 
 	processPictureInPictureVideo (instance, wrapper, returnvalue) {
-		if (instance.props && instance.props.backgroundKey) {
+		if (instance.props.backgroundKey) {
 			let user = BDFDB.LibraryModules.UserStore.getUser(instance.props.backgroundKey);
 			if (user) this.changeAvatar(user, this.getAvatarDiv(wrapper));
 		}
 	}
 
 	processPrivateChannel (instance, wrapper, returnvalue) {
-		if (instance.props && instance.props.user) {
+		if (instance.props.user) {
 			let username = wrapper.querySelector(BDFDB.dotCN.namecontainername);
 			this.changePrivateChannel(instance.props.user, username && username.firstElementChild ? username.firstElementChild : username);
 			this.changeAvatar(instance.props.user, this.getAvatarDiv(wrapper));
@@ -632,7 +618,7 @@ class EditUsers {
 					if (channel.type == 1) this.changeName(BDFDB.LibraryModules.UserStore.getUser(channel.recipients[0]), channelname);
 					else {
 						if (channelname.EditUsersChangeObserver && typeof channelname.EditUsersChangeObserver.disconnect == "function") channelname.EditUsersChangeObserver.disconnect();
-						if (BDFDB.BDUtils.isPluginEnabled("EditChannels")) BDFDB.BDUtils.getPlugin("EditChannels").changeChannel(channel, channelname);
+						if (BDFDB.BDUtils.isPluginEnabled("EditChannels")) {}
 						else {
 							channelname.style.removeProperty("color");
 							channelname.style.removeProperty("background");
@@ -708,13 +694,13 @@ class EditUsers {
 	
 	checkUrl (url, instance) {
 		let input = BDFDB.ReactUtils.findDOMNode(instance).firstElementChild;
-		clearTimeout(instance.checkTimeout);
+		BDFDB.TimeUtils.clear(instance.checkTimeout);
 		if (url == null || !url.trim()) {
 			if (input) BDFDB.DOMUtils.remove(input.tooltip);
 			instance.props.inputClassName = null;
 			instance.forceUpdate();
 		}
-		else instance.checkTimeout = setTimeout(() => {
+		else instance.checkTimeout = BDFDB.TimeUtils.timeout(() => {
 			BDFDB.LibraryRequires.request(url.trim(), (error, response, result) => {
 				if (response && response.headers["content-type"] && response.headers["content-type"].indexOf("image") != -1) {
 					if (input) BDFDB.DOMUtils.remove(input.tooltip);
@@ -758,8 +744,8 @@ class EditUsers {
 		this.changeBotTags(data, username, member);
 		if (data.name || data.color1 || data.color2 || username.getAttribute("changed-by-editusers")) {
 			let isBRCenabled = BDFDB.BDUtils.isPluginEnabled("BetterRoleColors");
-			let usenick = !BDFDB.DOMUtils.containsClass(username, BDFDB.disCN.userprofileusername) && !BDFDB.DOMUtils.containsClass(username.parentElement, BDFDB.disCN.userprofilelistname, BDFDB.disCN.accountinfodetails, false) && member.nick;
-			let usemembercolor = !BDFDB.DOMUtils.containsClass(username.parentElement, BDFDB.disCN.userprofilelistname) && (BDFDB.DOMUtils.containsClass(username, BDFDB.disCN.memberusername, BDFDB.disCN.messageusername, false) || isBRCenabled);
+			let usenick = !BDFDB.DOMUtils.containsClass(username, BDFDB.disCN.userprofileusername) && !BDFDB.DOMUtils.containsClass(username.parentElement, BDFDB.disCN.listname, BDFDB.disCN.accountinfodetails, false) && member.nick;
+			let usemembercolor = !BDFDB.DOMUtils.containsClass(username.parentElement, BDFDB.disCN.listname) && (BDFDB.DOMUtils.containsClass(username, BDFDB.disCN.memberusername, BDFDB.disCN.messageusername, false) || isBRCenabled);
 
 			if (BDFDB.ObjectUtils.is(data.color1)) {
 				username.style.setProperty("color", BDFDB.ColorUtils.convert(data.color1[Object.keys(data.color1)[0]], "RGBA"), "important");

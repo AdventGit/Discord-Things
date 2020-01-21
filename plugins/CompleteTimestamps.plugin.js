@@ -3,7 +3,7 @@
 class CompleteTimestamps {
 	getName () {return "CompleteTimestamps";}
 
-	getVersion () {return "1.3.7";}
+	getVersion () {return "1.3.9";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -11,7 +11,7 @@ class CompleteTimestamps {
 
 	constructor () {
 		this.changelog = {
-			"fixed":[["Arabic Usernames","Fixed issue where arabic usernames would break timestamps that contain a space"]],
+			"fixed":[["Compact","Fixed first timestamp of messagegroup not being visible without hovering in compact mode"]],
 			"improved":[["New Library Structure & React","Restructured my Library and switched to React rendering instead of DOM manipulation"]]
 		};
 
@@ -49,11 +49,11 @@ class CompleteTimestamps {
 	}
 
 	getSettingsPanel () {
-		if (!global.BDFDB || typeof BDFDB != "object" || !BDFDB.loaded || !this.started) return;
+		if (!window.BDFDB || typeof BDFDB != "object" || !BDFDB.loaded || !this.started) return;
 		let settings = BDFDB.DataUtils.get(this, "settings");
 		let choices = BDFDB.DataUtils.get(this, "choices");
 		let formats = BDFDB.DataUtils.get(this, "formats");
-		let settingsitems = [];
+		let settingspanel, settingsitems = [];
 		
 		for (let key in settings) settingsitems.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsSaveItem, {
 			className: BDFDB.disCN.marginbottom8,
@@ -141,18 +141,16 @@ class CompleteTimestamps {
 			title: "Placeholder Guide",
 			dividertop: true,
 			collapsed: BDFDB.DataUtils.load(this, "hideInfo", "hideInfo"),
-			children: ["$hour will be replaced with the current hour", "$minute will be replaced with the current minutes", "$second will be replaced with the current seconds", "$msecond will be replaced with the current milliseconds", "$timemode will change $hour to a 12h format and will be replaced with AM/PM", "$year will be replaced with the current year", "$month will be replaced with the current month", "$day will be replaced with the current day", "$monthnameL will be replaced with the monthname in long format based on the Discord Language", "$monthnameS will be replaced with the monthname in short format based on the Discord Language", "$weekdayL will be replaced with the weekday in long format based on the Discord Language", "$weekdayS will be replaced with the weekday in short format based on the Discord Language"].map(string => {
-				return BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormText, {
+			children: ["$hour will be replaced with the current hour", "$minute will be replaced with the current minutes", "$second will be replaced with the current seconds", "$msecond will be replaced with the current milliseconds", "$timemode will change $hour to a 12h format and will be replaced with AM/PM", "$year will be replaced with the current year", "$month will be replaced with the current month", "$day will be replaced with the current day", "$monthnameL will be replaced with the monthname in long format based on the Discord Language", "$monthnameS will be replaced with the monthname in short format based on the Discord Language", "$weekdayL will be replaced with the weekday in long format based on the Discord Language", "$weekdayS will be replaced with the weekday in short format based on the Discord Language", "$daysago will be replaced with a string to tell you how many days ago the event occured. For Example: " + BDFDB.LanguageUtils.LanguageStringsFormat("ACTIVITY_FEED_USER_PLAYED_DAYS_AGO", 3)].map(string => BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormText, {
 					type: BDFDB.LibraryComponents.FormComponents.FormTextTypes.DESCRIPTION,
 					children: string
-				});
-			}),
+			})),
 			onClick: collapsed => {
 				BDFDB.DataUtils.save(collapsed, this, "hideInfo", "hideInfo");
 			}
 		}));
 		
-		return BDFDB.PluginUtils.createSettingsPanel(this, settingsitems);
+		return settingspanel = BDFDB.PluginUtils.createSettingsPanel(this, settingsitems);
 	}
 
 
@@ -160,8 +158,8 @@ class CompleteTimestamps {
 	load () {}
 
 	start () {
-		if (!global.BDFDB) global.BDFDB = {myPlugins:{}};
-		if (global.BDFDB && global.BDFDB.myPlugins && typeof global.BDFDB.myPlugins == "object") global.BDFDB.myPlugins[this.getName()] = this;
+		if (!window.BDFDB) window.BDFDB = {myPlugins:{}};
+		if (window.BDFDB && window.BDFDB.myPlugins && typeof window.BDFDB.myPlugins == "object") window.BDFDB.myPlugins[this.getName()] = this;
 		var libraryScript = document.querySelector('head script#BDFDBLibraryScript');
 		if (!libraryScript || (performance.now() - libraryScript.getAttribute("date")) > 600000) {
 			if (libraryScript) libraryScript.remove();
@@ -170,18 +168,18 @@ class CompleteTimestamps {
 			libraryScript.setAttribute("type", "text/javascript");
 			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.min.js");
 			libraryScript.setAttribute("date", performance.now());
-			libraryScript.addEventListener("load", () => {this.initialize();});
+			libraryScript.addEventListener("load", _ => {this.initialize();});
 			document.head.appendChild(libraryScript);
 		}
-		else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
-		this.startTimeout = setTimeout(() => {
+		else if (window.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
+		this.startTimeout = setTimeout(_ => {
 			try {return this.initialize();}
 			catch (err) {console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not initiate plugin! " + err);}
 		}, 30000);
 	}
 
 	initialize () {
-		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
+		if (window.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
 			if (this.started) return;
 			BDFDB.PluginUtils.init(this);
 
@@ -194,7 +192,7 @@ class CompleteTimestamps {
 
 
 	stop () {
-		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
+		if (window.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
 			this.stopping = true;
 			
 			BDFDB.DOMUtils.removeLocalStyle(this.name + "CompactCorrection");
@@ -218,7 +216,7 @@ class CompleteTimestamps {
 	processMessage (e) {
 		if (!e.instance.props.isCompact) {
 			let settings = BDFDB.DataUtils.get(this, "settings");
-			if (settings.showInChat) this.injectTimestamp(e.returnvalue, e.instance.props);
+			if (settings.showInChat) this.injectTimestamp(e.returnvalue, e.instance.props.message.timestamp);
 			if (settings.showOnHover) {
 				let [children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue, {props:[["className", BDFDB.disCN.messagecontent]]});
 				if (index > -1) {
@@ -239,9 +237,9 @@ class CompleteTimestamps {
 		if (typeof e.returnvalue.props.children == "function") {
 			let settings = BDFDB.DataUtils.get(this, "settings");
 			let renderChildren = e.returnvalue.props.children;
-			e.returnvalue.props.children = () => {
-				let renderedChildren = renderChildren(e.instance);
-				if (e.instance.props.isCompact && settings.showInChat) this.injectTimestamp(renderedChildren, e.instance.props);
+			e.returnvalue.props.children = (...args) => {
+				let renderedChildren = renderChildren(...args);
+				if (e.instance.props.isCompact && settings.showInChat) this.injectTimestamp(renderedChildren, e.instance.props.message.timestamp);
 				if (settings.changeForEdit) this.injectEditStamp(renderedChildren, e.instance.props);
 				return renderedChildren;
 			};
@@ -256,9 +254,10 @@ class CompleteTimestamps {
 		}
 	}
 	
-	injectTimestamp (parent, props) {
+	injectTimestamp (parent, timestamp) {
 		let [children, index] = BDFDB.ReactUtils.findChildren(parent, {name: "MessageTimestamp"});
 		if (index > -1) {
+			let props = children[index].props;
 			if (!props.isCompact) children.splice(index++, 0, BDFDB.ReactUtils.createElement("span", {
 				children: "ARABIC-FIX",
 				style: {
@@ -267,14 +266,14 @@ class CompleteTimestamps {
 				}
 			}));
 			children.splice(index, 1, BDFDB.ReactUtils.createElement("time", {
-				className: BDFDB.DOMUtils.formatClassName(props.backgroundOpacity ? BDFDB.disCN["message" + props.backgroundOpacity + "backgroundopacity"] : null, !(props.isEditing || props.isHeader) ? BDFDB.disCN.messagetimestampvisibleonhover : null, props.isCompact ? (props.isMentioned ? BDFDB.disCN.messagetimestampcompactismentioned : BDFDB.disCN.messagetimestampcompact) : BDFDB.disCN.messagetimestampcozy),
-				dateTime: props.message.timestamp,
+				className: BDFDB.DOMUtils.formatClassName(props.backgroundOpacity && BDFDB.disCN["message" + props.backgroundOpacity + "backgroundopacity"], props.isVisibleOnlyOnHover && BDFDB.disCN.messagetimestampvisibleonhover, props.isCompact ? (props.isMentioned ? BDFDB.disCN.messagetimestampcompactismentioned : BDFDB.disCN.messagetimestampcompact) : BDFDB.disCN.messagetimestampcozy),
+				dateTime: timestamp,
 				children: [
 					BDFDB.ReactUtils.createElement("i", {
 						className: BDFDB.disCN.messagetimestampseparatorleft,
 						children: props.isCompact ? "[" : " ["
 					}),
-					this.getTimestamp(this.languages[BDFDB.DataUtils.get(this, "choices", "creationDateLang")].id, props.message.timestamp._i),
+					this.getTimestamp(this.languages[BDFDB.DataUtils.get(this, "choices", "creationDateLang")].id, timestamp._i),
 					BDFDB.ReactUtils.createElement("i", {
 						className: BDFDB.disCN.messagetimestampseparatorright,
 						children: props.isCompact ? "] " : "]"
@@ -313,7 +312,7 @@ class CompleteTimestamps {
 		else {
 			let ownformat = BDFDB.DataUtils.get(this, "formats", "ownFormat");
 			languageid = BDFDB.LanguageUtils.getLanguage().id;
-			let hour = timeobj.getHours(), minute = timeobj.getMinutes(), second = timeobj.getSeconds(), msecond = timeobj.getMilliseconds(), day = timeobj.getDate(), month = timeobj.getMonth()+1, timemode = "";
+			let hour = timeobj.getHours(), minute = timeobj.getMinutes(), second = timeobj.getSeconds(), msecond = timeobj.getMilliseconds(), day = timeobj.getDate(), month = timeobj.getMonth()+1, timemode = "", daysago = Math.round((new Date() - timeobj)/(1000*60*60*24));
 			if (ownformat.indexOf("$timemode") > -1) {
 				timemode = hour >= 12 ? "PM" : "AM";
 				hour = hour % 12;
@@ -329,9 +328,11 @@ class CompleteTimestamps {
 				.replace("$weekdayS", timeobj.toLocaleDateString(languageid,{weekday: "short"}))
 				.replace("$monthnameL", timeobj.toLocaleDateString(languageid,{month: "long"}))
 				.replace("$monthnameS", timeobj.toLocaleDateString(languageid,{month: "short"}))
+				.replace("$daysago", daysago > 0 ? BDFDB.LanguageUtils.LanguageStringsFormat("ACTIVITY_FEED_USER_PLAYED_DAYS_AGO", daysago) : BDFDB.LanguageUtils.LanguageStrings.SEARCH_SHORTCUT_TODAY)
 				.replace("$day", settings.forceZeros && day < 10 ? "0" + day : day)
 				.replace("$month", settings.forceZeros && month < 10 ? "0" + month : month)
-				.replace("$year", timeobj.getFullYear());
+				.replace("$year", timeobj.getFullYear())
+				.trim().split(" ").filter(n => n).join(" ");
 		}
 		return timestring;
 	}

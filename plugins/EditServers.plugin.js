@@ -3,7 +3,7 @@
 class EditServers {
 	getName () {return "EditServers";}
 
-	getVersion () {return "2.1.5";}
+	getVersion () {return "2.1.8";}
 	
 	getAuthor () {return "DevilBro";}
 
@@ -11,7 +11,7 @@ class EditServers {
 
 	constructor () {
 		this.changelog = {
-			"improved":[["Serveracronyms","You can now choose to use the native serveracronym for servers without icons even if you set a local custom servername"],["New Library Structure & React","Restructured my Library and switched to React rendering instead of DOM manipulation"]]
+			"improved":[["New Library Structure & React","Restructured my Library and switched to React rendering instead of DOM manipulation"]]
 		};
 
 		this.patchedModules = {
@@ -26,6 +26,7 @@ class EditServers {
 				GuildHeader: "render"
 			},
 			after: {
+				MessagesPopout: "render",
 				Guild: "render",
 				BlobMask: "render",
 				GuildIconWrapper: "render",
@@ -40,9 +41,10 @@ class EditServers {
 			settings: {
 				addOriginalTooltip:		{value:true, 	inner:false,	description:"Hovering over a changed Server Header shows the original Name as Tooltip"},
 				changeInGuildList:		{value:true, 	inner:true,		description:"Server List"},
+				changeInGuildHeader:	{value:true, 	inner:true,		description:"Server Header"},
 				changeInMutualGuilds:	{value:true, 	inner:true,		description:"Mutual Servers"},
-				changeInQuickSwitcher:	{value:true, 	inner:true,		description:"Quick Switcher"},
-				changeInGuildHeader:	{value:true, 	inner:true,		description:"Server Header"}
+				changeInRecentMentions:	{value:true, 	inner:true,		description:"Recent Mentions Popout"},
+				changeInQuickSwitcher:	{value:true, 	inner:true,		description:"Quick Switcher"}
 			}
 		};
 	}
@@ -50,7 +52,7 @@ class EditServers {
 	getSettingsPanel () {
 		if (!global.BDFDB || typeof BDFDB != "object" || !BDFDB.loaded || !this.started) return;
 		let settings = BDFDB.DataUtils.get(this, "settings");
-		let settingsitems = [], inneritems = [];
+		let settingspanel, settingsitems = [], inneritems = [];
 		
 		for (let key in settings) (!this.defaults.settings[key].inner ? settingsitems : inneritems).push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsSaveItem, {
 			className: BDFDB.disCN.marginbottom8,
@@ -79,7 +81,7 @@ class EditServers {
 			children: BDFDB.LanguageUtils.LanguageStrings.RESET
 		}));
 		
-		return BDFDB.PluginUtils.createSettingsPanel(this, settingsitems);
+		return settingspanel = BDFDB.PluginUtils.createSettingsPanel(this, settingsitems);
 	}
 
 	//legacy
@@ -159,20 +161,20 @@ class EditServers {
 	onGuildContextMenu (e) {
 		if (e.instance.props.guild) {
 			let [children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue, {name:["FluxContainer(MessageDeveloperModeGroup)", "DeveloperModeGroup"]});
-			children.splice(index > -1 ? index : children.length, 0, BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItemGroup, {
+			children.splice(index > -1 ? index : children.length, 0, BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItems.Group, {
 				children: [
-					BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuSubItem, {
+					BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItems.Sub, {
 						label: this.labels.context_localserversettings_text,
-						render: [BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItemGroup, {
+						render: [BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItems.Group, {
 							children: [
-								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItems.Item, {
 									label: this.labels.submenu_serversettings_text,
 									action: _ => {
 										BDFDB.ContextMenuUtils.close(e.instance);
 										this.showServerSettings(e.instance.props.guild.id);
 									}
 								}),
-								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.ContextMenuItems.Item, {
 									label: this.labels.submenu_resetsettings_text,
 									disabled: !BDFDB.DataUtils.load(this, "servers", e.instance.props.guild.id),
 									action: _ => {
@@ -190,7 +192,7 @@ class EditServers {
 	}
 
 	processGuild (e) {
-		if (e.instance.props.guild && BDFDB.DataUtils.get(this, "settings", "changeInGuildList")) {
+		if (BDFDB.GuildUtils.is(e.instance.props.guild) && BDFDB.DataUtils.get(this, "settings", "changeInGuildList")) {
 			e.instance.props.guild = this.getGuildData(e.instance.props.guild.id);
 			if (e.returnvalue) {
 				let data = BDFDB.DataUtils.load(this, "servers", e.instance.props.guild.id);
@@ -229,7 +231,8 @@ class EditServers {
 
 	processGuildAcronym (e) {
 		if (typeof e.returnvalue.props.children == "function" && BDFDB.DataUtils.get(this, "settings", "changeInGuildList")) {
-			let data = BDFDB.DataUtils.load(this, "servers", (e.instance.props.to.pathname.split("/channels/")[1] || "").split("/")[0]);
+			let pathname = BDFDB.ReactUtils.getValue(e.instance, "props.to.pathname");
+			let data = pathname && BDFDB.DataUtils.load(this, "servers", (pathname.split("/channels/")[1] || "").split("/")[0]);
 			if (data) {
 				let renderChildren = e.returnvalue.props.children;
 				e.returnvalue.props.children = (...args) => {
@@ -253,7 +256,7 @@ class EditServers {
 	}
 	
 	processGuildIconWrapper (e) {
-		if (e.instance.props.guild) {
+		if (BDFDB.GuildUtils.is(e.instance.props.guild)) {
 			let settings = BDFDB.DataUtils.get(this, "settings");
 			if (e.instance.props.className && e.instance.props.className.indexOf(BDFDB.disCN.guildfolderguildicon) > -1) e.instance.props.guild = this.getGuildData(e.instance.props.guild.id, settings.changeInGuildList);
 			else if (e.instance.props.className && e.instance.props.className.indexOf(BDFDB.disCN.listavatar) > -1) e.instance.props.guild = this.getGuildData(e.instance.props.guild.id, settings.changeInMutualGuilds);
@@ -262,7 +265,7 @@ class EditServers {
 	}
 	
 	processGuildIcon (e) {
-		if (e.instance.props.guild && e.instance.props.style && (!e.instance.props.style.backgroundImage || e.instance.props.style.backgroundImage == "none")) {
+		if (BDFDB.GuildUtils.is(e.instance.props.guild) && e.instance.props.style && (!e.instance.props.style.backgroundImage || e.instance.props.style.backgroundImage == "none")) {
 			let data = BDFDB.DataUtils.load(this, "servers", e.instance.props.guild.id);
 			if (data) {
 				let settings = BDFDB.DataUtils.get(this, "settings");
@@ -291,10 +294,23 @@ class EditServers {
 		}
 	}
 	
+	processMessagesPopout (e) {
+		if (BDFDB.DataUtils.get(this, "settings", "changeInRecentMentions")) {
+			let [children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue, {name: "VerticalScroller"});
+			if (index > -1 && children[index].props.children && BDFDB.ArrayUtils.is(children[index].props.children[0])) for (let dividerAndMessage of children[index].props.children[0]) if (dividerAndMessage && dividerAndMessage[0] && dividerAndMessage[0].props.children && dividerAndMessage[0].props.children[1]) {
+				let channel = BDFDB.ReactUtils.getValue(dividerAndMessage[1], "props.children.props.children.props.channel");
+				if (channel && BDFDB.ChannelUtils.isTextChannel(channel)) dividerAndMessage[0].props.children[1].props.children = this.getGuildData(channel.guild_id).name;
+			}
+		}
+	}
+	
 	processGuildSidebar (e) {
 		if (e.instance.props.guild) {
 			let data = BDFDB.DataUtils.load(this, "servers", e.instance.props.guild.id);
-			if (data && data.removeBanner) e.instance.props.guild = new BDFDB.DiscordObjects.Guild(Object.assign({}, e.instance.props.guild, {banner: null}));
+			if (data) {
+				if (data.removeBanner) e.instance.props.guild = new BDFDB.DiscordObjects.Guild(Object.assign({}, e.instance.props.guild, {banner: null}));
+				else if (data.banner) e.instance.props.guild = new BDFDB.DiscordObjects.Guild(Object.assign({}, e.instance.props.guild, {banner: data.banner}));
+			}
 		}
 	}
 	
@@ -328,8 +344,12 @@ class EditServers {
 				newGuildObject.icon = null;
 				newGuildObject.getIconURL = _ => {return null;};
 			}
-			else if (data.url) newGuildObject.getIconURL = _ => {return data.url;};
+			else if (data.url) {
+				newGuildObject.icon = data.url;
+				newGuildObject.getIconURL = _ => {return data.url;};
+			}
 			if (data.removeBanner) newGuildObject.banner = null;
+			else if (data.banner) newGuildObject.banner = data.banner;
 			return newGuildObject;
 		}
 		return new BDFDB.DiscordObjects.Guild(guild);
@@ -367,35 +387,31 @@ class EditServers {
 						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_guildname_text,
 							className: BDFDB.disCN.marginbottom8,
-							children: [
-								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TextInput, {
-									inputClassName: "input-guildname",
-									value: data.name,
-									placeholder: guild.name,
-									autoFocus: true,
-									onChange: (value, instance) => {
-										if (!currentIgnoreCustomNameState) {
-											let acronyminputins = BDFDB.ReactUtils.findOwner(instance._reactInternalFiber.return.return.return, {props:[["inputId","GUILDACRONYM"]]});
-											if (acronyminputins) {
-												acronyminputins.props.placeholder = value && BDFDB.LibraryModules.StringUtils.getAcronym(value) || guild.acronym;
-												BDFDB.ReactUtils.forceUpdate(acronyminputins);
-											}
+							children: BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TextInput, {
+								inputClassName: "input-guildname",
+								value: data.name,
+								placeholder: guild.name,
+								autoFocus: true,
+								onChange: (value, instance) => {
+									if (!currentIgnoreCustomNameState) {
+										let acronyminputins = BDFDB.ReactUtils.findOwner(instance._reactInternalFiber.return.return.return, {props:[["inputId","GUILDACRONYM"]]});
+										if (acronyminputins) {
+											acronyminputins.props.placeholder = value && BDFDB.LibraryModules.StringUtils.getAcronym(value) || guild.acronym;
+											BDFDB.ReactUtils.forceUpdate(acronyminputins);
 										}
 									}
-								})
-							]
+								}
+							})
 						}),
 						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_guildacronym_text,
 							className: BDFDB.disCN.marginbottom4,
-							children: [
-								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TextInput, {
-									inputClassName: "input-guildacronym",
-									inputId: "GUILDACRONYM",
-									value: data.shortName,
-									placeholder: !data.ignoreCustomName && data.name && BDFDB.LibraryModules.StringUtils.getAcronym(data.name) || guild.acronym
-								})
-							]
+							children: BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TextInput, {
+								inputClassName: "input-guildacronym",
+								inputId: "GUILDACRONYM",
+								value: data.shortName,
+								placeholder: !data.ignoreCustomName && data.name && BDFDB.LibraryModules.StringUtils.getAcronym(data.name) || guild.acronym
+							})
 						}),
 						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsItem, {
 							type: "Switch",
@@ -414,19 +430,17 @@ class EditServers {
 						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_guildicon_text,
 							className: BDFDB.disCN.marginbottom4,
-							children: [
-								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TextInput, {
-									inputClassName: "input-guildicon",
-									inputId: "GUILDICON",
-									success: !data.removeIcon && data.url,
-									value: data.url,
-									placeholder: BDFDB.GuildUtils.getIcon(guild.id),
-									disabled: data.removeIcon,
-									onChange: (value, instance) => {
-										this.checkUrl(value, instance);
-									}
-								})
-							]
+							children: BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TextInput, {
+								inputClassName: "input-guildicon",
+								inputId: "GUILDICON",
+								success: !data.removeIcon && data.url,
+								value: data.url,
+								placeholder: BDFDB.GuildUtils.getIcon(guild.id),
+								disabled: data.removeIcon,
+								onChange: (value, instance) => {
+									this.checkUrl(value, instance);
+								}
+							})
 						}),
 						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsItem, {
 							type: "Switch",
@@ -446,19 +460,17 @@ class EditServers {
 						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormItem, {
 							title: this.labels.modal_guildbanner_text,
 							className: BDFDB.disCN.marginbottom4,
-							children: [
-								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TextInput, {
-									inputClassName: "input-guildbanner",
-									inputId: "GUILDBANNER",
-									success: !data.removeBanner && data.banner,
-									value: data.banner,
-									placeholder: BDFDB.GuildUtils.getBanner(guild.id),
-									disabled: data.removeBanner || guild.id == "410787888507256842",
-									onChange: (value, instance) => {
-										this.checkUrl(value, instance);
-									}
-								})
-							]
+							children: BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TextInput, {
+								inputClassName: "input-guildbanner",
+								inputId: "GUILDBANNER",
+								success: !data.removeBanner && data.banner,
+								value: data.banner,
+								placeholder: BDFDB.GuildUtils.getBanner(guild.id),
+								disabled: data.removeBanner || guild.id == "410787888507256842",
+								onChange: (value, instance) => {
+									this.checkUrl(value, instance);
+								}
+							})
 						}),
 						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsItem, {
 							type: "Switch",

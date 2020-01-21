@@ -62,7 +62,7 @@ var HideUtils = (() => {
 					twitter_username: ''
 				}
 			],
-			version: '2.1.18',
+			version: '2.1.21',
 			description: 'Allows you to hide users, servers, and channels individually.',
 			github: 'https://github.com/Arashiryuu',
 			github_raw: 'https://raw.githubusercontent.com/Arashiryuu/crap/master/ToastIntegrated/HideUtils/HideUtils.plugin.js'
@@ -83,7 +83,7 @@ var HideUtils = (() => {
 						{
 							type: 'text',
 							children: [
-								'once again populate with HideUtils options, and uses the proper classes for its elements.'
+								'populate for channels again.'
 							]
 						}
 					])
@@ -858,6 +858,7 @@ var HideUtils = (() => {
 
 				let height = this.getProps(m, 'props.onHeightUpdate');
 				if (!height) height = this.getProps(m, '_reactInternalFiber.return.memoizedProps.onHeightUpdate');
+				if (!height) height = this.getProps(m, '_reactInternalFiber.child.child.memoizedProps.onHeightUpdate');
 
 				height && height();
 			}
@@ -1083,17 +1084,17 @@ var HideUtils = (() => {
 					}
 				});
 				const elements = item.getElement();
-				elements.classList.add(DiscordClasses.ContextMenu.clickable.toString());
-				elements.firstChild.classList.add(DiscordClasses.ContextMenu.label.toString());
+				elements.classList.add(...DiscordClasses.ContextMenu.clickable.value.split(' '));
+				elements.firstChild.classList.add(...DiscordClasses.ContextMenu.label.value.split(' '));
 				group.addItems(item);
 				context.prepend(group.getElement());
 				setImmediate(() => this.updateContextPosition(owner));
 			}
 
 			addChannelContextItems(instance, owner, context) {
-				if (instance.memoizedProps.children[3].type.displayName && instance.memoizedProps.children[3].type.displayName.includes('Category')) return;
+				if (instance.memoizedProps.children[0].props && instance.memoizedProps.children[0].props.type === 4) return;
 				const group = new ContextMenu.ItemGroup();
-				const channel = this.getProps(instance, 'memoizedProps.children.0.props.children.1.props.channel');
+				const channel = this.getProps(instance, 'memoizedProps.children.2.props.children.1.props.channel') || this.getProps(instance, 'memoizedProps.children.1.props.channel');
 				if (!channel) return;
 				const itemProps = {
 					label: 'Hide Channel',
@@ -1111,8 +1112,8 @@ var HideUtils = (() => {
 				}
 				const item = new ContextMenu.TextItem(itemProps.label, { callback: itemProps.action });
 				const elements = item.getElement();
-				elements.classList.add(DiscordClasses.ContextMenu.clickable.toString());
-				elements.firstChild.classList.add(DiscordClasses.ContextMenu.label.toString());
+				elements.classList.add(...DiscordClasses.ContextMenu.clickable.value.split(' '));
+				elements.firstChild.classList.add(...DiscordClasses.ContextMenu.label.value.split(' '));
 				group.addItems(item);
 				context.firstChild.insertAdjacentElement('afterend', group.getElement());
 				setImmediate(() => this.updateContextPosition(owner));
@@ -1146,8 +1147,8 @@ var HideUtils = (() => {
 				const secondItem = toggle.getElement();
 				const thirdItem = clear.getElement();
 				for (const i of [firstItem, secondItem, thirdItem]) {
-					i.classList.add(DiscordClasses.ContextMenu.clickable.toString());
-					i.firstChild.classList.add(DiscordClasses.ContextMenu.label.toString());
+					i.classList.add(...DiscordClasses.ContextMenu.clickable.value.split(' '));
+					i.firstChild.classList.add(...DiscordClasses.ContextMenu.label.value.split(' '));
 				}
 				group.addItems(item, toggle, clear);
 				context.firstChild.insertAdjacentElement('afterend', group.getElement());
@@ -1170,8 +1171,8 @@ var HideUtils = (() => {
 					}
 				});
 				const elements = item.getElement();
-				elements.classList.add(DiscordClasses.ContextMenu.clickable.toString());
-				elements.firstChild.classList.add(DiscordClasses.ContextMenu.label.toString());
+				elements.classList.add(...DiscordClasses.ContextMenu.clickable.value.split(' '));
+				elements.firstChild.classList.add(...DiscordClasses.ContextMenu.label.value.split(' '));
 				group.addItems(item);
 				context.firstChild.insertAdjacentElement('afterend', group.getElement());
 				setImmediate(() => this.updateContextPosition(owner));
@@ -1312,7 +1313,7 @@ var HideUtils = (() => {
 			observer({ addedNodes }) {
 				for (const node of addedNodes) {
 					if (!node) continue;
-					if (node.firstChild && node.firstChild.className && node.firstChild.className === DiscordClasses.ContextMenu.contextMenu.value) {
+					if (node.firstChild && node.firstChild.className && typeof node.firstChild.className === 'string' && node.firstChild.className.split(' ')[0] === DiscordClasses.ContextMenu.contextMenu.value.split(' ')[0]) {
 						this.processContextMenu(node.firstChild);
 					}
 				}

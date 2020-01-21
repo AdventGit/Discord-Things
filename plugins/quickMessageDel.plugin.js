@@ -18,13 +18,16 @@ quickMessageDel.prototype.getAuthor = function() {
 }
 
 quickMessageDel.prototype.baseTarget = function() {
-  return 'div.container-1YxwTf';
+    return 'div.container-1YxwTf';
+}
+quickMessageDel.prototype.mainTarget = function() {
+    return 'container-206Blv';
 }
 quickMessageDel.prototype.buttonTarget = function() {
     return 'div.button-3Jq0g9';
 }
 quickMessageDel.prototype.popoutsTarget = function() {
-    return 'div.layer-v9HyYc';
+    return 'div.container-3cGP6G > div.itemGroup-1tL0uz';
 }
 quickMessageDel.prototype.labelTarget = function() {
     return 'div.label-JWQiNe';
@@ -45,11 +48,19 @@ quickMessageDel.prototype.mutationObserverConfig = function() {
     return {attributeOldValue: false, attributes: false, characterData: false, characterDataoldValue: false, childList: true, subtree: true};
 }
 
+quickMessageDel.prototype.findQuery = function(jQObj) {
+    if (jQObj.hasClass(quickMessageDel.prototype.mainTarget())) {
+        jQObj.find(quickMessageDel.prototype.buttonTarget())[0].click();
+        return;
+    } else {
+        quickMessageDel.prototype.findQuery(jQObj.parent());
+    }
+}
 quickMessageDel.prototype.mutAction = function() {
     $(quickMessageDel.prototype.baseTarget()).off('click.qmd');
     $(quickMessageDel.prototype.baseTarget()).on('click.qmd', function(e) {
         if (isHeld == true) {
-            $(e.target).parent().find(quickMessageDel.prototype.buttonTarget())[0].click();
+            quickMessageDel.prototype.findQuery($(e.target));
             $(quickMessageDel.prototype.popoutsTarget()).css('visibility','hidden');
             $.each(quickMessageDel.prototype.eachTarget(), (index, item) => {
                 if($(item).text() === 'Delete') {
@@ -90,4 +101,5 @@ quickMessageDel.prototype.stop = function() {
     $(window).off('keydown.qmd');
     $(window).off('keyup.qmd');
     $(quickMessageDel.prototype.baseTarget()).off('click.qmd');
+    quickMessageDel.prototype.mutObvs.disconnect();
 }

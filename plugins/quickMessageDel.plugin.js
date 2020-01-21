@@ -23,6 +23,9 @@ quickMessageDel.prototype.baseTarget = function() {
 quickMessageDel.prototype.mainTarget = function() {
     return 'container-206Blv';
 }
+quickMessageDel.prototype.secondaryTarget = function() {
+    return 'container-1e22Ot';
+}
 quickMessageDel.prototype.buttonTarget = function() {
     return 'div.button-3Jq0g9';
 }
@@ -51,6 +54,9 @@ quickMessageDel.prototype.mutationObserverConfig = function() {
 quickMessageDel.prototype.findQuery = function(jQObj) {
     if (jQObj.hasClass(quickMessageDel.prototype.mainTarget())) {
         jQObj.find(quickMessageDel.prototype.buttonTarget())[0].click();
+        return;
+    } else if (jQObj.hasClass(quickMessageDel.prototype.secondaryTarget())) {
+        jQObj.parent().find(quickMessageDel.prototype.buttonTarget())[0].click();
         return;
     } else {
         quickMessageDel.prototype.findQuery(jQObj.parent());

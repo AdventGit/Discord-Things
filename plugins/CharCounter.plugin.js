@@ -3,7 +3,7 @@
 class CharCounter {
 	getName () {return "CharCounter";}
 
-	getVersion () {return "1.4.4";}
+	getVersion () {return "1.4.5";}
 
 	getAuthor () {return "DevilBro";}
 
@@ -35,7 +35,7 @@ class CharCounter {
 		}
 		   
 		this.css = `
-			${BDFDB.dotCNS.typing + BDFDB.dotCN.cooldownwrapper} {
+			${BDFDB.dotCNS.typing + BDFDB.dotCN.typingcooldownwrapper} {
 				margin-right: 64px;
 			}
 			${BDFDB.dotCN._charcountercounteradded} {
@@ -83,9 +83,9 @@ class CharCounter {
 	load () {}
 
 	start () {
-		if (!global.BDFDB) global.BDFDB = {myPlugins:{}};
-		if (global.BDFDB && global.BDFDB.myPlugins && typeof global.BDFDB.myPlugins == "object") global.BDFDB.myPlugins[this.getName()] = this;
-		var libraryScript = document.querySelector('head script#BDFDBLibraryScript');
+		if (!window.BDFDB) window.BDFDB = {myPlugins:{}};
+		if (window.BDFDB && window.BDFDB.myPlugins && typeof window.BDFDB.myPlugins == "object") window.BDFDB.myPlugins[this.getName()] = this;
+		let libraryScript = document.querySelector("head script#BDFDBLibraryScript");
 		if (!libraryScript || (performance.now() - libraryScript.getAttribute("date")) > 600000) {
 			if (libraryScript) libraryScript.remove();
 			libraryScript = document.createElement("script");
@@ -93,18 +93,18 @@ class CharCounter {
 			libraryScript.setAttribute("type", "text/javascript");
 			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.min.js");
 			libraryScript.setAttribute("date", performance.now());
-			libraryScript.addEventListener("load", () => {this.initialize();});
+			libraryScript.addEventListener("load", _ => {this.initialize();});
 			document.head.appendChild(libraryScript);
 		}
-		else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
-		this.startTimeout = setTimeout(() => {
+		else if (window.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
+		this.startTimeout = setTimeout(_ => {
 			try {return this.initialize();}
 			catch (err) {console.error(`%c[${this.getName()}]%c`, "color: #3a71c1; font-weight: 700;", "", "Fatal Error: Could not initiate plugin! " + err);}
 		}, 30000);
 	}
 
 	initialize () {
-		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
+		if (window.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
 			if (this.started) return;
 			BDFDB.PluginUtils.init(this);
 
@@ -115,7 +115,7 @@ class CharCounter {
 
 
 	stop () {
-		if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
+		if (window.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
 			this.stopping = true;
 
 			BDFDB.ModuleUtils.forceAllUpdates(this);

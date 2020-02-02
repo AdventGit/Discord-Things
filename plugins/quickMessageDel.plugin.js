@@ -18,19 +18,16 @@ quickMessageDel.prototype.getAuthor = function() {
 }
 
 quickMessageDel.prototype.baseTarget = function() {
-    return 'div.container-1YxwTf';
+    return 'div.container-3FojY8';
 }
-quickMessageDel.prototype.mainTarget = function() {
-    return 'container-206Blv';
-}
-quickMessageDel.prototype.secondaryTarget = function() {
-    return 'container-1e22Ot';
+quickMessageDel.prototype.queryTarget = function() {
+    return 'container-3FojY8';
 }
 quickMessageDel.prototype.buttonTarget = function() {
-    return 'div.button-3Jq0g9';
+    return 'div.button-1ZiXG9[aria-label="More"]';
 }
 quickMessageDel.prototype.popoutsTarget = function() {
-    return 'div.container-3cGP6G > div.itemGroup-1tL0uz';
+    return 'div.layer-v9HyYc';
 }
 quickMessageDel.prototype.labelTarget = function() {
     return 'div.label-JWQiNe';
@@ -52,11 +49,8 @@ quickMessageDel.prototype.mutationObserverConfig = function() {
 }
 
 quickMessageDel.prototype.findQuery = function(jQObj) {
-    if (jQObj.hasClass(quickMessageDel.prototype.mainTarget())) {
+    if (jQObj.hasClass(quickMessageDel.prototype.queryTarget())) {
         jQObj.find(quickMessageDel.prototype.buttonTarget())[0].click();
-        return;
-    } else if (jQObj.hasClass(quickMessageDel.prototype.secondaryTarget())) {
-        jQObj.parent().find(quickMessageDel.prototype.buttonTarget())[0].click();
         return;
     } else {
         quickMessageDel.prototype.findQuery(jQObj.parent());
@@ -69,7 +63,7 @@ quickMessageDel.prototype.mutAction = function() {
             quickMessageDel.prototype.findQuery($(e.target));
             $(quickMessageDel.prototype.popoutsTarget()).css('visibility','hidden');
             $.each(quickMessageDel.prototype.eachTarget(), (index, item) => {
-                if($(item).text() === 'Delete') {
+                if($(item).text() === 'Delete Message') {
                     $(item).click();
                     setTimeout(function() {
                         $(quickMessageDel.prototype.backdropTarget()).css('visibility','hidden');

@@ -16,10 +16,10 @@ dblClickEdit.prototype.getAuthor = function () {
 }
 
 dblClickEdit.prototype.baseTarget = function() {
-  return 'div.container-1YxwTf';
+  return 'div.container-3FojY8';
 }
 dblClickEdit.prototype.buttonTarget = function() {
-  return 'div.button-3Jq0g9';
+  return 'div.button-1ZiXG9[aria-label="More"]';
 }
 dblClickEdit.prototype.popoutsTarget = function() {
   return 'div.layer-v9HyYc';

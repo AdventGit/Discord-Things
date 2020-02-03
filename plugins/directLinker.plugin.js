@@ -84,10 +84,10 @@ directLinker.prototype.settingsPanelJS = function() {
 };
 
 directLinker.prototype.baseTarget = function() {
-    return 'div.container-1YxwTf div.markup-2BOw-j > a';
+    return 'div.container-3FojY8 > div.markup-2BOw-j > a';
 }
 directLinker.prototype.baseTarget2 = function() {
-    return 'div.modal-3c3bKg div.connectedAccounts-repVzS div.connectedAccount-36nQx7 > a';
+    return 'div.modal-3c3bKg div.connectedAccounts-repVzS > div.connectedAccount-36nQx7 > a';
 }
 directLinker.prototype.mutTarget = function() {
     return 'div.content-98HsJk';
@@ -100,32 +100,28 @@ directLinker.prototype.mutationObserverConfig = function() {
 }
 
 directLinker.prototype.mainAct = function(e) {
-    if (e.target.tagName === 'svg') {
+    if (e.target.tagName === 'A' || e.target.tagName === 'a') {
+        var hrefLink = $(e.target).attr('href');
+    } else if (e.target.tagName === 'SVG' || e.target.tagName === 'svg') {
         var hrefLink = $(e.target).parent().attr('href');
-    } else if (e.target.tagName === 'path') {
+    } else if (e.target.tagName === 'Path' || e.target.tagName === 'path') {
         var hrefLink = $(e.target).parent().parent().attr('href');
     }
     const steamConditions = ['//steamcommunity.com/','//store.steampowered.com/'];
     const osuConditions = ['//osu.ppy.sh/s/','//osu.ppy.sh/b/','//osu.ppy.sh/beatmapsets/'];
-    if (BdApi.loadData('directLinker', 'Steam') == 'Enabled') {
-        if (steamConditions.some(cond => hrefLink.includes(cond))) {
-            if (require('electron').shell.openExternal('steam://openurl/'+hrefLink)) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-            }
+    if (BdApi.loadData('directLinker', 'Steam') == 'Enabled' && steamConditions.some(cond => hrefLink.includes(cond))) {
+        if (require('electron').shell.openExternal('steam://openurl/'+hrefLink)) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
         }
-    }
-    if (BdApi.loadData('directLinker', 'OSU!') == 'Enabled') {
-        if (osuConditions.some(cond => hrefLink.includes(cond))) {
-            const bmid = hrefLink.split('?')[0].split('/').pop();
-            if (require('electron').shell.openExternal('osu://b/'+bmid)) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-            }
+    } else if (BdApi.loadData('directLinker', 'OSU!') == 'Enabled' && osuConditions.some(cond => hrefLink.includes(cond))) {
+        const bmid = hrefLink.split('?')[0].split('#')[1].split('/').pop();
+        if (require('electron').shell.openExternal('osu://b/'+bmid)) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
         }
     }
 }
-
 directLinker.prototype.mutAction = function() {
     $(directLinker.prototype.baseTarget()).off('click.directLinker');
     $(directLinker.prototype.baseTarget2()).off('click.directLinker');
@@ -141,7 +137,7 @@ directLinker.prototype.mutObvs = new MutationObserver(function(mutations) {
 });
 directLinker.prototype.mutTargets = function() {
     directLinker.prototype.mutObvs.observe($(directLinker.prototype.mutTarget()).get(0), directLinker.prototype.mutationObserverConfig());
-    directLinker.prototype.mutObvs.observe($(directLinker.prototype.mutTarget2()).next().get(0), directLinker.prototype.mutationObserverConfig());
+    directLinker.prototype.mutObvs.observe($(directLinker.prototype.mutTarget2()).get(0), directLinker.prototype.mutationObserverConfig());
 }
 
 directLinker.prototype.startTargets = function() {
@@ -154,13 +150,12 @@ directLinker.prototype.startTargets = function() {
         $(directLinker.prototype.baseTarget2()).off('click.directLinker');
         directLinker.prototype.mutObvs.disconnect();
         setTimeout(function() {
-            tV2d.prototype.startTargets();
+            directLinker.prototype.startTargets();
         }, 500);
     } finally {
         BdApi.showToast('directLinker: Loaded!');
     }
 }
-
 directLinker.prototype.mainExit = function() {
     try {
         $(directLinker.prototype.baseTarget()).off('click.directLinker');
@@ -179,7 +174,6 @@ directLinker.prototype.mainExit = function() {
 directLinker.prototype.start = function() {
     directLinker.prototype.startTargets();
 }
-
 directLinker.prototype.stop = function() {
     directLinker.prototype.mainExit();
 }

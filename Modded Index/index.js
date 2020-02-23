@@ -48,6 +48,5 @@ if (process.platform == "win32" || process.platform == "darwin") {
     electron.app.setAppPath(basePath);
     electron.app.setName(pkg.name);
     electron.app.disableHardwareAcceleration();
-    electron.app.commandLine.appendSwitch('enable-transparent-visuals');
     Module._load(path.join(basePath, pkg.main), null, true);
 }

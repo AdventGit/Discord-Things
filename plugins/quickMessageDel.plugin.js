@@ -18,10 +18,10 @@ quickMessageDel.prototype.getAuthor = function() {
 }
 
 quickMessageDel.prototype.baseTarget = function() {
-    return 'div.container-3FojY8';
+    return 'div.message-2qnXI6';
 }
 quickMessageDel.prototype.queryTarget = function() {
-    return 'container-3FojY8';
+    return 'message-2qnXI6';
 }
 quickMessageDel.prototype.buttonTarget = function() {
     return 'div.button-1ZiXG9[aria-label="More"]';

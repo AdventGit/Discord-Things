@@ -6,10 +6,10 @@ directLinker.prototype.getName = function() {
     return 'Direct Linker';
 }
 directLinker.prototype.getDescription = function() {
-    return 'Opens a variety of links inside the proper installed programs. (Example: Steam links open Steam instead of the browser)';
+    return 'Opens a variety of links inside the proper installed programs. (Example: Steam links open in Steam instead of the browser)';
 }
 directLinker.prototype.getVersion = function() {
-    return '1.0';
+    return '1.1';
 }
 directLinker.prototype.getAuthor = function() {
     return 'AdventDiscord';
@@ -44,6 +44,18 @@ margin-left: 8px !important;">\
                 <div class="ui-switch"></div>\
             </label>\
         </div>\
+        <div style="flex: 0 0 auto !important;\
+margin: 64px 0px 0px 0px !important;">\
+            <div style="flex 0 0 auto !important;\
+float: left !important;">Spotify:</div>\
+            <label class="ui-switch-wrapper ui-flex-child directLinker-Spotify" style="flex: 0 0 auto !important;\
+float: right !important;\
+margin-top: -3px !important;\
+margin-left: 8px !important;">\
+            <input class="ui-switch-checkbox" type="checkbox"></input>\
+            <div class="ui-switch"></div>\
+            </label>\
+        </div>\
     </div>\
 </div>';
     } finally {
@@ -61,6 +73,11 @@ directLinker.prototype.settingsPanelJS = function() {
             BdApi.saveData('directLinker', 'OSU!', 'Disabled');
         } else if (BdApi.loadData('directLinker', 'OSU!') == 'Enabled') {
             $('.directLinker-OSU div').addClass('checked');
+        }
+        if (BdApi.loadData('directLinker', 'Spotify') == undefined) {
+            BdApi.saveData('directLinker', 'Spotify', 'Disabled');
+        } else if (BdApi.loadData('directLinker', 'Spotify') == 'Enabled') {
+            $('.directLinker-Spotify div').addClass('checked');
         }
         $('.directLinker-Steam').on('click', function() {
             if ($('.directLinker-Steam div').hasClass('checked')) {
@@ -80,11 +97,20 @@ directLinker.prototype.settingsPanelJS = function() {
                 $('.directLinker-OSU div').addClass('checked');
             }
         });
+        $('.directLinker-Spotify').on('click', function() {
+            if ($('.directLinker-Spotify div').hasClass('checked')) {
+                BdApi.saveData('directLinker', 'Spotify', 'Disabled');
+                $('.directLinker-Spotify div').removeClass('checked');
+            } else {
+                BdApi.saveData('directLinker', 'Spotify', 'Enabled');
+                $('.directLinker-Spotify div').addClass('checked');
+            }
+        });
     },1);
 };
 
 directLinker.prototype.baseTarget = function() {
-    return 'div.container-3FojY8 > div.markup-2BOw-j > a';
+    return 'div.message-2qnXI6 div.markup-2BOw-j > a';
 }
 directLinker.prototype.baseTarget2 = function() {
     return 'div.modal-3c3bKg div.connectedAccounts-repVzS > div.connectedAccount-36nQx7 > a';
@@ -109,6 +135,7 @@ directLinker.prototype.mainAct = function(e) {
     }
     const steamConditions = ['//steamcommunity.com/','//store.steampowered.com/'];
     const osuConditions = ['//osu.ppy.sh/s/','//osu.ppy.sh/b/','//osu.ppy.sh/beatmapsets/'];
+    const spotifyConditions = ['//open.spotify.com/']
     if (BdApi.loadData('directLinker', 'Steam') == 'Enabled' && steamConditions.some(cond => hrefLink.includes(cond))) {
         if (require('electron').shell.openExternal('steam://openurl/'+hrefLink)) {
             e.preventDefault();
@@ -117,6 +144,12 @@ directLinker.prototype.mainAct = function(e) {
     } else if (BdApi.loadData('directLinker', 'OSU!') == 'Enabled' && osuConditions.some(cond => hrefLink.includes(cond))) {
         const bmid = hrefLink.split('?')[0].split('#')[1].split('/').pop();
         if (require('electron').shell.openExternal('osu://b/'+bmid)) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+        }
+    } else if (BdApi.loadData('directLinker', 'Spotify') == 'Enabled' && spotifyConditions.some(cond => hrefLink.includes(cond))) {
+        const spotify = hrefLink.split('.com/').slice(-1)[0];
+        if (require('electron').shell.openExternal('spotify://'+spotify)) {
             e.preventDefault();
             e.stopImmediatePropagation();
         }

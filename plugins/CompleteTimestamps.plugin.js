@@ -1,12 +1,12 @@
-//META{"name":"CompleteTimestamps","website":"https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/CompleteTimestamps","source":"https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/CompleteTimestamps/CompleteTimestamps.plugin.js"}*//
+//META{"name":"CompleteTimestamps","authorId":"278543574059057154","invite":"Jx3TjNS","donate":"https://www.paypal.me/MircoWittrien","patreon":"https://www.patreon.com/MircoWittrien","website":"https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/CompleteTimestamps","source":"https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/CompleteTimestamps/CompleteTimestamps.plugin.js"}*//
 
 var CompleteTimestamps = (_ => {
-	var languages;
+	var languages, currentMode;
 	
 	return class CompleteTimestamps {
 		getName () {return "CompleteTimestamps";}
 
-		getVersion () {return "1.4.1";}
+		getVersion () {return "1.4.3";}
 
 		getAuthor () {return "DevilBro";}
 
@@ -14,8 +14,7 @@ var CompleteTimestamps = (_ => {
 
 		constructor () {
 			this.changelog = {
-				"fixed":[["Message Update","Fixed the plugin for the new Message Update"]],
-				"improved":[["New Library Structure & React","Restructured my Library and switched to React rendering instead of DOM manipulation"]]
+				"fixed":[["Compact Mode","All timestamps are now changed to your choosen format in compact mode, like the plugin used to (disable 'Replace Chat ...' to disable this)"],["Extra Space for Compact","In some cases the space for the compact timestamp wouldn't be enough for the timestamp forcing it to wrap into two lines, added extra space"]]
 			};
 
 			this.patchedModules = {
@@ -32,21 +31,21 @@ var CompleteTimestamps = (_ => {
 		initConstructor () {
 			this.defaults = {
 				settings: {
-					showInChat:		{value:true, 	description:"Replace Chat Timestamp with Complete Timestamp:"},
-					showInEmbed:	{value:true, 	description:"Replace Embed Timestamp with Complete Timestamp:"},
-					changeForChat:	{value:true, 	description:"Change the Time for the Chat Time Tooltips:"},
-					changeForEdit:	{value:true, 	description:"Change the Time for the Edited Time Tooltips:"},
-					displayTime:	{value:true, 	description:"Display the Time in the Timestamp:"},
-					displayDate:	{value:true, 	description:"Display the Date in the Timestamp:"},
-					cutSeconds:		{value:false, 	description:"Cut off Seconds of the Time:"},
-					forceZeros:		{value:false, 	description:"Force leading Zeros:"},
-					otherOrder:		{value:false, 	description:"Show the Time before the Date:"}
+					showInChat:				{value:true, 	description:"Replace Chat Timestamp with Complete Timestamp:"},
+					showInEmbed:			{value:true, 	description:"Replace Embed Timestamp with Complete Timestamp:"},
+					changeForChat:			{value:true, 	description:"Change the Time for the Chat Time Tooltips:"},
+					changeForEdit:			{value:true, 	description:"Change the Time for the Edited Time Tooltips:"},
+					displayTime:			{value:true, 	description:"Display the Time in the Timestamp:"},
+					displayDate:			{value:true, 	description:"Display the Date in the Timestamp:"},
+					cutSeconds:				{value:false, 	description:"Cut off Seconds of the Time:"},
+					forceZeros:				{value:false, 	description:"Force leading Zeros:"},
+					otherOrder:				{value:false, 	description:"Show the Time before the Date:"}
 				},
 				choices: {
 					creationDateLang:		{value:"$discord", 	description:"Timestamp Format:"}
 				},
 				formats: {
-					ownFormat:				{value:"$hour:$minute:$second, $day.$month.$year", 	description:"Own Format:"}
+					ownformat:				{value:"$hour:$minute:$second, $day.$month.$year", 	description:"Own Format:"}
 				}
 			};
 		}
@@ -155,7 +154,21 @@ var CompleteTimestamps = (_ => {
 				title: "Placeholder Guide",
 				collapseStates: collapseStates,
 				dividertop: true,
-				children: ["$hour will be replaced with the current hour", "$minute will be replaced with the current minutes", "$second will be replaced with the current seconds", "$msecond will be replaced with the current milliseconds", "$timemode will change $hour to a 12h format and will be replaced with AM/PM", "$year will be replaced with the current year", "$month will be replaced with the current month", "$day will be replaced with the current day", "$monthnameL will be replaced with the monthname in long format based on the Discord Language", "$monthnameS will be replaced with the monthname in short format based on the Discord Language", "$weekdayL will be replaced with the weekday in long format based on the Discord Language", "$weekdayS will be replaced with the weekday in short format based on the Discord Language", "$daysago will be replaced with a string to tell you how many days ago the event occured. For Example: " + BDFDB.LanguageUtils.LanguageStringsFormat("ACTIVITY_FEED_USER_PLAYED_DAYS_AGO", 3)].map(string => BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormText, {
+				children: [
+					"$hour will be replaced with the current hour",
+					"$minute will be replaced with the current minutes",
+					"$second will be replaced with the current seconds",
+					"$msecond will be replaced with the current milliseconds",
+					"$timemode will change $hour to a 12h format and will be replaced with AM/PM",
+					"$year will be replaced with the current year",
+					"$month will be replaced with the current month",
+					"$day will be replaced with the current day",
+					"$monthnameL will be replaced with the monthname in long format based on the Discord Language",
+					"$monthnameS will be replaced with the monthname in short format based on the Discord Language",
+					"$weekdayL will be replaced with the weekday in long format based on the Discord Language",
+					"$weekdayS will be replaced with the weekday in short format based on the Discord Language",
+					"$daysago will be replaced with a string to tell you how many days ago the event occured. For Example: " + BDFDB.LanguageUtils.LanguageStringsFormat("ACTIVITY_FEED_USER_PLAYED_DAYS_AGO", 3)
+				].map(string => BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormComponents.FormText, {
 					type: BDFDB.LibraryComponents.FormComponents.FormTextTypes.DESCRIPTION,
 					children: string
 				}))
@@ -205,8 +218,6 @@ var CompleteTimestamps = (_ => {
 		stop () {
 			if (window.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) {
 				this.stopping = true;
-				
-				BDFDB.DOMUtils.removeLocalStyle(this.name + "CompactCorrection");
 
 				this.forceUpdateAll();
 
@@ -220,6 +231,7 @@ var CompleteTimestamps = (_ => {
 		onSettingsClosed () {
 			if (this.SettingsUpdated) {
 				delete this.SettingsUpdated;
+				currentMode = null;
 				this.forceUpdateAll();
 			}
 		}
@@ -235,7 +247,8 @@ var CompleteTimestamps = (_ => {
 			let [children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue, {name: "MessageTimestamp"});
 			if (index > -1) {
 				let settings = BDFDB.DataUtils.get(this, "settings");
-				this.changeTimestamp(children, index, {child:!e.instance.props.compact && settings.showInChat, tooltip:settings.changeForChat});
+				this.changeTimestamp(children, index, {child:settings.showInChat, tooltip:settings.changeForChat});
+				this.setMaxWidth(children[index], e.instance.props.compact);
 			}
 		}
 		
@@ -289,39 +302,39 @@ var CompleteTimestamps = (_ => {
 			parent[index] = stamp;
 		}
 
-		getTimestamp (languageid, time) {
+		getTimestamp (languageId, time) {
 			let timeobj = time ? time : new Date();
 			if (typeof time == "string") timeobj = new Date(time);
 			if (timeobj.toString() == "Invalid Date") timeobj = new Date(parseInt(time));
 			if (timeobj.toString() == "Invalid Date") return;
 			let settings = BDFDB.DataUtils.get(this, "settings"), timestring = "";
-			if (languageid != "own") {
+			if (languageId != "own") {
 				let timestamp = [];
-				if (settings.displayDate) 	timestamp.push(timeobj.toLocaleDateString(languageid));
-				if (settings.displayTime) 	timestamp.push(settings.cutSeconds ? this.cutOffSeconds(timeobj.toLocaleTimeString(languageid)) : timeobj.toLocaleTimeString(languageid));
+				if (settings.displayDate) 	timestamp.push(timeobj.toLocaleDateString(languageId));
+				if (settings.displayTime) 	timestamp.push(settings.cutSeconds ? this.cutOffSeconds(timeobj.toLocaleTimeString(languageId)) : timeobj.toLocaleTimeString(languageId));
 				if (settings.otherOrder)	timestamp.reverse();
 				timestring = timestamp.length > 1 ? timestamp.join(", ") : (timestamp.length > 0 ? timestamp[0] : "");
 				if (timestring && settings.forceZeros) timestring = this.addLeadingZeros(timestring);
 			}
 			else {
-				let ownformat = BDFDB.DataUtils.get(this, "formats", "ownFormat");
-				languageid = BDFDB.LanguageUtils.getLanguage().id;
+				let ownFormat = BDFDB.DataUtils.get(this, "formats", "ownformat");
+				languageId = BDFDB.LanguageUtils.getLanguage().id;
 				let hour = timeobj.getHours(), minute = timeobj.getMinutes(), second = timeobj.getSeconds(), msecond = timeobj.getMilliseconds(), day = timeobj.getDate(), month = timeobj.getMonth()+1, timemode = "", daysago = Math.round((new Date() - timeobj)/(1000*60*60*24));
-				if (ownformat.indexOf("$timemode") > -1) {
+				if (ownFormat.indexOf("$timemode") > -1) {
 					timemode = hour >= 12 ? "PM" : "AM";
 					hour = hour % 12;
 					hour = hour ? hour : 12;
 				}
-				timestring = ownformat
+				timestring = ownFormat
 					.replace("$hour", settings.forceZeros && hour < 10 ? "0" + hour : hour)
 					.replace("$minute", minute < 10 ? "0" + minute : minute)
 					.replace("$second", second < 10 ? "0" + second : second)
 					.replace("$msecond", settings.forceZeros ? (msecond < 10 ? "00" + msecond : (msecond < 100 ? "0" + msecond : msecond)) : msecond)
 					.replace("$timemode", timemode)
-					.replace("$weekdayL", timeobj.toLocaleDateString(languageid,{weekday: "long"}))
-					.replace("$weekdayS", timeobj.toLocaleDateString(languageid,{weekday: "short"}))
-					.replace("$monthnameL", timeobj.toLocaleDateString(languageid,{month: "long"}))
-					.replace("$monthnameS", timeobj.toLocaleDateString(languageid,{month: "short"}))
+					.replace("$weekdayL", timeobj.toLocaleDateString(languageId,{weekday: "long"}))
+					.replace("$weekdayS", timeobj.toLocaleDateString(languageId,{weekday: "short"}))
+					.replace("$monthnameL", timeobj.toLocaleDateString(languageId,{month: "long"}))
+					.replace("$monthnameS", timeobj.toLocaleDateString(languageId,{month: "short"}))
 					.replace("$daysago", daysago > 0 ? BDFDB.LanguageUtils.LanguageStringsFormat("ACTIVITY_FEED_USER_PLAYED_DAYS_AGO", daysago) : BDFDB.LanguageUtils.LanguageStrings.SEARCH_SHORTCUT_TODAY)
 					.replace("$day", settings.forceZeros && day < 10 ? "0" + day : day)
 					.replace("$month", settings.forceZeros && month < 10 ? "0" + month : month)
@@ -343,6 +356,32 @@ var CompleteTimestamps = (_ => {
 			}
 
 			return chararray.join("");
+		}
+		
+		setMaxWidth (timestamp, compact) {
+			if (currentMode != compact) {
+				currentMode = compact;
+				if (compact && timestamp.props.className && typeof timestamp.type == "string") {
+					let tempTimestamp = BDFDB.DOMUtils.create(`<div class="${BDFDB.disCN.messagecompact}"><${timestamp.type} class="${timestamp.props.className}" style="width: auto !important;">${this.getTimestamp(BDFDB.DataUtils.get(this, "choices", "creationDateLang"), new Date(253402124399995))}</${timestamp.type}></div>`);
+					document.body.appendChild(tempTimestamp);
+					let width = BDFDB.DOMUtils.getRects(tempTimestamp.firstElementChild).width + 10;
+					tempTimestamp.remove();
+					BDFDB.DOMUtils.appendLocalStyle(this.name + "CompactCorrection", `
+						${BDFDB.dotCN.messagecompact + BDFDB.dotCN.messagewrapper} {
+							padding-left: ${44 + width}px;
+						}
+						${BDFDB.dotCNS.messagecompact + BDFDB.dotCN.messagecontents} {
+							margin-left: -${44 + width}px;
+							padding-left: ${44 + width}px;
+							text-indent: calc(-${44 + width}px - -1rem);
+						}
+						${BDFDB.dotCNS.messagecompact + BDFDB.dotCN.messagetimestamp} {
+							width: ${width}px;
+						}
+					`);
+				}
+				else BDFDB.DOMUtils.removeLocalStyle(this.name + "CompactCorrection");
+			}
 		}
 			
 		forceUpdateAll() {

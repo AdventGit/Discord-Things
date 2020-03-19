@@ -16,7 +16,7 @@ dblClickEdit.prototype.getAuthor = function () {
 }
 
 dblClickEdit.prototype.baseTarget = function() {
-  return 'div.container-3FojY8';
+  return 'div.message-2qnXI6';
 }
 dblClickEdit.prototype.buttonTarget = function() {
   return 'div.button-1ZiXG9[aria-label="More"]';
@@ -39,7 +39,7 @@ dblClickEdit.prototype.mutationObserverConfig = function() {
 dblClickEdit.prototype.main = function() {
     $(dblClickEdit.prototype.popoutsTarget()).css('visibility','hidden');
     $.each(dblClickEdit.prototype.eachTarget(), (index, item) => {
-        if($(item).text() === 'Edit') {
+        if($(item).text() === 'Edit Message') {
             $(item).click();
             return;
         }
@@ -49,12 +49,12 @@ dblClickEdit.prototype.main = function() {
 dblClickEdit.prototype.mutAction = function() {
     $(dblClickEdit.prototype.baseTarget()).off('dblclick.dce');
     $(dblClickEdit.prototype.baseTarget()).on('dblclick.dce', function(e) {
-        try {
-            $(e.target).parent().find(dblClickEdit.prototype.buttonTarget())[0].click();
-            dblClickEdit.prototype.main()
-        } catch {
+        if (e.target.tagName === 'DIV' || e.target.tagName === 'div') {
+            $(e.target).parent().parent().find(dblClickEdit.prototype.buttonTarget())[0].click();
+            dblClickEdit.prototype.main();
+        } else if (e.target.tagName === 'EM' || e.target.tagName === 'em') {
             $(e.target).parent().parent().parent().find(dblClickEdit.prototype.buttonTarget())[0].click();
-            dblClickEdit.prototype.main()
+            dblClickEdit.prototype.main();
         }
     });
 }

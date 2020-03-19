@@ -1,10 +1,10 @@
-//META{"name":"EditUsers","website":"https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/EditUsers","source":"https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/EditUsers/EditUsers.plugin.js"}*//
+//META{"name":"EditUsers","authorId":"278543574059057154","invite":"Jx3TjNS","donate":"https://www.paypal.me/MircoWittrien","patreon":"https://www.patreon.com/MircoWittrien","website":"https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/EditUsers","source":"https://raw.githubusercontent.com/mwittrien/BetterDiscordAddons/master/Plugins/EditUsers/EditUsers.plugin.js"}*//
 
 var EditUsers = (_ => {
 	return class EditUsers {
 		getName () {return "EditUsers";}
 
-		getVersion () {return "3.7.8";}
+		getVersion () {return "3.8.0";}
 
 		getAuthor () {return "DevilBro";}
 
@@ -12,9 +12,7 @@ var EditUsers = (_ => {
 
 		constructor () {
 			this.changelog = {
-				"added":[["Custom Status","Ever been spoiled by a custom status of a user? You can now set your own local status for ppl or complete remove the status of a user"],["Custom Status Part 2","You can now select your own emoji for the local custom status"],["Message Color","You can now set unique message colors for users"]],
-				"fixed":[["Colored Text","Changing a User Color will now properly change the message color if Colored Text is enabled"],["Message Update","Fixed the plugin for the new Message Update"]],
-				"improved":[["New Library Structure & React","Restructured my Library and switched to React rendering instead of DOM manipulation"]]
+				"fixed":[["Avatars","Fixed avatars not being changed in some places"]]
 			};
 
 			this.patchedModules = {
@@ -44,7 +42,8 @@ var EditUsers = (_ => {
 					SearchPopoutComponent: "render",
 					IncomingCall: "render",
 					PrivateChannelCallParticipants: "render",
-					VideoTile: "render"
+					VideoTile: "render",
+					UserSummaryItem: "render"
 				},
 				after: {
 					AutocompleteUserResult: "render",
@@ -53,6 +52,7 @@ var EditUsers = (_ => {
 					NowPlayingHeader: "Header",
 					VoiceUser: "render",
 					Account: "render",
+					PrivateChannelEmptyMessage: "default",
 					MessageHeader: "default",
 					MessageContent: "type",
 					MemberListItem: "render",
@@ -458,45 +458,69 @@ var EditUsers = (_ => {
 			}
 		}
 
-		processMessage (e) {
-			let header = e.instance.props.childrenHeader;
-			if (header && header.props && header.props.message) {
-				let data = BDFDB.DataUtils.load(this, "users", header.props.message.author.id);
-				if (data) {
-					let message = new BDFDB.DiscordObjects.Message(Object.assign({}, header.props.message, {author: this.getUserData(header.props.message.author.id)}));
-					if (data.name) message.nick = data.name;
-					if (data.color1) message.colorString = BDFDB.ColorUtils.convert(BDFDB.ObjectUtils.is(data.color1) ? data.color1[0] : data.color1, "HEX");
-					header.props.message = message;
+		processPrivateChannelEmptyMessage (e) {
+			if (e.instance.props.channel && e.instance.props.channel.type == BDFDB.DiscordConstants.ChannelTypes.DM && BDFDB.DataUtils.get(this, "settings", "changeInChatWindow")) {
+				let recipientId = e.instance.props.channel.getRecipientId();
+				let name = this.getUserData(recipientId).username;
+				let [children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue.props.children, {props:"src"});
+				if (index > -1) children[index].props.src = this.getUserAvatar(recipientId);
+				[children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue.props.children, {name:"h1"});
+				if (index > -1) {
+					children[index].props.children = BDFDB.ReactUtils.createElement("span", {children: name});
+					this.changeUserColor(children[index].props.children, recipientId);
+				}
+				if (index > -1) children[index].props.src = this.getUserAvatar(recipientId);
+				[children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue.props.children, {name:"strong"});
+				if (index > -1) {
+					children[index].props.children = "@" + name;
+					this.changeUserColor(children[index], recipientId);
 				}
 			}
-			let content = e.instance.props.childrenMessageContent;
-			if (content && content.type && content.type.type) {
-				let data = BDFDB.DataUtils.load(this, "users", content.props.message.author.id);
-				let messageColor = data && (data.color5 || (BDFDB.BDUtils.getSettings("bda-gs-7") && data.color1));
-				if (messageColor) {
-					let message = new BDFDB.DiscordObjects.Message(Object.assign({}, content.props.message, {author: this.getUserData(content.props.message.author.id)}));
-					if (data.name) message.nick = data.name;
-					message.colorString = BDFDB.ColorUtils.convert(BDFDB.ObjectUtils.is(messageColor) ? messageColor[0] : messageColor, "HEX");
-					content.props.message = message;
+		}
+		
+		processMessage (e) {
+			if (BDFDB.DataUtils.get(this, "settings", "changeInChatWindow")) {
+				let header = e.instance.props.childrenHeader;
+				if (header && header.props && header.props.message) {
+					let data = BDFDB.DataUtils.load(this, "users", header.props.message.author.id);
+					if (data) {
+						let message = new BDFDB.DiscordObjects.Message(Object.assign({}, header.props.message, {author: this.getUserData(header.props.message.author.id)}));
+						if (data.name) message.nick = data.name;
+						if (data.color1) message.colorString = BDFDB.ColorUtils.convert(BDFDB.ObjectUtils.is(data.color1) ? data.color1[0] : data.color1, "HEX");
+						header.props.message = message;
+					}
+				}
+				let content = e.instance.props.childrenMessageContent;
+				if (content && content.type && content.type.type) {
+					let data = BDFDB.DataUtils.load(this, "users", content.props.message.author.id);
+					let messageColor = data && (data.color5 || (BDFDB.BDUtils.getSettings("bda-gs-7") && data.color1));
+					if (messageColor) {
+						let message = new BDFDB.DiscordObjects.Message(Object.assign({}, content.props.message, {author: this.getUserData(content.props.message.author.id)}));
+						if (data.name) message.nick = data.name;
+						message.colorString = BDFDB.ColorUtils.convert(BDFDB.ObjectUtils.is(messageColor) ? messageColor[0] : messageColor, "HEX");
+						content.props.message = message;
+					}
 				}
 			}
 		}
 		
 		processMessageHeader (e) {
 			if (e.instance.props.message && BDFDB.DataUtils.get(this, "settings", "changeInChatWindow")) {
-				let data = BDFDB.DataUtils.load(this, "users", e.instance.props.message.author.id);
-				if (data && (data.color1 || data.color2)) {
-					let usernamePopout = BDFDB.ReactUtils.getValue(e, "returnvalue.props.children.2.props.children.1")
-					if (usernamePopout && usernamePopout.props && typeof usernamePopout.props.children == "function") {
-						let renderChildren = usernamePopout.props.children;
-						usernamePopout.props.children = (...args) => {
-							let renderedChildren = renderChildren(...args);
-							this.changeUserColor(renderedChildren, e.instance.props.message.author.id);
-							return renderedChildren;
+				let [children, index] = BDFDB.ReactUtils.findChildren(e.returnvalue.props.children.slice(1), {name: "Popout"});
+				if (index > -1) {
+					let data = BDFDB.DataUtils.load(this, "users", e.instance.props.message.author.id);
+					if (data && (data.color1 || data.color2)) {
+						if (children[index] && children[index].props && typeof children[index].props.children == "function") {
+							let renderChildren = children[index].props.children;
+							children[index].props.children = (...args) => {
+								let renderedChildren = renderChildren(...args);
+								this.changeUserColor(renderedChildren, e.instance.props.message.author.id);
+								return renderedChildren;
+							}
 						}
 					}
+					this.injectBadge(children, e.instance.props.message.author.id, (BDFDB.LibraryModules.ChannelStore.getChannel(e.instance.props.message.channel_id) || {}).guild_id, 2, e.instance.props.compact ? BDFDB.disCN.messagebottagcompact : BDFDB.disCN.messagebottagcozy);
 				}
-				this.injectBadge(e.returnvalue.props.children[2].props.children, e.instance.props.message.author.id, (BDFDB.LibraryModules.ChannelStore.getChannel(e.instance.props.message.channel_id) || {}).guild_id, 2, e.instance.props.compact ? BDFDB.disCN.messagebottagcompact : BDFDB.disCN.messagebottagcozy);
 			}
 		}
 		
@@ -675,6 +699,7 @@ var EditUsers = (_ => {
 					e.returnvalue.props.name = BDFDB.ReactUtils.createElement("span", {children: this.getUserData(e.instance.props.user.id).username});
 					this.changeUserColor(e.returnvalue.props.name, e.instance.props.user.id, {changeBackground: true});
 					e.returnvalue.props.name = [e.returnvalue.props.name];
+					e.returnvalue.props.avatar.props.src = this.getUserAvatar(e.instance.props.user.id);
 					this.injectBadge(e.returnvalue.props.name, e.instance.props.user.id, null, 1);
 				}
 			}
@@ -736,9 +761,14 @@ var EditUsers = (_ => {
 				for (let participant of e.instance.props.participants) if (participant && participant.user) participant.user = this.getUserData(participant.user.id);
 			}
 		}
-
 		processVideoTile (e) {
 			if (e.instance.props.user && BDFDB.DataUtils.get(this, "settings", "changeInDmCalls")) e.instance.props.user = this.getUserData(e.instance.props.user.id);
+		}
+
+		processUserSummaryItem (e) {
+			if (BDFDB.ArrayUtils.is(e.instance.props.users)) {
+				for (let i in e.instance.props.users) if (e.instance.props.users[i]) e.instance.props.users[i] = this.getUserData(e.instance.props.users[i].id);
+			}
 		}
 
 		changeAppTitle () {
